@@ -16,16 +16,20 @@ export interface ApiResponse<T> {
   error: string | null;
 }
 
+interface ErrorResponse {
+  message?: string;
+}
+
 async function handleApiResponse<T>(promise: Promise<AxiosResponse<T>>): Promise<ApiResponse<T>> {
   try {
     const response = await promise;
     return { data: response.data, error: null };
   } catch (error) {
-    const axiosError = error as AxiosError;
+    const axiosError = error as AxiosError<ErrorResponse>;
     console.error('API Error:', axiosError.response?.data || axiosError.message);
     return { 
       data: null, 
-      error: axiosError.response?.data?.message || axiosError.message || 'An unknown error occurred' 
+      error: axiosError.response?.data?.message ?? axiosError.message ?? 'An unknown error occurred' 
     };
   }
 }
