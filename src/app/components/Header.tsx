@@ -69,7 +69,7 @@ const Header: React.FC<HeaderProps> = ({ headerColor }) => {
       {/* <nav className="relative w-full transition-transform duration-500 shadow-none "> */}
         <div className="container mx-auto flex justify-between items-center px-5 py-4">
           <Link href="/" className="flex items-center">
-            <Image src="/images/CSM-Logo-WHITE-01-web300.jpg" alt="CSM Aviation" width={80} height={80} className="invert" />
+            <Image src="/images/CSM_Logo_WHITE-01_no_plane.png" alt="CSM Aviation" width={120} height={120}  />
           </Link>
           
           {/* Desktop Menu */}
