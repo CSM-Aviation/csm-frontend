@@ -88,9 +88,9 @@ const Header: React.FC<HeaderProps> = ({ headerColor }) => {
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center space-x-4">
             <a href="tel:+8884359276" className="text-gray-800 transition-colors duration-300 hover:text-blue-600">
-              <FontAwesomeIcon icon={faPhone} size="lg" />
+              <FontAwesomeIcon color='#007BA7' icon={faPhone} size="lg" />
             </a>
-            <button className="bg-[#333333] text-white px-6 py-3 rounded hover:bg-[#555555] transition-colors duration-300">
+            <button className="bg-[#007BA7] text-white px-6 py-3 rounded hover:bg-[#555555] transition-colors duration-300">
               Request a quote
             </button>
           </div>
@@ -135,7 +135,7 @@ const Header: React.FC<HeaderProps> = ({ headerColor }) => {
               </a>
             </li>
             <li className="mt-4">
-              <button className="bg-[#333333] text-white px-6 py-3 rounded hover:bg-[#555555] transition-colors duration-300">
+              <button className="bg-[#007BA7] text-white px-6 py-3 rounded hover:bg-[#555555] transition-colors duration-300">
                 Request a quote
               </button>
             </li>
