@@ -1,93 +1,111 @@
-'use client'
+"use client"
 
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPhone, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-import JetInsightLink from "./JetInsightLink";
+import React, { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPhone } from '@fortawesome/free-solid-svg-icons';
 
 interface HeaderProps {
   headerColor: string;
 }
 
 const Header: React.FC<HeaderProps> = ({ headerColor }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const toggleNavbar = () => {
-    setIsOpen(!isOpen);
+  const handleDropdownHover = (dropdown: string) => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setActiveDropdown(dropdown);
   };
 
-  const toggleDropdown = (dropdown: string) => {
-    if (activeDropdown === dropdown) {
+  const handleDropdownLeave = () => {
+    timeoutRef.current = setTimeout(() => {
       setActiveDropdown(null);
-    } else {
-      setActiveDropdown(dropdown);
-    }
+    }, 300); // Delay before closing dropdown
   };
 
   useEffect(() => {
-    const closeDropdowns = (e: MouseEvent) => {
-      if (!(e.target as HTMLElement).closest('.dropdown')) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setActiveDropdown(null);
       }
     };
 
-    document.addEventListener('click', closeDropdowns);
-
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener('click', closeDropdowns);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
   return (
     <header className="relative w-full z-[1000]">
       <nav className="relative w-full transition-transform duration-500 shadow-none" style={{ backgroundColor: headerColor }}>
-        <div className="flex justify-between items-center px-5 py-2.5 relative">
+        <div className="container mx-auto flex justify-between items-center px-5 py-2.5">
           <Link href="/" className="flex items-center">
             <Image src="/images/CSM-Logo-WHITE-01-web300.jpg" alt="CSM Aviation" width={60} height={60} className="invert" />
           </Link>
-          <div className={`flex-grow justify-center ${isOpen ? 'fixed top-[60px] right-0 w-full h-[calc(100vh-60px)] bg-white flex-col items-center justify-start transition-all duration-1000 ease-out opacity-100 overflow-y-auto' : 'hidden lg:flex'}`}>
-            <ul className="flex lg:flex-row flex-col items-center w-full lg:w-auto pt-5 lg:pt-0">
-              <li className="dropdown relative lg:mx-5 my-2.5 lg:my-0 w-full lg:w-auto text-center">
-                <button onClick={() => toggleDropdown('charter')} className="block relative p-1.5 text-2xl font-bold font-['Source Sans Pro'] text-gray-800 uppercase transition-all duration-500 hover:underline hover:text-blue-600">CHARTER</button>
-                <div className={`dropdown-content absolute left-0 right-0 w-screen bg-[#bdae7a] z-[1] py-5 text-center box-border ml-[calc(-50vw+50%)] overflow-hidden transition-all duration-300 ease-out ${activeDropdown === 'charter' ? 'max-h-[300px]' : 'max-h-0'}`}>
-                  <div className="submenu flex flex-col items-center max-w-[1200px] mx-auto">
-                    <Link href="/charter/Quote" className="text-gray-800 py-3 px-4 text-sm uppercase transition-colors duration-300 hover:text-[#b19e58] hover:font-bold">Instant Quote</Link>
-                    <Link href="/charter/trip" className="text-gray-800 py-3 px-4 text-sm uppercase transition-colors duration-300 hover:text-[#b19e58] hover:font-bold">Trip Request</Link>
-                    <Link href="/charter/fleet" className="text-gray-800 py-3 px-4 text-sm uppercase transition-colors duration-300 hover:text-[#b19e58] hover:font-bold">FLEET</Link>
-                  </div>
-                </div>
-              </li>
-              <li className="lg:mx-5 my-2.5 lg:my-0 w-full lg:w-auto text-center">
-                <Link href="/management" onClick={toggleNavbar} className="block relative p-1.5 text-2xl font-bold font-['Source Sans Pro'] text-gray-800 uppercase transition-all duration-500 hover:underline hover:text-blue-600">MANAGEMENT</Link>
-              </li>
-              <li className="lg:mx-5 my-2.5 lg:my-0 w-full lg:w-auto text-center">
-                <Link href="/maintenance" onClick={toggleNavbar} className="block relative p-1.5 text-2xl font-bold font-['Source Sans Pro'] text-gray-800 uppercase transition-all duration-500 hover:underline hover:text-blue-600">MAINTENANCE</Link>
-              </li>
-              <li className="dropdown relative lg:mx-5 my-2.5 lg:my-0 w-full lg:w-auto text-center">
-                <button onClick={() => toggleDropdown('company')} className="block relative p-1.5 text-2xl font-bold font-['Source Sans Pro'] text-gray-800 uppercase transition-all duration-500 hover:underline hover:text-blue-600">COMPANY</button>
-                <div className={`dropdown-content absolute left-0 right-0 w-screen bg-[#bdae7a] z-[1] py-5 text-center box-border ml-[calc(-50vw+50%)] overflow-hidden transition-all duration-300 ease-out ${activeDropdown === 'company' ? 'max-h-[300px]' : 'max-h-0'}`}>
-                  <div className="submenu flex flex-col items-center max-w-[1200px] mx-auto">
-                    <Link href="/company/about" className="text-gray-800 py-3 px-4 text-sm uppercase transition-colors duration-300 hover:text-[#b19e58] hover:font-bold">About Us</Link>
-                    <Link href="/company/team" className="text-gray-800 py-3 px-4 text-sm uppercase transition-colors duration-300 hover:text-[#b19e58] hover:font-bold">Contact</Link>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div className="flex items-center gap-3.5 ml-auto">
-            <a href="tel:+8884359276" className="text-gray-800 transition-colors duration-300 hover:text-blue-600 hidden lg:block">
-              <FontAwesomeIcon icon={faPhone} size="2x" />
+          <ul className="flex items-center space-x-8">
+            <li 
+              className="relative group"
+              onMouseEnter={() => handleDropdownHover('charter')}
+              onMouseLeave={handleDropdownLeave}
+            >
+              <Link href="/charter" className="block p-1.5 text-xl font-bold text-gray-800 uppercase transition-all duration-300 hover:text-blue-600">CHARTER</Link>
+            </li>
+            <li>
+              <Link href="/management" className="block p-1.5 text-xl font-bold text-gray-800 uppercase transition-all duration-300 hover:text-blue-600">MANAGEMENT</Link>
+            </li>
+            <li>
+              <Link href="/maintenance" className="block p-1.5 text-xl font-bold text-gray-800 uppercase transition-all duration-300 hover:text-blue-600">MAINTENANCE</Link>
+            </li>
+            <li 
+              className="relative group"
+              onMouseEnter={() => handleDropdownHover('company')}
+              onMouseLeave={handleDropdownLeave}
+            >
+              <Link href="/company" className="block p-1.5 text-xl font-bold text-gray-800 uppercase transition-all duration-300 hover:text-blue-600">COMPANY</Link>
+            </li>
+          </ul>
+          <div className="flex items-center space-x-4">
+            <a href="tel:+8884359276" className="text-gray-800 transition-colors duration-300 hover:text-blue-600">
+              <FontAwesomeIcon icon={faPhone} size="lg" />
             </a>
-            {/* <JetInsightLink /> */}
-            <div id="mobile" onClick={toggleNavbar} className="cursor-pointer text-black text-2xl lg:hidden">
-              <FontAwesomeIcon icon={isOpen ? faTimes : faBars} />
-            </div>
+            <button className="bg-[#333333] text-white px-4 py-2 rounded hover:bg-[#555555] transition-colors duration-300">
+              Request a quote
+            </button>
           </div>
         </div>
       </nav>
+      {activeDropdown && (
+        <div 
+          ref={dropdownRef}
+          className="absolute left-0 w-full bg-[#bdae7a] py-8"
+          onMouseEnter={() => handleDropdownHover(activeDropdown)}
+          onMouseLeave={handleDropdownLeave}
+        >
+          <div className="container mx-auto flex justify-center">
+            <div className="flex flex-col items-center space-y-4">
+              {activeDropdown === 'charter' && (
+                <>
+                  <Link href="/charter/quote" className="text-xl text-gray-800 hover:text-white transition-colors duration-300">INSTANT QUOTE</Link>
+                  <Link href="/charter/trip" className="text-xl text-gray-800 hover:text-white transition-colors duration-300">TRIP REQUEST</Link>
+                  <Link href="/charter/fleet" className="text-xl text-gray-800 hover:text-white transition-colors duration-300">FLEET</Link>
+                </>
+              )}
+              {activeDropdown === 'company' && (
+                <>
+                  <Link href="/company/about" className="text-xl text-gray-800 hover:text-white transition-colors duration-300">ABOUT US</Link>
+                  <Link href="/company/contact" className="text-xl text-gray-800 hover:text-white transition-colors duration-300">CONTACT</Link>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 };
