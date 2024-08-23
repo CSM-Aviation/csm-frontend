@@ -13,7 +13,7 @@ export default function Home() {
         subtitle="Experience luxury air travel like never before"
         isHome={true}
       />
-      <section className="relative h-screen flex items-center justify-center">
+      {/* <section className="relative h-screen flex items-center justify-center">
         <Image
           src="/images/hero-background.jpg"
           alt="Private Jet"
@@ -29,7 +29,7 @@ export default function Home() {
             Book Your Flight
           </button>
         </div>
-      </section>
+      </section> */}
 
       {/* Content Sections */}
       <section className="py-16 bg-gray-100">

@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faTwitter, faInstagram, faPinterest, faYoutube, faWeixin, faWeibo, faTiktok } from '@fortawesome/free-brands-svg-icons';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import MessageDeskChatbot from './MessageDeskChatbot';
 
 const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -63,13 +64,14 @@ const Footer: React.FC = () => {
           </div>
         </div>
       </div>
-      <button 
+      {/* <button 
         onClick={scrollToTop} 
         className="fixed bottom-8 right-8 bg-white text-black p-3 rounded-full shadow-lg hover:bg-gray-200 transition duration-300"
         aria-label="Scroll to top"
       >
         <FontAwesomeIcon icon={faArrowUp} />
-      </button>
+      </button> */}
+      <MessageDeskChatbot/>
     </footer>
   );
 };
