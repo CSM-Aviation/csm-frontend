@@ -49,7 +49,7 @@ const Footer: React.FC = () => {
         </div>
         <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
-            <Image src="/CSM-Logo-WHITE-01-web300.jpg" alt="CSM Logo" width={100} height={50} />
+            <Image src="/images/CSM-Logo-WHITE-01-web300.jpg" alt="CSM Logo" width={100} height={50} />
             <p className="mt-2 text-sm">Copyright © 2024 CSM Aviation. All rights reserved.</p>
           </div>
           <div className="flex space-x-4">
