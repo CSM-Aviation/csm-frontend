@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { Analytics } from "@vercel/analytics/next"
 import Script from "next/script";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
         <Header headerColor={"#bdae7a"} />
         <main>{children}
           <Analytics />
+          <SpeedInsights />
         </main>
         <Footer />
       </body>
