@@ -5,10 +5,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+// import JetInsightComponent from './JetInsight/JetInsightComponent';
+import dynamic from 'next/dynamic';
+import Script from 'next/script';
 
 interface HeaderProps {
   headerColor: string;
 }
+
+const JetInsightComponent = dynamic(() => import('../components/JetInsight/JetInsightComponent'), {
+  ssr: false,
+});
 
 const Header: React.FC<HeaderProps> = ({ headerColor }) => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -90,9 +97,7 @@ const Header: React.FC<HeaderProps> = ({ headerColor }) => {
             <a href="tel:+8884359276" className="text-gray-800 transition-colors duration-300 hover:text-blue-600">
               <FontAwesomeIcon color='#007BA7' icon={faPhone} size="lg" />
             </a>
-            <button className="bg-[#007BA7] text-white px-6 py-3 rounded hover:bg-[#555555] transition-colors duration-300">
-              Request a quote
-            </button>
+            <JetInsightComponent />
           </div>
         </div>
       {/* </nav> */}
@@ -134,14 +139,18 @@ const Header: React.FC<HeaderProps> = ({ headerColor }) => {
                 <FontAwesomeIcon icon={faPhone} size="lg" /> Call Us
               </a>
             </li>
-            <li className="mt-4">
+            {/* <li className="mt-4">
               <button className="bg-[#007BA7] text-white px-6 py-3 rounded hover:bg-[#555555] transition-colors duration-300">
                 Request a quote
               </button>
-            </li>
+            </li> */}
           </ul>
         </div>
       )}
+      <Script
+          src='https://client.jetinsight.com/embed/126d130e-be91-4071-a8dc-2f94b609c239/empty'
+          strategy="afterInteractive"
+        />
     </header>
   );
 };
