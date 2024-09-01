@@ -54,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({ headerColor }) => {
         className="relative group"
         onMouseEnter={() => handleDropdownHover('charter')}
       >
-        <Link href="/charter" className={`block p-1.5 text-xl font-bold uppercase transition-all duration-300 ${activeDropdown === 'charter' ? 'text-blue-600 underline' : 'text-white hover:text-blue-600'}`}>CHARTER</Link>
+        <Link href="/" className={`block p-1.5 text-xl font-bold uppercase transition-all duration-300 ${activeDropdown === 'charter' ? 'text-blue-600 underline' : 'text-white hover:text-blue-600'}`}>CHARTER</Link>
       </li>
       <li>
         <Link href="/management" className="block p-1.5 text-xl font-bold text-white uppercase transition-all duration-300 hover:text-blue-600">MANAGEMENT</Link>
@@ -66,7 +66,7 @@ const Header: React.FC<HeaderProps> = ({ headerColor }) => {
         className="relative group"
         onMouseEnter={() => handleDropdownHover('company')}
       >
-        <Link href="/company" className={`block p-1.5 text-xl font-bold uppercase transition-all duration-300 ${activeDropdown === 'company' ? 'text-blue-600 underline' : 'text-white hover:text-blue-600'}`}>COMPANY</Link>
+        <Link href="/" className={`block p-1.5 text-xl font-bold uppercase transition-all duration-300 ${activeDropdown === 'company' ? 'text-blue-600 underline' : 'text-white hover:text-blue-600'}`}>COMPANY</Link>
       </li>
     </>
   );

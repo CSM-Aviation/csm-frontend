@@ -11,23 +11,28 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ backgroundImage, videoSource, title, subtitle, isHome }) => {
   return (
-    <section className="relative w-screen h-screen overflow-hidden">
+    <section className="relative w-full h-screen overflow-hidden">
       {isHome ? (
         <video autoPlay loop muted className="absolute top-0 left-0 w-full h-full object-cover">
           <source src={videoSource} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       ) : (
-        <div 
-          className="absolute top-0 left-0 w-full h-full bg-cover bg-center"
-          style={{ 
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundImage})` 
-          }}
-        ></div>
+        <div className="absolute top-0 left-0 w-full h-full">
+          <Image
+            src={backgroundImage}
+            alt="Background"
+            layout="fill"
+            objectFit="cover"
+            objectPosition="center"
+            quality={100}
+          />
+          <div className="absolute inset-0 bg-black opacity-50"></div>
+        </div>
       )}
-      <div className="relative z-10 flex flex-col justify-center items-center h-full text-white pt-20">
-        <h1 className="text-4xl md:text-6xl font-bold mb-4">{title}</h1>
-        <p className="text-xl md:text-2xl mb-8">{subtitle}</p>
+      <div className="relative z-10 flex flex-col justify-center items-center h-full text-white px-4">
+        <h1 className="text-4xl md:text-6xl font-bold mb-4 text-center">{title}</h1>
+        <p className="text-xl md:text-2xl mb-8 text-center">{subtitle}</p>
         {isHome && (
           <button className="bg-white text-black px-6 py-3 rounded-full font-bold flex items-center justify-center hover:bg-gray-200 transition-colors duration-300">
             <span>SCHEDULE TRIP</span>
