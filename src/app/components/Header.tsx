@@ -7,6 +7,7 @@ import { faPhone, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import dynamic from 'next/dynamic';
 import Script from 'next/script';
 import { useConfig } from '../contexts/ConfigContext';
+import TestCORS from '../test/TestCORS';
 
 interface HeaderProps {
   headerColor: string;
@@ -83,6 +84,7 @@ const Header: React.FC = () => {
         <Link href="/" className="flex items-center">
           <Image src="/images/CSM_Logo_WHITE-01_no_plane.png" alt="CSM Aviation" width={120} height={120} />
         </Link>
+        <TestCORS/>
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex items-center space-x-8">
