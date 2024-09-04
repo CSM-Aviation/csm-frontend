@@ -2,7 +2,8 @@
 
 import axios, { AxiosResponse, AxiosError } from 'axios';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
+// const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
+const BASE_URL = 'http://54.215.27.231:5000'
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -27,9 +28,9 @@ async function handleApiResponse<T>(promise: Promise<AxiosResponse<T>>): Promise
   } catch (error) {
     const axiosError = error as AxiosError<ErrorResponse>;
     console.error('API Error:', axiosError.response?.data || axiosError.message);
-    return { 
-      data: null, 
-      error: axiosError.response?.data?.message ?? axiosError.message ?? 'An unknown error occurred' 
+    return {
+      data: null,
+      error: axiosError.response?.data?.message ?? axiosError.message ?? 'An unknown error occurred'
     };
   }
 }
