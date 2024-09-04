@@ -3,7 +3,7 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
 
 // const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
-const BASE_URL = 'https://54.215.27.231:5000'
+const BASE_URL = 'http://54.215.27.231:5000'
 // const BASE_URL = 'https://ec2-54-215-27-231.us-west-1.compute.amazonaws.com'
 
 const api = axios.create({
