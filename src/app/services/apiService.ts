@@ -66,3 +66,5 @@ export interface Config {
 }
 
 // Add more specific API calls as needed
+
+export const testCORS = () => apiService.get('/test-cors');
