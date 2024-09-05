@@ -11,7 +11,7 @@ interface ServiceCardProps {
 }
 
 const ServiceCard: React.FC<ServiceCardProps> = ({ image, title, description, icon }) => (
-    <div className="relative overflow-hidden group bg-white rounded-lg shadow-lg h-[400px]">
+    <div className="relative bg-emerald-400 overflow-hidden group bg-white rounded-lg shadow-lg h-[400px]">
         <Image
             src={image}
             alt={title}
@@ -52,7 +52,7 @@ const ServicesCards = () => {
     ];
 
     return (
-        <section className="py-24 bg-gray-100">
+        <section className=" px-10 py-24 ">
             <div className="container mx-auto px-4 xl:px-0">
                 <h2 className="text-4xl font-bold text-center mb-3 text-black">Our Services</h2>
                 <h3 className="text-5xl font-bold text-center mb-16 text-black">Find The Best Service For You</h3>
