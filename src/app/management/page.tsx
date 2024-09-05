@@ -109,7 +109,7 @@ const ManagementPage: NextPage = () => {
           <div className="md:w-1/2  p-8 rounded-lg">
             <h2 className="text-3xl   px-16 text-white  font-bold mb-4">Your Asset Maintained at Peak Level</h2>
             <p className="mb-6 text-white px-16">
-            Under our management program, your aircraft will be maintained to its utmost, peak performance level. All aircraft must pass annual, safety audits by our professional and accredited mechanics so you'll be confident that your aircraft is always flying at its peak performance level.
+            Under our management program, your aircraft will be maintained to its utmost, peak performance level. All aircraft must pass annual, safety audits by our professional and accredited mechanics so youll be confident that your aircraft is always flying at its peak performance level.
             </p>
           </div>
         </div>
