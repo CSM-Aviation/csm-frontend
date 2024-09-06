@@ -68,7 +68,7 @@ const MaintManage: React.FC = () => {
     ];
 
     return (
-        <div className="flex flex-row w-full h-[70vh]">
+        <div className="flex flex-row w-full h-[65vh]">
             {services.map((service, index) => (
                 <ServiceCard key={index} {...service} />
             ))}
