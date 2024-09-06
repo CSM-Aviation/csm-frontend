@@ -49,10 +49,10 @@ const QuotePage: NextPage = () => {
         <div className='text-5xl px-6 text-center font-bold text-white'>Private Charter Quote</div>
         <p className='px-28 text-center mt-10 text-white'>
           The cost of a private jet charter varies based on several factors: The size of the aircraft, 
-          The distance you're flying, Your departure and arrival locations, How long your trip lasts, 
+          The distance you are flying, Your departure and arrival locations, How long your trip lasts, 
           Various other considerations. To get a ballpark figure for your private jet charter, you can 
           use our flight cost calculator. For more detailed pricing information, take a look at the 
-          charts we've provided below. Our company boasts an extensive and varied charter fleet, and 
+          charts we have provided below. Our company boasts an extensive and varied charter fleet, and 
           we have connections to thousands of aircraft across the globe. This allows us to match you 
           with the ideal jet for your upcoming journey, whatever your specific needs may be.
         </p>
