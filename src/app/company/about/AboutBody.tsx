@@ -3,9 +3,9 @@ import Image from 'next/image';
 
 const AboutUsComponent = () => {
   return (
-    <div className="w-full">
+    <div className="w-full ">
       {/* Dedicated People Section */}
-      <section className="bg-white py-16">
+      <section className=" py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-8 text-blue-900">Dedicated People Dedicated to Private Aviation</h2>
           <div className="max-w-4xl mx-auto bg-gray-100 p-8 rounded-lg shadow-lg">
