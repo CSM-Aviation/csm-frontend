@@ -15,6 +15,11 @@ const config: Config = {
       },
       colors: {
         'custom-gold': '#bdae7a',
+        'deep-blue': '#0C3C60',
+        'electric-blue': '#23B2EE',
+        'sky-blue': '#87CEEB',
+        'platinum': '#E5E4E2',
+        'charcoal': '#36454F',
       },
     },
   },

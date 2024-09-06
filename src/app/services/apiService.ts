@@ -2,8 +2,8 @@
 
 import axios, { AxiosResponse, AxiosError } from 'axios';
 
-// const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
-const BASE_URL = 'https://www.csmaviation-api.com'
+const BASE_URL = 'http://localhost:5000';
+// const BASE_URL = 'https://www.csmaviation-api.com'
 // const BASE_URL = 'https://ec2-54-215-27-231.us-west-1.compute.amazonaws.com'
 
 const api = axios.create({
@@ -64,6 +64,26 @@ export interface Config {
   header_color: string;
   home_video: string;
 }
+
+
+// New trip request interface
+export interface TripRequest {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  aircraftType: string;
+  tripType: string;
+  departureLocation: string;
+  startDate: string;
+  departureTime: string;
+  destinationLocation: string;
+  returnDate?: string;
+  returnTime?: string;
+  tripDetails: string;
+}
+
+export const submitTripRequest = (data: TripRequest) => apiService.post<{ message: string; id: string }>('/api/trip-request', data);
 
 // Add more specific API calls as needed
 
