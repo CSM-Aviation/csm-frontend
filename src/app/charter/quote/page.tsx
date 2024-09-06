@@ -1,4 +1,5 @@
 'use client'
+
 import React, { useRef } from 'react';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
@@ -17,52 +18,56 @@ const QuotePage: NextPage = () => {
   };
 
   return (
-    <div className="container mx-auto ">
-      <div className="relative h-[600px]">
-        <div className="absolute inset-0">
-          <Image
-            src="/images/m1.jpg"
-            layout="fill"
-            objectFit="cover"
-            alt="Aircraft on runway"
-            priority
-          />
-        </div>
-        <div className="relative z-10 container mx-auto px-4 h-full flex flex-col justify-center">
-          <h1 className="text-3xl text-center font-bold mb-4">BOOK A JET TODAY</h1>
-          <div className='flex justify-center gap-2'>
-            <button 
-              className='border-2 border-red-400 bg-white text-black rounded-lg p-2'
+    <div className="w-full">
+      <div className="relative h-screen">
+        <Image
+          src="/images/m1.jpg"
+          layout="fill"
+          objectFit="cover"
+          alt="Aircraft on runway"
+          priority
+        />
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center">
+          <h1 className="text-4xl md:text-6xl text-white font-bold mb-8">BOOK A JET TODAY</h1>
+          <div className='flex gap-4'>
+            <button
+              className='bg-white text-black rounded-lg px-6 py-3 text-lg font-semibold hover:bg-gray-200 transition'
               onClick={scrollToTuvoliWidget}
             >
               JET CHARTER QUOTE
             </button>
             <Link href="/company/contact">
-              <button className='border-2 border-red-400 bg-white text-black rounded-lg p-2'>
+              <button className='bg-red-600 text-white rounded-lg px-6 py-3 text-lg font-semibold hover:bg-red-700 transition'>
                 CONTACT US
               </button>
             </Link>
           </div>
         </div>
       </div>
-      <div className='bg-slate-900 py-10'>
-        <div className='text-5xl px-6 text-center font-bold text-white'>Private Charter Quote</div>
-        <p className='px-28 text-center mt-10 text-white'>
-          The cost of a private jet charter varies based on several factors: The size of the aircraft, 
-          The distance you are flying, Your departure and arrival locations, How long your trip lasts, 
-          Various other considerations. To get a ballpark figure for your private jet charter, you can 
-          use our flight cost calculator. For more detailed pricing information, take a look at the 
-          charts we have provided below. Our company boasts an extensive and varied charter fleet, and 
-          we have connections to thousands of aircraft across the globe. This allows us to match you 
-          with the ideal jet for your upcoming journey, whatever your specific needs may be.
-        </p>
+
+      <div className='bg-slate-900 py-20'>
+        <div className='container mx-auto px-4'>
+          <h2 className='text-4xl md:text-5xl text-center font-bold text-white mb-8'>Private Charter Quote</h2>
+          <p className='max-w-4xl mx-auto text-center text-lg text-gray-300'>
+            The cost of a private jet charter varies based on several factors: The size of the aircraft, 
+            The distance you are flying, Your departure and arrival locations, How long your trip lasts, 
+            Various other considerations. To get a ballpark figure for your private jet charter, you can 
+            use our flight cost calculator. For more detailed pricing information, take a look at the 
+            charts we have provided below. Our company boasts an extensive and varied charter fleet, and 
+            we have connections to thousands of aircraft across the globe. This allows us to match you 
+            with the ideal jet for your upcoming journey, whatever your specific needs may be.
+          </p>
+        </div>
       </div>
-      <div ref={tuvoliWidgetRef} className='p-16 bg-white'>
-        <h1 className='text-center text-4xl'>JET CHARTER QUOTE</h1>
-        <p className='text-center mt-5 text-2xl mb-5'>
-          Explore our Dynamic map for immediate private aircraft rental pricing.
-        </p>
-        <TuvoliWidget />
+
+      <div ref={tuvoliWidgetRef} className='py-20 bg-white'>
+        <div className='container mx-auto px-4'>
+          <h2 className='text-center text-4xl mb-4'>JET CHARTER QUOTE</h2>
+          <p className='text-center text-xl mb-10'>
+            Explore our Dynamic map for immediate private aircraft rental pricing.
+          </p>
+          <TuvoliWidget />
+        </div>
       </div>
     </div>
   );
