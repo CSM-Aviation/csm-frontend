@@ -17,8 +17,8 @@ const ManagementPage: NextPage = () => {
           />
         </div>
         <div className="relative z-10 container mx-auto px-4 h-full flex flex-col justify-center">
-          <h1 className="text-5xl font-bold text-white mb-4">LEGENDARY AIRCRAFT MANAGEMENT SERVICES</h1>
-          <p className="text-xl text-white">
+          <h1 className="text-5xl font-bold text-black mb-4">LEGENDARY AIRCRAFT MANAGEMENT SERVICES</h1>
+          <p className="text-xl text-black">
             Creating and curating an unmatched aircraft ownership experience every day.
           </p>
         </div>

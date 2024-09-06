@@ -32,7 +32,7 @@ const MaintenancePage: NextPage = () => {
         {/* First Row: Left Text, Right Image */}
         <div className="flex flex-col  md:flex-row items-center gap-8 mb-16">
           <div className="md:w-1/2  p-8 rounded-lg">
-            <h2 className="text-3xl   px-16 font-bold mb-4">MRO SERVICE</h2>
+            <h2 className="text-3xl text-black  px-16 font-bold mb-4">MRO SERVICE</h2>
             <p className="mb-6 text-gray-500 px-16">
               Our highly experienced, factory-trained, airplane and maintenance teams offer both scheduled and unscheduled aircraft maintenance. Periodic servicing, annual inspections, airframe structural repairs, engine overhaul, engine replacements, electrical repairs, avionics installations, and repairs.
             </p>
@@ -65,7 +65,7 @@ const MaintenancePage: NextPage = () => {
           </div>
 
           <div className="md:w-1/2  p-8 rounded-lg">
-            <h2 className="text-3xl   px-16 font-bold mb-4">AIRCRAFT & ENGINES</h2>
+            <h2 className="text-3xl  text-black px-16 font-bold mb-4">AIRCRAFT & ENGINES</h2>
             <p className="mb-6 text-gray-500 px-16">
               Specializing in maintenance, servicing, repairs, and overhaul of all models of Cessna aircraft, Piper aircraft, Beechcraft, Cirrus, Mooney, Aero Commander, Diamond, Learjet, Bombardier, Canadair, Cessna Citation, Falcon, Eclipse aircraft and many more.
             </p>
