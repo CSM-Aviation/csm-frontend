@@ -66,6 +66,30 @@ export interface Config {
 }
 
 
+export interface FleetItem {
+  _id: string;
+  aircraftName: string;
+  registration: string;
+  seats: string;
+  lavatory: string;
+  altitude: string;
+  cabinHeight: string;
+  cabinLength: string;
+  cabinWidth: string;
+  description: string;
+  doorHeight: string;
+  doorWidth: string;
+  luggageCapacity: string;
+  range: string;
+  speed: string;
+  wifi: string;
+  amenities: string;
+}
+
+// Add this new function to fetch fleet data
+export const fetchFleet = () => apiService.get<FleetItem[]>('/api/fleet');
+
+
 // New trip request interface
 export interface TripRequest {
   firstName: string;
