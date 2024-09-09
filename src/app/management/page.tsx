@@ -30,7 +30,7 @@ const ManagementPage: NextPage = () => {
           {/* First Row: Left Text, Right Image */}
           <div className="flex flex-col md:flex-row items-center gap-8 mb-16">
             <div className="md:w-1/2">
-              <h2 className="text-3xl font-bold mb-4">Charter Revenue Potential</h2>
+              <h2 className="text-3xl text-black font-bold mb-4">Charter Revenue Potential</h2>
               <p className="mb-6 text-gray-600">
                 Every hour that your jet spends on the ground it could be generating revenue. If your aircraft is less than fully utilized, we may be able to offer you more charter opportunities, because our demand is greater!
               </p>
@@ -51,7 +51,7 @@ const ManagementPage: NextPage = () => {
           {/* Second Row: Left Image, Right Text */}
           <div className="flex flex-col md:flex-row-reverse items-center gap-8 mb-16">
             <div className="md:w-1/2">
-              <h2 className="text-3xl font-bold mb-4">Exclusive Cost Efficiencies</h2>
+              <h2 className="text-3xl text-black font-bold mb-4">Exclusive Cost Efficiencies</h2>
               <p className="mb-6 text-gray-600">
                 Fuel discounts, alone, can save the owner of a midsize aircraft $20,000 to $25,000 per year. We also monitor the maintenance needs of your aircraft so maintenance and repairs are done on time and in the most cost effective manner.
               </p>
