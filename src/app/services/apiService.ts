@@ -1,6 +1,6 @@
 // services/apiService.ts
 
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosResponse, AxiosError,AxiosRequestConfig  } from 'axios';
 
 // const BASE_URL = 'http://localhost:5000';
 const BASE_URL = 'https://www.csmaviation-api.com'
@@ -36,13 +36,25 @@ async function handleApiResponse<T>(promise: Promise<AxiosResponse<T>>): Promise
   }
 }
 
+// Add a request interceptor to include the token in requests
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
+
+
 export const apiService = {
   async get<T>(endpoint: string): Promise<ApiResponse<T>> {
     return handleApiResponse(api.get<T>(endpoint));
   },
 
-  async post<T>(endpoint: string, data: any): Promise<ApiResponse<T>> {
-    return handleApiResponse(api.post<T>(endpoint, data));
+  async post<T>(endpoint: string, data: any, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
+    return handleApiResponse(api.post<T>(endpoint, data, config));
   },
 
   async put<T>(endpoint: string, data: any): Promise<ApiResponse<T>> {
@@ -52,6 +64,16 @@ export const apiService = {
   async delete<T>(endpoint: string): Promise<ApiResponse<T>> {
     return handleApiResponse(api.delete<T>(endpoint));
   },
+
+  // New auth methods
+  async login(username: string, password: string): Promise<ApiResponse<{ token: string }>> {
+    return handleApiResponse(api.post<{ token: string }>('/api/auth/login', { username, password }));
+  },
+
+  async logout(): Promise<ApiResponse<void>> {
+    return handleApiResponse(api.post<void>('/api/auth/logout'));
+  },
+
 
   // Add more methods as needed
 };

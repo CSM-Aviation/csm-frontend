@@ -3,10 +3,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPhone, faBars, faTimes, faUser  } from '@fortawesome/free-solid-svg-icons';
 import dynamic from 'next/dynamic';
 import Script from 'next/script';
 import { useConfig } from '../contexts/ConfigContext';
+import { useRouter } from 'next/navigation';
 
 interface HeaderProps {
   headerColor: string;
@@ -24,6 +25,7 @@ const Header: React.FC = () => {
   const [isHoveringDropdown, setIsHoveringDropdown] = useState(false);
   const { config } = useConfig();
   const headerColor = config?.header_color || "#bdae7a";  // Default color if config is not loaded yet
+  const router = useRouter();
 
   const handleDropdownHover = (dropdown: string) => {
     setActiveDropdown(dropdown);
@@ -77,12 +79,25 @@ const Header: React.FC = () => {
     </>
   );
 
+  const handleLoginClick = () => {
+    router.push('/admin/login');
+  };
+
   return (
     <header ref={headerRef} className=" relative top-0 left-0 w-full z-50" style={{ backgroundColor: headerColor }}>
       <div className="container mx-auto flex justify-between items-center px-5 py-4">
         <Link href="/" className="flex items-center">
           <Image src="/images/CSM_Logo_WHITE-01_no_plane.png" alt="CSM Aviation" width={120} height={120} />
         </Link>
+
+        {/* Login Button */}
+        <button
+          onClick={handleLoginClick}
+          className="absolute top-2 right-2 bg-transparent text-white hover:text-gray-200 transition-colors duration-300"
+        >
+          <FontAwesomeIcon icon={faUser} className="mr-2" />
+          Login
+        </button>
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex items-center space-x-8">
