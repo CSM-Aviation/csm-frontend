@@ -6,6 +6,7 @@ const AboutUsComponent = () => {
     <div className="w-full ">
       {/* Dedicated People Section */}
       <section className=" py-16">
+        
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-8 text-blue-900">Dedicated People Dedicated to Private Aviation</h2>
           <div className="max-w-4xl mx-auto bg-gray-100 p-8 rounded-lg shadow-lg">
@@ -74,7 +75,7 @@ const AboutUsComponent = () => {
             <div className="md:w-1/2">
               <div className="relative w-full h-[500px] rounded-lg overflow-hidden shadow-2xl">
                 <Image
-                  src="/images/csm-team.jpg"
+                  src="/images/about.jpg"
                   alt="CSM Aviation Team"
                   layout="fill"
                   objectFit="cover"
