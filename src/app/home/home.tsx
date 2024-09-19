@@ -21,7 +21,7 @@ export default function HomeBody() {
         <>
             <Hero
                 backgroundImage="/images/hero-background.jpg"
-                videoSource={`/videos/${config.home_video}`}
+                videoSource={`${config.home_video}`}
                 title="Welcome to CSM Aviation"
                 subtitle="Experience luxury air travel like never before"
                 isHome={true}
