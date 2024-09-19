@@ -75,7 +75,7 @@ const AboutUsComponent = () => {
             <div className="md:w-1/2">
               <div className="relative w-full h-[500px] rounded-lg overflow-hidden shadow-2xl">
                 <Image
-                  src="/images/csm-team.jpg"
+                  src="/images/about.jpg"
                   alt="CSM Aviation Team"
                   layout="fill"
                   objectFit="cover"

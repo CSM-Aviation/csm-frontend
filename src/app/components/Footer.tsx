@@ -8,6 +8,7 @@ import { faFacebookF, faTwitter, faInstagram, faPinterest, faYoutube, faWeixin, 
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import MessageDeskChatbot from './MessageDeskChatbot';
 
+
 const Footer: React.FC = () => {
   const scrollToTop = () => {
     window.scrollTo({
@@ -32,8 +33,8 @@ const Footer: React.FC = () => {
               <ul className="space-y-2">
                 <li><Link href="/faqs" className="hover:underline">FAQs</Link></li>
                 <li><Link href="/press-centre" className="hover:underline">Press Centre</Link></li>
-                <li><Link href="/contact" className="hover:underline">Contact Us</Link></li>
-                <li><Link href="/locations" className="hover:underline">Map of Covent Garden</Link></li>
+                <li><Link href="/company/contact" className="hover:underline">Contact Us</Link></li>
+                
               </ul>
             </div>
             <div>

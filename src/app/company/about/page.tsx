@@ -8,7 +8,7 @@ const AboutPage: NextPage = () => {
 
     <>
       <Hero
-        backgroundImage="/images/about_us.jpg"
+        backgroundImage="/images/luxury.jpg"
         videoSource="/videos/Home1.mp4"
         title="About US"
         subtitle="Experience luxury air travel like never before"
