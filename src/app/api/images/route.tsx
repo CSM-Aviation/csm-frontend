@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
     console.log("Returning image paths:", imagePaths);
 
     return NextResponse.json(imagePaths)
-  } catch (error) {
+  } catch (error:any) {
     console.error(`Error reading directory for ${id}:`, error)
     return NextResponse.json({ error: 'Failed to fetch images', details: error.message }, { status: 500 })
   }
