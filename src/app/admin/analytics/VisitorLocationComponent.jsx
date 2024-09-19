@@ -1,7 +1,19 @@
 import React from 'react';
-import { ChevronsUpDown, MoreHorizontal } from 'lucide-react';
+import { ChevronsUpDown } from 'lucide-react';
 
 const VisitorLocationComponent = ({ visitorData }) => {
+  // Aggregate data by country
+  const aggregatedData = visitorData.reduce((acc, item) => {
+    const country = item.location.split(', ').pop(); // Get the country (last part after comma)
+    acc[country] = (acc[country] || 0) + item.visitors;
+    return acc;
+  }, {});
+
+  // Convert aggregated data to array and sort by visitor count
+  const sortedData = Object.entries(aggregatedData)
+    .map(([country, visitors]) => ({ location: country, visitors }))
+    .sort((a, b) => b.visitors - a.visitors);
+
   return (
     <div className="bg-gray-800 text-white p-4 rounded-lg">
       <div className="flex justify-between items-center mb-4">
@@ -9,7 +21,7 @@ const VisitorLocationComponent = ({ visitorData }) => {
         <div className="text-xs text-gray-400">VISITORS</div>
       </div>
       <ul>
-        {visitorData.map((item, index) => (
+        {sortedData.map((item, index) => (
           <li key={index} className="flex justify-between items-center py-2">
             <div className="flex items-center">
               <span>{item.location}</span>
@@ -23,9 +35,6 @@ const VisitorLocationComponent = ({ visitorData }) => {
           View All
           <ChevronsUpDown className="ml-1 w-4 h-4" />
         </button>
-        {/* <button className="text-gray-400 hover:text-white transition-colors">
-          <MoreHorizontal className="w-5 h-5" />
-        </button> */}
       </div>
     </div>
   );
