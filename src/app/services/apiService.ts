@@ -2,8 +2,8 @@
 
 import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
 
-const BASE_URL = 'http://localhost:5000';
-// const BASE_URL = 'https://www.csmaviation-api.com'
+// const BASE_URL = 'http://localhost:5000';
+const BASE_URL = 'https://www.csmaviation-api.com'
 // const BASE_URL = 'https://ec2-54-215-27-231.us-west-1.compute.amazonaws.com'
 
 const api = axios.create({
