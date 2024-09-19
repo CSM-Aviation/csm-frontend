@@ -41,7 +41,7 @@ const ManagementPage: NextPage = () => {
       <div className="w-full py-16">
         <div className="container mx-auto px-4">
           {/* First Row: Left Text, Right Image */}
-          <div className="flex flex-col md:flex-row items-center gap-8 mb-16">
+          <div className="flex flex-col md:flex-row  gap-8 mb-16">
             <motion.div 
               initial={{ opacity: 0, x: -100 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -72,7 +72,7 @@ const ManagementPage: NextPage = () => {
           </div>
 
           {/* Second Row: Left Image, Right Text */}
-          <div className="flex flex-col md:flex-row-reverse items-center gap-8 mb-16">
+          <div className="flex flex-col md:flex-row-reverse  gap-8 mb-16">
             <motion.div 
               initial={{ opacity: 0, x: 100 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -108,7 +108,7 @@ const ManagementPage: NextPage = () => {
       <div className="w-full bg-slate-900 py-16">
         <div className="container mx-auto px-4">
           {/* Third Row: Left Text, Right Image */}
-          <div className="flex flex-col md:flex-row items-center gap-8 mb-16">
+          <div className="flex flex-col md:flex-row  gap-8 mb-16">
             <motion.div 
               initial={{ opacity: 0, x: -100 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -139,7 +139,7 @@ const ManagementPage: NextPage = () => {
           </div>
 
           {/* Fourth Row: Left Image, Right Text */}
-          <div className="flex flex-col md:flex-row-reverse items-center gap-8">
+          <div className="flex flex-col md:flex-row-reverse  gap-8">
             <motion.div 
               initial={{ opacity: 0, x: 100 }}
               whileInView={{ opacity: 1, x: 0 }}

@@ -61,6 +61,12 @@ const AdminAnalyticsDashboard: React.FC = () => {
         return { location: state, visitors };
     });
 
+    // const worldMapData = Object.entries(analyticsData.userLocations).reduce((acc, [location, visitors]) => {
+    //     const country = location.split(',').pop()?.trim() || 'Unknown';
+    //     acc[country] = (acc[country] || 0) + visitors;
+    //     return acc;
+    // }, {} as Record<string, number>);
+
     return (
         <div className="admin-dashboard p-6 bg-gray-900 text-white">
             <h1 className="text-3xl font-bold mb-6">Analytics Dashboard</h1>
