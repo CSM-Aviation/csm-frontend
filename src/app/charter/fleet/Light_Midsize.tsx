@@ -1,4 +1,6 @@
 import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 
 const Light_Midsize = () => {
   const aircraftData = [
@@ -9,23 +11,32 @@ const Light_Midsize = () => {
   ];
 
   return (
-    <div className=" mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
       {aircraftData.map((aircraft) => (
-        <div key={aircraft.id} className="flex flex-col items-center">
-          <div className="w-full h-48 mb-2 overflow-hidden">
-            <img
-              src={aircraft.image}
-              alt={`${aircraft.id} - ${aircraft.model}`}
-              className="w-full h-full rounded-2xl object-cover"
-            />
+        <Link 
+          href={{
+            pathname: `/charter/fleet/${aircraft.id}`,
+            query: { model: aircraft.model },
+          }}
+          key={aircraft.id}
+        >
+          <div className="flex cursor-pointer flex-col items-center">
+            <div className="w-full h-48 mb-2 overflow-hidden relative">
+              <Image
+                src={aircraft.image}
+                alt={`${aircraft.id} - ${aircraft.model}`}
+                fill
+                style={{ objectFit: 'fill' }}
+                className="rounded-2xl"
+              />
+            </div>
+            <p className="text-center">
+              {aircraft.id} - {aircraft.model}
+            </p>
           </div>
-          <p className="text-center">
-            {aircraft.id} - {aircraft.model}
-          </p>
-        </div>
+        </Link>
       ))}
     </div>
   );
 };
-
 export default Light_Midsize;
