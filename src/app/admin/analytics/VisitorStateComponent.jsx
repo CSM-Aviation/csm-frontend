@@ -1,16 +1,30 @@
 import React from 'react';
 import { ChevronsUpDown } from 'lucide-react';
 
-interface VisitorData {
-    location: string;
-    visitors: number;
-}
+// interface VisitorData {
+//     location: string;
+//     visitors: number;
+// }
 
-interface VisitorStateComponentProps {
-    visitorData: VisitorData[];
-}
+// interface VisitorStateComponentProps {
+//     visitorData: VisitorData[];
+// }
 
-const VisitorStateComponent: React.FC<VisitorStateComponentProps> = ({ visitorData }) => {
+const VisitorStateComponent = ({ visitorData }) => {
+
+    console.log(visitorData)
+    const aggregatedData = visitorData.reduce((acc, item) => {
+        const state = item.location; // Get the country (last part after comma)
+        acc[state] = (acc[state] || 0) + item.visitors;
+        return acc;
+      }, {});
+    
+      // Convert aggregated data to array and sort by visitor count
+      const sortedData = Object.entries(aggregatedData)
+        .map(([country, visitors]) => ({ location: country, visitors }))
+        .sort((a, b) => b.visitors - a.visitors);
+
+
     return (
         <div className="bg-gray-800 text-white p-4 rounded-lg">
             <div className="flex justify-between items-center mb-4">
@@ -18,7 +32,7 @@ const VisitorStateComponent: React.FC<VisitorStateComponentProps> = ({ visitorDa
                 <div className="text-xs text-gray-400">VISITORS</div>
             </div>
             <ul>
-                {visitorData.map((item, index) => (
+                {sortedData.map((item, index) => (
                     <li key={index} className="flex justify-between items-center py-2">
                         <div className="flex items-center">
                             <span>{item.location}</span>
