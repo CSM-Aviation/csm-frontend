@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import ConfigurationsTab from './ConfigurationsTab';
-import AnalyticsTab from './AnalyticsTab';
+import AnalyticsTab from '../analytics/AnalyticsTab';
 
 const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState('configurations');
