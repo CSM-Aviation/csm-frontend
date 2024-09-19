@@ -1,6 +1,6 @@
 // services/apiService.ts
 
-import axios, { AxiosResponse, AxiosError,AxiosRequestConfig  } from 'axios';
+import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
 
 // const BASE_URL = 'http://localhost:5000';
 const BASE_URL = 'https://www.csmaviation-api.com'
@@ -74,6 +74,15 @@ export const apiService = {
     return handleApiResponse(api.post<void>('/api/auth/logout'));
   },
 
+  // New analytics methods
+  async trackPageView(data: PageViewData): Promise<ApiResponse<void>> {
+    return handleApiResponse(api.post<void>('/api/analytics/pageview', data));
+  },
+
+  async getAnalyticsDashboard(): Promise<ApiResponse<AnalyticsDashboardData>> {
+    return handleApiResponse(api.get<AnalyticsDashboardData>('/api/analytics/dashboard'));
+  },
+
 
   // Add more methods as needed
 };
@@ -127,6 +136,33 @@ export interface TripRequest {
   returnDate?: string;
   returnTime?: string;
   tripDetails: string;
+}
+
+// New type definitions for analytics
+export interface PageViewData {
+  sessionId: string;
+  timestamp: string;
+  url: string;
+  path: string;
+  referrer: string;
+  userAgent: string;
+  screenResolution: string;
+  language: string;
+  pageViews: number;
+  city: string;
+  region: string;
+  country: string;
+}
+
+export interface AnalyticsDashboardData {
+  totalVisitors: number;
+  totalPageViews: number;
+  newUsers: number;
+  dates: string[];
+  pageViews: number[];
+  userLocations: { [key: string]: number };
+  pagesVisited: { [key: string]: number };
+  visitorTrend: { date: string; visitors: number }[];
 }
 
 export const submitTripRequest = (data: TripRequest) => apiService.post<{ message: string; id: string }>('/api/trip-request', data);

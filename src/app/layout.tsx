@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ConfigProvider } from "./contexts/ConfigContext";
+import AnalyticsTracker from "./admin/analytics/AnalyticsTracker";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
           <main>{children}
             <Analytics />
             <SpeedInsights />
+            <AnalyticsTracker />
           </main>
           <Footer />
         </ConfigProvider>
