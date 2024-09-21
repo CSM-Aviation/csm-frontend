@@ -2,14 +2,14 @@
 
 import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
 
-// const BASE_URL = 'http://localhost:5000';
-const BASE_URL = 'https://www.csmaviation-api.com'
-// const BASE_URL = 'https://ec2-54-215-27-231.us-west-1.compute.amazonaws.com'
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 const api = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
+    'X-API-Key': API_KEY
   },
 });
 

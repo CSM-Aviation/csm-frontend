@@ -2,9 +2,10 @@ import React from 'react';
 import { ChevronsUpDown } from 'lucide-react';
 
 const VisitorLocationComponent = ({ visitorData }) => {
+  console.log(visitorData)
   // Aggregate data by country
   const aggregatedData = visitorData.reduce((acc, item) => {
-    const country = item.location.split(', ').pop(); // Get the country (last part after comma)
+    const country = item.location // Get the country (last part after comma)
     acc[country] = (acc[country] || 0) + item.visitors;
     return acc;
   }, {});
