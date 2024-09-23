@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 const ManagementPage: NextPage = () => {
   return (
-    <div className="w-full">
+    <div className="w-full bg-red-500">
       {/* Hero Section */}
       <div className="relative h-screen">
         <Image
