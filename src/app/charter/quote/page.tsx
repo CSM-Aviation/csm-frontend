@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 
+
 const TuvoliWidget = dynamic(() => import('../../components/TuvoliWidget'), {
   ssr: false,
 });

@@ -6,6 +6,8 @@ import TurboProps from './TurboProps'
 import Light_Midsize from './Light_Midsize';
 import dynamic from 'next/dynamic';
 import Button from './Button';
+import customLoader from '../../../../image-loader' 
+import { fetchFleet, FleetItem } from '../../services/apiService';
 
 const TuvoliWidget = dynamic(() => import('../../components/TuvoliWidget'), {
   ssr: false,
@@ -21,8 +23,9 @@ const FleetPage: NextPage = () => {
     <div className='w-full bg-white'>
       <div className="relative  h-screen">
         <Image
-          src="/images/N923AS_Images/N923AS/snow.png"
+          src="/images/snow.png"
           layout="fill"
+          loader={customLoader}
           objectFit="cover"
           alt="Aircraft on runway"
           priority
