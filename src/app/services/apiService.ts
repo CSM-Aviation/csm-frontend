@@ -115,6 +115,9 @@ export interface FleetItem {
   speed: string;
   wifi: string;
   amenities: string;
+  category: string;
+  yom: string;
+  imageUrls: string[];
 }
 
 // Add this new function to fetch fleet data
