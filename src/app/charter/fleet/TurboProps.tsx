@@ -17,11 +17,11 @@ const TurboProps = () => {
         if (response.error) {
           throw new Error(response.error);
         }
-        // Filter for light and midsize aircraft - adjust this filtering logic as needed
-        const lightMidsizeAircraft = response.data?.filter((aircraft: FleetItem) => 
-          aircraft.category === "LIGHT" || aircraft.category === "MIDSIZE"
+        // Filter for TURBOPROPS aircraft only
+        const turboPropAircraft = response.data?.filter((aircraft: FleetItem) => 
+          aircraft.category === "TURBOPROPS"
         ) || [];
-        setAircraftData(lightMidsizeAircraft);
+        setAircraftData(turboPropAircraft);
       } catch (err) {
         console.error('Error fetching aircraft data:', err);
         setError('Failed to load aircraft data. Please try again later.');
@@ -48,12 +48,13 @@ const TurboProps = () => {
         >
           <div className="flex cursor-pointer flex-col items-center bg-white shadow-lg rounded-lg overflow-hidden">
             <div className="w-full h-48 relative">
-              {aircraft.imageUrls.length > 0 ? (
+              {aircraft.imageUrls && aircraft.imageUrls.length > 0 ? (
                 <Image
                   src={aircraft.imageUrls[0]}
                   loader={customLoader}
                   alt={`${aircraft.registration} - ${aircraft.aircraftName}`}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   style={{ objectFit: 'cover' }}
                 />
               ) : (

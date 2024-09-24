@@ -19,7 +19,7 @@ const Light_Midsize = () => {
         }
         // Filter for light and midsize aircraft - adjust this filtering logic as needed
         const lightMidsizeAircraft = response.data?.filter((aircraft: FleetItem) => 
-          aircraft.category === "LIGHT" || aircraft.category === "MIDSIZE"
+          aircraft.category === "LIGHT | MIDSIZE JETS" 
         ) || [];
         setAircraftData(lightMidsizeAircraft);
       } catch (err) {
@@ -48,12 +48,13 @@ const Light_Midsize = () => {
         >
           <div className="flex cursor-pointer flex-col items-center bg-white shadow-lg rounded-lg overflow-hidden">
             <div className="w-full h-48 relative">
-              {aircraft.imageUrls.length > 0 ? (
+            {aircraft.imageUrls && aircraft.imageUrls.length > 0 ? (
                 <Image
                   src={aircraft.imageUrls[0]}
                   loader={customLoader}
                   alt={`${aircraft.registration} - ${aircraft.aircraftName}`}
                   fill
+                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   style={{ objectFit: 'cover' }}
                 />
               ) : (
