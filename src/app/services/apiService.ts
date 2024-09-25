@@ -23,8 +23,8 @@ interface ErrorResponse {
 }
 
 export interface SeoData {
-  _id: string;
-  page: string;
+  _id?: string;
+  page?: string;
   title: string;
   description: string;
   keywords: string[];
