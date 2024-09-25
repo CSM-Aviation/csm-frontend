@@ -1,75 +1,60 @@
-'use client'
-
-import React, { useRef } from 'react';
+import React from 'react';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
-import Link from 'next/link';
+import Seo, { generateMetadata as seoGenerateMetadata } from '../../components/seo/Seo';
+import StructuredData from '../../components/seo/StructuredData';
+import { apiService, SeoData } from '../../services/apiService';
+import { Metadata } from 'next';
 
+const QuoteContent = dynamic(() => import('./QuoteContent'), { ssr: false });
 
-const TuvoliWidget = dynamic(() => import('../../components/TuvoliWidget'), {
-  ssr: false,
-});
+async function getData(): Promise<SeoData> {
+  try {
+    const response = await apiService.fetchSeoData('quote');
+    if (response.error || !response.data) {
+      throw new Error(response.error || 'Failed to fetch SEO data');
+    }
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching SEO data:', error);
+    return {
+      title: 'CSM Aviation',
+      description: 'Luxury air travel services',
+      keywords: ['private jet', 'charter'],
+      ogImage: '/images/default.jpg',
+      canonicalUrl: 'https://www.thisisatestspacefor.design',
+      robots: 'index, follow',
+      author: 'CSM Aviation',
+      language: 'en',
+      siteName: 'CSM Aviation',
+      type: 'website',
+      twitterHandle: '@CSMAviation',
+    };
+  }
+}
 
-const QuotePage: NextPage = () => {
-  const tuvoliWidgetRef = useRef<HTMLDivElement>(null);
+export async function generateMetadata(): Promise<Metadata> {
+  const seoData = await getData();
+  return seoGenerateMetadata(seoData);
+}
 
-  const scrollToTuvoliWidget = () => {
-    tuvoliWidgetRef.current?.scrollIntoView({ behavior: 'smooth' });
+const QuotePage: NextPage = async () => {
+  const seoData = await getData();
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": seoData.siteName,
+    "url": seoData.canonicalUrl,
+    "logo": "https://www.thisisatestspacefor.design/images/CSM-Logo-WHITE-01-web300.jpg",
+    "description": seoData.description
   };
 
   return (
     <div className="w-full">
-      <div className="relative h-screen">
-        <Image
-          src="/images/m1.jpg"
-          layout="fill"
-          objectFit="cover"
-          alt="Aircraft on runway"
-          priority
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center">
-          <h1 className="text-4xl md:text-6xl text-white font-bold mb-8">BOOK A JET TODAY</h1>
-          <div className='flex gap-4'>
-            <button
-              className='bg-white text-black rounded-lg px-1 py=1 md:px-6 md:py-3 text-lg font-semibold hover:bg-gray-200 transition'
-              onClick={scrollToTuvoliWidget}
-            >
-              JET CHARTER QUOTE
-            </button>
-            <Link href="/company/contact">
-              <button className='bg-red-600 text-white rounded-lg px-1 py-1 md:px-6 md:py-3 text-lg font-semibold hover:bg-red-700 transition'>
-                CONTACT US
-              </button>
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      <div className='bg-slate-900 py-20'>
-        <div className='container mx-auto px-4'>
-          <h2 className='text-4xl md:text-5xl text-center font-bold text-white mb-8'>Private Charter Quote</h2>
-          <p className='max-w-4xl mx-auto text-center text-lg text-gray-300'>
-            The cost of a private jet charter varies based on several factors: The size of the aircraft, 
-            The distance you are flying, Your departure and arrival locations, How long your trip lasts, 
-            Various other considerations. To get a ballpark figure for your private jet charter, you can 
-            use our flight cost calculator. For more detailed pricing information, take a look at the 
-            charts we have provided below. Our company boasts an extensive and varied charter fleet, and 
-            we have connections to thousands of aircraft across the globe. This allows us to match you 
-            with the ideal jet for your upcoming journey, whatever your specific needs may be.
-          </p>
-        </div>
-      </div>
-
-      <div ref={tuvoliWidgetRef} className='py-20 bg-white'>
-        <div className='container mx-auto px-4'>
-          <h2 className='text-center text-4xl mb-4'>JET CHARTER QUOTE</h2>
-          <p className='text-center text-xl mb-10'>
-            Explore our Dynamic map for immediate private aircraft rental pricing.
-          </p>
-          <TuvoliWidget />
-        </div>
-      </div>
+      <Seo {...seoData} />
+      <StructuredData data={structuredData} />
+      <QuoteContent />
     </div>
   );
 };

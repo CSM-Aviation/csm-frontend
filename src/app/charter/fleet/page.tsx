@@ -1,60 +1,59 @@
-"use client"
-import React, { useEffect, useState, useRef } from 'react';
-import { NextPage } from 'next';
-import Image from 'next/image';
-import TurboProps from './TurboProps'
-import Light_Midsize from './Light_Midsize';
+import React from 'react';
+import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
-import Button from './Button';
-import customLoader from '../../../../image-loader' 
-import { fetchFleet, FleetItem } from '../../services/apiService';
+import Seo, { generateMetadata as seoGenerateMetadata } from '../../components/seo/Seo';
+import StructuredData from '../../components/seo/StructuredData';
+import { apiService, SeoData } from '../../services/apiService';
 
-const TuvoliWidget = dynamic(() => import('../../components/TuvoliWidget'), {
-  ssr: false,
-});
-const FleetPage: NextPage = () => {
-  const tuvoliWidgetRef = useRef<HTMLDivElement>(null);
+const FleetContent = dynamic(() => import('./FleetContent'), { ssr: false });
 
-  const scrollToTuvoliWidget = () => {
-    tuvoliWidgetRef.current?.scrollIntoView({ behavior: 'smooth' });
+async function getData(): Promise<SeoData> {
+  try {
+    const response = await apiService.fetchSeoData('fleet');
+    if (response.error || !response.data) {
+      throw new Error(response.error || 'Failed to fetch SEO data');
+    }
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching SEO data:', error);
+    return {
+      title: 'CSM Aviation Fleet',
+      description: 'Explore our luxury aircraft fleet for private charter',
+      keywords: ['private jet', 'charter', 'fleet', 'aircraft'],
+      ogImage: '/images/fleet.jpg',
+      canonicalUrl: 'https://www.thisisatestspacefor.design/charter/fleet',
+      robots: 'index, follow',
+      author: 'CSM Aviation',
+      language: 'en',
+      siteName: 'CSM Aviation',
+      type: 'website',
+      twitterHandle: '@CSMAviation',
+    };
+  }
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const seoData = await getData();
+  return seoGenerateMetadata(seoData);
+}
+
+const FleetPage: React.FC = async () => {
+  const seoData = await getData();
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": seoData.siteName,
+    "url": seoData.canonicalUrl,
+    "logo": "https://www.thisisatestspacefor.design/images/CSM-Logo-WHITE-01-web300.jpg",
+    "description": seoData.description
   };
   return (
-
-    <div className='w-full bg-white'>
-      <div className="relative  h-screen">
-        <Image
-          src="/images/snow.png"
-          layout="fill"
-          loader={customLoader}
-          objectFit="cover"
-          alt="Aircraft on runway"
-          priority
-        />
-        <div className='absolute inset-0 bg-black bg-opacity-10 flex  items-center  px-4'>
-          <h1 className='text-4xl  md:text-6xl font-bold text-white mb-4 max-w-4xl'>Explore your Fleet</h1>
-
-        </div>
-      </div>
-      <div className='p-4 '>
-
-        <Button />
-        <div className='py-4'>
-          <h1 className='text-4xl mt-10 '>Turbo Props</h1>
-          <TurboProps />
-          <h1 className='text-4xl mt-10 '>LIGHT | MIDSIZE JETS</h1>
-          <Light_Midsize />
-        </div>
-      </div>
-      <div ref={tuvoliWidgetRef} className='mt-20 py-20 bg-gray-200'>
-        <div className='container mx-auto px-4'>
-          <h2 className='text-center text-4xl mb-4'>JET CHARTER QUOTE</h2>
-          <p className='text-center text-xl mb-10'>
-            Explore our Dynamic map for immediate private aircraft rental pricing.
-          </p>
-          <TuvoliWidget />
-        </div>
-      </div>
-    </div>
+    <>
+      <Seo {...seoData} />
+      <StructuredData data={structuredData} />
+      <FleetContent />
+    </>
   );
 };
 
