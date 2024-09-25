@@ -22,6 +22,25 @@ interface ErrorResponse {
   message?: string;
 }
 
+export interface SeoData {
+  title: string;
+  description: string;
+  keywords: string[];
+  ogImage: string;
+  canonicalUrl: string;
+  robots: string;
+  author: string;
+  language: string;
+  siteName: string;
+  type: 'website' | 'article' | 'book' | 'profile'; // Restrict to allowed types
+  twitterHandle: string;
+  publishedTime?: string;
+  modifiedTime?: string;
+  section?: string;
+  tags?: string[];
+
+}
+
 async function handleApiResponse<T>(promise: Promise<AxiosResponse<T>>): Promise<ApiResponse<T>> {
   try {
     const response = await promise;
@@ -36,11 +55,16 @@ async function handleApiResponse<T>(promise: Promise<AxiosResponse<T>>): Promise
   }
 }
 
+// Check if localStorage is available
+const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
+
 // Add a request interceptor to include the token in requests
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  if (isLocalStorageAvailable) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
   }
   return config;
 }, (error) => {
@@ -81,6 +105,13 @@ export const apiService = {
 
   async getAnalyticsDashboard(): Promise<ApiResponse<AnalyticsDashboardData>> {
     return handleApiResponse(api.get<AnalyticsDashboardData>('/api/analytics/dashboard'));
+  },
+
+  async fetchSeoData(page: string): Promise<ApiResponse<SeoData>> {
+    // For SEO data, we don't need authentication, so we can bypass the token check
+    return handleApiResponse(api.get<SeoData>(`/api/seo/${page}`, {
+      headers: { Authorization: undefined }
+    }));
   },
 
 
