@@ -4,22 +4,15 @@ import { useConfig } from '@/app/contexts/ConfigContext';
 
 const ConfigurationsTab: React.FC = () => {
     const [headerColor, setHeaderColor] = useState('');
-    const [homeVideo, setHomeVideo] = useState<File | null>(null);
+    const [selectedVideo, setSelectedVideo] = useState<File | null>(null);
+    const [videoPreviewUrl, setVideoPreviewUrl] = useState<string | null>(null);
     const [message, setMessage] = useState('');
     const { config } = useConfig();
-    // Default color if config is not loaded yet
 
     useEffect(() => {
         const headerColor = config?.header_color || "#bdae7a";
         setHeaderColor(headerColor);
-    }, []);
-
-    //   const fetchCurrentConfig = async () => {
-    //     const response = await apiService.get('/api/config');
-    //     if (response.data) {
-    //       setHeaderColor(response.data?.header_color);
-    //     }
-    //   };
+    }, [config]);
 
     const handleColorChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const newColor = e.target.value;
@@ -32,12 +25,19 @@ const ConfigurationsTab: React.FC = () => {
         }
     };
 
-    const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleVideoSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            setHomeVideo(file);
+            setSelectedVideo(file);
+            const previewUrl = URL.createObjectURL(file);
+            setVideoPreviewUrl(previewUrl);
+        }
+    };
+
+    const handleVideoUpload = async () => {
+        if (selectedVideo) {
             const formData = new FormData();
-            formData.append('video', file);
+            formData.append('video', selectedVideo);
             try {
                 const response = await apiService.post('/api/update-home-video', formData, {
                     headers: {
@@ -54,6 +54,11 @@ const ConfigurationsTab: React.FC = () => {
                 setMessage('Error uploading video');
             }
         }
+    };
+
+    const handleRemoveVideo = () => {
+        setSelectedVideo(null);
+        setVideoPreviewUrl(null);
     };
 
     return (
@@ -83,9 +88,31 @@ const ConfigurationsTab: React.FC = () => {
                             id="home-video"
                             name="home-video"
                             accept="video/*"
-                            onChange={handleVideoUpload}
+                            onChange={handleVideoSelection}
                             className="mt-1 block w-full"
                         />
+                        {videoPreviewUrl && (
+                            <div className="mt-4">
+                                <video width="320" height="240" controls>
+                                    <source src={videoPreviewUrl} type={selectedVideo?.type} />
+                                    Your browser does not support the video tag.
+                                </video>
+                                <div className="mt-2">
+                                    <button
+                                        onClick={handleRemoveVideo}
+                                        className="mr-2 px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                                    >
+                                        Remove
+                                    </button>
+                                    <button
+                                        onClick={handleVideoUpload}
+                                        className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                    >
+                                        Upload
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                     </div>
                     {message && (
                         <div className="mt-4 text-sm text-green-600">

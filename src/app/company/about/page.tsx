@@ -2,11 +2,58 @@ import React from 'react';
 import { NextPage } from 'next';
 import Hero from '@/app/components/Hero';
 import AboutBody from './AboutBody';
+import Seo, { generateMetadata as seoGenerateMetadata } from '../../components/seo/Seo';
+import StructuredData from '../../components/seo/StructuredData';
+import { apiService, SeoData } from '../../services/apiService';
+import { Metadata } from 'next';
 
-const AboutPage: NextPage = () => {
+
+async function getData(): Promise<SeoData> {
+  try {
+    const response = await apiService.fetchSeoData('about');
+    if (response.error || !response.data) {
+      throw new Error(response.error || 'Failed to fetch SEO data');
+    }
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching SEO data:', error);
+    return {
+      title: 'CSM Aviation',
+      description: 'Luxury air travel services',
+      keywords: ['private jet', 'charter'],
+      ogImage: '/images/default.jpg',
+      canonicalUrl: 'https://www.thisisatestspacefor.design',
+      robots: 'index, follow',
+      author: 'CSM Aviation',
+      language: 'en',
+      siteName: 'CSM Aviation',
+      type: 'website',
+      twitterHandle: '@CSMAviation',
+    };
+  }
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const seoData = await getData();
+  return seoGenerateMetadata(seoData);
+}
+
+const AboutPage: NextPage = async () => {
+  const seoData = await getData();
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": seoData.siteName,
+    "url": seoData.canonicalUrl,
+    "logo": "https://www.thisisatestspacefor.design/images/CSM-Logo-WHITE-01-web300.jpg",
+    "description": seoData.description
+  };
   return (
 
-    <>
+    <>  
+      <Seo {...seoData} />
+      <StructuredData data={structuredData} />
       <Hero
         backgroundImage="/images/luxury.jpg"
         videoSource="/videos/Home1.mp4"

@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic';
 import Script from 'next/script';
 import { useConfig } from '../contexts/ConfigContext';
 import { useRouter } from 'next/navigation';
+import HeaderMobileAccordion from './HeaderMobileAccordion';
 
 interface HeaderProps {
   headerColor: string;
@@ -99,7 +100,7 @@ const Header: React.FC = () => {
 
   return (
     <header ref={headerRef} className="relative top-0 left-0 w-full z-50" style={{ backgroundColor: headerColor }}>
-      <div className="container mx-auto flex justify-between items-center px-5 py-4">
+      <div className="container mx-auto flex justify-between items-center px-5 py-8">
         <Link href="/" className="flex items-center">
           <Image src="/images/CSM_Logo_WHITE-01_no_plane.png" alt="CSM Aviation" width={120} height={120} />
         </Link>
@@ -107,27 +108,27 @@ const Header: React.FC = () => {
         {/* Login Button */}
         <button
           onClick={handleLoginClick}
-          className="absolute top-2 right-2 bg-transparent text-white hover:text-gray-200 transition-colors duration-300"
+          className="absolute top-2 right-2 bg-transparent text-white hover:text-blue-500 transition-colors duration-300"
         >
           <FontAwesomeIcon icon={faUser} className="mr-2" />
           Login
         </button>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex items-center space-x-8">
+        <ul className="hidden lg:flex items-center space-x-8">
           <NavItems />
         </ul>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-gray-800 focus:outline-none"
+          className="lg:hidden text-gray-800 focus:outline-none"
           onClick={toggleMobileMenu}
         >
           <FontAwesomeIcon className='text-white' icon={mobileMenuOpen ? faTimes : faBars} size="lg" />
         </button>
 
         {/* Desktop CTA */}
-        <div className="hidden md:flex items-center space-x-4">
+        <div className="hidden lg:flex items-center space-x-4">
           <a href="tel:+8884359276" className="text-gray-800 transition-colors duration-300 hover:text-blue-600">
             <FontAwesomeIcon className='hover:text-blue-600' color='#007BA7' icon={faPhone} size="lg" />
           </a>
@@ -139,7 +140,7 @@ const Header: React.FC = () => {
       {activeDropdown && (
         <div
           ref={dropdownRef}
-          className="absolute left-0 w-full py-8 hidden md:block"
+          className="absolute left-0 w-full py-8 hidden lg:block"
           onMouseEnter={() => setIsHoveringDropdown(true)}
           onMouseLeave={() => {
             setIsHoveringDropdown(false);
@@ -170,9 +171,10 @@ const Header: React.FC = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden" style={{ backgroundColor: headerColor }}>
+        <div className="lg:hidden" style={{ backgroundColor: headerColor }}>
           <ul className="flex flex-col items-center py-4">
-            <NavItems />
+            {/* <NavItems /> */}
+            <HeaderMobileAccordion />
             <li className="mt-4">
               <a href="tel:+8884359276" className="text-white transition-colors duration-300 hover:text-gray-200">
                 <FontAwesomeIcon icon={faPhone} size="lg" /> Call Us
