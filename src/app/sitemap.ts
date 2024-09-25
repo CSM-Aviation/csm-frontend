@@ -5,7 +5,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Fetch dynamic routes from your API or database
     const fleetResponse = await fetchFleet();
     const fleetPages = fleetResponse.data ? fleetResponse.data.map(item => ({
-        url: `https://www.csmaviation.com/charter/fleet/${item.registration}+'?model='+${item.aircraftName}`,
+        url: `https://www.thisisatestspacefor.design/charter/fleet/${item.registration}+'?model='+${item.aircraftName}`,
         lastModified: new Date(),
         changeFrequency: 'monthly' as const,
         priority: 0.7
@@ -22,7 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         '/company/about',
         '/company/contact'
     ].map((route) => ({
-        url: `https://www.csmaviation.com${route}`,
+        url: `https://www.thisisatestspacefor.design${route}`,
         lastModified: new Date(),
         changeFrequency: 'daily' as const,
         priority: 0.8
@@ -30,7 +30,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     return [
         {
-            url: 'https://www.csmaviation.com',
+            url: 'https://www.thisisatestspacefor.design',
             lastModified: new Date(),
             changeFrequency: 'daily',
             priority: 1,
