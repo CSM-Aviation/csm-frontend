@@ -23,6 +23,8 @@ interface ErrorResponse {
 }
 
 export interface SeoData {
+  _id: string;
+  page: string;
   title: string;
   description: string;
   keywords: string[];
@@ -114,7 +116,14 @@ export const apiService = {
     }));
   },
 
+  // New SEO configuration methods
+  async getAllSeoConfigurations(): Promise<ApiResponse<SeoData[]>> {
+    return this.get<SeoData[]>('/api/seo/configurations/all');
+  },
 
+  async updateSeoConfiguration(id: string, config: Partial<SeoData>): Promise<ApiResponse<void>> {
+    return this.put<void>(`/api/seo/configurations/${id}`, config);
+  },
   // Add more methods as needed
 };
 

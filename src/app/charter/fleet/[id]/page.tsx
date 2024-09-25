@@ -4,7 +4,7 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { NextPage } from 'next';
 import { fetchFleet, FleetItem } from '../../../services/apiService';
-import customLoader from '../../../../../image-loader' 
+import customLoader from '../../../../../image-loader'
 interface AircraftDetailPageProps {
   params: { id: string };
   searchParams: { model: string };
@@ -63,7 +63,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
   if (!aircraftDetails) return <div>No aircraft details found.</div>;
 
   return (
-    <div className="container mx-auto mt-10 p-5">
+    <div className="container mx-auto mt-10 text-black p-5">
       <h1 className="text-5xl font-bold mb-4 text-blue-600">Aircraft Details</h1>
       <p className="text-5xl text-center mb-6">
         {aircraftDetails.registration} - {aircraftDetails.aircraftName}
