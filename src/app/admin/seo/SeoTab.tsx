@@ -17,7 +17,9 @@ const SeoTab: React.FC = () => {
         const response = await apiService.getAllSeoConfigurations();
         setIsLoading(false);
         if (response.data) {
-            const pageList = response.data.map(config => config.page);
+            const pageList: string[] = response.data
+                .map(config => config.page)
+                .filter((page): page is string => page !== undefined);
             setPages(pageList);
         } else if (response.error) {
             setMessage(`Failed to fetch pages: ${response.error}`);
@@ -61,7 +63,7 @@ const SeoTab: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (seoConfig) {
+        if (seoConfig && seoConfig._id) {
             setIsLoading(true);
             const { _id, ...configWithoutId } = seoConfig;
             const response = await apiService.updateSeoConfiguration(_id, configWithoutId);
@@ -71,6 +73,8 @@ const SeoTab: React.FC = () => {
             } else {
                 setMessage('SEO configuration updated successfully');
             }
+        } else {
+            setMessage('Cannot update: SEO configuration ID is missing');
         }
     };
 
