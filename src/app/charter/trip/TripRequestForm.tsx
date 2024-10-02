@@ -167,7 +167,7 @@ const TripRequestForm: React.FC = () => {
         </div>
       <button
         type="submit"
-        className="mt-6 w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
+        className="mt-6 w-full bg-electric-blue text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
         disabled={isSubmitting}
       >
         {isSubmitting ? 'Submitting...' : 'Request a Private Jet'}

@@ -100,9 +100,9 @@ const Header: React.FC = () => {
 
   return (
     <header ref={headerRef} className="relative top-0 left-0 w-full z-50" style={{ backgroundColor: headerColor }}>
-      <div className="container mx-auto flex justify-between items-center px-5 py-8">
-        <Link href="/" className="flex items-center">
-          <Image src="/images/CSM_Logo_WHITE-01_no_plane.png" alt="CSM Aviation" width={120} height={120} />
+      <div className=" w-full  flex  items-center px-5 py-8">
+        <Link href="/" className="flex-shrink-0">
+          <Image src="/images/csmlogonew.png" alt="CSM Aviation" width={120} height={120} />
         </Link>
 
         {/* Login Button */}
@@ -114,11 +114,11 @@ const Header: React.FC = () => {
           Login
         </button>
 
-        {/* Desktop Menu */}
-        <ul className="hidden lg:flex items-center space-x-8">
+        <nav  className="hidden lg:flex flex-grow justify-center">
+        <ul className=" flex space-x-8">
           <NavItems />
         </ul>
-
+        </nav>
         {/* Mobile Menu Button */}
         <button
           className="lg:hidden text-gray-800 focus:outline-none"
@@ -130,7 +130,7 @@ const Header: React.FC = () => {
         {/* Desktop CTA */}
         <div className="hidden lg:flex items-center space-x-4">
           <a href="tel:+8884359276" className="text-gray-800 transition-colors duration-300 hover:text-blue-600">
-            <FontAwesomeIcon className='hover:text-blue-600' color='#007BA7' icon={faPhone} size="lg" />
+            <FontAwesomeIcon className='hover:text-blue-600' color='#23B2EE' icon={faPhone} size="lg" />
           </a>
           <JetInsightComponent />
         </div>

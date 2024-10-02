@@ -39,9 +39,9 @@ const ContactForm = () => {
       setIsSubmitting(false);
     }
   };
-
+  const inputClasses = "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-black";
   return (
-    <div className="bg-slate-700 text-white py-16">
+    <div className="bg-white text-black py-16">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold mb-8 text-center">Contact Us</h1>
         <p className="text-center mb-8">
@@ -60,7 +60,7 @@ const ContactForm = () => {
                 value={formData.firstName}
                 onChange={handleChange}
                 required
-                className="w-full p-2 bg-slate-800 rounded"
+                className={inputClasses}
               />
             </div>
             <div>
@@ -72,7 +72,7 @@ const ContactForm = () => {
                 value={formData.lastName}
                 onChange={handleChange}
                 required
-                className="w-full p-2 bg-slate-800 rounded"
+                className={inputClasses}
               />
             </div>
           </div>
@@ -85,7 +85,7 @@ const ContactForm = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full p-2 bg-slate-800 rounded"
+              className={inputClasses}
             />
           </div>
           <div className="mb-6">
@@ -96,7 +96,7 @@ const ContactForm = () => {
               value={formData.message}
               onChange={handleChange}
               required
-              className="w-full p-2 bg-slate-800 rounded h-32"
+              className={inputClasses}
             ></textarea>
           </div>
           <button
