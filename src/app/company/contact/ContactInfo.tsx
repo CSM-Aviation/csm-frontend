@@ -1,29 +1,29 @@
 import React from 'react';
 
 const ContactInfo = () => {
-    const departments = [
-        {
-            name: 'CHARTER SALES',
-            email: 'charter@csmaviation.com',
-            office: '5594929403',
-            direct: '5598900421',
-            hours: '24/7 On-Demand'
-        },
-        {
-            name: 'DISPATCH',
-            email: 'dispatch@csmaviation.com',
-            office: '5594929403',
-            direct: '8884359276',
-            hours: '24/7 Flight Following/Dispatch'
-        },
-        {
-            name: 'ACCOUNTING',
-            email: 'accounting@csmaviation.com',
-            office: '5594929403',
-            direct: '5598900038',
-            hours: 'Mon - Fri: 7:30 AM - 4:00 PM'
-        }
-    ];
+    // const departments = [
+    //     {
+    //         name: 'CHARTER SALES',
+    //         email: 'charter@csmaviation.com',
+    //         office: '5594929403',
+    //         direct: '5598900421',
+    //         hours: '24/7 On-Demand'
+    //     },
+    //     {
+    //         name: 'DISPATCH',
+    //         email: 'dispatch@csmaviation.com',
+    //         office: '5594929403',
+    //         direct: '8884359276',
+    //         hours: '24/7 Flight Following/Dispatch'
+    //     },
+    //     {
+    //         name: 'ACCOUNTING',
+    //         email: 'accounting@csmaviation.com',
+    //         office: '5594929403',
+    //         direct: '5598900038',
+    //         hours: 'Mon - Fri: 7:30 AM - 4:00 PM'
+    //     }
+    // ];
 
     const locations = [
         {
@@ -103,7 +103,7 @@ const ContactInfo = () => {
             <div className="bg-white py-12">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {departments.map((dept, index) => (
+                        {/* {departments.map((dept, index) => (
                             <div key={index} className="text-center text-black">
                                 <h3 className="text-xl font-bold mb-4">{dept.name}</h3>
                                 <p><a href={`mailto:${dept.email}`} className="hover:underline">{dept.email}</a></p>
@@ -112,7 +112,7 @@ const ContactInfo = () => {
                                 <p>Hours of Operation:</p>
                                 <p>{dept.hours}</p>
                             </div>
-                        ))}
+                        ))} */}
                     </div>
                 </div>
             </div>

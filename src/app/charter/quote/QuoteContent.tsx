@@ -30,13 +30,13 @@ const QuoteContent: React.FC = () => {
           <h1 className="text-4xl md:text-6xl text-white font-bold mb-8">BOOK A JET TODAY</h1>
           <div className='flex gap-4'>
             <button
-              className='bg-white text-black rounded-lg px-1 py=1 md:px-6 md:py-3 text-lg font-semibold hover:bg-gray-200 transition'
+              className='bg-electric-blue text-black rounded-lg px-1 py=1 md:px-6 md:py-3 text-lg font-semibold hover:bg-gray-200 transition'
               onClick={scrollToTuvoliWidget}
             >
               JET CHARTER QUOTE
             </button>
             <Link href="/company/contact">
-              <button className='bg-red-600 text-white rounded-lg px-1 py-1 md:px-6 md:py-3 text-lg font-semibold hover:bg-red-700 transition'>
+              <button className='bg-electric-blue text-black rounded-lg px-1 py-1 md:px-6 md:py-3 text-lg font-semibold hover:bg-red-700 transition'>
                 CONTACT US
               </button>
             </Link>

@@ -106,10 +106,10 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
           </div>
         </div>
         <div className="flex flex-col gap-10">
-          <button className="text-black border-gray-400 border-2 font-bold py-5 px-10 rounded-2xl hover:bg-red-700 hover:text-white transition duration-300">
+          <button className="text-black bg-electric-blue border-gray-400 border-2 font-bold py-5 px-10 rounded-2xl hover:bg-red-700 hover:text-white transition duration-300">
             CHARTER QUOTE
           </button>
-          <button className="text-black font-bold py-5 px-10 border-gray-400 border-2 rounded-2xl hover:bg-blue-700 hover:text-white transition duration-300">
+          <button className="text-black bg-electric-blue font-bold py-5 px-10 border-gray-400 border-2 rounded-2xl hover:bg-blue-700 hover:text-white transition duration-300">
             CONTACT US
           </button>
         </div>
