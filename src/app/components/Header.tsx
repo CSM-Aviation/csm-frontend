@@ -100,9 +100,9 @@ const Header: React.FC = () => {
 
   return (
     <header ref={headerRef} className="relative top-0 left-0 w-full z-50" style={{ backgroundColor: headerColor }}>
-      <div className=" w-full  flex  items-center px-5 py-8">
+      <div className=" w-full  flex  items-center px-5 py-3">
         <Link href="/" className="flex-shrink-0">
-          <Image src="/images/csmlogonew.png" alt="CSM Aviation" width={120} height={120} />
+          <Image src="/images/whitebgcsmlogo.png" alt="CSM Aviation" width={120} height={120} />
         </Link>
 
         {/* Login Button */}
