@@ -45,8 +45,11 @@ const ContactForm = () => {
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold mb-8 text-center">Contact Us</h1>
         <p className="text-center mb-8">
-          Central Californias premier privation aviation management and part 135 air
+          Central California&apos;s premier private aviation management and part 135 air
           charter service now opening new charter service locations nationwide.
+          Complete the form below to begin a conversation with one of our experts.
+        </p>
+        <p className="text-center mb-8">
           Complete the form below to begin a conversation with one of our experts.
         </p>
         <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">

@@ -37,7 +37,7 @@ const FleetContent: React.FC = () => {
       <div className='p-4'>
         <Button />
         <div className='text-black py-4'>
-          <h1 className='text-4xl mt-10'>Turbo Props</h1>
+          <h1 className='text-4xl mt-10'>TURBO PROPS</h1>
           <TurboProps />
           <h1 className='text-4xl mt-10'>LIGHT | MIDSIZE JETS</h1>
           <Light_Midsize />
