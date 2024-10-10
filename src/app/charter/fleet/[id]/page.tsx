@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { NextPage } from 'next';
-import { fetchFleet, FleetItem } from '../../../services/apiService';
+import { apiService, FleetItem } from '../../../services/apiService';
 import customLoader from '../../../../../image-loader'
 interface AircraftDetailPageProps {
   params: { id: string };
@@ -30,7 +30,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
   useEffect(() => {
     const fetchAircraftDetails = async () => {
       try {
-        const response = await fetchFleet();
+        const response = await apiService.fetchFleet();
         if (response.error) {
           throw new Error(response.error);
         }

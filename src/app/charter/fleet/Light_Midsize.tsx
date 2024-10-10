@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { fetchFleet, FleetItem } from '../../services/apiService';
-import customLoader from '../../../../image-loader' 
+import { apiService, FleetItem } from '../../services/apiService';
+import customLoader from '../../../../image-loader'
 
 const Light_Midsize = () => {
   const [aircraftData, setAircraftData] = useState<FleetItem[]>([]);
@@ -13,13 +13,13 @@ const Light_Midsize = () => {
   useEffect(() => {
     const fetchAircraftData = async () => {
       try {
-        const response = await fetchFleet();
+        const response = await apiService.fetchFleet();
         if (response.error) {
           throw new Error(response.error);
         }
         // Filter for light and midsize aircraft - adjust this filtering logic as needed
-        const lightMidsizeAircraft = response.data?.filter((aircraft: FleetItem) => 
-          aircraft.category === "LIGHT | MIDSIZE JETS" 
+        const lightMidsizeAircraft = response.data?.filter((aircraft: FleetItem) =>
+          aircraft.category === "LIGHT | MIDSIZE JETS"
         ) || [];
         setAircraftData(lightMidsizeAircraft);
       } catch (err) {
@@ -39,7 +39,7 @@ const Light_Midsize = () => {
   return (
     <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {aircraftData.map((aircraft) => (
-        <Link 
+        <Link
           href={{
             pathname: `/charter/fleet/${aircraft.registration}`,
             query: { model: aircraft.aircraftName },
@@ -48,13 +48,13 @@ const Light_Midsize = () => {
         >
           <div className="flex cursor-pointer flex-col items-center bg-white shadow-lg rounded-lg overflow-hidden">
             <div className="w-full h-48 relative">
-            {aircraft.imageUrls && aircraft.imageUrls.length > 0 ? (
+              {aircraft.imageUrls && aircraft.imageUrls.length > 0 ? (
                 <Image
                   src={aircraft.imageUrls[0]}
                   loader={customLoader}
                   alt={`${aircraft.registration} - ${aircraft.aircraftName}`}
                   fill
-                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   style={{ objectFit: 'cover' }}
                 />
               ) : (

@@ -32,7 +32,7 @@ const ContactInfo = () => {
             airport: 'KFAT',
             office: 'Corporate Office',
             address: '3050 North Winery Ave.',
-            city: 'Fresno, California 93703',
+            city: 'Fresno, CA 93703',
             phone: '8884359276',
             email: 'dispatch@csmaviation.com',
             bgColor: 'bg-deep-blue',
@@ -43,7 +43,7 @@ const ContactInfo = () => {
             company: 'CSM Aviation',
             airport: 'KVIS',
             address: '9301 W. Airport Drive',
-            city: 'Visalia, California 93277',
+            city: 'Visalia, CA 93277',
             phone: '8884359276',
             email: 'dispatch@csmaviation.com',
             bgColor: 'bg-electric-blue',
@@ -54,7 +54,7 @@ const ContactInfo = () => {
             company: 'CSM Aviation',
             airport: 'KMAE',
             address: '4181 Airport Drive',
-            city: 'Madera, California 93277',
+            city: 'Madera, CA 93277',
             phone: '8884359276',
             email: 'dispatch@csmaviation.com',
             bgColor: 'bg-sky-blue',
@@ -84,7 +84,7 @@ const ContactInfo = () => {
         }
     ];
 
-    const formatPhoneNumber = (phoneNumberString:string) => {
+    const formatPhoneNumber = (phoneNumberString: string) => {
         const cleaned = ('' + phoneNumberString).replace(/\D/g, '');
         const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
         if (match) {
@@ -93,7 +93,7 @@ const ContactInfo = () => {
         return null;
     };
 
-    const getGoogleMapsUrl = (address:string, city:string) => {
+    const getGoogleMapsUrl = (address: string, city: string) => {
         const encodedAddress = encodeURIComponent(`${address}, ${city}`);
         return `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
     };

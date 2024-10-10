@@ -15,14 +15,14 @@ const MaintenanceMotion = () => {
             {/* Hero Section */}
             <div className="relative h-screen w-full">
                 <Image
-                    src="/images/maintenance.jpg"
+                    src="/images/maintenace_photo.jpg"
                     layout="fill"
                     objectFit="cover"
                     alt="Aircraft on runway"
                     priority
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-start px-4 md:px-16">
-                    <motion.h1 
+                    <motion.h1
                         initial={{ opacity: 0, y: -50 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
@@ -30,7 +30,7 @@ const MaintenanceMotion = () => {
                     >
                         AIRCRAFT MAINTENANCE
                     </motion.h1>
-                    <motion.p 
+                    <motion.p
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
@@ -45,18 +45,18 @@ const MaintenanceMotion = () => {
             {/* Make sure to remove any fixed heights or widths that might cause overflow */}
 
             {/* Example of adjusted section */}
-            <motion.div 
+            <motion.div
                 whileInView={{ opacity: 1, y: 0 }}
                 initial={{ opacity: 0, y: -100 }}
-                transition={{ duration: 0.8 }} 
+                transition={{ duration: 0.8 }}
                 className='w-full bg-gray-400 py-12'
             >
                 <div className='container mx-auto px-4'>
                     <h2 className='text-4xl md:text-5xl font-bold text-white mb-6'>FAA Certified Part 145 Repair Station</h2>
                     <p className='text-white text-lg'>
-                    
-                         CSM Aviation specializes in Aircraft Management and part 91/135 operations, our Maintenance operations are provided by our partner organization Madera Jet Center, which operates all Aircraft Maintenance and Aircraft Parts business operations. We offer a certified part 145 repair station to the Central Valley of California. We have experienced aircraft mechanics and a comprehensive aircraft mechanics training program that ensures your aircraft will be serviced to the highest industry standards. We have a zero-incident record with Safety and Client Satisfaction as our primary focus. We service single-engine, turbo-props, light to heavy jets, and provide Mobile AOG services as well as keeping one of the largest aircraft parts stock supporting the Central Valley. See below for more information and how to get in touch.
-                  
+
+                        CSM Aviation specializes in Aircraft Management and part 91/135 operations, our Maintenance operations are provided by our partner organization Madera Jet Center, which operates all Aircraft Maintenance and Aircraft Parts business operations. We offer a certified part 145 repair station to the Central Valley of California. We have experienced aircraft mechanics and a comprehensive aircraft mechanics training program that ensures your aircraft will be serviced to the highest industry standards. We have a zero-incident record with Safety and Client Satisfaction as our primary focus. We service single-engine, turbo-props, light to heavy jets, and provide Mobile AOG services as well as keeping one of the largest aircraft parts stock supporting the Central Valley. See below for more information and how to get in touch.
+
                     </p>
                 </div>
             </motion.div>
@@ -65,8 +65,8 @@ const MaintenanceMotion = () => {
             <div className="w-full py-16">
                 <div className="container mx-auto px-4 max-w-7xl">
                     {/* MRO Service */}
-                     <div className="flex flex-col md:flex-row gap-8 mb-16">
-                         <motion.div 
+                    <div className="flex flex-col md:flex-row gap-8 mb-16">
+                        <motion.div
                             initial={{ opacity: 0, x: -100 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8 }}
@@ -77,7 +77,7 @@ const MaintenanceMotion = () => {
                                 Our highly experienced, factory-trained, airplane and maintenance teams offer both scheduled and unscheduled aircraft maintenance. Periodic servicing, annual inspections, airframe structural repairs, engine overhaul, engine replacements, electrical repairs, avionics installations, and repairs.
                             </p>
                         </motion.div>
-                        <motion.div 
+                        <motion.div
                             initial={{ opacity: 0, x: 100 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8 }}
@@ -97,7 +97,7 @@ const MaintenanceMotion = () => {
 
                     {/* Aircraft & Engines */}
                     <div className="flex flex-col md:flex-row-reverse gap-8 mb-16">
-                        <motion.div 
+                        <motion.div
                             initial={{ opacity: 0, x: 100 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8 }}
@@ -108,7 +108,7 @@ const MaintenanceMotion = () => {
                                 Specializing in maintenance, servicing, repairs, and overhaul of all models of Cessna aircraft, Piper aircraft, Beechcraft, Cirrus, Mooney, Aero Commander, Diamond, Learjet, Bombardier, Canadair, Cessna Citation, Falcon, Eclipse aircraft and many more.
                             </p>
                         </motion.div>
-                        <motion.div 
+                        <motion.div
                             initial={{ opacity: 0, x: -100 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8 }}
@@ -140,8 +140,8 @@ const MaintenanceMotion = () => {
                     <p className='mb-6 text-gray-600'>
                         Discover our exceptional approach to aircraft management, where we provide superior safety standards, outstanding service, and maximized value for your aviation asset.
                     </p>
-                    <button 
-                        onClick={handleClick} 
+                    <button
+                        onClick={handleClick}
                         className='bg-electric-blue text-white px-6 py-3 rounded-full hover:bg-blue-600 transition duration-300 text-lg'
                     >
                         MAINTENANCE INQUIRY
@@ -181,7 +181,7 @@ export default MaintenanceMotion;
 //                     priority
 //                 />
 //                 <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-start px-4 md:px-16">
-//                     <motion.h1 
+//                     <motion.h1
 //                         initial={{ opacity: 0, y: -50 }}
 //                         animate={{ opacity: 1, y: 0 }}
 //                         transition={{ duration: 0.8 }}
@@ -189,7 +189,7 @@ export default MaintenanceMotion;
 //                     >
 //                         AIRCRAFT MAINTENANCE
 //                     </motion.h1>
-//                     <motion.p 
+//                     <motion.p
 //                         initial={{ opacity: 0, y: 50 }}
 //                         animate={{ opacity: 1, y: 0 }}
 //                         transition={{ duration: 0.8, delay: 0.2 }}
@@ -201,10 +201,10 @@ export default MaintenanceMotion;
 //             </div>
 
 //             {/* FAA Certified Section */}
-//             <motion.div 
+//             <motion.div
 //                 whileInView={{ opacity: 1, y: 0 }}
 //                 initial={{ opacity: 0, y: -100 }}
-//                 transition={{ duration: 0.8 }} 
+//                 transition={{ duration: 0.8 }}
 //                 className='w-full bg-gray-400 py-12'
 //             >
 //                 <div className='container mx-auto px-4'>
@@ -220,7 +220,7 @@ export default MaintenanceMotion;
 //                 <div className="container mx-auto px-4 max-w-7xl">
 //                     {/* MRO Service */}
 //                     <div className="flex flex-col md:flex-row gap-8 mb-16">
-//                         <motion.div 
+//                         <motion.div
 //                             initial={{ opacity: 0, x: -100 }}
 //                             whileInView={{ opacity: 1, x: 0 }}
 //                             transition={{ duration: 0.8 }}
@@ -231,7 +231,7 @@ export default MaintenanceMotion;
 //                                 Our highly experienced, factory-trained, airplane and maintenance teams offer both scheduled and unscheduled aircraft maintenance. Periodic servicing, annual inspections, airframe structural repairs, engine overhaul, engine replacements, electrical repairs, avionics installations, and repairs.
 //                             </p>
 //                         </motion.div>
-//                         <motion.div 
+//                         <motion.div
 //                             initial={{ opacity: 0, x: 100 }}
 //                             whileInView={{ opacity: 1, x: 0 }}
 //                             transition={{ duration: 0.8 }}
@@ -251,7 +251,7 @@ export default MaintenanceMotion;
 
 //                     {/* Aircraft & Engines */}
 //                     <div className="flex flex-col md:flex-row-reverse gap-8 mb-16">
-//                         <motion.div 
+//                         <motion.div
 //                             initial={{ opacity: 0, x: 100 }}
 //                             whileInView={{ opacity: 1, x: 0 }}
 //                             transition={{ duration: 0.8 }}
@@ -262,7 +262,7 @@ export default MaintenanceMotion;
 //                                 Specializing in maintenance, servicing, repairs, and overhaul of all models of Cessna aircraft, Piper aircraft, Beechcraft, Cirrus, Mooney, Aero Commander, Diamond, Learjet, Bombardier, Canadair, Cessna Citation, Falcon, Eclipse aircraft and many more.
 //                             </p>
 //                         </motion.div>
-//                         <motion.div 
+//                         <motion.div
 //                             initial={{ opacity: 0, x: -100 }}
 //                             whileInView={{ opacity: 1, x: 0 }}
 //                             transition={{ duration: 0.8 }}
@@ -287,7 +287,7 @@ export default MaintenanceMotion;
 //                 <div className="container mx-auto px-4 max-w-7xl">
 //                     {/* AOG Services */}
 //                     <div className="flex flex-col md:flex-row gap-8 mb-16">
-//                         <motion.div 
+//                         <motion.div
 //                             initial={{ opacity: 0, x: -100 }}
 //                             whileInView={{ opacity: 1, x: 0 }}
 //                             transition={{ duration: 0.8 }}
@@ -298,7 +298,7 @@ export default MaintenanceMotion;
 //                                 We offer quick-response mobile AOG services. We have a well-equipped and stocked mobile aircraft recovery vehicle, to provide you services at any airport in the Central California region. Our AOG team is trained to conduct quick and efficient offsite assistance and repairs.
 //                             </p>
 //                         </motion.div>
-//                         <motion.div 
+//                         <motion.div
 //                             initial={{ opacity: 0, x: 100 }}
 //                             whileInView={{ opacity: 1, x: 0 }}
 //                             transition={{ duration: 0.8 }}
@@ -318,7 +318,7 @@ export default MaintenanceMotion;
 
 //                     {/* Aircraft Parts */}
 //                     <div className="flex flex-col md:flex-row-reverse gap-8">
-//                         <motion.div 
+//                         <motion.div
 //                             initial={{ opacity: 0, x: 100 }}
 //                             whileInView={{ opacity: 1, x: 0 }}
 //                             transition={{ duration: 0.8 }}
@@ -329,7 +329,7 @@ export default MaintenanceMotion;
 //                                 We stock only high-quality, genuine aircraft parts, and an extensive inventory of tires, tubes, batteries, gaskets, filters, oils, lubes, and more. 24/7 call center to support your emergency needs.
 //                             </p>
 //                         </motion.div>
-//                         <motion.div 
+//                         <motion.div
 //                             initial={{ opacity: 0, x: -100 }}
 //                             whileInView={{ opacity: 1, x: 0 }}
 //                             transition={{ duration: 0.8 }}
@@ -361,8 +361,8 @@ export default MaintenanceMotion;
 //                     <p className='mb-6 text-gray-600'>
 //                         Discover our exceptional approach to aircraft management, where we provide superior safety standards, outstanding service, and maximized value for your aviation asset.
 //                     </p>
-//                     <button 
-//                         onClick={handleClick} 
+//                     <button
+//                         onClick={handleClick}
 //                         className='bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 transition duration-300 text-lg'
 //                     >
 //                         MAINTENANCE INQUIRY
