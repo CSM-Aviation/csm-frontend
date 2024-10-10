@@ -43,6 +43,41 @@ export interface SeoData {
 
 }
 
+// New: Cache implementation
+interface CacheItem<T> {
+  data: T;
+  expiry: number;
+}
+
+
+const cache: { [key: string]: CacheItem<any> } = {};
+const DEFAULT_CACHE_TIME = 5 * 60 * 1000; // 5 minutes
+
+// New: Function to get cached data or fetch new data
+async function getCachedData<T>(
+  key: string,
+  fetchFunction: () => Promise<ApiResponse<T>>,
+  cacheTime: number = DEFAULT_CACHE_TIME
+): Promise<ApiResponse<T>> {
+  const now = Date.now();
+  const cachedItem = cache[key];
+
+  if (cachedItem && now < cachedItem.expiry) {
+    return { data: cachedItem.data, error: null };
+  }
+
+  const response = await fetchFunction();
+
+  if (!response.error) {
+    cache[key] = {
+      data: response.data,
+      expiry: now + cacheTime
+    };
+  }
+
+  return response;
+}
+
 async function handleApiResponse<T>(promise: Promise<AxiosResponse<T>>): Promise<ApiResponse<T>> {
   try {
     const response = await promise;
@@ -75,8 +110,21 @@ api.interceptors.request.use((config) => {
 
 
 export const apiService = {
-  async get<T>(endpoint: string): Promise<ApiResponse<T>> {
-    return handleApiResponse(api.get<T>(endpoint));
+  async get<T>(endpoint: string, cacheTime?: number): Promise<ApiResponse<T>> {
+    return getCachedData<T>(
+      endpoint,
+      () => handleApiResponse(api.get<T>(endpoint)),
+      cacheTime
+    );
+  },
+
+  // New: Method to clear cache
+  clearCache(endpoint?: string) {
+    if (endpoint) {
+      delete cache[endpoint];
+    } else {
+      Object.keys(cache).forEach(key => delete cache[key]);
+    }
   },
 
   async post<T>(endpoint: string, data: any, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
@@ -107,6 +155,10 @@ export const apiService = {
 
   async getAnalyticsDashboard(): Promise<ApiResponse<AnalyticsDashboardData>> {
     return handleApiResponse(api.get<AnalyticsDashboardData>('/api/analytics/dashboard'));
+  },
+
+  async fetchFleet(cacheTime?: number): Promise<ApiResponse<FleetItem[]>> {
+    return this.get<FleetItem[]>('/api/fleet', cacheTime);
   },
 
   async fetchSeoData(page: string): Promise<ApiResponse<SeoData>> {

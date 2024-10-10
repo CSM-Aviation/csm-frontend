@@ -1,9 +1,9 @@
 import { MetadataRoute } from 'next'
-import { fetchFleet } from './services/apiService'
+import { apiService } from './services/apiService'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Fetch dynamic routes from your API or database
-    const fleetResponse = await fetchFleet();
+    const fleetResponse = await apiService.fetchFleet();
     const fleetPages = fleetResponse.data ? fleetResponse.data.map(item => ({
         url: `https://www.thisisatestspacefor.design/charter/fleet/${item.registration}+'?model='+${item.aircraftName}`,
         lastModified: new Date(),

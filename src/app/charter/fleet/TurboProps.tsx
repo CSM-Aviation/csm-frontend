@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { fetchFleet, FleetItem } from '../../services/apiService';
-import customLoader from '../../../../image-loader' 
+import { apiService, FleetItem } from '../../services/apiService';
+import customLoader from '../../../../image-loader'
 
 const TurboProps = () => {
   const [aircraftData, setAircraftData] = useState<FleetItem[]>([]);
@@ -13,12 +13,12 @@ const TurboProps = () => {
   useEffect(() => {
     const fetchAircraftData = async () => {
       try {
-        const response = await fetchFleet();
+        const response = await apiService.fetchFleet();
         if (response.error) {
           throw new Error(response.error);
         }
         // Filter for TURBOPROPS aircraft only
-        const turboPropAircraft = response.data?.filter((aircraft: FleetItem) => 
+        const turboPropAircraft = response.data?.filter((aircraft: FleetItem) =>
           aircraft.category === "TURBOPROPS"
         ) || [];
         setAircraftData(turboPropAircraft);
@@ -39,7 +39,7 @@ const TurboProps = () => {
   return (
     <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {aircraftData.map((aircraft) => (
-        <Link 
+        <Link
           href={{
             pathname: `/charter/fleet/${aircraft.registration}`,
             query: { model: aircraft.aircraftName },
