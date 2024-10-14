@@ -7,8 +7,9 @@ import { faPhone, faBars, faTimes, faUser } from '@fortawesome/free-solid-svg-ic
 import dynamic from 'next/dynamic';
 import Script from 'next/script';
 import { useConfig } from '../contexts/ConfigContext';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import HeaderMobileAccordion from './HeaderMobileAccordion';
+import useMobile from '../hooks/useMobile';
 
 interface HeaderProps {
   headerColor: string;
@@ -21,13 +22,18 @@ const JetInsightComponent = dynamic(() => import('../components/JetInsight/JetIn
 const Header: React.FC = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isMobileScreen, setIsMobileScreen] = useState(false);
+
+  const pathName = usePathname()
+
   const headerRef = useRef<HTMLElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [isHoveringDropdown, setIsHoveringDropdown] = useState(false);
   const { config } = useConfig();
   const headerColor = config?.header_color || "#ffffff";  // Default color if config is not loaded yet
   const router = useRouter();
+  const isMobile = useMobile({
+    breakPoint: 1024
+  })
 
   const handleDropdownHover = (dropdown: string) => {
     setActiveDropdown(dropdown);
@@ -55,21 +61,10 @@ const Header: React.FC = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
-  // Handle screen resize and update isMobileScreen state
+  
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobileScreen(window.innerWidth <= 768);  // Adjust this width based on your mobile breakpoint
-    };
-
-    // Set initial state
-    handleResize();
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+    setMobileMenuOpen(false);
+  }, [pathName])
 
   const NavItems = () => (
     <>
@@ -98,6 +93,58 @@ const Header: React.FC = () => {
     router.push('/admin/login');
   };
 
+  if (isMobile) {
+    return (
+      <header ref={headerRef} className="relative top-0 left-0 w-full z-50" style={{ backgroundColor: headerColor }}>
+        <div className=" w-full  flex  items-center px-5 py-3">
+          <Link href="/" className="flex-shrink-0">
+            <Image src="/images/whitebgcsmlogo.png" alt="CSM Aviation" width={60} height={60} />
+          </Link>
+
+          {/* Login Button */}
+          <button
+            onClick={handleLoginClick}
+            className="absolute top-2 right-4 bg-transparent text-white hover:text-blue-500 transition-colors duration-300"
+          >
+            <FontAwesomeIcon icon={faUser} className="mr-2" />
+            Login
+          </button>
+
+
+          {/* Mobile Menu Button */}
+          <button
+            className="text-gray-800 focus:outline-none w-full mt-2 flex justify-end"
+            onClick={toggleMobileMenu}
+          >
+            <FontAwesomeIcon className='text-white' icon={mobileMenuOpen ? faTimes : faBars} size="lg" />
+          </button>
+
+        </div>
+
+
+
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div style={{ backgroundColor: headerColor }}>
+            <ul className="flex flex-col items-center py-4">
+              <HeaderMobileAccordion />
+              <li className="mt-4">
+                <a href="tel:+8884359276" className="text-white transition-colors duration-300 hover:text-gray-200">
+                  <FontAwesomeIcon icon={faPhone} size="lg" /> Call Us
+                </a>
+              </li>
+            </ul>
+          </div>
+        )}
+        <Script
+          src='https://client.jetinsight.com/embed/126d130e-be91-4071-a8dc-2f94b609c239/empty'
+          strategy="afterInteractive"
+        />
+      </header>
+    );
+  }
+
   return (
     <header ref={headerRef} className="relative top-0 left-0 w-full z-50" style={{ backgroundColor: headerColor }}>
       <div className=" w-full  flex  items-center px-5 py-3">
@@ -108,24 +155,19 @@ const Header: React.FC = () => {
         {/* Login Button */}
         <button
           onClick={handleLoginClick}
-          className="absolute top-2 right-2 bg-transparent text-white hover:text-blue-500 transition-colors duration-300"
+          className="absolute top-3 right-6 bg-transparent text-white hover:text-blue-500 transition-colors duration-300"
         >
           <FontAwesomeIcon icon={faUser} className="mr-2" />
           Login
         </button>
 
-        <nav  className="hidden lg:flex flex-grow justify-center">
-        <ul className=" flex space-x-8">
-          <NavItems />
-        </ul>
+        <nav className="hidden lg:flex flex-grow justify-center">
+          <ul className=" flex space-x-8">
+            <NavItems />
+          </ul>
         </nav>
-        {/* Mobile Menu Button */}
-        <button
-          className="lg:hidden text-gray-800 focus:outline-none"
-          onClick={toggleMobileMenu}
-        >
-          <FontAwesomeIcon className='text-white' icon={mobileMenuOpen ? faTimes : faBars} size="lg" />
-        </button>
+
+
 
         {/* Desktop CTA */}
         <div className="hidden lg:flex items-center space-x-4">
@@ -167,22 +209,9 @@ const Header: React.FC = () => {
           </div>
         </div>
       )}
-      
 
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden" style={{ backgroundColor: headerColor }}>
-          <ul className="flex flex-col items-center py-4">
-            {/* <NavItems /> */}
-            <HeaderMobileAccordion />
-            <li className="mt-4">
-              <a href="tel:+8884359276" className="text-white transition-colors duration-300 hover:text-gray-200">
-                <FontAwesomeIcon icon={faPhone} size="lg" /> Call Us
-              </a>
-            </li>
-          </ul>
-        </div>
-      )}
+
+
       <Script
         src='https://client.jetinsight.com/embed/126d130e-be91-4071-a8dc-2f94b609c239/empty'
         strategy="afterInteractive"
