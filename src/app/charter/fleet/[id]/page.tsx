@@ -1,10 +1,11 @@
-"use client"
+"use client"; // Add this at the top
+
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { NextPage } from 'next';
 import { apiService, FleetItem } from '../../../services/apiService';
-import customLoader from '../../../../../image-loader'
+import customLoader from '../../../../../image-loader';
 import Button from '../Button';
 
 interface AircraftDetailPageProps {
@@ -17,8 +18,8 @@ const TuvoliWidget = dynamic(() => import('../../../components/TuvoliWidget'), {
 });
 
 interface AircraftDetailsTypes extends FleetItem {
-  configurationUrls: string[] | undefined
-  pdfUrls: string[] | undefined
+  configurationUrls: string[] | undefined;
+  pdfUrls: string[] | undefined;
 }
 
 const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchParams }) => {
@@ -34,7 +35,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
 
   const scrollToTuvoliWidget = () => {
     tuvoliWidgetRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }
+  };
 
   useEffect(() => {
     const fetchAircraftDetails = async () => {
@@ -70,7 +71,6 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
           const configurationUrl = imageUrls.length > 1 ? imageUrls[1] : undefined;
           setAircraftDetails({ ...aircraft, imageUrls, configurationUrls, pdfUrls });
           setPdfUrl(pdfUrls.length > 0 ? pdfUrls[0] : null);
-          // setConfigurationImageUrl(configurationUrls.length > 0 ? configurationUrls[0] : null);
         } else {
           setError('Aircraft not found');
         }
@@ -204,15 +204,20 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
   <h3 className="text-2xl font-bold mb-4">Cabin Configuration</h3>
       <div className='w-full mt-5 h-1 bg-black'></div>
       <div className="flex justify-center">
-        <Image
-          src={aircraftDetails.configurationUrls[1]}
-          alt="Cabin Configuration"
-          width={800}
-          height={400}
-          layout="responsive"
-          loader={customLoader}
-          className="rounded-lg mt-10"
-        />
+      {aircraftDetails.configurationUrls && aircraftDetails.configurationUrls.length > 1 ? (
+  <Image
+    src={aircraftDetails.configurationUrls[1]}
+    alt="Cabin Configuration"
+    width={800}
+    height={400}
+    layout="responsive"
+    loader={customLoader}
+    className="rounded-lg mt-10"
+  />
+) : (
+  <div>No configuration image available</div>
+)}
+
       </div>
     </div>
   </div>
@@ -236,6 +241,8 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
           <TuvoliWidget />
         </div>
       </div>
+
+      {/* More JSX here... */}
     </div>
   );
 };
