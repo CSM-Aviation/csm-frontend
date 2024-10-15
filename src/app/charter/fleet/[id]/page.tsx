@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { NextPage } from 'next';
 import { apiService, FleetItem } from '../../../services/apiService';
 import customLoader from '../../../../../image-loader';
@@ -101,8 +102,8 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
       <p className="text-5xl text-center mb-6">
         {aircraftDetails.registration} - {aircraftDetails.aircraftName}
       </p>
-      <div className="flex px-10 flex-col md:flex-row gap-6">
-        <div className="flex-grow">
+      <div className="flex px-10   flex-col md:flex-row gap-10">
+        <div className="flex-grow ">
           <div className="relative w-full h-[400px] mb-4">
             {aircraftDetails.imageUrls.length > 0 ? (
               <Image
@@ -119,7 +120,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
               </div>
             )}
           </div>
-          <div className="flex flex-wrap gap-2 pb-2">
+          <div className="flex flex-wrap  gap-2 pb-2">
             {aircraftDetails.imageUrls.map((img, index) => (
               <div
                 key={index}
@@ -138,14 +139,25 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
             ))}
           </div>
         </div>
-        <div className="flex flex-col gap-10">
-          <button className="text-black bg-electric-blue border-gray-400 border-2 font-bold py-5 px-10 rounded-2xl hover:bg-red-700 hover:text-white transition duration-300">
-            CHARTER QUOTE
-          </button>
-          <button className="text-black bg-electric-blue font-bold py-5 px-10 border-gray-400 border-2 rounded-2xl hover:bg-blue-700 hover:text-white transition duration-300">
-            CONTACT US
-          </button>
-        </div>
+
+
+        <div className="flex  justify-items-center  md:mt-24 gap-10  flex-col ">
+
+
+        <Link href="/charter/quote">
+  <button className=" md:w-48 sm:w-40  text-black bg-electric-blue font-bold py-5 border-gray-400 border-2 rounded-2xl hover:bg-white hover:text-black transition duration-300">
+    CHARTER QUOTE
+  </button>
+</Link>
+<Link href="/company/contact">
+  <button className="md:w-48 sm:w-40 text-black bg-electric-blue font-bold py-5 border-gray-400 border-2 rounded-2xl hover:bg-red-700 hover:text-white transition duration-300">
+    CONTACT US
+  </button>
+</Link>
+
+</div>
+
+
       </div>
 
       <div className='mt-20 px-10 text-black text-3xl'>
