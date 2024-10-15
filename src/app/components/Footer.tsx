@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebookF, faTwitter, faInstagram, faPinterest, faYoutube, faWeixin, faWeibo, faTiktok } from '@fortawesome/free-brands-svg-icons';
+import { faFacebookF, faTwitter, faInstagram, faPinterest, faYoutube, faWeixin, faWeibo, faTiktok, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import MessageDeskChatbot from './MessageDeskChatbot';
 import Login from '../admin/Login';
@@ -28,24 +28,29 @@ const Footer: React.FC = () => {
               Sign me up →
             </Link>
           </div>
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-3 gap-8">
             <div>
               <h3 className="text-xl font-bold mb-4">Got a Question?</h3>
               <ul className="space-y-2">
                 <li><Link href="/faqs" className="hover:underline">FAQs</Link></li>
-                <li><Link href="/press-centre" className="hover:underline">Press Centre</Link></li>
+                {/* <li><Link href="/press-centre" className="hover:underline">Press Centre</Link></li> */}
                 <li><Link href="/company/contact" className="hover:underline">Contact Us</Link></li>
-                
+
               </ul>
             </div>
             <div>
               <h3 className="text-xl font-bold mb-4">Useful Links</h3>
               <ul className="space-y-2">
-                <li><Link href="/privacy-policy" className="hover:underline">Privacy & Cookies Policy</Link></li>
-                <li><Link href="/cookie-policy" className="hover:underline">Cookie Policy</Link></li>
-                <li><Link href="/modern-slavery-act" className="hover:underline">Modern Slavery Act</Link></li>
+                <li><Link href="/privacy-policy" rel="noopener noreferrer" target="_blank" className="hover:underline">Privacy Policy</Link></li>
+                {/* <li><Link href="/cookie-policy" className="hover:underline">Cookie Policy</Link></li> */}
+                {/* <li><Link href="/modern-slavery-act" className="hover:underline">Modern Slavery Act</Link></li> */}
                 <li><Link href="/sitemap" className="hover:underline">Sitemap</Link></li>
               </ul>
+            </div>
+            <div className="flex space-x-4">
+              <a href="https://www.facebook.com/CSMaviation/" target="_blank" className="text-white hover:text-gray-400 transition duration-300"><FontAwesomeIcon icon={faFacebookF} /></a>
+              <a href="https://www.instagram.com/csm_aviation" target="_blank" className="text-white hover:text-gray-400 transition duration-300"><FontAwesomeIcon icon={faInstagram} /></a>
+              <a href="https://www.linkedin.com/company/csm-aviation" target="_blank" className="text-white hover:text-gray-400 transition duration-300"><FontAwesomeIcon icon={faLinkedin} /></a>
             </div>
           </div>
         </div>
@@ -54,16 +59,11 @@ const Footer: React.FC = () => {
             <Image src="/images/CSM-Logo-WHITE-01-web300.jpg" alt="CSM Logo" width={100} height={50} />
             <p className="mt-2 text-sm">Copyright © 2024 CSM Aviation. All rights reserved.</p>
           </div>
-          <div className="flex space-x-4">
-            <a href="#" className="text-white hover:text-gray-400 transition duration-300"><FontAwesomeIcon icon={faFacebookF} /></a>
-            <a href="#" className="text-white hover:text-gray-400 transition duration-300"><FontAwesomeIcon icon={faTwitter} /></a>
-            <a href="#" className="text-white hover:text-gray-400 transition duration-300"><FontAwesomeIcon icon={faInstagram} /></a>
-            <a href="#" className="text-white hover:text-gray-400 transition duration-300"><FontAwesomeIcon icon={faPinterest} /></a>
-            <a href="#" className="text-white hover:text-gray-400 transition duration-300"><FontAwesomeIcon icon={faYoutube} /></a>
-            <a href="#" className="text-white hover:text-gray-400 transition duration-300"><FontAwesomeIcon icon={faWeixin} /></a>
-            <a href="#" className="text-white hover:text-gray-400 transition duration-300"><FontAwesomeIcon icon={faWeibo} /></a>
-            <a href="#" className="text-white hover:text-gray-400 transition duration-300"><FontAwesomeIcon icon={faTiktok} /></a>
-          </div>
+          {/* <div className="flex space-x-4">
+            <a href="https://www.facebook.com/CSMaviation/" target="_blank" className="text-white hover:text-gray-400 transition duration-300"><FontAwesomeIcon icon={faFacebookF} /></a>
+            <a href="https://www.instagram.com/csm_aviation" target="_blank" className="text-white hover:text-gray-400 transition duration-300"><FontAwesomeIcon icon={faInstagram} /></a>
+            <a href="https://www.linkedin.com/company/csm-aviation" target="_blank" className="text-white hover:text-gray-400 transition duration-300"><FontAwesomeIcon icon={faLinkedin} /></a>
+          </div> */}
         </div>
       </div>
       {/* <button 
@@ -73,7 +73,7 @@ const Footer: React.FC = () => {
       >
         <FontAwesomeIcon icon={faArrowUp} />
       </button> */}
-      <MessageDeskChatbot/>
+      <MessageDeskChatbot />
     </footer>
   );
 };
