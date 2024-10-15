@@ -10,7 +10,7 @@ const ManagementMotion = () => {
       {/* Hero Section */}
       <div className="relative h-screen w-full">
         <Image
-          src="/images/management.png"
+          src="/images/private.jpg"
           fill
           style={{ objectFit: "fill" }} // Changed from "fill" to "cover"
           alt="Aircraft on runway"
@@ -91,7 +91,7 @@ const ManagementMotion = () => {
             >
               <div className="relative w-full h-[300px] md:h-[400px]">
                 <Image
-                  src="/images/charter.png"
+                  src="/images/cost.jpg"
                   fill
                   style={{ objectFit: "cover" }}
                   alt="Private jet charter"
