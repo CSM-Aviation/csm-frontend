@@ -1,10 +1,13 @@
-"use client"
+"use client"; // Add this at the top
+
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { NextPage } from 'next';
 import { apiService, FleetItem } from '../../../services/apiService';
-import customLoader from '../../../../../image-loader'
+import customLoader from '../../../../../image-loader';
+import Button from '../Button';
+
 interface AircraftDetailPageProps {
   params: { id: string };
   searchParams: { model: string };
@@ -14,18 +17,25 @@ const TuvoliWidget = dynamic(() => import('../../../components/TuvoliWidget'), {
   ssr: false,
 });
 
+interface AircraftDetailsTypes extends FleetItem {
+  configurationUrls: string[] | undefined;
+  pdfUrls: string[] | undefined;
+}
+
 const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchParams }) => {
   const { id } = params;
   const { model } = searchParams;
-  const [aircraftDetails, setAircraftDetails] = useState<FleetItem | null>(null);
+  const [aircraftDetails, setAircraftDetails] = useState<AircraftDetailsTypes | null>(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const [configurationImageUrl, setConfigurationImageUrl] = useState<string | null>(null);
   const tuvoliWidgetRef = useRef<HTMLDivElement>(null);
 
   const scrollToTuvoliWidget = () => {
     tuvoliWidgetRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }
+  };
 
   useEffect(() => {
     const fetchAircraftDetails = async () => {
@@ -35,8 +45,32 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
           throw new Error(response.error);
         }
         const aircraft = response.data?.find((item: FleetItem) => item.registration === id);
+
+        const {
+          pdfUrls = [],
+          configurationUrls = [],
+          imageUrls = []
+        } = (aircraft?.imageUrls?.reduce((acc: {
+          pdfUrls: string[],
+          configurationUrls: string[],
+          imageUrls: string[]
+        }, item: string) => {
+          if (item.includes('others/')) {
+            if (item.includes('.pdf')) {
+              acc.pdfUrls.push(item);
+            } else {
+              acc.configurationUrls.push(item);
+            }
+          } else {
+            acc.imageUrls.push(item);
+          }
+          return acc;
+        }, { pdfUrls: [], configurationUrls: [], imageUrls: [] })) || { pdfUrls: [], configurationUrls: [], imageUrls: [] };
+
         if (aircraft) {
-          setAircraftDetails(aircraft);
+          const configurationUrl = imageUrls.length > 1 ? imageUrls[1] : undefined;
+          setAircraftDetails({ ...aircraft, imageUrls, configurationUrls, pdfUrls });
+          setPdfUrl(pdfUrls.length > 0 ? pdfUrls[0] : null);
         } else {
           setError('Aircraft not found');
         }
@@ -64,7 +98,6 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
 
   return (
     <div className="container mx-auto mt-10 text-black p-5">
-      <h1 className="text-5xl font-bold mb-4 text-blue-600">Aircraft Details</h1>
       <p className="text-5xl text-center mb-6">
         {aircraftDetails.registration} - {aircraftDetails.aircraftName}
       </p>
@@ -138,6 +171,59 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
         {renderDetailRow("Category", aircraftDetails.category)}
       </div>
 
+    
+
+      {pdfUrl && (
+        <div className="mt-10 flex justify-center">
+          <a
+            href={pdfUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-black bg-electric-blue border-gray-400 border-2 font-bold py-3 px-6 rounded-xl hover:bg-white hover:text-black transition duration-300"
+          >
+            Download Aircraft Details
+          </a>
+        </div>
+      )}
+
+<div className="mt-10 flex flex-col lg:flex-row justify-between px-10">
+  {/* Aircraft Amenities */}
+  <div className="lg:w-1/2 lg:mr-10">
+    <h3 className="text-2xl font-bold mb-4">Aircraft Amenities</h3>
+    <div className='w-full mt-5 h-1 bg-black'></div>
+    <ul className="list-disc pl-5 mt-5">
+      {aircraftDetails.amenities.split(',').map((amenity, index) => (
+        <li key={index} className="text-lg">{amenity.trim()}</li>
+      ))}
+    </ul>
+  </div>
+
+  {/* Cabin Configuration */}
+ 
+  <div className="lg:w-1/2 lg:mr-10">
+  <h3 className="text-2xl font-bold mb-4">Cabin Configuration</h3>
+      <div className='w-full mt-5 h-1 bg-black'></div>
+      <div className="flex justify-center">
+      {aircraftDetails.configurationUrls && aircraftDetails.configurationUrls.length > 1 ? (
+  <Image
+    src={aircraftDetails.configurationUrls[1]}
+    alt="Cabin Configuration"
+    width={800}
+    height={400}
+    layout="responsive"
+    loader={customLoader}
+    className="rounded-lg mt-10"
+  />
+) : (
+  <div>No configuration image available</div>
+)}
+
+      </div>
+    </div>
+  </div>
+
+
+
       <div className='mt-20 px-10 text-black text-3xl'>
         Description
         <div className='w-full mt-5 h-1 bg-black'></div>
@@ -146,19 +232,17 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
         <p>{aircraftDetails.description}</p>
       </div>
 
-      <div className='mt-20 px-10 text-black text-3xl'>
-        Amenities
-        <div className='w-full mt-5 h-1 bg-black'></div>
-      </div>
-      <div className="mt-5 px-10">
-        <ul className="list-disc pl-5">
-          {aircraftDetails.amenities.split(',').map((amenity, index) => (
-            <li key={index}>{amenity.trim()}</li>
-          ))}
-        </ul>
+      <div ref={tuvoliWidgetRef} className='mt-20 py-20 bg-gray-200'>
+        <div className='container mx-auto px-4'>
+          <h2 className='text-center text-4xl mb-4'>JET CHARTER QUOTE</h2>
+          <p className='text-center text-xl mb-10'>
+            Explore our Dynamic map for immediate private aircraft rental pricing.
+          </p>
+          <TuvoliWidget />
+        </div>
       </div>
 
-      {/* TuvoliWidget section remains the same */}
+      {/* More JSX here... */}
     </div>
   );
 };
