@@ -16,8 +16,8 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, image, content, link }
 
     return (
         <Link href={link} className={`block transition-all duration-500 ease-in-out ${isHovered ? 'w-[70%]' : 'w-1/2'} h-[70vh] relative group overflow-hidden`}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}>
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}>
             <div className="relative w-full h-full">
                 <Image
                     src={image}
@@ -28,10 +28,10 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, image, content, link }
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-50 group-hover:bg-opacity-70 transition-all duration-300"></div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-white z-10">
-                    <h2 className="text-4xl font-bold mb-4 text-center transition-all duration-300 group-hover:scale-105">{title}</h2>
-                    <ul className={`flex-grow flex flex-col justify-center items-center transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+                    <h2 className="text-6xl font-bold mb-4 text-center transition-all duration-300 group-hover:scale-105">{title}</h2>
+                    <ul className={`flex-grow flex flex-col justify-center items-center  transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
                         {content.map((item, index) => (
-                            <li key={index} className="text-lg mb-2 text-center">{item}</li>
+                            <li key={index} className="text-2xl mb-2 text-center">{item}</li>
                         ))}
                     </ul>
                 </div>
