@@ -68,7 +68,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
         }, { pdfUrls: [], configurationUrls: [], imageUrls: [] })) || { pdfUrls: [], configurationUrls: [], imageUrls: [] };
 
         if (aircraft) {
-          const configurationUrl = imageUrls.length > 1 ? imageUrls[1] : undefined;
+          setConfigurationImageUrl(configurationUrls.length > 0 ? configurationUrls[0] : null);
           setAircraftDetails({ ...aircraft, imageUrls, configurationUrls, pdfUrls });
           setPdfUrl(pdfUrls.length > 0 ? pdfUrls[0] : null);
         } else {
@@ -204,16 +204,16 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
   <h3 className="text-2xl font-bold mb-4">Cabin Configuration</h3>
       <div className='w-full mt-5 h-1 bg-black'></div>
       <div className="flex justify-center">
-      {aircraftDetails.configurationUrls && aircraftDetails.configurationUrls.length > 1 ? (
-  <Image
-    src={aircraftDetails.configurationUrls[1]}
-    alt="Cabin Configuration"
-    width={800}
-    height={400}
-    layout="responsive"
-    loader={customLoader}
-    className="rounded-lg mt-10"
-  />
+      {configurationImageUrl ? (
+              <Image
+                src={configurationImageUrl}
+                alt="Cabin Configuration"
+                width={800}
+                height={400}
+                layout="responsive"
+                loader={customLoader}
+                className="rounded-lg mt-10"
+              />
 ) : (
   <div>No configuration image available</div>
 )}
