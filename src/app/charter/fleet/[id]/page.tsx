@@ -13,7 +13,7 @@ interface AircraftDetailPageProps {
   params: { id: string };
   searchParams: { model: string };
 }
-const JetInsightComponent = dynamic(() => import('../../../components/JetInsight/JetInsightComponent'), {
+const JetInsightComponent = dynamic(() => import('../../../components/JetInsight/JetInsightComponent2'), {
   ssr: false,
 });
 const TuvoliWidget = dynamic(() => import('../../../components/TuvoliWidget'), {
