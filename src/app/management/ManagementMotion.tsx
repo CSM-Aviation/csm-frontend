@@ -23,7 +23,7 @@ const ManagementMotion = () => {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-6xl font-bold text-white mb-4 max-w-4xl"
           >
-            LEGENDARY AIRCRAFT MANAGEMENT SERVICES
+            AIRCRAFT MANAGEMENT SERVICES
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 50 }}

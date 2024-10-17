@@ -72,19 +72,19 @@ const Header: React.FC = () => {
         className="relative group"
         onMouseEnter={() => handleDropdownHover('charter')}
       >
-        <Link href="/" className={`block p-1.5 text-xl font-bold uppercase transition-all duration-300 ${activeDropdown === 'charter' ? 'text-blue-600 underline' : 'text-white hover:text-blue-600'}`}>CHARTER</Link>
+        <Link href="/" className={`block p-1.5 text-xl font-bold uppercase transition-all duration-300 ${activeDropdown === 'charter' ? 'text-electric-blue underline' : 'text-white hover:text-electric-blue'}`}>CHARTER</Link>
       </li>
       <li onMouseEnter={() => setActiveDropdown(null)}>
-        <Link href="/management" className="block p-1.5 text-xl font-bold text-white uppercase transition-all duration-300 hover:text-blue-600">MANAGEMENT</Link>
+        <Link href="/management" className="block p-1.5 text-xl font-bold text-white uppercase transition-all duration-300 hover:text-electric-blue">MANAGEMENT</Link>
       </li>
       <li onMouseEnter={() => setActiveDropdown(null)}>
-        <Link href="/maintenance" className="block p-1.5 text-xl font-bold text-white uppercase transition-all duration-300 hover:text-blue-600">MAINTENANCE</Link>
+        <Link href="/maintenance" className="block p-1.5 text-xl font-bold text-white uppercase transition-all duration-300 hover:text-electric-blue">MAINTENANCE</Link>
       </li>
       <li
         className="relative group"
         onMouseEnter={() => handleDropdownHover('company')}
       >
-        <Link href="/" className={`block p-1.5 text-xl font-bold uppercase transition-all duration-300 ${activeDropdown === 'company' ? 'text-blue-600 underline' : 'text-white hover:text-blue-600'}`}>COMPANY</Link>
+        <Link href="/" className={`block p-1.5 text-xl font-bold uppercase transition-all duration-300 ${activeDropdown === 'company' ? 'text-electric-blue underline' : 'text-white hover:text-blue-600'}`}>COMPANY</Link>
       </li>
     </>
   );
@@ -194,15 +194,15 @@ const Header: React.FC = () => {
             <div className="flex flex-col items-center space-y-4">
               {activeDropdown === 'charter' && (
                 <>
-                  <Link href="/charter/quote" className="text-xl text-white hover:text-blue-600 hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>INSTANT QUOTE</Link>
-                  <Link href="/charter/trip" className="text-xl text-white  hover:text-blue-600 hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>TRIP REQUEST</Link>
-                  <Link href="/charter/fleet" className="text-xl text-white  hover:text-blue-600 hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>FLEET</Link>
+                  <Link href="/charter/quote" className="text-xl text-white  hover:text-electric-blue hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>INSTANT QUOTE</Link>
+                  <Link href="/charter/trip" className="text-xl text-white   hover:text-electric-blue hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>TRIP REQUEST</Link>
+                  <Link href="/charter/fleet" className="text-xl text-white  hover:text-electric-blue hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>FLEET</Link>
                 </>
               )}
               {activeDropdown === 'company' && (
                 <>
-                  <Link href="/company/about" className="text-xl text-white  hover:text-blue-600 hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>ABOUT US</Link>
-                  <Link href="/company/contact" className="text-xl text-white  hover:text-blue-600 hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>CONTACT</Link>
+                  <Link href="/company/about" className="text-xl text-white  hover:text-electric-blue hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>ABOUT US</Link>
+                  <Link href="/company/contact" className="text-xl text-white  hover:text-electric-blue hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>CONTACT</Link>
                 </>
               )}
             </div>

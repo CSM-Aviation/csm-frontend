@@ -31,7 +31,7 @@ const FleetContent: React.FC = () => {
           priority
         />
         <div className='absolute inset-0 bg-black bg-opacity-10 flex items-center px-4'>
-          <h1 className='text-4xl md:text-6xl font-bold text-white mb-4 max-w-4xl'>Explore your Fleet</h1>
+          {/* <h1 className='text-4xl md:text-6xl font-bold text-white mb-4 max-w-4xl'>Explore your Fleet</h1> */}
         </div>
       </div>
       <div className='p-4'>

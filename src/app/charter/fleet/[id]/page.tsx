@@ -13,7 +13,9 @@ interface AircraftDetailPageProps {
   params: { id: string };
   searchParams: { model: string };
 }
-
+const JetInsightComponent = dynamic(() => import('../../../components/JetInsight/JetInsightComponent'), {
+  ssr: false,
+});
 const TuvoliWidget = dynamic(() => import('../../../components/TuvoliWidget'), {
   ssr: false,
 });
@@ -143,17 +145,17 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
 
         <div className="flex  justify-items-center  md:mt-24 gap-10  flex-col ">
 
-
-        <Link href="/charter/quote">
+        <JetInsightComponent />
+        {/* <Link href="/charter/quote">
   <button className=" md:w-48 sm:w-40  text-black bg-electric-blue font-bold py-5 border-gray-400 border-2 rounded-2xl hover:bg-white hover:text-black transition duration-300">
     CHARTER QUOTE
   </button>
-</Link>
-<Link href="/company/contact">
+</Link> */}
+{/* <Link href="/company/contact">
   <button className="md:w-48 sm:w-40 text-black bg-electric-blue font-bold py-5 border-gray-400 border-2 rounded-2xl hover:bg-red-700 hover:text-white transition duration-300">
     CONTACT US
   </button>
-</Link>
+</Link> */}
 
 </div>
 
