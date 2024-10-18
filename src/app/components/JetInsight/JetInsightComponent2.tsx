@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import styles from './JetInsight.module.scss';
+import styles from './JetInsight1.module.scss';
 
 const JetInsightComponent: React.FC = () => {
   const buttonRef = useRef<HTMLButtonElement>(null);
