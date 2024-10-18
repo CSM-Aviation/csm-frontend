@@ -130,7 +130,7 @@ const Header: React.FC = () => {
             <ul className="flex flex-col items-center py-4">
               <HeaderMobileAccordion />
               <li className="mt-4">
-                <a href="tel:+8884359276" className="text-white transition-colors duration-300 hover:text-gray-200">
+                <a href="tel:+18884359276" className="text-white transition-colors duration-300 hover:text-gray-200">
                   <FontAwesomeIcon icon={faPhone} size="lg" /> Call Us
                 </a>
               </li>
@@ -149,7 +149,7 @@ const Header: React.FC = () => {
     <header ref={headerRef} className="relative top-0 left-0 w-full z-50" style={{ backgroundColor: headerColor }}>
       <div className=" w-full  flex  items-center px-5 py-3">
         <Link href="/" className="flex-shrink-0">
-          <Image src="/images/whitebgcsmlogo.png" alt="CSM Aviation" width={120} height={120} />
+          <Image src="/images/whitebgcsmlogo.png" alt="CSM Aviation" className='p-2' width={120} height={120} />
         </Link>
 
         {/* Login Button */}
@@ -171,7 +171,7 @@ const Header: React.FC = () => {
 
         {/* Desktop CTA */}
         <div className="hidden lg:flex items-center space-x-4">
-          <a href="tel:+8884359276" className="text-gray-800 transition-colors duration-300 hover:text-blue-600">
+          <a href="tel:+18884359276" className="text-gray-800 transition-colors duration-300 hover:text-blue-600">
             <FontAwesomeIcon className='hover:text-blue-600' color='#23B2EE' icon={faPhone} size="lg" />
           </a>
           <JetInsightComponent />
