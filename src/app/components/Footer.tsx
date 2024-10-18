@@ -87,7 +87,7 @@ const Footer: React.FC = () => {
               width={100}
               height={50}
             />
-            <p className="mt-2 text-sm">
+            <p className="mt-2 md:text-xl">
               Copyright © 2024 CSM Aviation. All rights reserved.
             </p>
           </div>
