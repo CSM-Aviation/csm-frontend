@@ -1,24 +1,33 @@
-'use client'
-
 import React, { useState, useEffect } from 'react';
+import { apiService } from '../services/apiService';
 
 const EmailSubscription: React.FC = () => {
   const [email, setEmail] = useState('');
   const [isMounted, setIsMounted] = useState(false);
+  const [message, setMessage] = useState('');
 
-  // Ensure component only renders after hydration
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle email subscription logic here
-    console.log('Subscribing email:', email);
+    setMessage('');
+
+    try {
+      const response = await apiService.post('/api/subscribe', { email });
+      if (response.error) {
+        throw new Error(response.error);
+      }
+      setEmail('');
+      setMessage('Thank you for subscribing!');
+    } catch (error) {
+      setMessage('An error occurred. Please try again.');
+    }
   };
 
   if (!isMounted) {
-    return null; // Prevent server-side render mismatch by skipping until mounted
+    return null;
   }
 
   return (
@@ -33,6 +42,7 @@ const EmailSubscription: React.FC = () => {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email address"
           className="flex-grow py-2 px-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+          required
         />
         <button
           type="submit"
@@ -41,6 +51,7 @@ const EmailSubscription: React.FC = () => {
           Join now
         </button>
       </form>
+      {message && <p className="mt-2 text-sm text-green-500">{message}</p>}
     </div>
   );
 };
