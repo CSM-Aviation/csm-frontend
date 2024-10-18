@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ConfigProvider } from "./contexts/ConfigContext";
 import AnalyticsTracker from "./admin/analytics/AnalyticsTracker";
+import Breadcrumb from "./components/Breadcrumb";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <ConfigProvider>
           <Header />
+          {/* <div className="container mx-auto px-4 py-4"> */}
+          <Breadcrumb />
+          {/* </div> */}
           <main>{children}
             <Analytics />
             <SpeedInsights />
