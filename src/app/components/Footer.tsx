@@ -12,11 +12,11 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-[#004080] text-white py-16">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
           <EmailSubscription />
-          <div className="grid grid-cols-3 gap-8">
+          <div className="grid max-md:ml-10 grid-cols-3 gap-14">
             {/* Rest of the footer content */}
-            <div>
+            <div className=''>
               <h3 className="md:text-2xl font-bold mb-4">Got a Question?</h3>
               <ul className=" md:text-2xl space-y-2">
                 <li>

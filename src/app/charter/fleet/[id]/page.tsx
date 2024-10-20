@@ -1,5 +1,4 @@
-"use client"; // Add this at the top
-
+'use client'
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
@@ -8,6 +7,7 @@ import { NextPage } from 'next';
 import { apiService, FleetItem } from '../../../services/apiService';
 import customLoader from '../../../../../image-loader';
 import Button from '../Button';
+import { ChevronLeft, ChevronRight, Maximize, X } from 'lucide-react';
 
 interface AircraftDetailPageProps {
   params: { id: string };
@@ -30,6 +30,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
   const { model } = searchParams;
   const [aircraftDetails, setAircraftDetails] = useState<AircraftDetailsTypes | null>(null);
   const [selectedImage, setSelectedImage] = useState(0);
+  const [isFullScreen, setIsFullScreen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
@@ -38,6 +39,17 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
 
   const scrollToTuvoliWidget = () => {
     tuvoliWidgetRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+  const handlePrevImage = () => {
+    setSelectedImage((prev) => (prev > 0 ? prev - 1 : aircraftDetails!.imageUrls.length - 1));
+  };
+
+  const handleNextImage = () => {
+    setSelectedImage((prev) => (prev < aircraftDetails!.imageUrls.length - 1 ? prev + 1 : 0));
+  };
+
+  const toggleFullScreen = () => {
+    setIsFullScreen(!isFullScreen);
   };
 
   useEffect(() => {
@@ -101,21 +113,41 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
 
   return (
     <div className="container mx-auto mt-10 text-black p-5">
-      <p className="text-5xl text-center mb-6">
+      <p className="text-5xl max-md:text-3xl md:mt-10 text-center mb-6">
         {aircraftDetails.registration} - {aircraftDetails.aircraftName}
       </p>
       <div className="flex px-10   flex-col md:flex-row gap-10">
         <div className="flex-grow ">
           <div className="relative w-full h-[400px] mb-4">
             {aircraftDetails.imageUrls.length > 0 ? (
-              <Image
-                src={aircraftDetails.imageUrls[selectedImage]}
-                alt={`${aircraftDetails.aircraftName} - Image ${selectedImage + 1}`}
-                fill
-                loader={customLoader}
-                style={{ objectFit: 'cover' }}
-                className="rounded-lg"
-              />
+              <>
+                <Image
+                  src={aircraftDetails.imageUrls[selectedImage]}
+                  alt={`${aircraftDetails.aircraftName} - Image ${selectedImage + 1}`}
+                  fill
+                  loader={customLoader}
+                  style={{ objectFit: 'cover' }}
+                  className="rounded-lg"
+                />
+                <button
+                  className="absolute top-2 right-2 p-2 bg-white bg-opacity-50 rounded-full hover:bg-opacity-75 transition-opacity"
+                  onClick={toggleFullScreen}
+                >
+                  <Maximize size={24} />
+                </button>
+                <button
+                  className="absolute left-2 top-1/2 transform -translate-y-1/2 p-2 bg-white bg-opacity-50 rounded-full hover:bg-opacity-75 transition-opacity"
+                  onClick={handlePrevImage}
+                >
+                  <ChevronLeft size={24} />
+                </button>
+                <button
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 bg-white bg-opacity-50 rounded-full hover:bg-opacity-75 transition-opacity"
+                  onClick={handleNextImage}
+                >
+                  <ChevronRight size={24} />
+                </button>
+              </>
             ) : (
               <div className="w-full h-full bg-gray-200 flex items-center justify-center">
                 No Image Available
@@ -145,19 +177,10 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
 
         <div className="flex  justify-items-center  md:mt-24 gap-10  flex-col ">
 
-        <JetInsightComponent />
-        {/* <Link href="/charter/quote">
-  <button className=" md:w-48 sm:w-40  text-black bg-electric-blue font-bold py-5 border-gray-400 border-2 rounded-2xl hover:bg-white hover:text-black transition duration-300">
-    CHARTER QUOTE
-  </button>
-</Link> */}
-{/* <Link href="/company/contact">
-  <button className="md:w-48 sm:w-40 text-black bg-electric-blue font-bold py-5 border-gray-400 border-2 rounded-2xl hover:bg-red-700 hover:text-white transition duration-300">
-    CONTACT US
-  </button>
-</Link> */}
+          <JetInsightComponent />
 
-</div>
+
+        </div>
 
 
       </div>
@@ -185,7 +208,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
         {renderDetailRow("Category", aircraftDetails.category)}
       </div>
 
-    
+
 
       {pdfUrl && (
         <div className="mt-10 flex justify-center">
@@ -200,25 +223,25 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
         </div>
       )}
 
-<div className="mt-10 flex flex-col lg:flex-row justify-between px-10">
-  {/* Aircraft Amenities */}
-  <div className="lg:w-1/2 lg:mr-10">
-    <h3 className="text-2xl font-bold mb-4">Aircraft Amenities</h3>
-    <div className='w-full mt-5 h-1 bg-black'></div>
-    <ul className="list-disc pl-5 mt-5">
-      {aircraftDetails.amenities.split(',').map((amenity, index) => (
-        <li key={index} className="text-lg">{amenity.trim()}</li>
-      ))}
-    </ul>
-  </div>
+      <div className="mt-10 flex flex-col lg:flex-row justify-between px-10">
+        {/* Aircraft Amenities */}
+        <div className="lg:w-1/2 lg:mr-10">
+          <h3 className="text-2xl font-bold mb-4">Aircraft Amenities</h3>
+          <div className='w-full mt-5 h-1 bg-black'></div>
+          <ul className="list-disc pl-5 mt-5">
+            {aircraftDetails.amenities.split(',').map((amenity, index) => (
+              <li key={index} className="text-lg">{amenity.trim()}</li>
+            ))}
+          </ul>
+        </div>
 
-  {/* Cabin Configuration */}
- 
-  <div className="lg:w-1/2 lg:mr-10">
-  <h3 className="text-2xl font-bold mb-4">Cabin Configuration</h3>
-      <div className='w-full mt-5 h-1 bg-black'></div>
-      <div className="flex justify-center">
-      {configurationImageUrl ? (
+        {/* Cabin Configuration */}
+
+        <div className="lg:w-1/2 lg:mr-10">
+          <h3 className="text-2xl font-bold mb-4">Cabin Configuration</h3>
+          <div className='w-full mt-5 h-1 bg-black'></div>
+          <div className="flex justify-center">
+            {configurationImageUrl ? (
               <Image
                 src={configurationImageUrl}
                 alt="Cabin Configuration"
@@ -228,13 +251,13 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
                 loader={customLoader}
                 className="rounded-lg mt-10"
               />
-) : (
-  <div>No configuration image available</div>
-)}
+            ) : (
+              <div>No configuration image available</div>
+            )}
 
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
 
 
@@ -257,6 +280,37 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
       </div>
 
       {/* More JSX here... */}
+      {isFullScreen && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center">
+          <div className="relative w-full h-full">
+            <Image
+              src={aircraftDetails.imageUrls[selectedImage]}
+              alt={`${aircraftDetails.aircraftName} - Full Screen Image`}
+              fill
+              loader={customLoader}
+              style={{ objectFit: 'contain' }}
+            />
+            <button
+              className="absolute top-4 right-4 p-2 bg-white bg-opacity-50 rounded-full hover:bg-opacity-75 transition-opacity"
+              onClick={toggleFullScreen}
+            >
+              <X size={24} />
+            </button>
+            <button
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 p-2 bg-white bg-opacity-50 rounded-full hover:bg-opacity-75 transition-opacity"
+              onClick={handlePrevImage}
+            >
+              <ChevronLeft size={24} />
+            </button>
+            <button
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 bg-white bg-opacity-50 rounded-full hover:bg-opacity-75 transition-opacity"
+              onClick={handleNextImage}
+            >
+              <ChevronRight size={24} />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
