@@ -1,7 +1,6 @@
 .jetInsightOut {
   display: flex;
 }
-
 .jetinsightEmbeddedRequestButton {
   align-items: center !important;
   appearance: none !important;
@@ -43,7 +42,7 @@
     box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
       rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset !important;
     transform: translateY(-2px) !important;
-    background-color: #3954f0 !important;
+    background-color: white!important;
   }
 
   &:active {
