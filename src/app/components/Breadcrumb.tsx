@@ -12,7 +12,7 @@ const Breadcrumb: React.FC = () => {
     }
 
     return (
-        <div className="absolute top-29 md:mt-5  w-1/5  z-50 px-4 py-4 " aria-label="Breadcrumb">
+        <div className="absolute top-29 md:mt-5  w-1/5  z-10 px-4 py-4 " aria-label="Breadcrumb">
             <ol className="inline-flex items-center space-x-2">
                 {pathSegments.map((segment, index) => {
                     const href = `/${pathSegments.slice(0, index + 1).join('/')}`;

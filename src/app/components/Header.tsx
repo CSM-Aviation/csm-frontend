@@ -100,11 +100,13 @@ const Header: React.FC = () => {
           <Link href="/" className="flex-shrink-0">
             <Image src="/images/whitebgcsmlogo.png" alt="CSM Aviation" width={60} height={60} />
           </Link>
-
+          <a href="tel:+18884359276" className="  flex gap-2 mt-2  absolute left-1/2  justify-center items-center text-white transition-colors duration-300 hover:text-gray-200">
+                  <FontAwesomeIcon icon={faPhone} size="lg" />(888) I-FLY-CSM
+                </a>
           {/* Login Button */}
           <button
             onClick={handleLoginClick}
-            className="absolute top-2 right-4 bg-transparent text-white hover:text-blue-500 transition-colors duration-300"
+            className="absolute top-2  right-4 bg-transparent text-white hover:text-blue-500 transition-colors duration-300"
           >
             <FontAwesomeIcon icon={faUser} className="mr-2" />
             Login
@@ -113,7 +115,7 @@ const Header: React.FC = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="text-gray-800 focus:outline-none w-full mt-2 flex justify-end"
+            className="text-gray-800  focus:outline-none w-full mt-2 flex justify-end"
             onClick={toggleMobileMenu}
           >
             <FontAwesomeIcon className='text-white' icon={mobileMenuOpen ? faTimes : faBars} size="lg" />
