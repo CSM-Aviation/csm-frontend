@@ -1,70 +1,221 @@
-'use client'
-
-import React, { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPhone, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-// import JetInsightLink from "./JetInsightLink";
+"use client";
+import React, { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPhone, faBars, faTimes, faUser } from '@fortawesome/free-solid-svg-icons';
+import dynamic from 'next/dynamic';
+import Script from 'next/script';
+import { useConfig } from '../contexts/ConfigContext';
+import { usePathname, useRouter } from 'next/navigation';
+import HeaderMobileAccordion from './HeaderMobileAccordion';
+import useMobile from '../hooks/useMobile';
 
 interface HeaderProps {
   headerColor: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ headerColor }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const JetInsightComponent = dynamic(() => import('../components/JetInsight/JetInsightComponent'), {
+  ssr: false,
+});
 
-  const toggleNavbar = () => {
-    setIsOpen(!isOpen);
+const Header: React.FC = () => {
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const pathName = usePathname()
+
+  const headerRef = useRef<HTMLElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isHoveringDropdown, setIsHoveringDropdown] = useState(false);
+  const { config } = useConfig();
+  const headerColor = config?.header_color || "#ffffff";  // Default color if config is not loaded yet
+  const router = useRouter();
+  const isMobile = useMobile({
+    breakPoint: 1024
+  })
+
+  const handleDropdownHover = (dropdown: string) => {
+    setActiveDropdown(dropdown);
   };
 
-  return (
-    <header className="relative w-full z-[1000]">
-      <nav className="relative w-full transition-transform duration-500 shadow-none" style={{ backgroundColor: headerColor }}>
-        <div className="flex justify-between items-center px-5 py-2.5 relative">
-          <Link href="/" className="flex items-center">
-            <Image src="/images/CSM-Logo-WHITE-01-web300.jpg" alt="CSM Aviation" width={60} height={60} className="invert" />
+  const handleDropdownLeave = () => {
+    if (!isHoveringDropdown) {
+      setActiveDropdown(null);
+    }
+  };
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
+        setActiveDropdown(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+  
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathName])
+
+  const NavItems = () => (
+    <>
+      <li
+        className="relative group"
+        onMouseEnter={() => handleDropdownHover('charter')}
+      >
+        <Link href="/" className={`block p-1.5 text-xl font-bold uppercase transition-all duration-300 ${activeDropdown === 'charter' ? 'text-electric-blue underline' : 'text-white hover:text-electric-blue'}`}>CHARTER</Link>
+      </li>
+      <li onMouseEnter={() => setActiveDropdown(null)}>
+        <Link href="/management" className="block p-1.5 text-xl font-bold text-white uppercase transition-all duration-300 hover:text-electric-blue">MANAGEMENT</Link>
+      </li>
+      <li onMouseEnter={() => setActiveDropdown(null)}>
+        <Link href="/maintenance" className="block p-1.5 text-xl font-bold text-white uppercase transition-all duration-300 hover:text-electric-blue">MAINTENANCE</Link>
+      </li>
+      <li
+        className="relative group"
+        onMouseEnter={() => handleDropdownHover('company')}
+      >
+        <Link href="/" className={`block p-1.5 text-xl font-bold uppercase transition-all duration-300 ${activeDropdown === 'company' ? 'text-electric-blue underline' : 'text-white hover:text-blue-600'}`}>COMPANY</Link>
+      </li>
+    </>
+  );
+
+  const handleLoginClick = () => {
+    router.push('/admin/login');
+  };
+
+  if (isMobile) {
+    return (
+      <header ref={headerRef} className="relative top-0 left-0 w-full z-50" style={{ backgroundColor: headerColor }}>
+        <div className=" w-full  flex  items-center px-5 py-3">
+          <Link href="/" className="flex-shrink-0">
+            <Image src="/images/whitebgcsmlogo.png" alt="CSM Aviation" width={60} height={60} />
           </Link>
-          <div className={`flex-grow justify-center ${isOpen ? 'fixed top-[60px] right-0 w-full h-[calc(100vh-60px)] bg-white flex-col items-center justify-start transition-all duration-1000 ease-out opacity-100 overflow-y-auto' : 'hidden lg:flex'}`}>
-            <ul className="flex lg:flex-row flex-col items-center w-full lg:w-auto pt-5 lg:pt-0">
-              <li className="dropdown relative lg:mx-5 my-2.5 lg:my-0 w-full lg:w-auto text-center">
-                <Link href="/charter" onClick={toggleNavbar} className="block relative p-1.5 text-2xl font-bold font-['Source Sans Pro'] text-gray-800 uppercase transition-all duration-500 hover:underline hover:text-blue-600">CHARTER</Link>
-                <div className="dropdown-content hidden group-hover:block absolute left-0 right-0 w-screen bg-[#bdae7a] z-[1] py-5 text-center box-border ml-[calc(-50vw+50%)] max-h-0 overflow-hidden transition-all duration-300 ease-out group-hover:max-h-[300px]">
-                  <div className="submenu flex flex-col items-center max-w-[1200px] mx-auto">
-                    <Link href="/charter/Quote" className="text-gray-800 py-3 px-4 text-sm uppercase transition-colors duration-300 hover:text-[#b19e58] hover:font-bold">Instant Quote</Link>
-                    <Link href="/charter/trip" className="text-gray-800 py-3 px-4 text-sm uppercase transition-colors duration-300 hover:text-[#b19e58] hover:font-bold">Trip Request</Link>
-                    <Link href="/charter/fleet" className="text-gray-800 py-3 px-4 text-sm uppercase transition-colors duration-300 hover:text-[#b19e58] hover:font-bold">FLEET</Link>
-                  </div>
-                </div>
-              </li>
-              <li className="lg:mx-5 my-2.5 lg:my-0 w-full lg:w-auto text-center">
-                <Link href="/management" onClick={toggleNavbar} className="block relative p-1.5 text-2xl font-bold font-['Source Sans Pro'] text-gray-800 uppercase transition-all duration-500 hover:underline hover:text-blue-600">MANAGEMENT</Link>
-              </li>
-              <li className="lg:mx-5 my-2.5 lg:my-0 w-full lg:w-auto text-center">
-                <Link href="/maintenance" onClick={toggleNavbar} className="block relative p-1.5 text-2xl font-bold font-['Source Sans Pro'] text-gray-800 uppercase transition-all duration-500 hover:underline hover:text-blue-600">MAINTENANCE</Link>
-              </li>
-              <li className="dropdown relative lg:mx-5 my-2.5 lg:my-0 w-full lg:w-auto text-center">
-                <Link href="/company" onClick={toggleNavbar} className="block relative p-1.5 text-2xl font-bold font-['Source Sans Pro'] text-gray-800 uppercase transition-all duration-500 hover:underline hover:text-blue-600">COMPANY</Link>
-                <div className="dropdown-content hidden group-hover:block absolute left-0 right-0 w-screen bg-[#bdae7a] z-[1] py-5 text-center box-border ml-[calc(-50vw+50%)] max-h-0 overflow-hidden transition-all duration-300 ease-out group-hover:max-h-[300px]">
-                  <div className="submenu flex flex-col items-center max-w-[1200px] mx-auto">
-                    <Link href="/company/about" className="text-gray-800 py-3 px-4 text-sm uppercase transition-colors duration-300 hover:text-[#b19e58] hover:font-bold">About Us</Link>
-                    <Link href="/company/team" className="text-gray-800 py-3 px-4 text-sm uppercase transition-colors duration-300 hover:text-[#b19e58] hover:font-bold">Contact</Link>
-                  </div>
-                </div>
+
+          {/* Login Button */}
+          <button
+            onClick={handleLoginClick}
+            className="absolute top-2 right-4 bg-transparent text-white hover:text-blue-500 transition-colors duration-300"
+          >
+            <FontAwesomeIcon icon={faUser} className="mr-2" />
+            Login
+          </button>
+
+
+          {/* Mobile Menu Button */}
+          <button
+            className="text-gray-800 focus:outline-none w-full mt-2 flex justify-end"
+            onClick={toggleMobileMenu}
+          >
+            <FontAwesomeIcon className='text-white' icon={mobileMenuOpen ? faTimes : faBars} size="lg" />
+          </button>
+
+        </div>
+
+
+
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div style={{ backgroundColor: headerColor }}>
+            <ul className="flex flex-col items-center py-4">
+              <HeaderMobileAccordion />
+              <li className="mt-4">
+                <a href="tel:+18884359276" className="text-white transition-colors duration-300 hover:text-gray-200">
+                  <FontAwesomeIcon icon={faPhone} size="lg" /> Call Us
+                </a>
               </li>
             </ul>
           </div>
-          <div className="flex items-center gap-3.5 ml-auto">
-            <a href="tel:+8884359276" className="text-gray-800 transition-colors duration-300 hover:text-blue-600 hidden lg:block">
-              <FontAwesomeIcon icon={faPhone} size="2x" />
-            </a>
-            {/* <JetInsightLink /> */}
-            <div id="mobile" onClick={toggleNavbar} className="cursor-pointer text-black text-2xl lg:hidden">
-              <FontAwesomeIcon icon={isOpen ? faTimes : faBars} />
+        )}
+        <Script
+          src='https://client.jetinsight.com/embed/126d130e-be91-4071-a8dc-2f94b609c239/empty'
+          strategy="afterInteractive"
+        />
+      </header>
+    );
+  }
+
+  return (
+    <header ref={headerRef} className="relative top-0 left-0 w-full z-50" style={{ backgroundColor: headerColor }}>
+      <div className=" w-full  flex  items-center px-5 py-3">
+        <Link href="/" className="flex-shrink-0">
+          <Image src="/images/whitebgcsmlogo.png" alt="CSM Aviation" className='p-2' width={120} height={120} />
+        </Link>
+
+        {/* Login Button */}
+        <button
+          onClick={handleLoginClick}
+          className="absolute top-3 right-6 bg-transparent text-white hover:text-blue-500 transition-colors duration-300"
+        >
+          <FontAwesomeIcon icon={faUser} className="mr-2" />
+          Login
+        </button>
+
+        <nav className="hidden lg:flex flex-grow justify-center">
+          <ul className=" flex space-x-8">
+            <NavItems />
+          </ul>
+        </nav>
+
+
+
+        {/* Desktop CTA */}
+        <div className="hidden lg:flex items-center space-x-4">
+          <a href="tel:+18884359276" className="text-gray-800 transition-colors duration-300 hover:text-blue-600">
+            <FontAwesomeIcon className='hover:text-blue-600' color='#23B2EE' icon={faPhone} size="lg" />
+          </a>
+          <JetInsightComponent />
+        </div>
+      </div>
+
+      {/* Full-width Dropdown Menu */}
+      {activeDropdown && (
+        <div
+          ref={dropdownRef}
+          className="absolute left-0 w-full py-8 hidden lg:block"
+          onMouseEnter={() => setIsHoveringDropdown(true)}
+          onMouseLeave={() => {
+            setIsHoveringDropdown(false);
+            setActiveDropdown(null);
+          }}
+          style={{ backgroundColor: headerColor }}
+        >
+          <div className="container mx-auto flex justify-center">
+            <div className="flex flex-col items-center space-y-4">
+              {activeDropdown === 'charter' && (
+                <>
+                  <Link href="/charter/quote" className="text-xl text-white  hover:text-electric-blue hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>INSTANT QUOTE</Link>
+                  <Link href="/charter/trip" className="text-xl text-white   hover:text-electric-blue hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>TRIP REQUEST</Link>
+                  <Link href="/charter/fleet" className="text-xl text-white  hover:text-electric-blue hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>FLEET</Link>
+                </>
+              )}
+              {activeDropdown === 'company' && (
+                <>
+                  <Link href="/company/about" className="text-xl text-white  hover:text-electric-blue hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>ABOUT US</Link>
+                  <Link href="/company/contact" className="text-xl text-white  hover:text-electric-blue hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>CONTACT</Link>
+                </>
+              )}
             </div>
           </div>
         </div>
-      </nav>
+      )}
+
+
+
+      <Script
+        src='https://client.jetinsight.com/embed/126d130e-be91-4071-a8dc-2f94b609c239/empty'
+        strategy="afterInteractive"
+      />
     </header>
   );
 };

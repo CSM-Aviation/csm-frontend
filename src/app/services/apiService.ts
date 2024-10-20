@@ -1,13 +1,15 @@
 // services/apiService.ts
 
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 const api = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
+    'X-API-Key': API_KEY
   },
 });
 
@@ -20,6 +22,62 @@ interface ErrorResponse {
   message?: string;
 }
 
+export interface SeoData {
+  _id?: string;
+  page?: string;
+  title: string;
+  description: string;
+  keywords: string[];
+  ogImage: string;
+  canonicalUrl: string;
+  robots: string;
+  author: string;
+  language: string;
+  siteName: string;
+  type: 'website' | 'article' | 'book' | 'profile'; // Restrict to allowed types
+  twitterHandle: string;
+  publishedTime?: string;
+  modifiedTime?: string;
+  section?: string;
+  tags?: string[];
+
+}
+
+// New: Cache implementation
+interface CacheItem<T> {
+  data: T;
+  expiry: number;
+}
+
+
+const cache: { [key: string]: CacheItem<any> } = {};
+const DEFAULT_CACHE_TIME = 5 * 60 * 1000; // 5 minutes
+
+// New: Function to get cached data or fetch new data
+async function getCachedData<T>(
+  key: string,
+  fetchFunction: () => Promise<ApiResponse<T>>,
+  cacheTime: number = DEFAULT_CACHE_TIME
+): Promise<ApiResponse<T>> {
+  const now = Date.now();
+  const cachedItem = cache[key];
+
+  if (cachedItem && now < cachedItem.expiry) {
+    return { data: cachedItem.data, error: null };
+  }
+
+  const response = await fetchFunction();
+
+  if (!response.error) {
+    cache[key] = {
+      data: response.data,
+      expiry: now + cacheTime
+    };
+  }
+
+  return response;
+}
+
 async function handleApiResponse<T>(promise: Promise<AxiosResponse<T>>): Promise<ApiResponse<T>> {
   try {
     const response = await promise;
@@ -27,20 +85,50 @@ async function handleApiResponse<T>(promise: Promise<AxiosResponse<T>>): Promise
   } catch (error) {
     const axiosError = error as AxiosError<ErrorResponse>;
     console.error('API Error:', axiosError.response?.data || axiosError.message);
-    return { 
-      data: null, 
-      error: axiosError.response?.data?.message ?? axiosError.message ?? 'An unknown error occurred' 
+    return {
+      data: null,
+      error: axiosError.response?.data?.message ?? axiosError.message ?? 'An unknown error occurred'
     };
   }
 }
 
+// Check if localStorage is available
+const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
+
+// Add a request interceptor to include the token in requests
+api.interceptors.request.use((config) => {
+  if (isLocalStorageAvailable) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
+
+
 export const apiService = {
-  async get<T>(endpoint: string): Promise<ApiResponse<T>> {
-    return handleApiResponse(api.get<T>(endpoint));
+  async get<T>(endpoint: string, cacheTime?: number): Promise<ApiResponse<T>> {
+    return getCachedData<T>(
+      endpoint,
+      () => handleApiResponse(api.get<T>(endpoint)),
+      cacheTime
+    );
   },
 
-  async post<T>(endpoint: string, data: any): Promise<ApiResponse<T>> {
-    return handleApiResponse(api.post<T>(endpoint, data));
+  // New: Method to clear cache
+  clearCache(endpoint?: string) {
+    if (endpoint) {
+      delete cache[endpoint];
+    } else {
+      Object.keys(cache).forEach(key => delete cache[key]);
+    }
+  },
+
+  async post<T>(endpoint: string, data: any, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
+    return handleApiResponse(api.post<T>(endpoint, data, config));
   },
 
   async put<T>(endpoint: string, data: any): Promise<ApiResponse<T>> {
@@ -51,6 +139,43 @@ export const apiService = {
     return handleApiResponse(api.delete<T>(endpoint));
   },
 
+  // New auth methods
+  async login(username: string, password: string): Promise<ApiResponse<{ token: string }>> {
+    return handleApiResponse(api.post<{ token: string }>('/api/auth/login', { username, password }));
+  },
+
+  async logout(): Promise<ApiResponse<void>> {
+    return handleApiResponse(api.post<void>('/api/auth/logout'));
+  },
+
+  // New analytics methods
+  async trackPageView(data: PageViewData): Promise<ApiResponse<void>> {
+    return handleApiResponse(api.post<void>('/api/analytics/pageview', data));
+  },
+
+  async getAnalyticsDashboard(): Promise<ApiResponse<AnalyticsDashboardData>> {
+    return handleApiResponse(api.get<AnalyticsDashboardData>('/api/analytics/dashboard'));
+  },
+
+  async fetchFleet(cacheTime?: number): Promise<ApiResponse<FleetItem[]>> {
+    return this.get<FleetItem[]>('/api/fleet', cacheTime);
+  },
+
+  async fetchSeoData(page: string): Promise<ApiResponse<SeoData>> {
+    // For SEO data, we don't need authentication, so we can bypass the token check
+    return handleApiResponse(api.get<SeoData>(`/api/seo/${page}`, {
+      headers: { Authorization: undefined }
+    }));
+  },
+
+  // New SEO configuration methods
+  async getAllSeoConfigurations(): Promise<ApiResponse<SeoData[]>> {
+    return this.get<SeoData[]>('/api/seo/configurations/all');
+  },
+
+  async updateSeoConfiguration(id: string, config: Partial<SeoData>): Promise<ApiResponse<void>> {
+    return this.put<void>(`/api/seo/configurations/${id}`, config);
+  },
   // Add more methods as needed
 };
 
@@ -63,4 +188,80 @@ export interface Config {
   home_video: string;
 }
 
+
+export interface FleetItem {
+  _id: string;
+  aircraftName: string;
+  registration: string;
+  seats: string;
+  lavatory: string;
+  altitude: string;
+  cabinHeight: string;
+  cabinLength: string;
+  cabinWidth: string;
+  description: string;
+  doorHeight: string;
+  doorWidth: string;
+  luggageCapacity: string;
+  range: string;
+  speed: string;
+  wifi: string;
+  amenities: string;
+  category: string;
+  yom: string;
+  imageUrls: string[];
+}
+
+// Add this new function to fetch fleet data
+export const fetchFleet = () => apiService.get<FleetItem[]>('/api/fleet');
+
+
+// New trip request interface
+export interface TripRequest {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  aircraftType: string;
+  tripType: string;
+  departureLocation: string;
+  startDate: string;
+  departureTime: string;
+  destinationLocation: string;
+  returnDate?: string;
+  returnTime?: string;
+  tripDetails: string;
+}
+
+// New type definitions for analytics
+export interface PageViewData {
+  sessionId: string;
+  timestamp: string;
+  url: string;
+  path: string;
+  referrer: string;
+  userAgent: string;
+  screenResolution: string;
+  language: string;
+  pageViews: number;
+  city: string;
+  region: string;
+  country: string;
+}
+
+export interface AnalyticsDashboardData {
+  totalVisitors: number;
+  totalPageViews: number;
+  newUsers: number;
+  dates: string[];
+  pageViews: number[];
+  userLocations: { [key: string]: number };
+  pagesVisited: { [key: string]: number };
+  visitorTrend: { date: string; visitors: number }[];
+}
+
+export const submitTripRequest = (data: TripRequest) => apiService.post<{ message: string; id: string }>('/api/trip-request', data);
+
 // Add more specific API calls as needed
+
+export const testCORS = () => apiService.get('/test-cors');
