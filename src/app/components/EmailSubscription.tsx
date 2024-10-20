@@ -35,7 +35,7 @@ const EmailSubscription: React.FC = () => {
       <h2 className="md:text-3xl font-bold mb-4">
         Subscribe to our CSM offers, special updates<br />and much more ...
       </h2>
-      <form onSubmit={handleSubmit} className='flex gap-2'>
+      <form onSubmit={handleSubmit} className="flex flex-col  max-sm:w-1/2 sm:flex-row gap-2 max-w-md mx-auto sm:mx-0">
         <input
           type="email"
           value={email}
@@ -46,7 +46,7 @@ const EmailSubscription: React.FC = () => {
         />
         <button
           type="submit"
-          className="px-6 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition duration-300 ease-in-out"
+          className="px-6 py-2 bg-blue-500 hover:translate-y-[-5px] hover:duration-300 ease-in-out text-white font-semibold rounded-md hover:bg-blue-600 transition duration-300"
         >
           Join now
         </button>

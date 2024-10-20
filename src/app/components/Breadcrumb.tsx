@@ -1,5 +1,4 @@
-"use client"
-
+'use client'
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -13,19 +12,20 @@ const Breadcrumb: React.FC = () => {
     }
 
     return (
-        <nav className="flex container mx-auto px-4 py-4" aria-label="Breadcrumb">
+        <div className="absolute top-29 md:mt-5  w-1/5  z-50 px-4 py-4 " aria-label="Breadcrumb">
             <ol className="inline-flex items-center space-x-2">
                 {pathSegments.map((segment, index) => {
                     const href = `/${pathSegments.slice(0, index + 1).join('/')}`;
                     const isLast = index === pathSegments.length - 1;
                     return (
                         <React.Fragment key={segment}>
-                            {index > 0 && <span className="text-gray-400 text-lg">/</span>}
+                            {index > 0 && <span className="text-black text-lg">/</span>}
                             <li>
                                 <Link
                                     href={href}
-                                    className={`text-lg font-medium ${isLast ? 'text-gray-500 cursor-default' : 'text-[#004080] hover:text-electric-blue'
-                                        }`}
+                                    className={`md:text-3xl  font-medium ${
+                                        isLast ? 'text-black cursor-default' : 'text-black hover:text-red-500'
+                                    }`}
                                     aria-current={isLast ? 'page' : undefined}
                                 >
                                     {segment.toUpperCase().replace(/-/g, ' ')}
@@ -35,7 +35,7 @@ const Breadcrumb: React.FC = () => {
                     );
                 })}
             </ol>
-        </nav>
+        </div>
     );
 };
 

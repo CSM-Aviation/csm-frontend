@@ -30,8 +30,14 @@ const FleetContent: React.FC = () => {
           alt="Aircraft on runway"
           priority
         />
-        <div className='absolute inset-0 bg-black bg-opacity-10 flex items-center px-4'>
-          {/* <h1 className='text-4xl md:text-6xl font-bold text-white mb-4 max-w-4xl'>Explore your Fleet</h1> */}
+        <div className='absolute inset-0  flex flex-col justify-center items-center'>
+         
+          <button
+              className='bg-electric-blue r text-black  hover:translate-y-[-5px]  hover:duration-300 ease-in-out rounded-lg px-1 py=1 md:px-6 md:py-6 text-lg font-semibold hover:bg-gray-200 transition'
+              onClick={scrollToTuvoliWidget}
+            >
+              JET CHARTER QUOTE
+            </button>
         </div>
       </div>
       <div className='p-4'>

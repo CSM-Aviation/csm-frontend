@@ -1,10 +1,19 @@
 // src/components/ManagementMotion.tsx
 "use client";
-
+import dynamic from 'next/dynamic';
 import { motion } from "framer-motion";
 import Image from 'next/image';
+import { useRouter } from "next/navigation";
 
 const ManagementMotion = () => {
+  const router = useRouter();
+  const handleClick = () => {
+      router.push('/company/contact');
+  };
+  const JetInsightComponent = dynamic(() => import('../components/JetInsight/JetInsightComponent2'), {
+      ssr: false,
+    });
+  
   return (
     <div className="overflow-x-hidden w-full">
       {/* Hero Section */}
@@ -33,6 +42,15 @@ const ManagementMotion = () => {
           >
             Creating and curating an unmatched aircraft ownership experience every day.
           </motion.p>
+          <motion.button
+        initial={{ opacity: 0, y: 60 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2}}
+        onClick={handleClick}
+        className='bg-electric-blue mt-6 flex items-center justify-center hover:translate-y-[-5px] rounded-xl hover:duration-300 ease-in-out text-black px-1 py-2 md:px-6 md:py-3 text-lg font-semibold hover:bg-white transition'
+      >
+        MANAGEMENT INQUIRY
+      </motion.button>
         </div>
       </div>
 

@@ -1,13 +1,25 @@
+'use client'
 import React from 'react';
 import Image from 'next/image';
-
+import dynamic from 'next/dynamic';
+const JetInsightComponent = dynamic(() => import('../../components/JetInsight/JetInsightComponent2'), {
+  ssr: false,
+});
+       
 const AboutUsComponent = () => {
   return (
     <div className="w-full ">
       {/* Dedicated People Section */}
       <section className=" py-16">
+
+      
         
         <div className="container mx-auto px-4">
+          <div className='flex items-center justify-center mb-10'>
+
+<JetInsightComponent/>
+          </div>
+        
           <h2 className="text-4xl font-bold text-center mb-8 text-blue-900">Dedicated People Dedicated to Private Aviation</h2>
           <div className="max-w-4xl mx-auto bg-gray-100 p-8 rounded-lg shadow-lg">
             <p className="text-lg text-gray-700 leading-relaxed">
@@ -75,10 +87,10 @@ const AboutUsComponent = () => {
             <div className="md:w-1/2">
               <div className="relative w-full h-[500px] rounded-lg overflow-hidden shadow-2xl">
                 <Image
-                  src="/images/about.jpg"
+                  src="/images/aboutlatest.png"
                   alt="CSM Aviation Team"
                   layout="fill"
-                  objectFit="cover"
+                  objectFit="contain"
                 />
               </div>
             </div>
