@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useEffect, useRef } from 'react';
 import styles from './JetInsight2.module.scss';
 
