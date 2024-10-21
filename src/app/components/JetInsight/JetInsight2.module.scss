@@ -1,6 +1,10 @@
 .jetInsightOut {
-    display: flex;
-  }
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  width: 100%; /* Ensure full width */
+  height: 100%; /* Ensure full height */
+}
   
   .jetinsightEmbeddedRequestButton {
     align-items: center !important;

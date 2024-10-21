@@ -53,12 +53,16 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, videoSource, title, subtit
             <div className="absolute inset-0 bg-black opacity-50"></div>
           </div>
         )}
-        <div className="relative z-10 flex flex-col justify-center items-center h-full text-white px-4">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 text-center">{title}</h1>
-          <p className="text-xl md:text-2xl mb-8 text-center">{subtitle}</p>
-          {isHome && 
-          <JetInsightComponent/>}
-        </div>
+   <div className="relative z-10 flex flex-col justify-center items-center h-full text-white px-4">
+  <h1 className="text-4xl md:text-6xl font-bold mb-4 text-center">{title}</h1>
+  <p className="text-xl md:text-2xl mb-8 text-center">{subtitle}</p>
+  {isHome && (
+    <div className="flex justify-center items-center w-full"> {/* Ensure JetInsight is centered */}
+       <JetInsightComponent /> 
+    
+    </div>
+  )}
+</div>
       </section>
     </>
   );

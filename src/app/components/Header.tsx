@@ -100,9 +100,10 @@ const Header: React.FC = () => {
           <Link href="/" className="flex-shrink-0">
             <Image src="/images/whitebgcsmlogo.png" alt="CSM Aviation" width={60} height={60} />
           </Link>
-          <a href="tel:+18884359276" className="  flex gap-2 mt-2  absolute left-1/2  justify-center items-center text-white transition-colors duration-300 hover:text-gray-200">
-                  <FontAwesomeIcon icon={faPhone} size="lg" />(888) I-FLY-CSM
-                </a>
+          <a href="tel:+18884359276" className="flex gap-2 mt-2 absolute left-1/2 transform -translate-x-1/2 justify-center items-center text-white transition-colors duration-300 hover:text-gray-200 sm:block md:hidden">
+  <FontAwesomeIcon icon={faPhone} size="lg" /> (888) I-FLY-CSM
+</a>
+
           {/* Login Button */}
           <button
             onClick={handleLoginClick}
