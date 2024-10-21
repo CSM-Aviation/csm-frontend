@@ -186,6 +186,8 @@ export const fetchConfig = () => apiService.get<Config>('/api/config');
 export interface Config {
   header_color: string;
   home_video: string;
+  f1_video1:string;
+  f1_video2:string;
 }
 
 

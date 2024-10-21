@@ -45,9 +45,11 @@ const ManagementMotion = () => {
           <motion.button
         initial={{ opacity: 0, y: 60 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2}}
+      
         onClick={handleClick}
-        className='bg-electric-blue mt-6 flex items-center justify-center hover:translate-y-[-5px] rounded-xl hover:duration-300 ease-in-out text-black px-1 py-2 md:px-6 md:py-3 text-lg font-semibold hover:bg-white transition'
+        whileHover={{ translateY: -15 }}  // Add this for Framer Motion hover effect
+        transition={{ duration: 0.1, delay: 0.1 }}
+        className='bg-electric-blue     mt-6 flex items-center justify-center hover:translate-y-[-5px] rounded-xl hover:duration-300 ease-in-out text-black px-1 py-2 md:px-6 md:py-3 text-lg font-semibold hover:bg-white transition'
       >
         MANAGEMENT INQUIRY
       </motion.button>
