@@ -216,7 +216,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
             href={pdfUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-black bg-electric-blue border-gray-400 border-2 font-bold py-3 px-6 rounded-xl hover:bg-white hover:text-black transition duration-300"
+            className="text-black bg-electric-blue hover:translate-y-[-5px] border-gray-400 border-2 font-bold py-3 px-6 rounded-xl hover:bg-white hover:text-black transition duration-300"
           >
             Download Aircraft Details
           </a>
