@@ -7,8 +7,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import MessageDeskChatbot from './MessageDeskChatbot';
 import EmailSubscription from './EmailSubscription';
+import { usePathname } from 'next/navigation';
+import MessageDeskController from './MessageDeskChatbot';
 
 const Footer: React.FC = () => {
+  const pathname = usePathname();
+  const shouldHideChatbot = pathname === '/f1race';
+
   return (
     <footer className="bg-[#004080] text-white py-16">
       <div className="container mx-auto px-4">
@@ -94,7 +99,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
 
-      <MessageDeskChatbot />
+      <MessageDeskController shouldHide={shouldHideChatbot} />
     </footer>
   );
 };
