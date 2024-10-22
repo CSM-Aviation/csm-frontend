@@ -1,7 +1,7 @@
 'use client'
 import React, { useRef } from 'react';
 import { useConfig } from '../contexts/ConfigContext';
-import Hero1 from '../components/Hero';
+import Hero1 from '../components/Hero1';
 import Image from 'next/image';
 import img1 from "../../../public/images/F1/f1img1.jpeg";
 import img2 from "../../../public/images/F1/f1img2.jpeg";
@@ -93,7 +93,6 @@ export default function F1Race() {
                     CONTACT US
                 </button>
             </div>
-
 
 
         </div>
