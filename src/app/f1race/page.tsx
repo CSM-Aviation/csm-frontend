@@ -6,6 +6,7 @@ import Image from 'next/image';
 import img1 from "../../../public/images/F1/f1img1.jpeg";
 import img2 from "../../../public/images/F1/f1img2.jpeg";
 import { useRouter } from "next/navigation";
+import Countdown from '../components/Countdown';
 import dynamic from 'next/dynamic';
 const TuvoliWidget = dynamic(() => import('../components/TuvoliWidget'), {
     ssr: false,
@@ -32,7 +33,7 @@ export default function F1Race() {
     }
 
     return (
-        <div className="bg-gray-100">
+        <div className="bg-white">
             <Hero1
                 backgroundImage="/images/hero-background.jpg"
                 videoSource={`${config.f1_video1}`}
@@ -41,15 +42,27 @@ export default function F1Race() {
                 isHome={true}
             />
 
-            <div className="max-w-7xl bg-white  mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="max-w-7xl   mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <h1 className="text-4xl  font-bold text-center mb-8 text-gray-800">
                     Indulge in the Thrill: F1 Vegas Grand Prix with Our Luxury Charter
                 </h1>
                 <p className="text-xl text-center mb-12 text-gray-600">
                     Experience the pinnacle of luxury travel as you embark on a journey to the Las Vegas F1 Grand Prix.
                 </p>
+                <div className="flex flex-col max-lg:p-2 items-center justify-center min-h-screen bg-black">
+                    <Countdown />
+                    <p className="text-xl w-3/4 mt-10 text-center mb-12 text-gray-400">
+                        F1® RETURNS TO LAS VEGAS
+                        NOVEMBER 21-23, 2024
+                        Formula 1® makes its return to the Sports and Entertainment Capital of the World on November 21-23, 2024 for the can’t-miss race of the year.
 
-                <div className="grid   md:grid-cols-2 gap-8 items-center mb-12">
+
+
+                        The Las Vegas Grand Prix’s 3.8-mile track weaves past world-famous landmarks, casinos and hotels, cutting right through the neon heart of The Strip as drivers hit top speeds of up to 217 mph.
+                    </p>
+                </div>
+
+                <div className="grid mt-10  md:grid-cols-2 gap-8 items-center mb-12">
                     <Image src={img2} alt="Luxurious private jet" className="rounded-lg shadow-lg" />
                     <div>
                         <h2 className="text-2xl font-semibold mb-4 text-gray-800">Our Exclusive Charter Service</h2>
