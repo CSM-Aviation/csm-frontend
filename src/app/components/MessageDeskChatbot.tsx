@@ -11,12 +11,26 @@ declare global {
   }
 }
 
-const MessageDeskChatbot: React.FC = () => {
+interface MessageDeskControllerProps {
+  shouldHide?: boolean;
+}
+
+const MessageDeskController: React.FC<MessageDeskControllerProps> = ({ shouldHide = false }) => {
+
+
+
   useEffect(() => {
+
+    if (shouldHide) {
+      return
+    }
+
     const script = document.createElement('script');
     script.src = "https://api.snapdesk.app/chatbot?key=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGVuYW50X2lkIjoxOTc4MCwiY3JlYXRlZF9hdCI6IjIwMjQtMDctMDVUMjM6MjQ6MjkuOTg4NDI2WiJ9.DAUXkHvLFzYsW-xcuoO6U2hEHUMplZTzYwyjc8Q-NVw";
     script.async = true;
     document.body.appendChild(script);
+
+
 
     return () => {
       document.body.removeChild(script);
@@ -29,8 +43,12 @@ const MessageDeskChatbot: React.FC = () => {
     }
   };
 
+  if (shouldHide) {
+    return null
+  }
+
   return (
-    <button 
+    <button
       onClick={openChatbot}
       className="fixed bottom-8 right-8 bg-white text-black p-3 rounded-full shadow-lg hover:bg-gray-200 transition duration-300"
       aria-label="Open chat"
@@ -40,4 +58,4 @@ const MessageDeskChatbot: React.FC = () => {
   );
 };
 
-export default MessageDeskChatbot;
+export default MessageDeskController;
