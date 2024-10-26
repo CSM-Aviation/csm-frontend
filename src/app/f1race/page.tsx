@@ -35,7 +35,7 @@ export default function F1Race() {
         <div className="bg-gray-100">
             <Hero1
                 backgroundImage="/images/hero-background.jpg"
-                videoSource={`${config.f1_video2}`}
+                videoSource={`${config.f1_video1}`}
                 title=""
                 subtitle=""
                 isHome={true}
