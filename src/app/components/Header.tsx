@@ -133,9 +133,9 @@ const Header: React.FC = () => {
             <ul className="flex flex-col items-center py-4">
               <HeaderMobileAccordion />
               <li className="mt-4">
-                <a href="tel:+18884359276" className="text-white transition-colors duration-300 hover:text-gray-200">
+                {/* <a href="tel:+18884359276" className="text-white transition-colors duration-300 hover:text-gray-200">
                   <FontAwesomeIcon icon={faPhone} size="lg" /> Call Us
-                </a>
+                </a> */}
               </li>
             </ul>
           </div>
