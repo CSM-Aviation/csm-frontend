@@ -58,3 +58,25 @@ body {
 .align-baseline {
   vertical-align: baseline;
 }
+/* Optional: Add these styles if you want the video to take up the full width of the screen */
+.video-container {
+  width: 100vw;
+  max-width: 100%;
+  position: relative;
+  background-color: black;
+}
+
+/* Optional: Add these styles if you want to maintain a specific aspect ratio */
+.video-container::before {
+  content: "";
+  display: block;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
+
+.video-container > * {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

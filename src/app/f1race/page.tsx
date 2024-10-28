@@ -7,6 +7,7 @@ import img1 from "../../../public/images/F1/f1img1.jpeg";
 import img2 from "../../../public/images/F1/f1img2.jpeg";
 import { useRouter } from "next/navigation";
 import Countdown from '../components/Countdown';
+import VideoPlayer from '../components/VideoPlayer';
 import dynamic from 'next/dynamic';
 const TuvoliWidget = dynamic(() => import('../components/TuvoliWidget'), {
     ssr: false,
@@ -34,13 +35,9 @@ export default function F1Race() {
 
     return (
         <div className="bg-white">
-            <Hero1
-                backgroundImage="/images/hero-background.jpg"
-                videoSource={`${config.f1_video1}`}
-                title=""
-                subtitle=""
-                isHome={true}
-            />
+                <div className="relative w-full">
+                <VideoPlayer videoUrl={config.f1_video1} />
+            </div>
 
             <div className="max-w-7xl   mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <h1 className="text-4xl  font-bold text-center mb-8 text-gray-800">
