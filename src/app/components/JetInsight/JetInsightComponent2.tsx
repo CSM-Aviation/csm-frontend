@@ -39,7 +39,7 @@ const JetInsightComponent: React.FC = () => {
           id="jetinsight-embedded-request-open-button"
           className={styles.jetinsightEmbeddedRequestButton}
         >
-          Request a quote
+           REQUEST QUOTE
         </button>
       </div>
       <div id="jetinsight-embedded-request-modal" ref={modalRef} className={styles.jetinsightEmbeddedRequestModal}>
