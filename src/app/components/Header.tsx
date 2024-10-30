@@ -98,11 +98,11 @@ const Header: React.FC = () => {
       <header ref={headerRef} className="relative top-0 left-0 w-full z-50" style={{ backgroundColor: headerColor }}>
         <div className=" w-full  flex  items-center px-5 py-3">
           <Link href="/" className="flex-shrink-0">
-            <Image src="/images/whitebgcsmlogo.png" alt="CSM Aviation" width={60} height={60} />
+            <Image src="/images/whitebgcsmlogo.png" alt="CSM Aviation" width={50} height={50} />
           </Link>
           <a href="tel:+18884359276" className="flex gap-2 mt-2 absolute left-1/2 transform -translate-x-1/2 justify-center items-center text-white transition-colors duration-300 hover:text-gray-200 sm:block md:hidden">
-  <FontAwesomeIcon icon={faPhone} size="lg" /> (888) I-FLY-CSM
-</a>
+          <FontAwesomeIcon icon={faPhone} size="lg" /> (888) I-FLY-CSM
+          </a>
 
           {/* Login Button */}
           <button
@@ -152,7 +152,7 @@ const Header: React.FC = () => {
     <header ref={headerRef} className="relative top-0 left-0 w-full z-50" style={{ backgroundColor: headerColor }}>
       <div className=" w-full  flex  items-center px-5 py-3">
         <Link href="/" className="flex-shrink-0">
-          <Image src="/images/whitebgcsmlogo.png" alt="CSM Aviation" className='p-2' width={120} height={120} />
+          <Image src="/images/whitebgcsmlogo.png" alt="CSM Aviation" className='p-2' width={100} height={100} />
         </Link>
 
         {/* Login Button */}
@@ -197,9 +197,10 @@ const Header: React.FC = () => {
             <div className="flex flex-col items-center space-y-4">
               {activeDropdown === 'charter' && (
                 <>
-                  <Link href="/charter/quote" className="text-xl text-white  hover:text-electric-blue hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>INSTANT QUOTE</Link>
-                  <Link href="/charter/trip" className="text-xl text-white   hover:text-electric-blue hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>TRIP REQUEST</Link>
-                  <Link href="/charter/fleet" className="text-xl text-white  hover:text-electric-blue hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>FLEET</Link>
+                 <Link href="/charter/fleet" className="text-xl text-white  hover:text-electric-blue hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>FLEET</Link>
+                  {/* <Link href="/charter/quote" className="text-xl text-white  hover:text-electric-blue hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>INSTANT QUOTE</Link>
+                  <Link href="/charter/trip" className="text-xl text-white   hover:text-electric-blue hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>TRIP REQUEST</Link> */}
+                 
                 </>
               )}
               {activeDropdown === 'company' && (

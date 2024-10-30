@@ -22,8 +22,8 @@ const HeaderMobileAccordion: React.FC = () => {
         </button>
         {activeAccordion === 'charter' && (
           <div className="pl-8 py-2">
-            <Link href="/charter/quote" className="block py-2 text-white hover:text-blue-600">INSTANT QUOTE</Link>
-            <Link href="/charter/trip" className="block py-2 text-white hover:text-blue-600">TRIP REQUEST</Link>
+            {/* <Link href="/charter/quote" className="block py-2 text-white hover:text-blue-600">INSTANT QUOTE</Link>
+            <Link href="/charter/trip" className="block py-2 text-white hover:text-blue-600">TRIP REQUEST</Link> */}
             <Link href="/charter/fleet" className="block py-2 text-white hover:text-blue-600">FLEET</Link>
           </div>
         )}
