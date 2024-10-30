@@ -149,7 +149,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl }) => {
         )}
 
         {/* JetInsight Component */}
-        <div className="absolute top-1/2  max-md:top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+        <div className="flex absolute top-1/2 justify-center items-center w-full">
           <JetInsightComponent />
         </div>
       </div>

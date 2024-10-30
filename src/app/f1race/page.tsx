@@ -7,6 +7,7 @@ import img1 from "../../../public/images/F1/f1img1.jpeg";
 import img2 from "../../../public/images/F1/f1img2.jpeg";
 import { useRouter } from "next/navigation";
 import Countdown from '../components/Countdown';
+import starsBg from '../../../public/images/stars.png'
 import VideoPlayer from '../components/VideoPlayer';
 import dynamic from 'next/dynamic';
 const TuvoliWidget = dynamic(() => import('../components/TuvoliWidget'), {
@@ -35,7 +36,7 @@ export default function F1Race() {
 
     return (
         <div className="bg-white">
-                <div className="relative w-full">
+            <div className="relative w-full">
                 <VideoPlayer videoUrl={config.f1_video1} />
             </div>
 
@@ -58,7 +59,20 @@ export default function F1Race() {
                         The Las Vegas Grand Prix’s 3.8-mile track weaves past world-famous landmarks, casinos and hotels, cutting right through the neon heart of The Strip as drivers hit top speeds of up to 217 mph.
                     </p>
                 </div>
-
+                {/* <section className='h-[492px]  mt-10 relative bg-black/80 flex items-center'
+                 style={{
+                    backgroundImage: `url(${starsBg.src})`,
+                }}
+                >
+<div className="absolute top-1/2 left-1/2 h-96 w-96 bg-purple-500 rounded-full border border-white/20 -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(50%_50%_at_16.8%_18.3%,white,rgb(184,148,255)_37.7%,rgb(24,0,66))] shadow-[-20px_-20px_50px_rgb(255,255,255,.5),-20px_-20px_80px_rgb(255,255,255,.1),0_0_50px_rgb(140,69,255)]"></div>
+<div className='container relative' >
+                        <h1 className="text-8xl text-white  font-semibold tracking-tighter text-center mt-10 bg-[radial-gradient(120%_120%,white,rgba(255,255,255,0.5))] text-transparent bg-clip-text">
+                            24/7 JET CHARTER SERVICE
+                        </h1>
+                        <div className='flex justify-center mt-5 '> </div>
+                        <p className='  text-lg  text-white/70 mt-5 text-center '>With CSM we can help you book your charter anywhere in the world and help you fly with safety and luxury</p>
+                    </div>
+                </section> */}
                 <div className="grid mt-10  md:grid-cols-2 gap-8 items-center mb-12">
                     <Image src={img2} alt="Luxurious private jet" className="rounded-lg shadow-lg" />
                     <div>
@@ -84,7 +98,7 @@ export default function F1Race() {
                     <Image src={img1} alt="Luxurious private jet interior" className="rounded-lg shadow-lg order-1 md:order-2" />
                 </div>
             </div>
-
+{/* 
             <div ref={tuvoliWidgetRef} className='py-20 bg-white'>
                 <div className='container mx-auto px-4'>
                     <h2 className='text-center text-4xl mb-4'>JET CHARTER QUOTE</h2>
@@ -93,8 +107,8 @@ export default function F1Race() {
                     </p>
                     <TuvoliWidget />
                 </div>
-            </div>
-            <div className=" bg-gray-200 p-6 text-center ">
+            </div> */}
+            {/* <div className=" bg-gray-200 p-6 text-center ">
                 <h3 className="text-2xl font-bold mb-4 text-gray-800">
                     Book your luxury charter today and secure your spot at the Las Vegas F1 Grand Prix.
                 </h3>
@@ -102,7 +116,7 @@ export default function F1Race() {
                 <button onClick={handleClick} className='bg-electric-blue  hover:translate-y-[-5px]  hover:duration-300 ease-in-out text-black rounded-lg px-1 py-1 md:px-6 md:py-3 text-lg font-semibold hover:bg-white transition'>
                     CONTACT US
                 </button>
-            </div>
+            </div> */}
 
 
         </div>
