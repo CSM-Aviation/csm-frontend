@@ -56,7 +56,7 @@ const ServicesCards = () => {
             <div className="container mx-auto px-4 xl:px-0">
                 <h2 className="text-3xl  md:text-4xl lg:text-5xl font-bold text-center mb-3 text-gray-600">Our Services</h2>
                 <h3 className="text-2xl  md:text-3xl lg:text-4xl font-bold text-center mb-16 text-gray-400">Find The Best Service For You</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-14">
+                <div className="grid grid-cols-1 xl:grid-cols-3 gap-14">
                     {services.map((service, index) => (
                         <ServiceCard key={index} {...service} />
                     ))}
