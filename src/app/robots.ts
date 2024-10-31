@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
             allow: '/',
             disallow: '/private/',
         },
-        sitemap: 'https://www.thisisatestspacefor.design/sitemap.xml',
+        sitemap: 'https://www.csmaviation.com/sitemap.xml',
     }
 }
