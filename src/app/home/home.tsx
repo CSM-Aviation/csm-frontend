@@ -20,11 +20,13 @@ export default function HomeBody() {
     return (
         <>
             <Hero
-                backgroundImage="/images/hero-background.jpg"
-                videoSource={`${config.home_video}`}
+                desktopImage="/images/hero/home-desktop.jpg"
+                mobileImage="/images/hero/home-mobile.jpg"
+                videoSource={config?.home_video}
                 title="Welcome to CSM Aviation"
                 subtitle="Experience luxury air travel like never before"
                 isHome={true}
+                showJetInsight={true}
             />
             <ServicesCards />
             <MaintManage />
