@@ -55,9 +55,9 @@ const AboutPage: NextPage = async () => {
       <Seo {...seoData} />
       <StructuredData data={structuredData} />
       <Hero
-        backgroundImage="/images/luxury.jpg"
-        videoSource="/videos/Home1.mp4"
-        title="About US"
+        desktopImage="/images/Luxury_desktop.jpg"
+        mobileImage="/images/Luxury_mobile.jpg"
+        title="About Us"
         subtitle="Experience luxury air travel like never before"
         isHome={false}
       />
