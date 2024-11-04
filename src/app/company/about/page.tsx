@@ -56,7 +56,7 @@ const AboutPage: NextPage = async () => {
       <StructuredData data={structuredData} />
       <Hero
         desktopImage="/images/Luxury_desktop.jpg"
-        mobileImage="/images/Luxury_mobile.jpg"
+        mobileImage="/images/luxury_mobile.jpg"
         title="About Us"
         subtitle="Experience luxury air travel like never before"
         isHome={false}
