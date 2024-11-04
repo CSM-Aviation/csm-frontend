@@ -23,14 +23,34 @@ const FleetContent: React.FC = () => {
   return (
     <div className='w-full bg-white'>
       <div className="relative h-screen">
-        <Image
-          src="/images/snow.png"
-          layout="fill"
-          loader={customLoader}
-          objectFit="cover"
-          alt="Aircraft on runway"
-          priority
-        />
+        {/* Responsive Image Handling */}
+        <div className="absolute inset-0">
+          {/* Desktop Image */}
+          <div className="hidden md:block w-full h-full">
+            <Image
+              src="/images/snow_desktop.jpg"
+              layout="fill"
+              loader={customLoader}
+              objectFit="cover"
+              alt="Fleet hero image"
+              priority
+              className="transition-opacity duration-300"
+            />
+          </div>
+
+          {/* Mobile Image */}
+          <div className="block md:hidden w-full h-full">
+            <Image
+              src="/images/snow_mobile.jpg"
+              layout="fill"
+              loader={customLoader}
+              objectFit="cover"
+              alt="Fleet hero image"
+              priority
+              className="transition-opacity duration-300"
+            />
+          </div>
+        </div>
         {/* <div className='absolute inset-0  flex flex-col justify-center items-center'>
          
           <button
@@ -41,9 +61,9 @@ const FleetContent: React.FC = () => {
             </button>
         </div> */}
 
-<div className="absolute inset-0  flex flex-col justify-center items-center ">
-   <JetInsightComponent />
-</div>
+        <div className="absolute inset-0  flex flex-col justify-center items-center ">
+          <JetInsightComponent />
+        </div>
 
       </div>
       <div className='p-4'>

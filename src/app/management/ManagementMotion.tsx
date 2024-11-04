@@ -8,23 +8,42 @@ import { useRouter } from "next/navigation";
 const ManagementMotion = () => {
   const router = useRouter();
   const handleClick = () => {
-      router.push('/company/contact');
+    router.push('/company/contact');
   };
   const JetInsightComponent = dynamic(() => import('../components/JetInsight/JetInsightComponent2'), {
-      ssr: false,
-    });
-  
+    ssr: false,
+  });
+
   return (
     <div className="overflow-x-hidden w-full">
-      {/* Hero Section */}
       <div className="relative h-screen w-full">
-        <Image
-          src="/images/private.jpg"
-          fill
-          style={{ objectFit: "fill" }} // Changed from "fill" to "cover"
-          alt="Aircraft on runway"
-          priority
-        />
+        {/* Responsive Image Handling */}
+        <div className="absolute inset-0">
+          {/* Desktop Image */}
+          <div className="hidden md:block w-full h-full">
+            <Image
+              src="/images/private_desktop.jpg"
+              layout="fill"
+              objectFit="cover"
+              alt="Aircraft management services"
+              priority
+              className="transition-opacity duration-300"
+            />
+          </div>
+
+          {/* Mobile Image */}
+          <div className="block md:hidden w-full h-full">
+            <Image
+              src="/images/private_mobile.jpg"
+              layout="fill"
+              objectFit="cover"
+              alt="Aircraft management services"
+              priority
+              className="transition-opacity duration-300"
+            />
+          </div>
+        </div>
+
         <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-center items-center text-center px-4">
           <motion.h1
             initial={{ opacity: 0, y: -50 }}
@@ -43,16 +62,15 @@ const ManagementMotion = () => {
             Creating and curating an unmatched aircraft ownership experience every day.
           </motion.p>
           <motion.button
-        initial={{ opacity: 0, y: 60 }}
-        animate={{ opacity: 1, y: 0 }}
-      
-        onClick={handleClick}
-        whileHover={{ translateY: -15 }}  // Add this for Framer Motion hover effect
-        transition={{ duration: 0.1, delay: 0.1 }}
-        className='bg-electric-blue     mt-6 flex items-center justify-center hover:translate-y-[-5px] rounded-xl hover:duration-300 ease-in-out text-black px-1 py-2 md:px-6 md:py-3 text-lg font-semibold hover:bg-white transition'
-      >
-        MANAGEMENT INQUIRY
-      </motion.button>
+            initial={{ opacity: 0, y: 60 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ translateY: -15 }}
+            transition={{ duration: 0.1, delay: 0.1 }}
+            onClick={handleClick}
+            className='bg-electric-blue mt-6 flex items-center justify-center rounded-xl hover:duration-300 ease-in-out text-black px-1 py-2 md:px-6 md:py-3 text-lg font-semibold hover:bg-white transition'
+          >
+            MANAGEMENT INQUIRY
+          </motion.button>
         </div>
       </div>
 
@@ -92,7 +110,7 @@ const ManagementMotion = () => {
 
           {/* Second Row: Left Image, Right Text */}
           <div className="flex flex-col md:flex-row-reverse gap-8 mb-16"> {/* Removed extra space */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 100 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
@@ -103,7 +121,7 @@ const ManagementMotion = () => {
                 Fuel discounts, alone, can save the owner of a midsize aircraft $20,000 to $25,000 per year. We also monitor the maintenance needs of your aircraft so maintenance and repairs are done on time and in the most cost effective manner.
               </p>
             </motion.div>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -100 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
@@ -128,7 +146,7 @@ const ManagementMotion = () => {
         <div className="container mx-auto px-4 max-w-7xl"> {/* Added max-w-7xl */}
           {/* Third Row: Left Text, Right Image */}
           <div className="flex flex-col md:flex-row gap-8 mb-16"> {/* Removed extra space */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -100 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
@@ -139,7 +157,7 @@ const ManagementMotion = () => {
                 Our clients work with a single point of contact, with a dedicated customer service specialist available 24/7. Our team also includes technical experts from fleet maintenance, operations and accounting -- all working in unison with your interests in mind.
               </p>
             </motion.div>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 100 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
@@ -159,7 +177,7 @@ const ManagementMotion = () => {
 
           {/* Fourth Row: Left Image, Right Text */}
           <div className="flex flex-col md:flex-row-reverse gap-8"> {/* Removed extra space */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 100 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
@@ -170,7 +188,7 @@ const ManagementMotion = () => {
                 Under our management program, your aircraft will be maintained to its utmost, peak performance level. All aircraft must pass annual, safety audits by our professional and accredited mechanics so you will be confident that your aircraft is always flying at its peak performance level.
               </p>
             </motion.div>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -100 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
