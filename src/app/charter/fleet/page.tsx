@@ -21,7 +21,7 @@ async function getData(): Promise<SeoData> {
       description: 'Explore our luxury aircraft fleet for private charter',
       keywords: ['private jet', 'charter', 'fleet', 'aircraft'],
       ogImage: '/images/fleet.jpg',
-      canonicalUrl: 'https://www.thisisatestspacefor.design/charter/fleet',
+      canonicalUrl: 'https://www.csmaviation.com/charter/fleet',
       robots: 'index, follow',
       author: 'CSM Aviation',
       language: 'en',
@@ -45,7 +45,7 @@ const FleetPage: React.FC = async () => {
     "@type": "Organization",
     "name": seoData.siteName,
     "url": seoData.canonicalUrl,
-    "logo": "https://www.thisisatestspacefor.design/images/CSM-Logo-WHITE-01-web300.jpg",
+    "logo": "https://www.csmaviation.com/images/CSM-Logo-WHITE-01-web300.jpg",
     "description": seoData.description
   };
   return (

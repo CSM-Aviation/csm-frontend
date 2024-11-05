@@ -11,52 +11,69 @@ const MaintenanceMotion = () => {
     };
     const JetInsightComponent = dynamic(() => import('../components/JetInsight/JetInsightComponent2'), {
         ssr: false,
-      });
+    });
 
     return (
         <div className="overflow-hidden w-full">
-        {/* Hero Section */}
-        <div className="relative h-screen w-full">
-          <Image
-            src="/images/maintenace_photo.jpg"
-            layout="fill"
-            objectFit="cover"
-            alt="Aircraft on runway"
-            priority
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center px-4 md:px-16">
-            <motion.h1
-              initial={{ opacity: 0, y: -50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-5xl md:text-6xl font-bold text-red-700 mb-4"
-            >
-              AIRCRAFT MAINTENANCE
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-xl md:text-2xl text-white mb-6"
-            >
-              Fresno - Madera - Visalia
-            </motion.p>
-            <motion.button
-  initial={{ opacity: 0, y: 60 }}
-  animate={{ opacity: 1, y: 0 }}
-  whileHover={{ translateY: -15 }}  // Add this for Framer Motion hover effect
-  transition={{ duration: 0.1, delay: 0.1 }}
-  onClick={handleClick}
-  className='bg-electric-blue flex items-center justify-center rounded-xl hover:duration-300 ease-in-out text-black px-1 py-2 md:px-6 md:py-3 text-lg font-semibold hover:bg-white transition'
->
-  MAINTENANCE INQUIRY
-</motion.button>
+            <div className="relative h-screen w-full">
+                {/* Responsive Image Handling */}
+                <div className="absolute inset-0">
+                    {/* Desktop Image */}
+                    <div className="hidden md:block w-full h-full">
+                        <Image
+                            src="/images/maintenance_desktop.jpg"
+                            layout="fill"
+                            objectFit="cover"
+                            alt="Aircraft maintenance facility"
+                            priority
+                            className="transition-opacity duration-300"
+                        />
+                    </div>
+
+                    {/* Mobile Image */}
+                    <div className="block md:hidden w-full h-full">
+                        <Image
+                            src="/images/maintenance_mobile.jpg"
+                            layout="fill"
+                            objectFit="cover"
+                            alt="Aircraft maintenance facility"
+                            priority
+                            className="transition-opacity duration-300"
+                        />
+                    </div>
+                </div>
+
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center px-4 md:px-16">
+                    <motion.h1
+                        initial={{ opacity: 0, y: -50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-5xl md:text-6xl font-bold text-red-700 mb-4"
+                    >
+                        AIRCRAFT MAINTENANCE
+                    </motion.h1>
+                    <motion.p
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                        className="text-xl md:text-2xl text-white mb-6 text-center"
+                    >
+                        Fresno - Madera - Visalia
+                    </motion.p>
+                    <motion.button
+                        initial={{ opacity: 0, y: 60 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        whileHover={{ translateY: -15 }}
+                        transition={{ duration: 0.1, delay: 0.1 }}
+                        onClick={handleClick}
+                        className='bg-electric-blue flex items-center justify-center rounded-xl hover:duration-300 ease-in-out text-black px-1 py-2 md:px-6 md:py-3 text-lg font-semibold hover:bg-white transition'
+                    >
+                        MAINTENANCE INQUIRY
+                    </motion.button>
+                </div>
+            </div>
 
 
-          </div>
-        </div>
-      
-      
             {/* Rest of the sections... */}
             {/* Make sure to remove any fixed heights or widths that might cause overflow */}
 
@@ -153,11 +170,11 @@ const MaintenanceMotion = () => {
             >
                 <div className='container mx-auto px-4 flex flex-col items-center justify-center text-center max-w-2xl'>
                     {/* <h2 className='text-3xl font-bold mb-4'>Request a Quote</h2> */}
-                    <JetInsightComponent/>
+                    <JetInsightComponent />
                     <p className='mb-6 mt-6 text-lg text-gray-600'>
                         Discover our exceptional approach to aircraft management, where we provide superior safety standards, outstanding service, and maximized value for your aviation asset.
                     </p>
-                 
+
                 </div>
             </motion.div>
         </div>

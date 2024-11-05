@@ -22,7 +22,7 @@ async function getData(): Promise<SeoData> {
       description: 'Luxury air travel services',
       keywords: ['private jet', 'charter'],
       ogImage: '/images/default.jpg',
-      canonicalUrl: 'https://www.thisisatestspacefor.design',
+      canonicalUrl: 'https://www.csmaviation.com',
       robots: 'index, follow',
       author: 'CSM Aviation',
       language: 'en',
@@ -46,18 +46,18 @@ const AboutPage: NextPage = async () => {
     "@type": "Organization",
     "name": seoData.siteName,
     "url": seoData.canonicalUrl,
-    "logo": "https://www.thisisatestspacefor.design/images/CSM-Logo-WHITE-01-web300.jpg",
+    "logo": "https://www.csmaviation.com/images/CSM-Logo-WHITE-01-web300.jpg",
     "description": seoData.description
   };
   return (
 
-    <>  
+    <>
       <Seo {...seoData} />
       <StructuredData data={structuredData} />
       <Hero
-        backgroundImage="/images/luxury.jpg"
-        videoSource="/videos/Home1.mp4"
-        title="About US"
+        desktopImage="/images/Luxury_desktop.jpg"
+        mobileImage="/images/luxury_mobile.jpg"
+        title="About Us"
         subtitle="Experience luxury air travel like never before"
         isHome={false}
       />
