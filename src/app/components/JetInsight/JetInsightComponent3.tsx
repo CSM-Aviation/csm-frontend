@@ -42,6 +42,7 @@ const JetInsightComponent: React.FC = () => {
         <button
           ref={buttonRef}
           id="jetinsight-embedded-request-open-button"
+          onClick={()=>window.scrollTo(0,120)}
           className={styles.jetinsightEmbeddedRequestButton}
         >
           SCHEDULE TRIP
