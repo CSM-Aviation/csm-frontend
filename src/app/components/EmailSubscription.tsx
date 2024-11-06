@@ -31,7 +31,7 @@ const EmailSubscription: React.FC = () => {
   }
 
   return (
-    <div className="text-center md:text-left">
+    <div className="text-center  md:text-left">
       <h2 className="md:text-3xl font-bold mb-4">
         Subscribe to our CSM offers, special updates<br />and much more ...
       </h2>

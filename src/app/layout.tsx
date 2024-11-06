@@ -8,6 +8,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ConfigProvider } from "./contexts/ConfigContext";
 import AnalyticsTracker from "./admin/analytics/AnalyticsTracker";
 import Breadcrumb from "./components/Breadcrumb";
+import { Testimonials } from "./components/Testimonials";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,6 +38,7 @@ export default function RootLayout({
             <SpeedInsights />
             <AnalyticsTracker />
           </main>
+          <Testimonials />
           <Footer />
         </ConfigProvider>
       </body>
