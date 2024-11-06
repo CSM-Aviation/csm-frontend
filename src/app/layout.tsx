@@ -38,7 +38,7 @@ export default function RootLayout({
             <SpeedInsights />
             <AnalyticsTracker />
           </main>
-          <Testimonials />
+          {/* <Testimonials /> */}
           <Footer />
         </ConfigProvider>
       </body>
