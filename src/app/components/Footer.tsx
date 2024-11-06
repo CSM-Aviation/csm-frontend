@@ -1,5 +1,6 @@
 'use client'
 import React from 'react';
+import { FaArrowRight } from "react-icons/fa6";
 import Link from 'next/link';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -56,76 +57,98 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="flex md:text-2xl space-x-4">
-              <a
-                href="https://www.facebook.com/CSMaviation/"
-                target="_blank"
-                className="text-white hover:text-gray-400 transition duration-300"
-              >
-                <FontAwesomeIcon icon={faFacebookF} />
-              </a>
-              <a
-                href="https://www.instagram.com/csm_aviation"
-                target="_blank"
-                className="text-white hover:text-gray-400 transition duration-300"
-              >
-                <FontAwesomeIcon icon={faInstagram} />
-              </a>
-              <a
-                href="https://www.linkedin.com/company/csm-aviation"
-                target="_blank"
-                className="text-white hover:text-gray-400 transition duration-300"
-              >
-                <FontAwesomeIcon icon={faLinkedin} />
-              </a>
+            <div className="flex flex-col space-y-6">
+              {/* Social Media Icons */}
+              <div className="flex space-x-4 md:text-2xl">
+                <a
+                  href="https://www.facebook.com/CSMaviation/"
+                  target="_blank"
+                  className="text-white hover:text-gray-400 transition duration-300"
+                >
+                  <FontAwesomeIcon icon={faFacebookF} />
+                </a>
+                <a
+                  href="https://www.instagram.com/csm_aviation"
+                  target="_blank"
+                  className="text-white hover:text-gray-400 transition duration-300"
+                >
+                  <FontAwesomeIcon icon={faInstagram} />
+                </a>
+                <a
+                  href="https://www.linkedin.com/company/csm-aviation"
+                  target="_blank"
+                  className="text-white hover:text-gray-400 transition duration-300"
+                >
+                  <FontAwesomeIcon icon={faLinkedin} />
+                </a>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Partners Section */}
-        <div className="border-t border-white pt-8 mb-8">
-          <h3 className="text-xl font-bold mb-6 text-center">Proud Partners / Members Of:</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
-            <a href="https://www.gulfstream.com/en/" target="_blank" rel="noopener noreferrer" className="bg-white p-4 rounded-lg hover:opacity-80 transition-opacity">
+        <div className='flex flex-col space-y-6 md:space-y-8'>
+          <div className='flex justify-center md:justify-start items-center'>
+            <div className=' text-xl md:text-2xl  font-bold'>Proud Members of</div>
+            <div className='ml-2'>
+              <FaArrowRight className="text-2xl" />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 items-center justify-items-center">
+            <a href="https://www.nata.aero/" target="_blank" rel="noopener noreferrer" className="flex items-center">
               <Image
-                src="/images/partners/gulfstream-logo.png"
-                alt="Gulfstream"
-                width={150}
-                height={60}
-                className="h-12 w-auto object-contain"
-              />
-            </a>
-            <a href="https://ibac.org/" target="_blank" rel="noopener noreferrer" className="bg-white p-4 rounded-lg hover:opacity-80 transition-opacity">
-              <Image
-                src="/images/partners/ibac-logo.png"
-                alt="IBAC"
-                width={150}
-                height={60}
-                className="h-12 w-auto object-contain"
-              />
-            </a>
-            <a href="https://www.nata.aero/" target="_blank" rel="noopener noreferrer" className="bg-white p-4 rounded-lg hover:opacity-80 transition-opacity">
-              <Image
-                src="/images/partners/nata-logo.png"
+                src="/images/LOGOS/NATlogo.png"
                 alt="NATA"
-                width={150}
-                height={60}
-                className="h-12 w-auto object-contain"
+                width={100}
+                height={40}
+                className="h-8 w-auto object-contain"
               />
             </a>
-            <a href="https://beechcraft.txtav.com/en/king-air-360" target="_blank" rel="noopener noreferrer" className="bg-white p-4 rounded-lg hover:opacity-80 transition-opacity">
+            
+            <a href="https://ibac.org/" target="_blank" rel="noopener noreferrer" className="flex items-center">
               <Image
-                src="/images/partners/beechcraft-logo.png"
+                src="/images/LOGOS/ibac-logo.svg"
+                alt="IBAC"
+                width={100}
+                height={40}
+                className="h-8 w-auto object-contain"
+              />
+            </a>
+
+            <a href="https://www.wyvernltd.com/" target="_blank" rel="noopener noreferrer" className="flex items-center">
+              <Image
+                src="/images/LOGOS/wyvern_logo.png"
+                alt="Wyvern"
+                width={100}
+                height={40}
+                className="h-8 w-auto object-contain"
+              />
+            </a>
+
+            <a href="https://beechcraft.txtav.com/en/king-air-360" target="_blank" rel="noopener noreferrer" className="flex items-center">
+              <Image
+                src="/images/LOGOS/beechcraft-logo-white.svg"
                 alt="Beechcraft"
-                width={150}
-                height={60}
-                className="h-12 w-auto object-contain"
+                width={100}
+                height={40}
+                className="h-8 w-auto object-contain"
+              />
+            </a>
+
+            <a href="https://www.gulfstream.com/en/" target="_blank" rel="noopener noreferrer" className="flex items-center col-span-2 md:col-span-1">
+              <Image
+                src="/images/LOGOS/gulff.png"
+                alt="Gulfstream"
+                width={100}
+                height={200}
+                className="h-32 w-auto object-contain"
               />
             </a>
           </div>
         </div>
 
-        <div className="border-t border-white pt-8 flex flex-col md:flex-row justify-between items-center">
+        <div className="border-t border-white mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
             <Image
               src="/images/CSM-Logo-WHITE-01-web300.jpg"

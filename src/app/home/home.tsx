@@ -31,7 +31,7 @@ export default function HomeBody() {
             <ServicesCards />
             <MaintManage />
 
-            <div className="h-16"></div>
+            {/* <div className="h-16"></div> */}
         </>
     );
 }
