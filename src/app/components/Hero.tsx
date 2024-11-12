@@ -83,8 +83,12 @@ const Hero: React.FC<HeroProps> = ({
 
         <div className="relative z-10 flex flex-col justify-center items-center h-full text-white px-4">
           <div className="max-sm:mb-52">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 text-center">{title}</h1>
-            <p className="text-xl md:text-2xl mb-8 text-center">{subtitle}</p>
+            <h1 className="text-4xl md:text-6xl font-bold mb-4 text-center [text-shadow:5px_5px_8px_rgba(0,0,0,0.5)]">
+              {title}
+            </h1>
+            <p className="text-xl md:text-2xl mb-8 text-center [text-shadow:5px_5px_8px_rgba(0,0,0,0.5)]">
+              {subtitle}
+            </p>
 
             {showJetInsight && (
               <div className="flex justify-center items-center w-full">
