@@ -49,7 +49,7 @@ const ManagementMotion = () => {
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-4xl md:text-6xl font-bold text-white mb-4 max-w-4xl"
+            className="text-4xl md:text-6xl font-bold text-white mb-4 max-w-4xl text-center [text-shadow:5px_5px_8px_rgba(0,0,0,0.5)]"
           >
             AIRCRAFT MANAGEMENT SERVICES
           </motion.h1>
@@ -57,7 +57,7 @@ const ManagementMotion = () => {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl md:text-2xl text-white max-w-2xl"
+            className="text-xl md:text-2xl text-white max-w-2xl text-center [text-shadow:5px_5px_8px_rgba(0,0,0,0.5)]"
           >
             Creating and curating an unmatched aircraft ownership experience every day.
           </motion.p>

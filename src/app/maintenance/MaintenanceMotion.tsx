@@ -48,7 +48,7 @@ const MaintenanceMotion = () => {
                         initial={{ opacity: 0, y: -50 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="text-5xl md:text-6xl font-bold text-red-700 mb-4"
+                        className="text-5xl md:text-6xl font-bold text-white-700 mb-4 [text-shadow:5px_5px_8px_rgba(0,0,0,0.5)]"
                     >
                         AIRCRAFT MAINTENANCE
                     </motion.h1>
@@ -56,7 +56,7 @@ const MaintenanceMotion = () => {
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
-                        className="text-xl md:text-2xl text-white mb-6 text-center"
+                        className="text-xl md:text-2xl text-white mb-6 text-center [text-shadow:5px_5px_8px_rgba(0,0,0,0.5)]"
                     >
                         Fresno - Madera - Visalia
                     </motion.p>
