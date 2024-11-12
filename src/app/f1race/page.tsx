@@ -1,5 +1,5 @@
 'use client'
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useConfig } from '../contexts/ConfigContext';
 import Hero1 from '../components/Hero1';
 import Image from 'next/image';
@@ -10,21 +10,50 @@ import Countdown from '../components/Countdown';
 import starsBg from '../../../public/images/stars.png'
 import VideoPlayer from '../components/VideoPlayer';
 import dynamic from 'next/dynamic';
+import F1Analytics from '../analytics/f1race/F1Analytics';
+import { useF1Analytics } from '../analytics/f1race/useF1Analytics';
 const TuvoliWidget = dynamic(() => import('../components/TuvoliWidget'), {
     ssr: false,
 });
 
 export default function F1Race() {
+    const { trackF1Event, trackF1Conversion } = useF1Analytics();
     const tuvoliWidgetRef = useRef<HTMLDivElement>(null);
+    const { config, error } = useConfig();
+    const router = useRouter();
+
+    const handleContactClick = () => {
+        trackF1Event('contact_click', 'F1_CTA', 'Contact Button Click');
+        router.push('/company/contact');
+    };
+
+    const handleQuoteRequest = () => {
+        trackF1Event('quote_request', 'F1_CTA', 'Quote Request Click');
+        trackF1Conversion(1000); // Example value
+        scrollToTuvoliWidget();
+    };
 
     const scrollToTuvoliWidget = () => {
         tuvoliWidgetRef.current?.scrollIntoView({ behavior: 'smooth' });
+        trackF1Event('widget_view', 'F1_Widget', 'Tuvoli Widget View');
     };
-    const { config, error } = useConfig();
-    const router = useRouter();
-    const handleClick = () => {
-        router.push('/company/contact');
-    };
+
+    useEffect(() => {
+        // Track initial page view
+        trackF1Event('page_view', 'F1_Page', 'F1 Page Initial View');
+
+        // Track scroll depth
+        const handleScroll = () => {
+            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            if (scrollPercent >= 25) trackF1Event('scroll_depth', 'F1_Engagement', '25% Scroll');
+            if (scrollPercent >= 50) trackF1Event('scroll_depth', 'F1_Engagement', '50% Scroll');
+            if (scrollPercent >= 75) trackF1Event('scroll_depth', 'F1_Engagement', '75% Scroll');
+            if (scrollPercent >= 90) trackF1Event('scroll_depth', 'F1_Engagement', '90% Scroll');
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     if (error) {
         return <div className="text-red-600 text-center p-4">Error: {error}</div>;
@@ -36,6 +65,7 @@ export default function F1Race() {
 
     return (
         <div className="bg-white">
+            <F1Analytics />
             <div className="relative w-full">
                 <VideoPlayer videoUrl={config.f1_video1} />
             </div>
@@ -98,7 +128,7 @@ export default function F1Race() {
                     <Image src={img1} alt="Luxurious private jet interior" className="rounded-lg shadow-lg order-1 md:order-2" />
                 </div>
             </div>
-{/* 
+            {/* 
             <div ref={tuvoliWidgetRef} className='py-20 bg-white'>
                 <div className='container mx-auto px-4'>
                     <h2 className='text-center text-4xl mb-4'>INSTANT CHARTER QUOTE</h2>
