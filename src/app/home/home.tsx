@@ -24,7 +24,7 @@ export default function HomeBody() {
                 mobileImage="/images/hero/home-mobile.jpg"
                 videoSource={config?.home_video}
                 title="Welcome to CSM Aviation"
-                subtitle="Experience luxury air travel like never before"
+                subtitle="Director Broker Services | Wholesale Private Charter Direct to Public"
                 isHome={true}
                 showJetInsight={true}
             />
