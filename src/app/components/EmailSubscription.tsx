@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { apiService } from '../services/apiService';
+import { FiArrowRight } from 'react-icons/fi';
 
 const EmailSubscription: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -31,27 +32,29 @@ const EmailSubscription: React.FC = () => {
   }
 
   return (
-    <div className="text-center  md:text-left">
-      <h2 className="md:text-3xl font-bold mb-4">
+    <div className="text-center md:text-left   ">
+      <h2 className="md:text-3xl font-bold mb-6 text-white">
         Subscribe to our CSM offers, special updates<br />and much more ...
       </h2>
-      <form onSubmit={handleSubmit} className="flex flex-col  max-sm:w-1/2 sm:flex-row gap-2 max-w-md mx-auto sm:mx-0">
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Enter your email address"
-          className="flex-grow py-2 px-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-          required
-        />
-        <button
-          type="submit"
-          className="px-6 py-2 bg-blue-500 hover:translate-y-[-5px] hover:duration-300 ease-in-out text-white font-semibold rounded-md hover:bg-blue-600 transition duration-300"
-        >
-          Join now
-        </button>
+      <form onSubmit={handleSubmit} className="max-w-md  flex items-center">
+        <div className="relative w-full">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            className="w-full py-3 px-4 pr-14 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+            required
+          />
+          <button
+            type="submit"
+            className="absolute inset-y-1 right-1 flex items-center justify-center w-10 h-10 bg-gray-700 rounded-xl text-white hover:bg-gray-600 transition duration-300"
+          >
+            <FiArrowRight size={18} />
+          </button>
+        </div>
       </form>
-      {message && <p className="mt-2 text-sm text-green-500">{message}</p>}
+      {message && <p className="mt-4 text-sm text-white">{message}</p>}
     </div>
   );
 };
