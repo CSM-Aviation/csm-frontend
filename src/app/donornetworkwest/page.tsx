@@ -93,7 +93,7 @@ const DonorNetworkWest = () => {
             >
               <h2 className="text-3xl text-black font-bold mb-4">Specialized Medical Transport</h2>
               <p className="mb-6 text-gray-600">
-                Our aircraft are specially equipped to maintain the integrity of medical cargo. Working with Donor Network West, we've implemented precise protocols to ensure organ transportation meets the highest standards of safety and efficiency, serving over 13 million people in our coverage area.
+                Our aircraft are specially equipped to maintain the integrity of medical cargo. Working with Donor Network West, we have implemented precise protocols to ensure organ transportation meets the highest standards of safety and efficiency, serving over 13 million people in our coverage area.
               </p>
             </motion.div>
             <motion.div
@@ -127,7 +127,7 @@ const DonorNetworkWest = () => {
             >
               <h2 className="text-3xl font-bold mb-4 text-white">24/7 Emergency Response</h2>
               <p className="mb-6 text-gray-300">
-                Our dedicated team works around the clock to support Donor Network West's mission. With just minutes to respond, our crews are always prepared to launch, connecting life-saving organs with those who need them most across our extensive network of 175 hospitals and 5 transplant centers.
+                Our dedicated team works around the clock to support Donor Network West mission. With just minutes to respond, our crews are always prepared to launch, connecting life-saving organs with those who need them most across our extensive network of 175 hospitals and 5 transplant centers.
               </p>
             </motion.div>
             <motion.div
@@ -157,7 +157,7 @@ const DonorNetworkWest = () => {
             >
               <h2 className="text-3xl font-bold mb-4 text-white">Community Impact</h2>
               <p className="mb-6 text-gray-300">
-                Every flight we conduct with Donor Network West represents hope for families across our region. In 2022, we helped facilitate the transportation of organs from 416 donors, contributing to the network's mission of saving and healing lives through organ and tissue donation.
+                Every flight we conduct with Donor Network West represents hope for families across our region. In 2022, we helped facilitate the transportation of organs from 416 donors, contributing to the network mission of saving and healing lives through organ and tissue donation.
               </p>
             </motion.div>
             <motion.div
