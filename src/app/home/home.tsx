@@ -5,6 +5,7 @@ import Hero from "../components/Hero";
 import MaintManage from "../components/MaintManage";
 import ServicesCards from "../components/ServiceCard";
 import { useConfig } from '../contexts/ConfigContext';
+import DonorNetworkSection from '../components/DonorNetworkSection';
 
 export default function HomeBody() {
     const { config, error } = useConfig();
@@ -30,6 +31,7 @@ export default function HomeBody() {
             />
             <ServicesCards />
             <MaintManage />
+            <DonorNetworkSection/>
 
             {/* <div className="h-16"></div> */}
         </>
