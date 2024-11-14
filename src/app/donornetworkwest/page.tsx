@@ -74,7 +74,7 @@ const DonorNetworkWest = () => {
             >
               <div className="relative w-full h-[300px] md:h-[400px]">
                 <Image
-                  src="/images/dnw/JHM00068.jpg"
+                  src="/images/dnw/JHM00281.jpg"
                   fill
                   style={{ objectFit: "cover" }}
                   alt="Medical transport aircraft"
