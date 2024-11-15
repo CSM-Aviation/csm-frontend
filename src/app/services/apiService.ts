@@ -153,8 +153,8 @@ export const apiService = {
     return handleApiResponse(api.post<void>('/api/analytics/pageview', data));
   },
 
-  async getAnalyticsDashboard(): Promise<ApiResponse<AnalyticsDashboardData>> {
-    return handleApiResponse(api.get<AnalyticsDashboardData>('/api/analytics/dashboard'));
+  async getAnalyticsDashboard(timeframe: string = '7d'): Promise<ApiResponse<AnalyticsDashboardData>> {
+    return this.get<AnalyticsDashboardData>(`/api/analytics/dashboard?timeframe=${timeframe}`);
   },
 
   async fetchFleet(cacheTime?: number): Promise<ApiResponse<FleetItem[]>> {
@@ -186,8 +186,8 @@ export const fetchConfig = () => apiService.get<Config>('/api/config');
 export interface Config {
   header_color: string;
   home_video: string;
-  f1_video1:string;
-  f1_video2:string;
+  f1_video1: string;
+  f1_video2: string;
 }
 
 
@@ -260,6 +260,56 @@ export interface AnalyticsDashboardData {
   userLocations: { [key: string]: number };
   pagesVisited: { [key: string]: number };
   visitorTrend: { date: string; visitors: number }[];
+}
+
+export interface AnalyticsOverview {
+  totalVisitors: number;
+  totalPageViews: number;
+  newUsers: number;
+  returningUsers: number;
+}
+
+export interface EngagementMetrics {
+  hourlyActivity: Array<{
+    _id: number;
+    count: number;
+  }>;
+  trafficSources: {
+    [source: string]: number;
+  };
+}
+
+export interface GeographyData {
+  userLocations: Array<{
+    location: string;
+    count: number;
+  }>;
+}
+
+export interface ContentMetrics {
+  pagesVisited: Array<{
+    path: string;
+    views: number;
+    uniqueVisitors: number;
+    bounceRate: number;
+  }>;
+}
+
+export interface TrendData {
+  visitorTrend: Array<{
+    date: string;
+    visitors: number;
+    pageviews: number;
+  }>;
+}
+
+export interface AnalyticsDashboardData {
+  timeframe: string;
+  overview: AnalyticsOverview;
+  engagement: EngagementMetrics;
+  geography: GeographyData;
+  content: ContentMetrics;
+  trends: TrendData;
 }
 
 export const submitTripRequest = (data: TripRequest) => apiService.post<{ message: string; id: string }>('/api/trip-request', data);
