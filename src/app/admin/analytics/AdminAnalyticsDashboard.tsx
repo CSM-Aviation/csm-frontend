@@ -1,114 +1,265 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement } from 'chart.js';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+    PointElement,
+    LineElement
+} from 'chart.js';
 import { apiService, AnalyticsDashboardData } from '../../services/apiService';
 import VisitorLocationComponent from './VisitorLocationComponent';
 import VisitorStateComponent from './VisitorStateComponent';
+import { Loader2, ArrowUpRight, ArrowDownRight, Clock } from 'lucide-react';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement);
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+    PointElement,
+    LineElement
+);
 
 const AdminAnalyticsDashboard: React.FC = () => {
     const [analyticsData, setAnalyticsData] = useState<AnalyticsDashboardData | null>(null);
+    const [timeframe, setTimeframe] = useState('7d');
+    const [loading, setLoading] = useState(true);
+    const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
 
     useEffect(() => {
-        const fetchAnalyticsData = async () => {
-            const response = await apiService.getAnalyticsDashboard();
+        const fetchData = async () => {
+            setLoading(true);
+            const response = await apiService.getAnalyticsDashboard(timeframe);
             if (response.data) {
                 setAnalyticsData(response.data);
-            } else {
-                console.error('Failed to fetch analytics data:', response.error);
+                setLastUpdated(new Date());
             }
+            setLoading(false);
         };
 
-        fetchAnalyticsData();
-    }, []);
+        fetchData();
+        // Refresh data every 5 minutes
+        const interval = setInterval(fetchData, 300000);
+        return () => clearInterval(interval);
+    }, [timeframe]);
 
-    if (!analyticsData) return <div>Loading...</div>;
+    if (loading || !analyticsData) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <Loader2 className="w-8 h-8 animate-spin" />
+            </div>
+        );
+    }
 
-    const pageViewsData = {
-        labels: analyticsData.dates,
-        datasets: [{
-            label: 'Page Views',
-            data: analyticsData.pageViews,
-            backgroundColor: 'rgba(75, 192, 192, 0.6)',
-        }]
+    const renderMetricCard = (title: string, value: number, change: number, format: 'number' | 'percentage' = 'number') => (
+        <div className="bg-white rounded-lg p-6 shadow-lg">
+            <h3 className="text-lg font-medium text-gray-500">{title}</h3>
+            <div className="mt-2 flex items-baseline">
+                <p className="text-3xl font-semibold">
+                    {format === 'number' ? value.toLocaleString() : `${value.toFixed(1)}%`}
+                </p>
+                {change !== 0 && (
+                    <span className={`ml-2 flex items-center text-sm ${change > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        {change > 0 ? <ArrowUpRight className="w-4 h-4" /> : <ArrowDownRight className="w-4 h-4" />}
+                        {Math.abs(change)}%
+                    </span>
+                )}
+            </div>
+        </div>
+    );
+
+    const renderHourlyActivityChart = () => {
+        const data = {
+            labels: analyticsData.engagement.hourlyActivity.map(item =>
+                `${item._id}:00`
+            ),
+            datasets: [{
+                label: 'Activity',
+                data: analyticsData.engagement.hourlyActivity.map(item => item.count),
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                fill: true,
+            }]
+        };
+
+        return (
+            <Line
+                data={data}
+                options={{
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => `${context.parsed.y} visits`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: { beginAtZero: true },
+                        x: {
+                            ticks: {
+                                callback: (value) => `${value}h`
+                            }
+                        }
+                    }
+                }}
+            />
+        );
     };
-
-    const visitorTrendData = {
-        labels: analyticsData.visitorTrend.map(item => item.date),
-        datasets: [{
-            label: 'Visitors',
-            data: analyticsData.visitorTrend.map(item => item.visitors),
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1
-        }]
-    };
-
-    const extractLocationData = (location: string) => {
-        const parts = location.split(',').map(part => part.trim());
-        const country = parts[parts.length - 1] || 'Unknown';
-        const state = parts[parts.length - 2] || 'Unknown';
-        return { country, state };
-    };
-
-    const visitorLocationData = Object.entries(analyticsData.userLocations).map(([location, visitors]) => {
-        const { country } = extractLocationData(location);
-        return { location: country, visitors };
-    });
-
-    const visitorStateData = Object.entries(analyticsData.userLocations).map(([location, visitors]) => {
-        const { state } = extractLocationData(location);
-        return { location: state, visitors };
-    });
-
-    // const worldMapData = Object.entries(analyticsData.userLocations).reduce((acc, [location, visitors]) => {
-    //     const country = location.split(',').pop()?.trim() || 'Unknown';
-    //     acc[country] = (acc[country] || 0) + visitors;
-    //     return acc;
-    // }, {} as Record<string, number>);
 
     return (
-        <div className="admin-dashboard p-6 bg-gray-900 text-white">
-            <h1 className="text-3xl font-bold mb-6">Analytics Dashboard</h1>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                <div className="bg-gray-800 p-4 rounded shadow">
-                    <h2 className="text-xl font-semibold mb-2">Total Visitors</h2>
-                    <p className="text-3xl">{analyticsData.totalVisitors}</p>
+        <div className="min-h-screen bg-gray-50 p-6">
+            <div className="max-w-7xl mx-auto">
+                {/* Header */}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+                    <div>
+                        <h1 className="text-2xl font-bold text-gray-900">Analytics Dashboard</h1>
+                        <div className="flex items-center mt-2 text-sm text-gray-500">
+                            <Clock className="w-4 h-4 mr-1" />
+                            Last updated: {lastUpdated.toLocaleTimeString()}
+                        </div>
+                    </div>
+                    <div className="mt-4 md:mt-0 flex items-center gap-4">
+                        <select
+                            value={timeframe}
+                            onChange={(e) => setTimeframe(e.target.value)}
+                            className="bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2"
+                        >
+                            <option value="24h">Last 24 hours</option>
+                            <option value="7d">Last 7 days</option>
+                            <option value="30d">Last 30 days</option>
+                            <option value="90d">Last 90 days</option>
+                        </select>
+                    </div>
                 </div>
-                <div className="bg-gray-800 p-4 rounded shadow">
-                    <h2 className="text-xl font-semibold mb-2">New Users</h2>
-                    <p className="text-3xl">{analyticsData.newUsers}</p>
+
+                {/* Overview Metrics */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    {renderMetricCard('Total Visitors', analyticsData.overview.totalVisitors, 8.2)}
+                    {renderMetricCard('Page Views', analyticsData.overview.totalPageViews, 12.5)}
+                    {renderMetricCard('New Users', analyticsData.overview.newUsers, 5.3)}
+                    {renderMetricCard('Returning Users', analyticsData.overview.returningUsers, -2.1)}
                 </div>
-                <div className="bg-gray-800 p-4 rounded shadow">
-                    <h2 className="text-xl font-semibold mb-2">Total Page Views</h2>
-                    <p className="text-3xl">{analyticsData.totalPageViews}</p>
+
+                {/* Main Charts Section */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    {/* Visitor Trend Chart */}
+                    <div className="bg-white p-6 rounded-lg shadow-lg">
+                        <h2 className="text-lg font-semibold mb-4">Visitor Trend</h2>
+                        <Line
+                            data={{
+                                labels: analyticsData.trends.visitorTrend.map(item => item.date),
+                                datasets: [
+                                    {
+                                        label: 'Visitors',
+                                        data: analyticsData.trends.visitorTrend.map(item => item.visitors),
+                                        borderColor: '#3b82f6',
+                                        tension: 0.4,
+                                    },
+                                    {
+                                        label: 'Page Views',
+                                        data: analyticsData.trends.visitorTrend.map(item => item.pageviews),
+                                        borderColor: '#10b981',
+                                        tension: 0.4,
+                                    }
+                                ]
+                            }}
+                            options={{
+                                responsive: true,
+                                interaction: {
+                                    mode: 'index',
+                                    intersect: false,
+                                },
+                                plugins: {
+                                    legend: { position: 'bottom' }
+                                },
+                                scales: {
+                                    y: { beginAtZero: true }
+                                }
+                            }}
+                        />
+                    </div>
+
+                    {/* Hourly Activity Chart */}
+                    <div className="bg-white p-6 rounded-lg shadow-lg">
+                        <h2 className="text-lg font-semibold mb-4">Hourly Activity</h2>
+                        {renderHourlyActivityChart()}
+                    </div>
                 </div>
-            </div>
-            <div className="grid grid-cols-1 gap-6 mb-6">
-                <div className="bg-gray-800 p-4 rounded shadow">
-                    <h2 className="text-xl font-semibold mb-4">Visitor Trend (Last 7 Days)</h2>
-                    <Line data={visitorTrendData} options={{ responsive: true, scales: { y: { beginAtZero: true } } }} />
+
+                {/* Traffic Sources and Locations */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                    {/* Traffic Sources */}
+                    <div className="bg-white p-6 rounded-lg shadow-lg">
+                        <h2 className="text-lg font-semibold mb-4">Traffic Sources</h2>
+                        <Bar
+                            data={{
+                                labels: Object.keys(analyticsData.engagement.trafficSources),
+                                datasets: [{
+                                    data: Object.values(analyticsData.engagement.trafficSources),
+                                    backgroundColor: '#3b82f6'
+                                }]
+                            }}
+                            options={{
+                                indexAxis: 'y',
+                                responsive: true,
+                                plugins: {
+                                    legend: { display: false }
+                                }
+                            }}
+                        />
+                    </div>
+
+                    {/* Locations */}
+                    <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <VisitorLocationComponent visitorData={analyticsData.geography.userLocations} />
+                        <VisitorStateComponent visitorData={analyticsData.geography.userLocations} />
+                    </div>
                 </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <VisitorLocationComponent visitorData={visitorLocationData} />
-                <VisitorStateComponent visitorData={visitorStateData} />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div className="bg-gray-800 p-4 rounded shadow">
-                    <h2 className="text-xl font-semibold mb-4">Page Views (Last 7 Days)</h2>
-                    <Bar data={pageViewsData} options={{ responsive: true, scales: { y: { beginAtZero: true } } }} />
-                </div>
-                <div className="bg-gray-800 p-4 rounded shadow">
-                    <h2 className="text-xl font-semibold mb-4">Top Pages Visited</h2>
-                    <ul className="space-y-2">
-                        {Object.entries(analyticsData.pagesVisited).map(([path, count], index) => (
-                            <li key={path} className="flex justify-between items-center">
-                                <span className="text-gray-300">{path}</span>
-                                <span className="bg-gray-700 px-2 py-1 rounded">{count}</span>
-                            </li>
-                        ))}
-                    </ul>
+
+                {/* Most Visited Pages */}
+                <div className="bg-white rounded-lg shadow-lg p-6">
+                    <h2 className="text-lg font-semibold mb-4">Most Visited Pages</h2>
+                    <div className="overflow-x-auto">
+                        <table className="min-w-full">
+                            <thead>
+                                <tr className="border-b">
+                                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-500">Page</th>
+                                    <th className="px-6 py-3 text-right text-sm font-semibold text-gray-500">Views</th>
+                                    <th className="px-6 py-3 text-right text-sm font-semibold text-gray-500">Unique Visitors</th>
+                                    <th className="px-6 py-3 text-right text-sm font-semibold text-gray-500">Bounce Rate</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-200">
+                                {analyticsData.content.pagesVisited.map((page, index) => (
+                                    <tr key={index}>
+                                        <td className="px-6 py-4 text-sm text-gray-900 max-w-xs truncate">
+                                            {page.path}
+                                        </td>
+                                        <td className="px-6 py-4 text-sm text-gray-500 text-right">
+                                            {page.views.toLocaleString()}
+                                        </td>
+                                        <td className="px-6 py-4 text-sm text-gray-500 text-right">
+                                            {page.uniqueVisitors.toLocaleString()}
+                                        </td>
+                                        <td className="px-6 py-4 text-sm text-gray-500 text-right">
+                                            {page.bounceRate.toFixed(1)}%
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

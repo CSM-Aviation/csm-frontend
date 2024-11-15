@@ -46,6 +46,7 @@ const AnalyticsScripts = () => {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
+            gtag('config', 'G-2FC101FT90');
             gtag('config', 'AW-364956149');
           `,
                 }}
