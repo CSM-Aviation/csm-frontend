@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { motion, useMotionValue, useTransform } from "framer-motion";
 import Hero from "../components/Hero";
 import MaintManage from "../components/MaintManage";
 import ServicesCards from "../components/ServiceCard";
 import { useConfig } from "../contexts/ConfigContext";
 import DonorNetworkSection from "../components/DonorNetworkSection";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 
 export default function HomeBody() {
   const { config, error } = useConfig();
@@ -13,10 +13,8 @@ export default function HomeBody() {
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
   const [windowHeight, setWindowHeight] = useState(typeof window !== 'undefined' ? window.innerHeight : 0);
 
-  // Get dynamic scrollable range and update it when content changes
   useEffect(() => {
     const updateDimensions = () => {
-      // Wait for next frame to ensure accurate measurements
       requestAnimationFrame(() => {
         const scrollHeight = Math.max(
           document.documentElement.scrollHeight,
@@ -29,13 +27,9 @@ export default function HomeBody() {
       });
     };
 
-    // Initial update
     updateDimensions();
-    
-    // Update on resize
     window.addEventListener("resize", updateDimensions);
     
-    // Update when content might change
     const observer = new MutationObserver(updateDimensions);
     observer.observe(document.body, { 
       childList: true, 
@@ -48,51 +42,41 @@ export default function HomeBody() {
     };
   }, []);
 
-  // Motion values for the airplane's position
   const scrollY = useMotionValue(0);
   
-  // Calculate midpoint of scroll range for circular animation
-  const midScrollPoint = scrollRange * 0.5; // Middle of the page
-  const circleRadius = Math.min(100, windowWidth * 0.1); // Responsive radius
-  const circleDuration = scrollRange * 0.3; // Longer duration for circular movement
-
-  // Transform scroll progress to animation progress
+  // Transform scroll progress to x position
   const xTransform = useTransform(
     scrollY,
-    [0, midScrollPoint - circleDuration, midScrollPoint, midScrollPoint + circleDuration, scrollRange],
-    [
-      20, // Start position
-      windowWidth * 0.3, // Before circle
-      windowWidth * 0.5, // Circle center
-      windowWidth * 0.7, // After circle
-      windowWidth - 100, // End position
-    ]
+    [0, scrollRange],
+    [0, windowWidth - 100] // Move from left to right
   );
 
+  // Create curved path using quadratic bezier
   const yTransform = useTransform(
     scrollY,
-    [0, midScrollPoint - circleDuration, midScrollPoint, midScrollPoint + circleDuration, scrollRange],
-    [
-      80, // Start position
-      windowHeight * 0.4, // Before circle
-      windowHeight * 0.5, // Circle center
-      windowHeight * 0.6, // After circle
-      windowHeight - 60, // End position
-    ]
+    (value) => {
+      const progress = value / scrollRange;
+      // Quadratic bezier curve calculation
+      const startY = windowHeight - 100; // Bottom left
+      const controlY = windowHeight - 300; // Control point height
+      const endY = windowHeight - 100; // Bottom right
+      
+      const t = progress;
+      return (1 - t) * (1 - t) * startY + 2 * (1 - t) * t * controlY + t * t * endY;
+    }
   );
 
-  // Smoother rotation transform
+  // Rotation based on curve tangent
   const rotateTransform = useTransform(
     scrollY,
-    [0, midScrollPoint - circleDuration, midScrollPoint, midScrollPoint + circleDuration, scrollRange],
-    [0, 0, 180, 360, 360] // More gradual rotation
+    [0, scrollRange * 0.33, scrollRange * 0.66, scrollRange], // Three sections
+    [0, 15, 25, 45] // No rotation → 45° down → 90° down
   );
 
-  // Update scrollY value based on window scroll with smooth interpolation
   useEffect(() => {
-  let rafId:number |null=null;
+    let rafId: number | null = null;
     let currentY = 0;
-    const smoothness = 0.1; // Adjust for smoother or more responsive movement
+    const smoothness = 0.1;
 
     const handleScroll = () => {
       const updateScroll = () => {
@@ -124,14 +108,6 @@ export default function HomeBody() {
     };
   }, [scrollY]);
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  if (!config) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <>
       <motion.div
@@ -144,7 +120,7 @@ export default function HomeBody() {
         }}
       >
         <img
-          src="/images/airplane-arrival1.svg"
+          src="/images/airplane3.svg"
           alt="Airplane icon"
           className="w-20 h-20 object-contain"
         />
