@@ -90,7 +90,7 @@ export default function HomeBody() {
 
   // Update scrollY value based on window scroll with smooth interpolation
   useEffect(() => {
-  let rafld:number |null=null;
+  let rafId:number |null=null;
     let currentY = 0;
     const smoothness = 0.1; // Adjust for smoother or more responsive movement
 
