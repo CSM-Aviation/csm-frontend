@@ -17,6 +17,9 @@ import { apiService, AnalyticsDashboardData } from '../../services/apiService';
 import VisitorLocationComponent from './VisitorLocationComponent';
 import VisitorStateComponent from './VisitorStateComponent';
 import { Loader2, ArrowUpRight, ArrowDownRight, Clock } from 'lucide-react';
+import VisitorTrendChart from './VisitorTrendChart';
+import HourlyActivityChart from './HourlyActivityChart';
+import TrafficSourcesChart from './TrafficSourcesChart';
 
 ChartJS.register(
     CategoryScale,
@@ -154,7 +157,8 @@ const AdminAnalyticsDashboard: React.FC = () => {
                 {/* Main Charts Section */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                     {/* Visitor Trend Chart */}
-                    <div className="bg-white p-6 rounded-lg shadow-lg">
+                    <VisitorTrendChart data={analyticsData.trends.visitorTrend} />
+                    {/* <div className="bg-white p-6 rounded-lg shadow-lg">
                         <h2 className="text-lg font-semibold mb-4">Visitor Trend</h2>
                         <Line
                             data={{
@@ -188,19 +192,25 @@ const AdminAnalyticsDashboard: React.FC = () => {
                                 }
                             }}
                         />
-                    </div>
+                    </div> */}
 
                     {/* Hourly Activity Chart */}
                     <div className="bg-white p-6 rounded-lg shadow-lg">
-                        <h2 className="text-lg font-semibold mb-4">Hourly Activity</h2>
-                        {renderHourlyActivityChart()}
+                        <h2 className="text-lg font-semibold mb-4">Hourly Activity Analysis</h2>
+                        {/* {renderHourlyActivityChart()} */}
+                        <HourlyActivityChart 
+                        data={analyticsData.engagement.hourlyActivity}
+                        timezone={Intl.DateTimeFormat().resolvedOptions().timeZone}
+                        />
                     </div>
                 </div>
 
                 {/* Traffic Sources and Locations */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                     {/* Traffic Sources */}
-                    <div className="bg-white p-6 rounded-lg shadow-lg">
+                    <TrafficSourcesChart trafficSources={analyticsData.engagement.trafficSources} />
+
+                    {/* <div className="bg-white p-6 rounded-lg shadow-lg">
                         <h2 className="text-lg font-semibold mb-4">Traffic Sources</h2>
                         <Bar
                             data={{
@@ -218,7 +228,7 @@ const AdminAnalyticsDashboard: React.FC = () => {
                                 }
                             }}
                         />
-                    </div>
+                    </div> */}
 
                     {/* Locations */}
                     <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
