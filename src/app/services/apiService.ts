@@ -280,10 +280,11 @@ export interface EngagementMetrics {
 }
 
 export interface GeographyData {
-  userLocations: Array<{
-    location: string;
-    count: number;
-  }>;
+  userLocations: Record<string, number>;
+  // or alternatively:
+  // userLocations: {
+  //   [location: string]: number;
+  // };
 }
 
 export interface ContentMetrics {
