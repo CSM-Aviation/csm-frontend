@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { apiService, AnalyticsDashboardData } from '../../services/apiService';
-import { Loader2 } from 'lucide-react';
+import { Loader2, ArrowUpRight, ArrowDownRight, Clock } from 'lucide-react';
 import VisitorTrendChart from './VisitorTrendChart';
 import HourlyActivityChart from './HourlyActivityChart';
 import TrafficSourcesChart from './TrafficSourcesChart';
@@ -20,7 +20,12 @@ const defaultAnalyticsData: AnalyticsDashboardData = {
     },
     engagement: {
         hourlyActivity: [],
-        trafficSources: {}
+        trafficSources: {},
+        performanceMetrics: {
+            bounceRate: 0,
+            avgSessionDuration: 0,
+            avgPagesPerSession: 0
+        }
     },
     geography: {
         userLocations: {}
@@ -35,8 +40,7 @@ const defaultAnalyticsData: AnalyticsDashboardData = {
     pageViews: [],
     userLocations: {},
     pagesVisited: {},
-    visitorTrend: [],
-    timeframe: ''
+    visitorTrend: []
 };
 
 const AdminAnalyticsDashboard: React.FC = () => {
@@ -52,7 +56,6 @@ const AdminAnalyticsDashboard: React.FC = () => {
       try {
         const response = await apiService.getAnalyticsDashboard(timeframe);
         if (response.data) {
-          // Ensure all required properties exist with default values if missing
           setAnalyticsData({
             ...defaultAnalyticsData,
             ...response.data,
@@ -109,7 +112,13 @@ const AdminAnalyticsDashboard: React.FC = () => {
     );
   }
 
-  const renderMetricCard = (title: string, value: number, change: number, format: 'number' | 'percentage' = 'number') => (
+  const renderMetricCard = (
+    title: string, 
+    value: number, 
+    change: number, 
+    format: 'number' | 'percentage' = 'number',
+    trend: 'up' | 'down' | 'none' = 'none'
+  ) => (
     <div className="bg-white rounded-lg p-6 shadow-lg">
       <h3 className="text-lg font-medium text-gray-500">{title}</h3>
       <div className="mt-2 flex items-baseline">
@@ -117,8 +126,13 @@ const AdminAnalyticsDashboard: React.FC = () => {
           {format === 'number' ? value.toLocaleString() : `${value.toFixed(1)}%`}
         </p>
         {change !== 0 && (
-          <span className={`ml-2 flex items-center text-sm ${change > 0 ? 'text-green-600' : 'text-red-600'}`}>
-            {change > 0 ? '+' : ''}{change}%
+          <span className={`ml-2 flex items-center text-sm ${trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
+            {trend === 'up' ? (
+              <ArrowUpRight className="w-4 h-4 mr-1" />
+            ) : (
+              <ArrowDownRight className="w-4 h-4 mr-1" />
+            )}
+            {Math.abs(change)}%
           </span>
         )}
       </div>
@@ -128,21 +142,69 @@ const AdminAnalyticsDashboard: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Overview Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {renderMetricCard('Total Visitors', analyticsData.overview.totalVisitors, 0)}
-          {renderMetricCard('Page Views', analyticsData.overview.totalPageViews, 0)}
-          {renderMetricCard('New Users', analyticsData.overview.newUsers, 0)}
-          {renderMetricCard('Returning Users', analyticsData.overview.returningUsers, 0)}
+        {/* Header with Controls */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Analytics Dashboard</h1>
+            <div className="flex items-center mt-2 text-sm text-gray-500">
+              <Clock className="w-4 h-4 mr-1" />
+              Last updated: {lastUpdated.toLocaleTimeString()}
+            </div>
+          </div>
+          <div className="mt-4 md:mt-0 flex items-center gap-4">
+            <select
+              value={timeframe}
+              onChange={(e) => setTimeframe(e.target.value)}
+              className="bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="24h">Last 24 hours</option>
+              <option value="7d">Last 7 days</option>
+              <option value="30d">Last 30 days</option>
+              <option value="90d">Last 90 days</option>
+            </select>
+          </div>
         </div>
 
-        {/* Charts */}
+        {/* Performance Indicators */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {renderMetricCard(
+            'Total Visitors', 
+            analyticsData.overview.totalVisitors, 
+            8.2, 
+            'number',
+            'up'
+          )}
+          {renderMetricCard(
+            'Page Views', 
+            analyticsData.overview.totalPageViews, 
+            12.5, 
+            'number',
+            'up'
+          )}
+          {renderMetricCard(
+            'New Users', 
+            analyticsData.overview.newUsers, 
+            -2.1, 
+            'number',
+            'down'
+          )}
+          {renderMetricCard(
+            'Returning Users', 
+            analyticsData.overview.returningUsers, 
+            5.3, 
+            'number',
+            'up'
+          )}
+        </div>
+
+        {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           <VisitorTrendChart 
             data={analyticsData.trends.visitorTrend || []} 
           />
           <HourlyActivityChart 
             data={analyticsData.engagement.hourlyActivity || []} 
+            timezone={Intl.DateTimeFormat().resolvedOptions().timeZone}
           />
         </div>
 
@@ -153,10 +215,10 @@ const AdminAnalyticsDashboard: React.FC = () => {
           />
           <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
             <VisitorLocationComponent 
-              visitorData={analyticsData.geography.userLocations || {}} 
+              visitorData={analyticsData.geography.userLocations} 
             />
             <VisitorStateComponent 
-              visitorData={analyticsData.geography.userLocations || {}} 
+              visitorData={analyticsData.geography.userLocations} 
             />
           </div>
         </div>
@@ -170,6 +232,9 @@ const AdminAnalyticsDashboard: React.FC = () => {
                 <tr className="border-b">
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-500">Page</th>
                   <th className="px-6 py-3 text-right text-sm font-semibold text-gray-500">Views</th>
+                  <th className="px-6 py-3 text-right text-sm font-semibold text-gray-500">Unique Visitors</th>
+                  <th className="px-6 py-3 text-right text-sm font-semibold text-gray-500">Bounce Rate</th>
+                  {/* <th className="px-6 py-3 text-right text-sm font-semibold text-gray-500">Avg. Time</th> */}
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
@@ -181,6 +246,15 @@ const AdminAnalyticsDashboard: React.FC = () => {
                     <td className="px-6 py-4 text-sm text-gray-500 text-right">
                       {page.views.toLocaleString()}
                     </td>
+                    <td className="px-6 py-4 text-sm text-gray-500 text-right">
+                      {page.uniqueVisitors.toLocaleString()}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-500 text-right">
+                      {page.bounceRate.toFixed(1)}%
+                    </td>
+                    {/* <td className="px-6 py-4 text-sm text-gray-500 text-right">
+                      {Math.floor(page.avgTimeOnPage / 60)}m {page.avgTimeOnPage % 60}s
+                    </td> */}
                   </tr>
                 ))}
               </tbody>

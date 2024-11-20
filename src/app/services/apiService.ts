@@ -305,12 +305,43 @@ export interface TrendData {
 }
 
 export interface AnalyticsDashboardData {
-  timeframe: string;
-  overview: AnalyticsOverview;
-  engagement: EngagementMetrics;
-  geography: GeographyData;
-  content: ContentMetrics;
-  trends: TrendData;
+  overview: {
+    totalVisitors: number;
+    totalPageViews: number;
+    newUsers: number;
+    returningUsers: number;
+  };
+  trends: {
+    visitorTrend: Array<{
+      date: string;
+      visitors: number;
+      pageviews: number;
+    }>;
+  };
+  engagement: {
+    hourlyActivity: Array<{
+      _id: number;
+      count: number;
+    }>;
+    trafficSources: Record<string, number>;
+    performanceMetrics: {
+      bounceRate: number;
+      avgSessionDuration: number;
+      avgPagesPerSession: number;
+    };
+  };
+  geography: {
+    userLocations: Record<string, number>;
+  };
+  content: {
+    pagesVisited: Array<{
+      path: string;
+      views: number;
+      uniqueVisitors: number;
+      bounceRate: number;
+      avgTimeOnPage: number;
+    }>;
+  };
 }
 
 export const submitTripRequest = (data: TripRequest) => apiService.post<{ message: string; id: string }>('/api/trip-request', data);
