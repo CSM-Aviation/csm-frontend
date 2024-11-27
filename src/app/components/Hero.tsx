@@ -56,7 +56,7 @@ const Hero: React.FC<HeroProps> = ({
                 src={desktopImage || '/images/default-desktop.jpg'}
                 alt="Background"
                 layout="fill"
-                objectFit="cover"
+                // objectFit="cover"
                 objectPosition="center"
                 quality={85}
                 priority
@@ -70,14 +70,14 @@ const Hero: React.FC<HeroProps> = ({
                 src={mobileImage || '/images/default-mobile.jpg'}
                 alt="Background"
                 layout="fill"
-                objectFit="cover"
+                // objectFit="cover"
                 objectPosition="center"
                 quality={85}
                 priority
                 className="transition-opacity duration-300"
               />
             </div>
-            <div className="absolute inset-0 bg-black opacity-50"></div>
+            <div className="absolute inset-0 bg-black opacity-10"></div>
           </div>
         )}
 
