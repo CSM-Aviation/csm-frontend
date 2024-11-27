@@ -122,15 +122,17 @@ export default function HomeBody() {
         <img
           src="/images/airplane3.svg"
           alt="Airplane icon"
-          className="w-20 h-20 object-contain"
+          className="w-32 h-32 object-contain"
         />
       </motion.div>
 
       <div>
         <Hero
-          desktopImage="/images/hero/home-desktop.jpg"
-          mobileImage="/images/hero/home-mobile.jpg"
-          videoSource={config?.home_video}
+          // desktopImage="/images/hero/home-desktop.jpg"
+          desktopImage="/images/thanksgiving/a1.png"
+          // mobileImage="/images/hero/home-mobile.jpg"
+          mobileImage="/images/thanksgiving/a1.png"
+          // videoSource={config?.home_video}
           title="Welcome to CSM Aviation"
           subtitle="Director Broker Services | Wholesale Private Charter Direct to Public"
           isHome={true}
