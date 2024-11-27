@@ -63,7 +63,7 @@ const ThanksgivingCharter = () => {
             >
               <h2 className="text-3xl text-black font-bold mb-4">Skip the Holiday Rush</h2>
               <p className="mb-6 text-gray-600">
-                Avoid crowded airports and delayed flights this Thanksgiving season. Our private charter services ensure you arrive at your family gathering relaxed and on time. With flexible scheduling and direct flights to your destination, you'll have more time to spend with loved ones.
+                Avoid crowded airports and delayed flights this Thanksgiving season. Our private charter services ensure you arrive at your family gathering relaxed and on time. With flexible scheduling and direct flights to your destination, you will have more time to spend with loved ones.
               </p>
             </motion.div>
             <motion.div
@@ -127,7 +127,7 @@ const ThanksgivingCharter = () => {
             >
               <h2 className="text-3xl font-bold mb-4 text-white">Flexible Holiday Schedule</h2>
               <p className="mb-6 text-gray-300">
-                Whether you're planning an extended Thanksgiving weekend or a quick visit home, our flexible scheduling adapts to your needs. We operate around your timeline, ensuring you never miss a moment of family celebration. Book now to secure your preferred travel dates.
+                Whether you are planning an extended Thanksgiving weekend or a quick visit home, our flexible scheduling adapts to your needs. We operate around your timeline, ensuring you never miss a moment of family celebration. Book now to secure your preferred travel dates.
               </p>
             </motion.div>
             <motion.div
