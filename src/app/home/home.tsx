@@ -132,7 +132,7 @@ export default function HomeBody() {
           desktopImage="/images/thanksgiving/a1.png"
           // mobileImage="/images/hero/home-mobile.jpg"
           mobileImage="/images/thanksgiving/a1.png"
-          // videoSource={config?.home_video}
+          videoSource={config?.home_video}
           title="Welcome to CSM Aviation"
           subtitle="Director Broker Services | Wholesale Private Charter Direct to Public"
           isHome={true}
