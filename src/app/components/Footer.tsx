@@ -155,7 +155,15 @@ const Footer = () => {
                     />
                   </a>
                 </div>
-                <div className="flex items-center justify-center h-12">
+                <div className="flex items-center justify-center h-12" id="wyvern">
+                  <a href="http://app.wyvern.systems/public/verification/f47895b023ddd948dfcc647054/10463/032a727d117c7-eb882228c5be6" target="_blank">
+                    <Image src="http://api.wyvern.systems/api/company/status/verify/f47895b023ddd948dfcc647054/10463/032a727d117c7/3/eb882228c5be6" alt="WYVERN Logo"
+                    width={100}
+                    height={40}
+                    className="max-h-full w-auto object-contain"/>
+                  </a>
+                </div>
+                {/* <div className="flex items-center justify-center h-12">
                   <a href="https://www.wyvernltd.com/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
                     <Image
                       src="/images/LOGOS/wyvern_logo.png"
@@ -165,7 +173,7 @@ const Footer = () => {
                       className="max-h-full w-auto object-contain"
                     />
                   </a>
-                </div>
+                </div> */}
                 <div className="flex items-center justify-center h-12">
                   <a href="https://beechcraft.txtav.com/en/king-air-360" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
                     <Image
