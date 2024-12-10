@@ -15,7 +15,7 @@ const Footer = () => {
   const shouldHideChatbot = pathname === '/f1race';
 
   return (
-    <footer className="bg-[#004080] mt-14 text-white py-16">
+    <footer className="bg-[#004080]  text-white py-16">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
           {/* Email Subscription Section - 50% */}

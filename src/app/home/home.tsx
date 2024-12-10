@@ -6,6 +6,7 @@ import ServicesCards from "../components/ServiceCard";
 import { useConfig } from "../contexts/ConfigContext";
 import DonorNetworkSection from "../components/DonorNetworkSection";
 import { motion, useMotionValue, useTransform } from "framer-motion";
+import PopularDestinations from "../components/PopularDestinations";
 
 export default function HomeBody() {
   const { config, error } = useConfig();
@@ -110,21 +111,7 @@ export default function HomeBody() {
 
   return (
     <>
-      <motion.div
-        style={{
-          position: "fixed",
-          top: yTransform,
-          left: xTransform,
-          rotate: rotateTransform,
-          zIndex: 10,
-        }}
-      >
-        <img
-          src="/images/airplane3.svg"
-          alt="Airplane icon"
-          className="w-32 h-32 object-contain"
-        />
-      </motion.div>
+      
 
       <div>
         <Hero
@@ -141,6 +128,7 @@ export default function HomeBody() {
         <ServicesCards />
         <MaintManage />
         <DonorNetworkSection />
+        <PopularDestinations />
       </div>
     </>
   );
