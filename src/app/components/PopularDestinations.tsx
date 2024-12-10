@@ -41,7 +41,7 @@ const PopularDestinations = () => {
           Popular Private Jet Charter Destinations
         </h1>
         <p className="text-sm  md:text-xl lg:text-2xl font-bold text-center  text-gray-400">
-          Fly to your dream destination with Mercury Jets. We offer private
+          Fly to your dream destination with CSM Aviation. We offer private
           jet charter flights to over 1,000 destinations worldwide. Depending
           on your needs and preferences, there are many private charter flight
           destinations to choose from.
