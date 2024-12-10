@@ -14,6 +14,10 @@ const Footer = () => {
   const pathname = usePathname();
   const shouldHideChatbot = pathname === '/f1race';
 
+  const handleWyvernClick = () => {
+    window.open('http://app.wyvern.systems/public/verification/f47895b023ddd948dfcc647054/10463/032a727d117c7-eb882228c5be6', '_blank');
+  };
+
   return (
     <footer className="bg-[#004080]  text-white py-16">
       <div className="container mx-auto px-4">
@@ -155,6 +159,20 @@ const Footer = () => {
                     />
                   </a>
                 </div>
+                {/* <div className="flex items-center justify-center h-12" id="wyvern">
+                  <button 
+                    onClick={handleWyvernClick}
+                    className="w-full h-full flex items-center justify-center"
+                  >
+                    <Image
+                      src="/images/LOGOS/wyvern_logo.png"
+                      alt="WYVERN Verified"
+                      width={100}
+                      height={100}
+                      className="max-h-full w-auto object-contain hover:opacity-80 transition-opacity"
+                    />
+                  </button>
+                </div> */}
                 <div className="flex items-center justify-center h-12">
                   <a href="https://www.wyvernltd.com/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
                     <Image
