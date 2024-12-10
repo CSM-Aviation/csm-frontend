@@ -12,7 +12,7 @@ const nextConfig = {
     },
     reactStrictMode: true,
     images: {
-      domains: ['s3.us-west-1.amazonaws.com'],
+      domains: ['s3.us-west-1.amazonaws.com','api.wyvern.systems'],
       loader: 'custom',
       loaderFile: './image-loader.ts',
     },
