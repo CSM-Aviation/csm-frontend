@@ -61,7 +61,7 @@ const DonorNetworkSection = () => {
         >
           <div className="text-center p-6 bg-white bg-opacity-10 rounded-xl">
             <h3 className="text-3xl font-bold text-white mb-2">8876</h3>
-            <p className="text-blue-100">Life-Saving Flights in history of CSM</p>
+            <p className="text-blue-100">Life Saving Flights to Date</p>
           </div>
           <div className="text-center p-6 bg-white bg-opacity-10 rounded-xl">
             <h3 className="text-3xl font-bold text-white mb-2">24/7</h3>
