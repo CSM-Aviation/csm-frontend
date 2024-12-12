@@ -37,10 +37,10 @@ export const Testimonials = () => {
         <section className="py-20 md:py-24 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
-              <h2 className="text-5xl md:text-6xl text-center tracking-tighter font-medium">
+              <h2 className="text-center pb-5 text-3xl  md:text-4xl lg:text-5xl font-bold  mb-3 text-[#004080]">
                 Trusted by Industry Leaders
               </h2>
-              <p className="mt-5 text-lg md:text-xl  text-black/70 text-center tracking-tight max-w-sm mx-auto">
+              <p className="text-sm  md:text-xl lg:text-2xl font-bold text-center  text-gray-400">
                 Discover why executives and luxury clients choose our charter services
               </p>
             </div>
