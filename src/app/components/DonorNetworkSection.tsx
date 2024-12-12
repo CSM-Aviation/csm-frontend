@@ -57,8 +57,8 @@ const DonorNetworkSection = () => {
           className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12"
         >
           <div className="text-center p-6 bg-white bg-opacity-10 rounded-xl">
-            <h3 className="text-3xl font-bold text-white mb-2">416</h3>
-            <p className="text-blue-100">Life-Saving Flights in 2023</p>
+            <h3 className="text-3xl font-bold text-white mb-2">8876</h3>
+            <p className="text-blue-100">Life Saving Flights to Date</p>
           </div>
           <div className="text-center p-6 bg-white bg-opacity-10 rounded-xl">
             <h3 className="text-3xl font-bold text-white mb-2">24/7</h3>

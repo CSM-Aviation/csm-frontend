@@ -32,7 +32,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ image, title, description, ic
 const ServicesCards = () => {
     const services: ServiceCardProps[] = [
         {
-            image: "/images/charter.png",
+            image: "/images/image_jetcenter_gi_205.jpg",
             title: "Direct Charter to Public",
             description: "Located in Central California, we are positioned well to depart from all Northern and Southern California airport locations, including Las Vegas and Reno, Nevada. We offer the Luxury Travel Experience, with safety and overall trip experience as our primary focus.",
             icon: faPlane,
