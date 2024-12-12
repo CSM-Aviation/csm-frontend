@@ -10,7 +10,7 @@ const DonorNetworkSection = () => {
   return (
     <div className="w-full py-20 relative overflow-hidden">
       {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900"/>
+      <div className="absolute inset-0 bg-[#004080]"/>
       
       {/* Content Container */}
       <div className="relative container mx-auto px-4 max-w-7xl">
@@ -19,21 +19,22 @@ const DonorNetworkSection = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ amount: 0.8, once: true }}
             transition={{ duration: 0.8 }}
-            className="w-48 h-24 relative mb-6 bg-white rounded-lg p-10" // Added white background
+            className="w-48 h-24 relative mb-6 bg-white rounded-lg p-10"
           >
             <Image
               src="/images/dnw/dnw.svg"
               alt="Donor Network West Logo"
               fill
               style={{ objectFit: "contain" }}
-        className="object-contain p-2" 
-              
+              className="object-contain p-2"
             />
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ amount: 0.8, once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-3xl md:text-4xl font-bold text-white text-center mb-4"
           >
@@ -42,6 +43,7 @@ const DonorNetworkSection = () => {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ amount: 0.8, once: true }}
             transition={{ duration: 0.8, delay: 0.3 }}
             className="text-lg text-blue-100 text-center max-w-2xl mb-8"
           >
@@ -53,12 +55,13 @@ const DonorNetworkSection = () => {
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ amount: 0.8, once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
           className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12"
         >
           <div className="text-center p-6 bg-white bg-opacity-10 rounded-xl">
-            <h3 className="text-3xl font-bold text-white mb-2">416</h3>
-            <p className="text-blue-100">Life-Saving Flights in 2023</p>
+            <h3 className="text-3xl font-bold text-white mb-2">8876</h3>
+            <p className="text-blue-100">Life-Saving Flights in history of CSM</p>
           </div>
           <div className="text-center p-6 bg-white bg-opacity-10 rounded-xl">
             <h3 className="text-3xl font-bold text-white mb-2">24/7</h3>
@@ -74,6 +77,7 @@ const DonorNetworkSection = () => {
         <motion.div 
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ amount: 0.8, once: true }}
           transition={{ duration: 0.8, delay: 0.5 }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
         >
@@ -89,7 +93,6 @@ const DonorNetworkSection = () => {
                 fill
                 style={{ objectFit: "cover" }}
                 className="hover:scale-110 transition-transform duration-500"
-                
               />
             </div>
           ))}
@@ -99,6 +102,7 @@ const DonorNetworkSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ amount: 0.8, once: true }}
           transition={{ duration: 0.8, delay: 0.6 }}
           className="flex justify-center"
         >

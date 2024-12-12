@@ -32,7 +32,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ image, title, description, ic
 const ServicesCards = () => {
     const services: ServiceCardProps[] = [
         {
-            image: "/images/charter.png",
+            image: "/images/homepage.jpg",
             title: "Direct Charter to Public",
             description: "Located in Central California, we are positioned well to depart from all Northern and Southern California airport locations, including Las Vegas and Reno, Nevada. We offer the Luxury Travel Experience, with safety and overall trip experience as our primary focus.",
             icon: faPlane,
@@ -54,7 +54,7 @@ const ServicesCards = () => {
     return (
         <section className=" px-10 py-24 ">
             <div className="container mx-auto px-4 xl:px-0">
-                <h2 className="text-3xl  md:text-4xl lg:text-5xl font-bold text-center mb-3 text-gray-600">Our Services</h2>
+                <h2 className="text-3xl  md:text-4xl lg:text-5xl font-bold text-center mb-3 text-[#004080]">Our Services</h2>
                 <h3 className="text-2xl  md:text-3xl lg:text-4xl font-bold text-center mb-16 text-gray-400">Find The Best Service For You</h3>
                 <div className="grid grid-cols-1 xl:grid-cols-3 gap-14">
                     {services.map((service, index) => (
