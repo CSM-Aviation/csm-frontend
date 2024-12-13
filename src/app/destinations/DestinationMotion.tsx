@@ -44,7 +44,7 @@ const DestinationMotion = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-xl md:text-2xl text-white max-w-2xl text-center mb-8 [text-shadow:5px_5px_8px_rgba(0,0,0,0.5)]"
           >
-            Experience unparalleled luxury with CSM Aviation's 24/7 on-demand private jet charter services
+            Experience unparalleled luxury with CSM Aviations 24/7 on-demand private jet charter services
           </motion.p>
           <div className="flex justify-center items-center w-full">
             <JetInsightComponent />
