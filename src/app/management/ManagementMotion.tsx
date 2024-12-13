@@ -67,7 +67,7 @@ const ManagementMotion = () => {
             whileHover={{ translateY: -15 }}
             transition={{ duration: 0.1, delay: 0.1 }}
             onClick={handleClick}
-            className='bg-electric-blue mt-6 flex items-center justify-center rounded-xl hover:duration-300 ease-in-out text-black px-1 py-2 md:px-6 md:py-3 text-lg font-semibold hover:bg-white transition'
+            className='bg-electric-blue mt-6 flex items-center justify-center rounded-xl hover:duration-300 ease-in-out text-black px-5 py-2 md:px-6 md:py-3 text-lg font-semibold hover:bg-white transition'
           >
             MANAGEMENT INQUIRY
           </motion.button>

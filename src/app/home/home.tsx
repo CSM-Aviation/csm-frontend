@@ -127,8 +127,9 @@ export default function HomeBody() {
         />
         <ServicesCards />
         <MaintManage />
+        <PopularDestinations />
         <DonorNetworkSection />
-        {/* <PopularDestinations /> */}
+       
       </div>
     </>
   );
