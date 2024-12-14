@@ -7,6 +7,7 @@ import { useConfig } from "../contexts/ConfigContext";
 import DonorNetworkSection from "../components/DonorNetworkSection";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import PopularDestinations from "../components/PopularDestinations";
+import Testimonials from "../components/Testimonials";
 
 export default function HomeBody() {
   const { config, error } = useConfig();
@@ -129,6 +130,7 @@ export default function HomeBody() {
         <MaintManage />
         <PopularDestinations />
         <DonorNetworkSection />
+        <Testimonials />
        
       </div>
     </>
