@@ -130,7 +130,7 @@ export default function HomeBody() {
         <MaintManage />
         <PopularDestinations />
         <DonorNetworkSection />
-        <Testimonials />
+        {/* <Testimonials /> */}
        
       </div>
     </>
