@@ -129,7 +129,7 @@ export default function HomeBody() {
         <ServicesCards />
         <MaintManage />
         <PopularDestinations />
-        <DonorNetworkSection />
+        {/* <DonorNetworkSection /> */}
         {/* <Testimonials /> */}
        
       </div>

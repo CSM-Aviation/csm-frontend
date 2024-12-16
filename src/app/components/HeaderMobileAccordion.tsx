@@ -25,6 +25,7 @@ const HeaderMobileAccordion: React.FC = () => {
             {/* <Link href="/charter/quote" className="block py-2 text-white hover:text-blue-600">INSTANT QUOTE</Link>
             <Link href="/charter/trip" className="block py-2 text-white hover:text-blue-600">TRIP REQUEST</Link> */}
             <Link href="/charter/fleet" className="block py-2 text-white hover:text-blue-600">FLEET</Link>
+            <Link href="/destinations" className="block py-2 text-white hover:text-blue-600">CHARTER DESTINATIONS</Link>
           </div>
         )}
       </div>
