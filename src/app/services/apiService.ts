@@ -176,11 +176,34 @@ export const apiService = {
   async updateSeoConfiguration(id: string, config: Partial<SeoData>): Promise<ApiResponse<void>> {
     return this.put<void>(`/api/seo/configurations/${id}`, config);
   },
+
+  async submitSurvey(data: SurveySubmission): Promise<ApiResponse<{ id: string }>> {
+    return handleApiResponse(api.post<{ id: string }>('/api/surveys', data));
+  },
+
+  async getSurveys(): Promise<ApiResponse<Array<SurveySubmission & { submittedAt: string }>>> {
+    return handleApiResponse(api.get<Array<SurveySubmission & { submittedAt: string }>>('/api/surveys'));
+  }
+
   // Add more methods as needed
 };
 
 // Specific API calls
 export const fetchConfig = () => apiService.get<Config>('/api/config');
+
+
+interface SurveySubmission {
+  bookingEfficiency: number;      // 1-5 rating
+  fboLocating: number;           // 1-5 rating
+  fboStaffCourtesy: number;      // 1-5 rating
+  aircraftCleanliness: number;   // 1-5 rating
+  cabinComfort: number;          // 1-5 rating
+  crewProfessionalism: number;   // 1-5 rating
+  overallSatisfaction: number;   // 1-5 rating
+  willRecommend: string;         // 'Yes' or 'No'
+  email: string;                 // Optional
+  comments: string;              // Optional
+}
 
 // Define your types
 export interface Config {
