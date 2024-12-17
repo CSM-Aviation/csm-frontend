@@ -18,12 +18,12 @@ const Breadcrumb: React.FC = () => {
                     const href = `/${pathSegments.slice(0, index + 1).join('/')}`;
                     const isLast = index === pathSegments.length - 1;
                     return (
-                        <React.Fragment key={segment}>
-                            {index > 0 && <span className="text-black text-lg">/</span>}
+                      <React.Fragment key={segment}>
+                            {index > 0 && <span className="text-black text-xs md:text-lg">/</span>}
                             <li>
                                 <Link
                                     href={href}
-                                    className={`md:text-3xl  font-medium ${
+                                    className={`text-xs md:text-3xl font-medium ${
                                         isLast ? 'text-black cursor-default' : 'text-black hover:text-red-500'
                                     }`}
                                     aria-current={isLast ? 'page' : undefined}

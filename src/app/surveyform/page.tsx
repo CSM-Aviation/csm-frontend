@@ -3,9 +3,30 @@ import React, { useState, useEffect, FormEvent } from 'react';
 import { apiService } from '../services/apiService';
 import { Star } from 'lucide-react';
 
+// Define the form data structure
+interface FormData {
+  bookingEfficiency: number;
+  fboLocating: number;
+  fboStaffCourtesy: number;
+  aircraftCleanliness: number;
+  cabinComfort: number;
+  crewProfessionalism: number;
+  overallSatisfaction: number;
+  willRecommend: string;
+  email: string;
+  comments: string;
+}
+
+// Define the rating field structure
+interface RatingField {
+  name: keyof Pick<FormData, 'bookingEfficiency' | 'fboLocating' | 'fboStaffCourtesy' | 
+    'aircraftCleanliness' | 'cabinComfort' | 'crewProfessionalism' | 'overallSatisfaction'>;
+  label: string;
+}
+
 const SurveyForm = () => {
   const [isClient, setIsClient] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     bookingEfficiency: 0,
     fboLocating: 0,
     fboStaffCourtesy: 0,
@@ -55,7 +76,7 @@ const SurveyForm = () => {
     }
   };
 
-  const ratingFields = [
+  const ratingFields: RatingField[] = [
     { name: 'bookingEfficiency', label: 'Booking Efficiency' },
     { name: 'fboLocating', label: 'FBO Locating Experience' },
     { name: 'fboStaffCourtesy', label: 'FBO Staff Courtesy' },
@@ -65,9 +86,16 @@ const SurveyForm = () => {
     { name: 'overallSatisfaction', label: 'Overall Satisfaction' }
   ];
 
+  const handleRatingChange = (fieldName: RatingField['name'], rating: number) => {
+    setFormData(prev => ({
+      ...prev,
+      [fieldName]: rating
+    }));
+  };
+
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <h1 className="text-3xl font-bold text-center mb-6">Flight Experience Survey</h1>
+      <h1 className="text-3xl text-[#004080] font-bold text-center mb-6">Flight Experience Survey</h1>
       <form onSubmit={handleSubmit} className="bg-white rounded-lg p-6 shadow space-y-6">
         {/* Rating Fields */}
         {ratingFields.map(field => (
@@ -79,15 +107,12 @@ const SurveyForm = () => {
                   <button
                     key={rating}
                     type="button"
-                    onClick={() => setFormData(prev => ({
-                      ...prev,
-                      [field.name]: rating
-                    }))}
+                    onClick={() => handleRatingChange(field.name, rating)}
                     className="p-1"
                   >
                     <Star
                       className={`w-6 h-6 ${
-                        rating <= formData[field.name as keyof typeof formData]
+                        rating <= formData[field.name]
                           ? 'text-yellow-400 fill-yellow-400'
                           : 'text-gray-300'
                       }`}
