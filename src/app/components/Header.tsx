@@ -200,7 +200,7 @@ const Header: React.FC = () => {
                  <Link href="/charter/fleet" className="text-xl text-white  hover:text-electric-blue hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>FLEET</Link>
                   {/* <Link href="/charter/quote" className="text-xl text-white  hover:text-electric-blue hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>INSTANT QUOTE</Link>
                   <Link href="/charter/trip" className="text-xl text-white   hover:text-electric-blue hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>TRIP REQUEST</Link> */}
-                 
+                  <Link href="/destinations" className="text-xl text-white  hover:text-electric-blue hover:underline transition-colors duration-300" onClick={() => setActiveDropdown(null)}>CHARTER DESTINATIONS</Link>
                 </>
               )}
               {activeDropdown === 'company' && (
