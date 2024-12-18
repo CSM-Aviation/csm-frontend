@@ -192,10 +192,14 @@ export const apiService = {
 export const fetchConfig = () => apiService.get<Config>('/api/config');
 
 
-interface SurveySubmission {
+export interface SurveySubmission {
+  _id: string;
+  approved: boolean;
+  submittedAt: string | number | Date;
+  fullName:string;
   bookingEfficiency: number;      // 1-5 rating
-  fboLocating: number;           // 1-5 rating
-  fboStaffCourtesy: number;      // 1-5 rating
+  // fboLocating: number;           // 1-5 rating
+  // fboStaffCourtesy: number;      // 1-5 rating
   aircraftCleanliness: number;   // 1-5 rating
   cabinComfort: number;          // 1-5 rating
   crewProfessionalism: number;   // 1-5 rating
