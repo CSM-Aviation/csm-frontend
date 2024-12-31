@@ -117,10 +117,10 @@ export default function HomeBody() {
       <div>
         <Hero
           // desktopImage="/images/hero/home-desktop.jpg"
-          // desktopImage="/images/thanksgiving/a1.png"
+          desktopImage="/images/newyear/newyear.jpeg"
           // mobileImage="/images/hero/home-mobile.jpg"
-          // mobileImage="/images/thanksgiving/a1.png"
-          videoSource={config?.home_video}
+          mobileImage="/images/newyear/newyear.jpeg"
+          // videoSource={config?.home_video}
           title="Welcome to CSM Aviation"
           subtitle="Director Broker Services | Wholesale Private Charter Direct to Public"
           isHome={true}
