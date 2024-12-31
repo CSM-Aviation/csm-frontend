@@ -54,7 +54,7 @@ export default function NewYearsPage() {
             {...fadeIn}
             className="text-6xl md:text-8xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gold-400 to-gold-200"
           >
-            New Year's Eve
+            New Years Eve
             <br />
             <span className="text-4xl md:text-6xl">Private Jet Charter</span>
           </motion.h1>
@@ -64,7 +64,7 @@ export default function NewYearsPage() {
             transition={{ delay: 0.2 }}
             className="text-xl mx-auto md:text-2xl mt-32 mb-8 max-w-7xl"
           >
-            Celebrate the arrival of the new year at your dream destination with CSM Aviation's luxury private jet service.
+            Celebrate the arrival of the new year at your dream destination with CSM Aviation luxury private jet service.
           </motion.p>
           <div className="flex justify-center items-center w-full">
                 <JetInsightComponent />
@@ -147,9 +147,9 @@ export default function NewYearsPage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl font-bold mb-6">Ready to Elevate Your New Year's Eve?</h2>
+            <h2 className="text-4xl font-bold mb-6">Ready to Elevate Your New Years Eve?</h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto">
-              Contact us now to secure your private jet charter and make this New Year's Eve truly unforgettable.
+              Contact us now to secure your private jet charter and make this New Years Eve truly unforgettable.
             </p>
             <Link href="/company/contact">
               <button className='bg-electric-blue  hover:translate-y-[-5px]  hover:duration-300 ease-in-out text-black rounded-lg px-1 py-1 md:px-6 md:py-3 text-lg font-semibold hover:bg-white transition'>
