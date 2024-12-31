@@ -82,8 +82,8 @@ export const Testimonials = () => {
                   </div>
                 </div>
                 <blockquote>
-                  <p className="text-gray-700 text-lg italic leading-relaxed mb-4">
-                    "{testimonial.comments}"
+                <p className="text-gray-700 text-lg italic leading-relaxed mb-4">
+                    &ldquo;{testimonial.comments}&rdquo;
                   </p>
                   <div className="flex items-center gap-2">
                     <div className="flex items-center">
