@@ -222,7 +222,7 @@ const Footer = () => {
                 height={50}
               />
               <p className="mt-2 md:text-xl">
-                Copyright © 2024 CSM Aviation. All rights reserved.
+                Copyright © {new Date().getFullYear()} CSM Aviation. All rights reserved.
               </p>
             </div>
           </div>
