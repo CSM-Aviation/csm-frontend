@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import Seo, { generateMetadata as seoGenerateMetadata } from '../../components/seo/Seo';
 import StructuredData from '../../components/seo/StructuredData';
 import { apiService, SeoData } from '../../services/apiService';
+import { generateStructuredData } from '@/app/utils/structuredData';
 
 const FleetContent = dynamic(() => import('./FleetContent'), { ssr: false });
 
@@ -32,22 +33,21 @@ async function getData(): Promise<SeoData> {
   }
 }
 
+async function generateMetadata(): Promise<Metadata> {
+  const seoData = await getData();
+  return seoGenerateMetadata(seoData);
+}
+
+// Export the metadata generator for Next.js
+export { generateMetadata };
 
 const FleetPage: React.FC = async () => {
   const seoData = await getData();
   seoGenerateMetadata(seoData);
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": seoData.siteName,
-    "url": seoData.canonicalUrl,
-    "logo": "https://www.csmaviation.com/images/CSM-Logo-WHITE-01-web300.jpg",
-    "description": seoData.description
-  };
+  const structuredData = generateStructuredData(seoData);
   return (
     <>
-      <Seo {...seoData} />
       <StructuredData data={structuredData} />
       <FleetContent />
     </>
