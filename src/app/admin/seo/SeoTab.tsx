@@ -56,7 +56,7 @@ const SeoTab: React.FC = () => {
         if (seoConfig) {
             setSeoConfig({
                 ...seoConfig,
-                keywords: e.target.value.split(',').map(k => k.trim())
+                keywords: e.target.value.split(',').map(k => k)
             });
         }
     };
@@ -138,7 +138,7 @@ const SeoTab: React.FC = () => {
                                     type="text"
                                     name="keywords"
                                     id="keywords"
-                                    value={seoConfig.keywords.join(', ')}
+                                    value={seoConfig.keywords.join(',')}
                                     onChange={handleKeywordsChange}
                                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 />
