@@ -4,6 +4,7 @@ import Seo, { generateMetadata as seoGenerateMetadata } from '../../components/s
 import StructuredData from '../../components/seo/StructuredData';
 import { apiService, SeoData } from '../../services/apiService';
 import { Metadata } from 'next';
+import { generateStructuredData } from '@/app/utils/structuredData';
 
 const TripRequestForm = dynamic(() => import('./TripRequestForm'), { ssr: false });
 
@@ -32,23 +33,21 @@ async function getData(): Promise<SeoData> {
   }
 }
 
+async function generateMetadata(): Promise<Metadata> {
+  const seoData = await getData();
+  return seoGenerateMetadata(seoData);
+}
+
+// Export the metadata generator for Next.js
+export { generateMetadata };
+
 
 const TripPage: React.FC = async () => {
   const seoData = await getData();
-  seoGenerateMetadata(seoData);
-
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": seoData.siteName,
-    "url": seoData.canonicalUrl,
-    "logo": "https://www.csmaviation.com/images/CSM-Logo-WHITE-01-web300.jpg",
-    "description": seoData.description
-  };
+  const structuredData = generateStructuredData(seoData);
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Seo {...seoData} />
       <StructuredData data={structuredData} />
       <h1 className="text-4xl font-bold text-center mb-8 text-blue-900">Trip Request</h1>
       <TripRequestForm />

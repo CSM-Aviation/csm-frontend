@@ -6,6 +6,7 @@ import Seo, { generateMetadata as seoGenerateMetadata } from '../../components/s
 import StructuredData from '../../components/seo/StructuredData';
 import { apiService, SeoData } from '../../services/apiService';
 import { Metadata } from 'next';
+import { generateStructuredData } from '@/app/utils/structuredData';
 
 
 async function getData(): Promise<SeoData> {
@@ -33,23 +34,19 @@ async function getData(): Promise<SeoData> {
   }
 }
 
+async function generateMetadata(): Promise<Metadata> {
+  const seoData = await getData();
+  return seoGenerateMetadata(seoData);
+}
+
+// Export the metadata generator for Next.js
+export { generateMetadata };
 
 const AboutPage: NextPage = async () => {
   const seoData = await getData();
-  seoGenerateMetadata(seoData);
-
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": seoData.siteName,
-    "url": seoData.canonicalUrl,
-    "logo": "https://www.csmaviation.com/images/CSM-Logo-WHITE-01-web300.jpg",
-    "description": seoData.description
-  };
+  const structuredData = generateStructuredData(seoData);
   return (
-
     <>
-      <Seo {...seoData} />
       <StructuredData data={structuredData} />
       <Hero
         desktopImage="/images/Luxury_desktop.jpg"
