@@ -163,9 +163,7 @@ export const apiService = {
 
   async fetchSeoData(page: string): Promise<ApiResponse<SeoData>> {
     // For SEO data, we don't need authentication, so we can bypass the token check
-    return handleApiResponse(api.get<SeoData>(`/api/seo/${page}`, {
-      headers: { Authorization: undefined }
-    }));
+    return handleApiResponse(api.get<SeoData>(`/api/seo/${page}`));
   },
 
   // New SEO configuration methods

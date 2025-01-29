@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useEffect } from 'react';
+import React from 'react';
 import HomeBody from './home/home';
 import Seo, { generateMetadata as seoGenerateMetadata } from './components/seo/Seo';
 import StructuredData from './components/seo/StructuredData';
@@ -13,6 +11,7 @@ async function getData(): Promise<SeoData> {
     if (response.error || !response.data) {
       throw new Error(response.error || 'Failed to fetch SEO data');
     }
+    // console.log("SEO data received: "+ response.data.keywords)
     return response.data;
   } catch (error) {
     console.error('Error fetching SEO data:', error);
@@ -37,13 +36,12 @@ async function generateMetadata(): Promise<Metadata> {
   return seoGenerateMetadata(seoData);
 }
 
-export default async function Home() {
+// Export the metadata generator for Next.js
+export { generateMetadata };
 
-  // useEffect(() => {
-  //   generateMetadata()
-  // },[])
+export default async function Home() {
   const seoData = await getData();
-  seoGenerateMetadata(seoData);
+  // console.log(seoData);
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -51,12 +49,23 @@ export default async function Home() {
     "name": seoData.siteName,
     "url": seoData.canonicalUrl,
     "logo": "https://www.csmaviation.com/images/CSM-Logo-WHITE-01-web300.jpg",
-    "description": seoData.description
+    "description": seoData.description,
+    // Add these recommended fields for better SEO
+    "sameAs": [
+      // Add your social media URLs here
+      "https://twitter.com/CSMAviation",
+      // "https://facebook.com/CSMAviation",
+      // "https://linkedin.com/company/csm-aviation"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "", // Add your contact number
+      "contactType": "customer service"
+    }
   };
 
   return (
     <>
-      <Seo {...seoData} />
       <StructuredData data={structuredData} />
       <HomeBody />
     </>
