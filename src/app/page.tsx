@@ -4,6 +4,7 @@ import Seo, { generateMetadata as seoGenerateMetadata } from './components/seo/S
 import StructuredData from './components/seo/StructuredData';
 import { apiService, SeoData } from './services/apiService';
 import { Metadata } from 'next';
+import { generateStructuredData } from './utils/structuredData';
 
 async function getData(): Promise<SeoData> {
   try {
@@ -41,28 +42,7 @@ export { generateMetadata };
 
 export default async function Home() {
   const seoData = await getData();
-  // console.log(seoData);
-
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": seoData.siteName,
-    "url": seoData.canonicalUrl,
-    "logo": "https://www.csmaviation.com/images/CSM-Logo-WHITE-01-web300.jpg",
-    "description": seoData.description,
-    // Add these recommended fields for better SEO
-    "sameAs": [
-      // Add your social media URLs here
-      "https://twitter.com/CSMAviation",
-      // "https://facebook.com/CSMAviation",
-      // "https://linkedin.com/company/csm-aviation"
-    ],
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "", // Add your contact number
-      "contactType": "customer service"
-    }
-  };
+  const structuredData = generateStructuredData(seoData);
 
   return (
     <>
