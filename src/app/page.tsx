@@ -1,4 +1,6 @@
-import React from 'react';
+"use client";
+
+import React, { useEffect } from 'react';
 import HomeBody from './home/home';
 import Seo, { generateMetadata as seoGenerateMetadata } from './components/seo/Seo';
 import StructuredData from './components/seo/StructuredData';
@@ -30,13 +32,18 @@ async function getData(): Promise<SeoData> {
   }
 }
 
-export async function generateMetadata(): Promise<Metadata> {
+async function generateMetadata(): Promise<Metadata> {
   const seoData = await getData();
   return seoGenerateMetadata(seoData);
 }
 
 export default async function Home() {
+
+  // useEffect(() => {
+  //   generateMetadata()
+  // },[])
   const seoData = await getData();
+  seoGenerateMetadata(seoData);
 
   const structuredData = {
     "@context": "https://schema.org",

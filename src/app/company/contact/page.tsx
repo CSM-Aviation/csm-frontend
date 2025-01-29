@@ -11,7 +11,7 @@ const ContactForm = dynamic(() => import('./ContactForm'), { ssr: false });
 
 async function getData(): Promise<SeoData> {
   try {
-    const response = await apiService.fetchSeoData('about');
+    const response = await apiService.fetchSeoData('contact');
     if (response.error || !response.data) {
       throw new Error(response.error || 'Failed to fetch SEO data');
     }
@@ -34,13 +34,10 @@ async function getData(): Promise<SeoData> {
   }
 }
 
-export async function generateMetadata(): Promise<Metadata> {
-  const seoData = await getData();
-  return seoGenerateMetadata(seoData);
-}
 
 const ContactPage: NextPage = async () => {
   const seoData = await getData();
+  seoGenerateMetadata(seoData);
 
   const structuredData = {
     "@context": "https://schema.org",

@@ -32,13 +32,10 @@ async function getData(): Promise<SeoData> {
   }
 }
 
-export async function generateMetadata(): Promise<Metadata> {
-  const seoData = await getData();
-  return seoGenerateMetadata(seoData);
-}
 
 const TripPage: React.FC = async () => {
   const seoData = await getData();
+  seoGenerateMetadata(seoData);
 
   const structuredData = {
     "@context": "https://schema.org",
