@@ -122,7 +122,7 @@ export default function HomeBody() {
           
           videoSource={config?.home_video}
           title="Welcome to CSM Aviation"
-          subtitle="Director Broker Services | Wholesale Private Charter | Direct to Public"
+          subtitle="Anywhere Anytime Private Air Charter"
           isHome={true}
           showJetInsight={true}
         />
