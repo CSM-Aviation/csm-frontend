@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faUser } from '@fortawesome/free-solid-svg-icons';
 
 const HeaderMobileAccordion: React.FC = () => {
   const [activeAccordion, setActiveAccordion] = useState<string | null>(null);
+  const router = useRouter();
 
   const toggleAccordion = (accordion: string) => {
     setActiveAccordion(activeAccordion === accordion ? null : accordion);
+  };
+
+  const handleLoginClick = () => {
+    router.push('/admin/login');
   };
 
   return (
@@ -22,8 +28,6 @@ const HeaderMobileAccordion: React.FC = () => {
         </button>
         {activeAccordion === 'charter' && (
           <div className="pl-8 py-2">
-            {/* <Link href="/charter/quote" className="block py-2 text-white hover:text-blue-600">INSTANT QUOTE</Link>
-            <Link href="/charter/trip" className="block py-2 text-white hover:text-blue-600">TRIP REQUEST</Link> */}
             <Link href="/charter/fleet" className="block py-2 text-white hover:text-blue-600">FLEET</Link>
             <Link href="/destinations" className="block py-2 text-white hover:text-blue-600">CHARTER DESTINATIONS</Link>
           </div>
@@ -49,6 +53,15 @@ const HeaderMobileAccordion: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Added Login Button */}
+      <button
+        onClick={handleLoginClick}
+        className="w-full flex items-center p-4 text-white hover:text-blue-600"
+      >
+        <FontAwesomeIcon icon={faUser} className="mr-2" />
+        <span>LOGIN</span>
+      </button>
     </div>
   );
 };
