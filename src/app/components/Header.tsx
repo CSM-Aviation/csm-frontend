@@ -174,7 +174,18 @@ const Header: React.FC = () => {
 
         {/* Desktop CTA */}
         <div className="hidden lg:flex items-center space-x-4">
-          <a href="tel:+18884359276" className="text-gray-800 transition-colors duration-300 hover:text-blue-600">
+        <a
+            href="tel:+18884359276"
+            onClick={() => {
+              window.dataLayer = window.dataLayer || [];
+              window.dataLayer.push({
+                event: 'cta_call_click',
+                category: 'conversion',
+                label: window.location.pathname, 
+              });
+            }}
+            className="text-gray-800 transition-colors duration-300 hover:text-blue-600"
+          >
             <FontAwesomeIcon className='hover:text-white  hover:translate-y-[-5px]  hover:duration-300 ease-in-out' color='#23B2EE' icon={faPhone} size="lg" />
           </a>
           <JetInsightComponent />

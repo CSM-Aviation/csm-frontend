@@ -24,6 +24,12 @@ const ContactForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'contact_form_submission',
+      category: 'conversion',
+      label: window.location.pathname, // you can change or add more parameters as needed
+    });
     setIsSubmitting(true);
     setSubmitStatus('');
 
