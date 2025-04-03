@@ -720,7 +720,7 @@ const VendorSubmissionForm = () => {
                                     <div className="flex flex-col sm:flex-row gap-4">
                                         <div className="sm:w-1/2">
                                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                Signer's Name <span className="text-red-500">*</span>
+                                                Signer&apos;s Name <span className="text-red-500">*</span>
                                             </label>
                                             <input
                                                 type="text"
@@ -733,7 +733,7 @@ const VendorSubmissionForm = () => {
                                         </div>
                                         <div className="sm:w-1/2">
                                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                Signer's Title <span className="text-red-500">*</span>
+                                                Signer&apos;s Title <span className="text-red-500">*</span>
                                             </label>
                                             <input
                                                 type="text"
@@ -992,7 +992,7 @@ const VendorSubmissionForm = () => {
                                     <div className="flex flex-col sm:flex-row gap-4">
                                         <div className="sm:w-1/2">
                                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                Signer's Name <span className="text-red-500">*</span>
+                                                Signer&apos;s Name <span className="text-red-500">*</span>
                                             </label>
                                             <input
                                                 type="text"
@@ -1005,7 +1005,7 @@ const VendorSubmissionForm = () => {
                                         </div>
                                         <div className="sm:w-1/2">
                                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                Signer's Title <span className="text-red-500">*</span>
+                                                Signer&apos;s Title <span className="text-red-500">*</span>
                                             </label>
                                             <input
                                                 type="text"
