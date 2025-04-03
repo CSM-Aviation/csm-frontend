@@ -43,6 +43,27 @@ export interface SeoData {
 
 }
 
+export interface Vendor {
+  _id: string;
+  companyName: string;
+  email: string;
+  phone: string;
+  status: 'Pending' | 'Approved' | 'Rejected';
+  createdAt: string;
+  argusStatus?: string;
+  wyvernStatus?: string;
+  isbaoStatus?: string;
+  alternativeCertification?: string;
+  documents?: {
+    certificate?: string;
+    smsManual?: string;
+    opsSpec?: string;
+    insurance?: string;
+    additionalCerts?: string;
+  };
+  rejectReason?: string;
+}
+
 // New: Cache implementation
 interface CacheItem<T> {
   data: T;
@@ -181,7 +202,27 @@ export const apiService = {
 
   async getSurveys(): Promise<ApiResponse<Array<SurveySubmission & { submittedAt: string }>>> {
     return handleApiResponse(api.get<Array<SurveySubmission & { submittedAt: string }>>('/api/surveys'));
-  }
+  },
+
+  // Vendor management methods
+  async getAllVendors(): Promise<ApiResponse<Vendor[]>> {
+    return handleApiResponse(api.get<Vendor[]>('/api/vendor-form/all'));
+  },
+
+  async getVendor(id: string): Promise<ApiResponse<Vendor>> {
+    return handleApiResponse(api.get<Vendor>(`/api/vendor-form/${id}`));
+  },
+
+  async updateVendorStatus(id: string, status: 'Approved' | 'Rejected' | 'Pending', rejectReason?: string): Promise<ApiResponse<void>> {
+    const data: { status: string; rejectReason?: string } = { status };
+    
+    // Only include rejectReason if it's provided and status is 'Rejected'
+    if (status === 'Rejected' && rejectReason) {
+        data.rejectReason = rejectReason;
+    }
+    
+    return this.put<void>(`/api/vendor-form/${id}/status`, data);
+}
 
   // Add more methods as needed
 };
@@ -194,7 +235,7 @@ export interface SurveySubmission {
   _id: string;
   approved: boolean;
   submittedAt: string | number | Date;
-  fullName:string;
+  fullName: string;
   bookingEfficiency: number;      // 1-5 rating
   // fboLocating: number;           // 1-5 rating
   // fboStaffCourtesy: number;      // 1-5 rating

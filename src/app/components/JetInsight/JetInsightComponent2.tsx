@@ -16,6 +16,12 @@ const JetInsightComponent: React.FC = () => {
     script.onload = () => {
       if (buttonRef.current && modalRef.current && iframeRef.current) {
         buttonRef.current.addEventListener('click', () => {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'cta_button_click',
+            category: 'conversion',
+            label: 'REQUEST_QUOTE'
+          });
           iframeRef.current!.src = "https://client.jetinsight.com/embed/csm-aviation/Web-Request?";
           modalRef.current!.style.display = "block";
         });
