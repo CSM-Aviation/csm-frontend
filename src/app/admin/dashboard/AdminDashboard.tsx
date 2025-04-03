@@ -4,9 +4,10 @@ import ConfigurationsTab from './ConfigurationsTab';
 import AnalyticsTab from '../analytics/AnalyticsTab';
 import SeoTab from '../seo/SeoTab';
 import TestimonialsTab from '../testimonials/TestimonialsTab';
+import VendorTab from '../vendor/VendorTab';
 
 const AdminDashboard: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('configurations');
+  const [activeTab, setActiveTab] = useState('vendor');
   const router = useRouter();
 
   useEffect(() => {
@@ -32,10 +33,19 @@ const AdminDashboard: React.FC = () => {
               </div>
               <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
                 <button
+                  onClick={() => setActiveTab('vendor')}
+                  className={`${activeTab === 'vendor'
+                    ? 'border-indigo-500 text-gray-900'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
+                >
+                  Vendor
+                </button>
+                <button
                   onClick={() => setActiveTab('configurations')}
                   className={`${activeTab === 'configurations'
-                      ? 'border-indigo-500 text-gray-900'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-indigo-500 text-gray-900'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                     } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
                 >
                   Configurations
@@ -43,8 +53,8 @@ const AdminDashboard: React.FC = () => {
                 <button
                   onClick={() => setActiveTab('analytics')}
                   className={`${activeTab === 'analytics'
-                      ? 'border-indigo-500 text-gray-900'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-indigo-500 text-gray-900'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                     } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
                 >
                   Analytics
@@ -52,11 +62,10 @@ const AdminDashboard: React.FC = () => {
 
                 <button
                   onClick={() => setActiveTab('testimonials')}
-                  className={`${
-                    activeTab === 'testimonials'
+                  className={`${activeTab === 'testimonials'
                       ? 'border-indigo-500 text-gray-900'
                       : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
+                    } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
                 >
                   Testimonials
                 </button>
@@ -64,8 +73,8 @@ const AdminDashboard: React.FC = () => {
                 <button
                   onClick={() => setActiveTab('seo')}
                   className={`${activeTab === 'seo'
-                      ? 'border-indigo-500 text-gray-900'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'border-indigo-500 text-gray-900'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                     } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
                 >
                   SEO
@@ -91,6 +100,7 @@ const AdminDashboard: React.FC = () => {
             {activeTab === 'analytics' && <AnalyticsTab />}
             {activeTab === 'testimonials' && <TestimonialsTab />}
             {activeTab === 'seo' && <SeoTab />}
+            {activeTab === 'vendor' && <VendorTab />}
           </div>
         </main>
       </div>
