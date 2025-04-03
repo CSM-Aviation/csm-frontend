@@ -10,21 +10,29 @@ const JetInsightComponent: React.FC = () => {
 
   useEffect(() => {
     const script = document.createElement('script');
-    script.src = 'https://client.jetinsight.com/embed/126d130e-be91-4071-a8dc-2f94b609c239/Web-Request.js';
+    script.src =
+      'https://client.jetinsight.com/embed/126d130e-be91-4071-a8dc-2f94b609c239/Web-Request.js';
     script.async = true;
     document.body.appendChild(script);
 
     script.onload = () => {
       if (buttonRef.current && modalRef.current && iframeRef.current) {
         buttonRef.current.addEventListener('click', () => {
-          iframeRef.current!.src = "https://client.jetinsight.com/embed/csm-aviation/Web-Request?";
+          // Push custom event to dataLayer for Schedule Trip
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'cta_button_click',
+            category: 'conversion',
+            label: 'SCHEDULE_TRIP'
+          });
+          iframeRef.current!.src =
+            "https://client.jetinsight.com/embed/csm-aviation/Web-Request?";
           modalRef.current!.style.display = "block";
         });
       }
     };
 
     return () => {
-      // Check if the script still exists before trying to remove it
       if (document.body.contains(script)) {
         document.body.removeChild(script);
       }
@@ -42,7 +50,7 @@ const JetInsightComponent: React.FC = () => {
         <button
           ref={buttonRef}
           id="jetinsight-embedded-request-open-button"
-          onClick={()=>window.scrollTo(0,120)}
+          onClick={() => window.scrollTo(0, 120)}
           className={styles.jetinsightEmbeddedRequestButton}
         >
           SCHEDULE TRIP
@@ -58,7 +66,11 @@ const JetInsightComponent: React.FC = () => {
           </div>
         </button>
       </div>
-      <div id="jetinsight-embedded-request-modal" ref={modalRef} className={styles.jetinsightEmbeddedRequestModal}>
+      <div
+        id="jetinsight-embedded-request-modal"
+        ref={modalRef}
+        className={styles.jetinsightEmbeddedRequestModal}
+      >
         <button
           id="jetinsight-embedded-request-close-button"
           className={styles.closeButton}
