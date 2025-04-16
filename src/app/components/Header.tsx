@@ -131,31 +131,19 @@ const Header: React.FC = () => {
 
   return (
     <header ref={headerRef} className="relative top-0 left-0 w-full z-50" style={{ backgroundColor: headerColor }}>
-      <div className=" w-full  flex  items-center px-5 py-3">
+      <div className="w-full flex items-center justify-between px-5 py-3">
         <Link href="/" className="flex-shrink-0">
           <Image src="/images/whitebgcsmlogo.png" alt="CSM Aviation" className='p-2' width={100} height={100} />
         </Link>
 
-        {/* Login Button */}
-        <button
-          onClick={handleLoginClick}
-          className="absolute top-3 right-6 bg-transparent text-white hover:text-blue-500 transition-colors duration-300"
-        >
-          <FontAwesomeIcon icon={faUser} className="mr-2" />
-          Login
-        </button>
-
         <nav className="hidden lg:flex flex-grow justify-center">
-          <ul className=" flex space-x-8">
+          <ul className="flex space-x-8">
             <NavItems />
           </ul>
         </nav>
 
-
-
-        {/* Desktop CTA */}
-        <div className="hidden lg:flex items-center space-x-4">
-        <a
+        <div className="hidden lg:flex items-center space-x-6">
+          <a
             href="tel:+18884359276"
             onClick={() => {
               window.dataLayer = window.dataLayer || [];
@@ -167,9 +155,16 @@ const Header: React.FC = () => {
             }}
             className="text-gray-800 transition-colors duration-300 hover:text-blue-600"
           >
-            <FontAwesomeIcon className='hover:text-white  hover:translate-y-[-5px]  hover:duration-300 ease-in-out' color='#23B2EE' icon={faPhone} size="lg" />
+            <FontAwesomeIcon className='hover:text-white hover:translate-y-[-5px] hover:duration-300 ease-in-out' color='#23B2EE' icon={faPhone} size="lg" />
           </a>
           <JetInsightComponent />
+          {/* <button
+            onClick={handleLoginClick}
+            className="bg-transparent text-white hover:text-blue-500 transition-colors duration-300 flex items-center"
+          >
+            <FontAwesomeIcon icon={faUser} className="mr-2" />
+            Login
+          </button> */}
         </div>
       </div>
 
