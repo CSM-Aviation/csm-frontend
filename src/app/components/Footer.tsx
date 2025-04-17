@@ -125,7 +125,7 @@ const Footer = () => {
           {/* Partners Section */}
           <div>
             <h3 className="text-xl font-bold mb-4 border-b border-white/20 pb-2 flex items-center">
-              PROUD MEMBERS OF
+              Affiliations/Ratings
               <FaArrowRight className="ml-2 text-sm" />
             </h3>
 
@@ -163,7 +163,7 @@ const Footer = () => {
                   />
                 </a>
               </div>
-              <div className="bg-white/10 rounded-lg p-3 flex items-center justify-center h-16 hover:bg-white/20 transition-colors">
+              {/* <div className="bg-white/10 rounded-lg p-3 flex items-center justify-center h-16 hover:bg-white/20 transition-colors">
                 <a href="https://beechcraft.txtav.com/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
                   <Image
                     src="/images/LOGOS/beechcraft-logo-white.svg"
@@ -173,7 +173,7 @@ const Footer = () => {
                     className="max-h-full w-auto object-contain"
                   />
                 </a>
-              </div>
+              </div> */}
               <div className="bg-white/10 rounded-lg p-3 flex items-center justify-center h-16 hover:bg-white/20 transition-colors">
                 <a href="https://www.argus.aero/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
                   <Image
@@ -185,7 +185,7 @@ const Footer = () => {
                   />
                 </a>
               </div>
-              <div className="bg-white/10 rounded-lg p-3 flex items-center justify-center h-16 hover:bg-white/20 transition-colors">
+              {/* <div className="bg-white/10 rounded-lg p-3 flex items-center justify-center h-16 hover:bg-white/20 transition-colors">
               <a href="https://www.gulfstream.com/en/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
                   <Image
                     src="/images/LOGOS/gulff.png"
@@ -195,7 +195,7 @@ const Footer = () => {
                     className="max-h-full w-auto object-contain"
                   />
                 </a>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
