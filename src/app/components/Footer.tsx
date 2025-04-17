@@ -133,7 +133,7 @@ const Footer = () => {
               <div className="bg-white/10 rounded-lg p-3 flex items-center justify-center h-16 hover:bg-white/20 transition-colors">
                 <a href="https://www.nata.aero/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
                   <Image
-                    src="/images/LOGOS/NATlogo.png"
+                    src="/images/LOGOS/NATA_logo.png"
                     alt="NATA"
                     width={100}
                     height={40}
@@ -185,17 +185,17 @@ const Footer = () => {
                   />
                 </a>
               </div>
-              {/* <div className="bg-white/10 rounded-lg p-3 flex items-center justify-center h-16 hover:bg-white/20 transition-colors">
-              <a href="https://www.gulfstream.com/en/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
+              <div className="bg-white/10 rounded-lg p-3 flex items-center justify-center h-16 hover:bg-white/20 transition-colors">
+              <a href="https://acsf.aero/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
                   <Image
-                    src="/images/LOGOS/gulff.png"
-                    alt="Gulfstream"
-                    width={120}
-                    height={48}
+                    src="/images/LOGOS/acsf_logo.png"
+                    alt="ACSF"
+                    width={100}
+                    height={40}
                     className="max-h-full w-auto object-contain"
                   />
                 </a>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
