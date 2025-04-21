@@ -24,8 +24,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 mb-10">
           {/* Email Subscription and Contact Section */}
           <div className="lg:col-span-2 space-y-8">
-              {/* Contact Information */}
-              <div className="mb-6">
+            {/* Contact Information */}
+            <div className="mb-6">
               <h3 className="text-xl font-bold mb-4 border-b border-white/20 pb-2">CONTACT US</h3>
               <div className="space-y-4">
                 <div className="flex items-center space-x-3 group">
@@ -42,11 +42,11 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-            
+
             {/* Email Subscription */}
             <div className="relative">
               <h3 className="text-xl font-bold mb-4 border-b border-white/20 pb-2">STAY UPDATED</h3>
-              <EmailSubscription/>
+              <EmailSubscription />
             </div>
 
             {/* Social Media */}
@@ -130,29 +130,20 @@ const Footer = () => {
             </h3>
 
             <div className="grid grid-cols-2 gap-6">
-              <div className="bg-white/10 rounded-lg p-3 flex items-center justify-center h-16 hover:bg-white/20 transition-colors">
-                <a href="https://www.nata.aero/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
+
+              <div className="p-3 items-center justify-center">
+                <a href="https://www.argus.aero/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
                   <Image
-                    src="/images/LOGOS/NATA_logo.png"
-                    alt="NATA"
-                    width={100}
-                    height={40}
+                    src="/images/LOGOS/CSM_Aviation_Argus_Gold_150x150.png"
+                    alt="ARGUS"
+                    width={200}
+                    height={1000}
                     className="max-h-full w-auto object-contain"
                   />
                 </a>
               </div>
-              <div className="bg-white/10 rounded-lg p-3 flex items-center justify-center h-16 hover:bg-white/20 transition-colors">
-                <a href="https://ibac.org/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
-                  <Image
-                    src="/images/LOGOS/ibac-logo.svg"
-                    alt="IBAC"
-                    width={100}
-                    height={40}
-                    className="max-h-full w-auto object-contain"
-                  />
-                </a>
-              </div>
-              <div className="bg-white/10 rounded-lg p-3 flex items-center justify-center h-16 hover:bg-white/20 transition-colors">
+
+              <div className="p-3 items-center justify-center">
                 <a href="https://www.wyvernltd.com/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
                   <Image
                     src="/images/LOGOS/wyvern_logo.png"
@@ -163,6 +154,33 @@ const Footer = () => {
                   />
                 </a>
               </div>
+
+
+              <div className="p-3 items-center justify-center">
+                <a href="https://nbaa.org/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
+                  <Image
+                    src="/images/LOGOS/nbaa_logo.png"
+                    alt="NBAA"
+                    width={100}
+                    height={40}
+                    className="max-h-full w-auto object-contain"
+                  />
+                </a>
+              </div>
+
+              <div className="p-3 items-center justify-center">
+                <a href="https://www.nata.aero/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
+                  <Image
+                    src="/images/LOGOS/NATA_logo.png"
+                    alt="NATA"
+                    width={100}
+                    height={40}
+                    className="max-h-full w-auto object-contain"
+                  />
+                </a>
+              </div>
+
+
               {/* <div className="bg-white/10 rounded-lg p-3 flex items-center justify-center h-16 hover:bg-white/20 transition-colors">
                 <a href="https://beechcraft.txtav.com/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
                   <Image
@@ -174,7 +192,7 @@ const Footer = () => {
                   />
                 </a>
               </div> */}
-              <div className="bg-white/10 rounded-lg p-3 flex items-center justify-center h-16 hover:bg-white/20 transition-colors">
+              {/* <div className="bg-white/10 rounded-lg p-3 flex items-center justify-center h-16 hover:bg-white/20 transition-colors">
                 <a href="https://www.argus.aero/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
                   <Image
                     src="/images/LOGOS/CSM_Aviation_Argus_Gold_150x150.png"
@@ -184,9 +202,9 @@ const Footer = () => {
                     className="max-h-full w-auto object-contain"
                   />
                 </a>
-              </div>
-              <div className="bg-white/10 rounded-lg p-3 flex items-center justify-center h-16 hover:bg-white/20 transition-colors">
-              <a href="https://acsf.aero/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
+              </div> */}
+              <div className="p-3 items-center justify-center">
+                <a href="https://acsf.aero/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
                   <Image
                     src="/images/LOGOS/acsf_logo.png"
                     alt="ACSF"
