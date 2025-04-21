@@ -177,7 +177,7 @@ const Footer = () => {
               <div className="bg-white/10 rounded-lg p-3 flex items-center justify-center h-16 hover:bg-white/20 transition-colors">
                 <a href="https://www.argus.aero/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
                   <Image
-                    src="/images/Gold_argus_logos/CSM%20Aviation%20-%20Gold-ARGUS%20Logo-customized-04.2025.svg"
+                    src="/images/LOGOS/CSM_Aviation_Argus_Gold_150x150.png"
                     alt="ARGUS"
                     width={100}
                     height={40}
