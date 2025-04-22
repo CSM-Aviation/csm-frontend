@@ -36,18 +36,28 @@ const Hero: React.FC<HeroProps> = ({
       </Head>
       <section className="relative w-full h-screen overflow-hidden">
         {videoSource ? (
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            className="absolute top-0 left-0 w-full h-full object-cover"
-            style={{ pointerEvents: 'none' }}
-          >
-            <source src={videoSource} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          <>
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              className="absolute top-0 left-0 w-full h-full object-cover"
+              style={{ pointerEvents: 'none' }}
+            >
+              <source src={videoSource} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            {/* Subtle video overlay to hide granulation */}
+            <div 
+              className="absolute top-0 left-0 w-full h-full pointer-events-none"
+              style={{ 
+                background: 'linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3))',
+                mixBlendMode: 'overlay'
+              }}
+            ></div>
+          </>
         ) : (
           <div className="absolute top-0 left-0 w-full h-full">
             {/* Desktop Image */}
@@ -81,7 +91,7 @@ const Hero: React.FC<HeroProps> = ({
           </div>
         )}
 
-        <div className="relative z-10 flex flex-col justify-center items-center h-full text-white px-4">
+        <div className="relative z-20 flex flex-col justify-center items-center h-full text-white px-4">
           <div className="max-sm:mb-52">
             <h1 className="text-4xl md:text-6xl font-bold mb-4 text-center [text-shadow:5px_5px_8px_rgba(0,0,0,0.5)]">
               {title}
