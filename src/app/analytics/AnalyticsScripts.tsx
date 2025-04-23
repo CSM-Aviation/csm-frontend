@@ -51,6 +51,10 @@ const AnalyticsScripts = () => {
           `,
                 }}
             />
+            <Script
+                src="https://analytics.ahrefs.com/analytics.js" data-key="MSlrBwH23cXE+3yE9YHCRg" async
+                strategy="afterInteractive"
+            />
         </>
     );
 };
