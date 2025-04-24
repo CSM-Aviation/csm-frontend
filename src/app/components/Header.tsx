@@ -82,7 +82,7 @@ const Header: React.FC = () => {
     <header ref={headerRef} className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${transparent ? 'bg-opacity-0' : scrolled ? 'bg-opacity-90 shadow-lg' : 'bg-opacity-100'}`} style={{ backgroundColor: transparent ? 'transparent' : headerColor }}>
       <div className="w-full flex items-center justify-between px-5 py-3">
         <Link href="/" className="flex-shrink-0">
-          <div className='p-2' style={{width:"100px",height:"100px"}} />
+          <Image src="/images/whitebgcsmlogo.png" alt="CSM Aviation" className='' width={100} height={100} />
         </Link>
 
         {/* Phone Icon */}

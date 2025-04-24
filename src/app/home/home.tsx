@@ -114,14 +114,14 @@ export default function HomeBody() {
     <>
       <div >
         <Hero
-          desktopImage="/images/hero.jpg"
-          mobileImage="/images/hero.jpg"
-          videoSource={config?.home_video}
-          title="Welcome to CSM Aviation"
-          subtitle="Anywhere Anytime Private Air Charter"
-          isHome={true}
-          showJetInsight={true}
-          showCSMVideoText={true} // Enable the CSM video text effect
+          videoSource={config?.home_video || ""}
+          // desktopImage={config?.home_image || ""}
+          // mobileImage={config?.home_image || ""}
+          // title="Welcome to CSM Aviation"
+          // subtitle="Anywhere Anytime Private Air Charter"
+          // isHome={true}
+          // showJetInsight={true}
+          // showCSMVideoText={true} // Enable the CSM video text effect
         />
         <ServicesCards />
         <MaintManage />

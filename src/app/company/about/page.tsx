@@ -1,6 +1,6 @@
 import React from 'react';
 import { NextPage } from 'next';
-import Hero from '@/app/components/Hero';
+import Hero from '@/app/components/Hero1';
 import AboutBody from './AboutBody';
 import Seo, { generateMetadata as seoGenerateMetadata } from '../../components/seo/Seo';
 import StructuredData from '../../components/seo/StructuredData';
@@ -49,8 +49,8 @@ const AboutPage: NextPage = async () => {
     <>
       <StructuredData data={structuredData} />
       <Hero
-        desktopImage="/images/Luxury_desktop.jpg"
-        mobileImage="/images/luxury_mobile.jpg"
+        backgroundImage="/images/Luxury_desktop.jpg"
+        videoSource="/images/Luxury.mp4"
         title="About Us"
         subtitle="Experience luxury air travel like never before"
         isHome={false}
