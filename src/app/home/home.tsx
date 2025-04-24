@@ -112,7 +112,7 @@ export default function HomeBody() {
 
   return (
     <>
-      <div>
+      <div >
         <Hero
           desktopImage="/images/hero.jpg"
           mobileImage="/images/hero.jpg"

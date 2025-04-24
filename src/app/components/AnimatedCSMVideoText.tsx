@@ -127,7 +127,7 @@ const AnimatedCSMVideoText = ({ videoSource }) => {
       <AnimatePresence mode="wait">
         {showInitialText && (
           <motion.div 
-            className="absolute z-10 flex justify-center items-center top-1/4 transform -translate-y-1/2"
+            className="absolute z-10 flex justify-center items-center  transform -translate-y-1/2"
             initial="initial"
             animate={transition ? "transition" : "initial"}
             exit="exit"
@@ -138,9 +138,9 @@ const AnimatedCSMVideoText = ({ videoSource }) => {
         )}
       </AnimatePresence>
       
-      {/* SVG for the text with animation - centered with adjusted viewBox */}
+      {/* SVG for the text with animation - centered with adjusted viewBox - MOVED UP */}
       <motion.div 
-        className="relative w-full max-w-4xl mx-auto h-screen flex items-start justify-center overflow-hidden pt-24 md:pt-36"
+        className="relative w-full max-w-4xl mx-auto h-screen flex items-start justify-center overflow-hidden pt-12 "
         initial={{ opacity: 0 }}
         animate={isVideoLoaded ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 0.8, ease: "easeIn" }}
@@ -176,10 +176,10 @@ const AnimatedCSMVideoText = ({ videoSource }) => {
               <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G" />
             </filter>
             
-            {/* Blue glow filter */}
+            {/* ENHANCED Blue glow filter with stronger effect */}
             <filter id="blue-glow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="8" result="blur" />
-              <feFlood floodColor="#23B2EE" floodOpacity="0.7" result="color" />
+              <feGaussianBlur stdDeviation="15" result="blur" />
+              <feFlood floodColor="#23B2EE" floodOpacity="0.9" result="color" />
               <feComposite in="color" in2="blur" operator="in" result="glow" />
               <feMerge>
                 <feMergeNode in="glow" />
@@ -187,10 +187,12 @@ const AnimatedCSMVideoText = ({ videoSource }) => {
               </feMerge>
             </filter>
             
-            {/* Drop shadow filter for letter outlines */}
+            {/* ENHANCED Drop shadow filter for letter outlines - MUCH STRONGER */}
             <filter id="letter-shadow" x="-10%" y="-10%" width="120%" height="120%">
-              <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#0C3C60" floodOpacity="0.8"/>
-              <feDropShadow dx="2" dy="2" stdDeviation="3" floodColor="#23B2EE" floodOpacity="0.6"/>
+              <feDropShadow dx="0" dy="0" stdDeviation="10" floodColor="#ffffff" floodOpacity="0.9"/>
+              <feDropShadow dx="2" dy="2" stdDeviation="5" floodColor="#ffffff" floodOpacity="0.8"/>
+              <feDropShadow dx="4" dy="4" stdDeviation="3" floodColor="#aaddff" floodOpacity="0.7"/>
+              <feDropShadow dx="-3" dy="-3" stdDeviation="4" floodColor="#ffffff" floodOpacity="0.6"/>
             </filter>
             
             {/* Blue gradient for letter outlines */}
@@ -207,7 +209,7 @@ const AnimatedCSMVideoText = ({ videoSource }) => {
               d="M150,50 C80,50 30,120 30,200 C30,280 80,350 150,350 C200,350 240,320 260,280 L200,240 C190,260 170,275 150,275 C110,275 80,240 80,200 C80,160 110,125 150,125 C170,125 190,140 200,160 L260,120 C240,80 200,50 150,50 Z" 
               fill="none" 
               stroke="url(#blue-gradient)" 
-              strokeWidth="6" 
+              strokeWidth="8" 
               filter="url(#blue-glow)"
               opacity="0.9"
             />
@@ -231,12 +233,12 @@ const AnimatedCSMVideoText = ({ videoSource }) => {
               </div>
             </foreignObject>
             
-            {/* Outline for letter C */}
+            {/* Outline for letter C - ENHANCED with thicker stroke and better shadow */}
             <path 
               d="M150,50 C80,50 30,120 30,200 C30,280 80,350 150,350 C200,350 240,320 260,280 L200,240 C190,260 170,275 150,275 C110,275 80,240 80,200 C80,160 110,125 150,125 C170,125 190,140 200,160 L260,120 C240,80 200,50 150,50 Z" 
               fill="none" 
-              stroke="rgba(255,255,255,0.9)" 
-              strokeWidth="2"
+              stroke="rgba(255,255,255,1)" 
+              strokeWidth="3.5"
               filter="url(#letter-shadow)" 
             />
           </motion.g>
@@ -248,7 +250,7 @@ const AnimatedCSMVideoText = ({ videoSource }) => {
               d="M400,50 C320,50 280,100 280,150 C280,240 400,240 400,280 C400,300 380,310 360,310 C340,310 320,300 310,280 L260,320 C280,350 320,370 360,370 C440,370 480,320 480,270 C480,180 360,180 360,140 C360,120 380,110 400,110 C420,110 440,120 450,140 L500,100 C480,70 440,50 400,50 Z" 
               fill="none" 
               stroke="url(#blue-gradient)" 
-              strokeWidth="6" 
+              strokeWidth="8" 
               filter="url(#blue-glow)"
               opacity="0.9"
             />
@@ -272,12 +274,12 @@ const AnimatedCSMVideoText = ({ videoSource }) => {
               </div>
             </foreignObject>
             
-            {/* Outline for letter S */}
+            {/* Outline for letter S - ENHANCED with thicker stroke and better shadow */}
             <path 
               d="M400,50 C320,50 280,100 280,150 C280,240 400,240 400,280 C400,300 380,310 360,310 C340,310 320,300 310,280 L260,320 C280,350 320,370 360,370 C440,370 480,320 480,270 C480,180 360,180 360,140 C360,120 380,110 400,110 C420,110 440,120 450,140 L500,100 C480,70 440,50 400,50 Z" 
               fill="none" 
-              stroke="rgba(255,255,255,0.9)" 
-              strokeWidth="2"
+              stroke="rgba(255,255,255,1)" 
+              strokeWidth="3.5"
               filter="url(#letter-shadow)"
             />
           </motion.g>
@@ -289,7 +291,7 @@ const AnimatedCSMVideoText = ({ videoSource }) => {
               d="M550,50 L550,350 L630,350 L630,160 L680,280 L730,160 L730,350 L810,350 L810,50 L730,50 L680,170 L630,50 Z" 
               fill="none" 
               stroke="url(#blue-gradient)" 
-              strokeWidth="6" 
+              strokeWidth="8" 
               filter="url(#blue-glow)"
               opacity="0.9"
             />
@@ -313,12 +315,12 @@ const AnimatedCSMVideoText = ({ videoSource }) => {
               </div>
             </foreignObject>
             
-            {/* Outline for letter M */}
+            {/* Outline for letter M - ENHANCED with thicker stroke and better shadow */}
             <path 
               d="M550,50 L550,350 L630,350 L630,160 L680,280 L730,160 L730,350 L810,350 L810,50 L730,50 L680,170 L630,50 Z" 
               fill="none" 
-              stroke="rgba(255,255,255,0.9)" 
-              strokeWidth="2"
+              stroke="rgba(255,255,255,1)" 
+              strokeWidth="3.5"
               filter="url(#letter-shadow)"
             />
           </motion.g>

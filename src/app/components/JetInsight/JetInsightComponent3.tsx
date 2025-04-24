@@ -46,7 +46,7 @@ const JetInsightComponent: React.FC = () => {
 
   return (
     <>
-      <div className={styles.jetInsightOut}>
+      <div className={`${styles.jetInsightOut} flex flex-row flex-nowrap w-full gap-1 p-3 md:p-none`}>
         <button
           ref={buttonRef}
           id="jetinsight-embedded-request-open-button"
@@ -65,7 +65,14 @@ const JetInsightComponent: React.FC = () => {
             </svg>
           </div>
         </button>
+        <button className={`ml-1 ${styles.jetinsightEmbeddedRequestButton}`}>
+          <a href="tel:+18884359276">
+
+          Call Now
+          </a>
+        </button>
       </div>
+      
       <div
         id="jetinsight-embedded-request-modal"
         ref={modalRef}
