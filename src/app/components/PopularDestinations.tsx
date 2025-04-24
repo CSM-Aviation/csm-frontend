@@ -38,10 +38,10 @@ const PopularDestinations = () => {
     <div className="w-full h-full py-20 md:py-24">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-center pb-5 text-3xl  md:text-4xl lg:text-5xl font-bold  mb-3 text-[#004080]">
-          Popular Private Jet Charter Destinations
+          Popular Destinations
         </h1>
         <p className="text-sm px-8 md:text-xl lg:text-2xl font-bold text-center  text-gray-400">
-        Experience the journey to your dream destination with CSM Aviation. We provide private jet charters to more than 1,000 destinations across the globe. Tailored to your needs and preferences, our service offers an extensive selection of private charter destinations for you to explore.
+        Beyond First Class. Beyond Expectation. Safely There. Discover seamless and luxurious private jet charters to your global destinations, knowing your journey with CSM Aviation is underpinned by the highest safety standards.
         </p>
       </div>
       <div className="p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

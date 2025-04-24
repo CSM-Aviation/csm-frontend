@@ -54,7 +54,7 @@ const ServicesCards: React.FC = () => {
       id: 2,
       image: "/images/medical.png",
       title: "Medical Charter",
-      description: "We are proud to provide fixed-wing air charter service to the United Network for Organ Sharing community; providing On-Demand Air Medical Transportation services for over ten years with a perfect safety record.",
+      description: "We are proud to provide medavac air charter service to the Organ Donor community; providing On-Demand Air Medical Transportation services for over ten years with a perfect safety record.",
       link: "/donornetworkwest"
     },
     {
@@ -70,10 +70,10 @@ const ServicesCards: React.FC = () => {
     <section className="px-10 py-24">
       <div className="container mx-auto px-4 xl:px-0">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-3 text-[#004080]">
-          Our Services
+          Charter Services
         </h2>
         <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-16 text-gray-400">
-          Find The Best Service For You
+          24/7 On Demand Charter
         </h3>
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-14">
           {services.map(service => (
