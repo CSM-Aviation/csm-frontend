@@ -112,26 +112,22 @@ export default function HomeBody() {
 
   return (
     <>
-      
-
       <div>
         <Hero
           desktopImage="/images/hero.jpg"
-       
           mobileImage="/images/hero.jpg"
-          
           videoSource={config?.home_video}
           title="Welcome to CSM Aviation"
           subtitle="Anywhere Anytime Private Air Charter"
           isHome={true}
           showJetInsight={true}
+          showCSMVideoText={true} // Enable the CSM video text effect
         />
         <ServicesCards />
         <MaintManage />
         <PopularDestinations />
         {/* <DonorNetworkSection /> */}
         <Testimonials />
-       
       </div>
     </>
   );
