@@ -12,6 +12,23 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [showInitialText, setShowInitialText] = useState(true);
   const [transition, setTransition] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Check if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Set initial value
+    checkMobile();
+    
+    // Add listener for window resize
+    window.addEventListener('resize', checkMobile);
+    
+    // Clean up
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   
   useEffect(() => {
     if (!videoRef.current || !containerRef.current) return;
@@ -95,20 +112,28 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   
-  const targetScale = viewport.width < 768 ? 0.6 : viewport.width < 1024 ? 0.8 : 1;
+  // Adjust scale based on screen size - smaller scale for mobile
+  const targetScale = viewport.width < 768 ? 0.4 : viewport.width < 1024 ? 0.7 : 1;
+
+  // Adjust position for mobile
+  const mobileXPosition = -viewport.width / 2 + 15;
+  const mobileYPosition = -viewport.height / 2 + 25;
+  
+  const desktopXPosition = -viewport.width / 2 + 25;
+  const desktopYPosition = -viewport.height / 2 + 10;
 
   // Initial text animation variants for smooth morphing to cutout
   const initialTextVariants = {
     initial: { 
-      scale: 2,
+      scale: isMobile ? 1.5 : 2,
       x: "-50%",
       y: "-50%", 
       zIndex: 50,
     },
     transition: { 
       scale: targetScale,
-      x: -viewport.width / 2 + 25,
-      y: -viewport.height / 2 + 10,
+      x: isMobile ? mobileXPosition : desktopXPosition,
+      y: isMobile ? mobileYPosition : desktopYPosition,
       zIndex: 50,
       transition: {
         duration: 0.8,
@@ -116,8 +141,8 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
       }
     },
     exit: {
-      x: -viewport.width / 2 + 25,
-      y: -viewport.height / 2 + 10,
+      x: isMobile ? mobileXPosition : desktopXPosition,
+      y: isMobile ? mobileYPosition : desktopYPosition,
       transition: {
         duration: 0.5,
         ease: "easeOut"
@@ -169,9 +194,9 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
           Your browser does not support the video tag.
         </video>
         
-        {/* Main content container - everything should be vertically centered */}
+        {/* Main content container - adjust vertical positioning for mobile */}
         <motion.div 
-          className="relative w-full max-w-4xl mx-auto flex flex-col items-center justify-center px-4"
+          className={`relative w-full max-w-4xl mx-auto flex flex-col items-center justify-center px-4 ${isMobile ? 'mt-16' : ''}`}
           initial={{ opacity: 0 }}
           animate={isVideoLoaded ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeIn" }}
@@ -179,11 +204,11 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
         >
           {/* Content now tightly packed without excess space */}
           <div className="flex flex-col items-center justify-center w-full">
-            {/* SVG for CSM letters - position adjusted to be more centered */}
+            {/* SVG for CSM letters - adjust viewBox for mobile */}
             <div className="w-full">
               <svg 
                 className="w-full h-auto" 
-                viewBox="0 0 840 600" 
+                viewBox={isMobile ? "0 0 840 700" : "0 0 840 600"} 
                 preserveAspectRatio="xMidYMid meet"
               >
                 <defs>
@@ -365,7 +390,7 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
             
             {/* Tagline text - moved directly below CSM with minimal spacing */}
             <motion.div 
-              className="text-white text-xl md:text-2xl lg:text-3xl text-center font-light w-full mt-[-100px]"
+              className={`text-white text-xl md:text-2xl lg:text-3xl text-center font-light w-full ${isMobile ? 'mt-[-60px]' : 'mt-[-100px]'}`}
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: { 
@@ -384,9 +409,9 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
               Anywhere. Anytime. Private Air Charter.
             </motion.div>
             
-            {/* JetInsight component - right below the tagline with minimal spacing */}
+            {/* JetInsight component - adjusted for mobile */}
             <motion.div 
-              className="w-full flex justify-center mt-6"
+              className={`w-full flex justify-center ${isMobile ? 'mt-4' : 'mt-6'}`}
               initial={{ opacity: 0, y: 20 }}
               animate={isVideoLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ delay: 0.7, duration: 0.8 }}
