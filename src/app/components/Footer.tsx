@@ -134,7 +134,7 @@ const Footer = () => {
               <div className="p-3 items-center justify-center">
                 <a href="https://www.argus.aero/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
                   <Image
-                    src="/images/LOGOS/CSM_Aviation_Argus_Gold_150x150.png"
+                    src="/images/LOGOS/CSM_Aviation_Gold_ARGUS_04-removebg-preview.png"
                     alt="ARGUS"
                     width={200}
                     height={1000}
@@ -159,7 +159,7 @@ const Footer = () => {
               <div className="p-3 items-center justify-center">
                 <a href="https://nbaa.org/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
                   <Image
-                    src="/images/LOGOS/nbaa_logo.png"
+                    src="/images/LOGOS/NBAA_logo_4:24.png"
                     alt="NBAA"
                     width={100}
                     height={40}
@@ -206,7 +206,7 @@ const Footer = () => {
               <div className="p-3 items-center justify-center">
                 <a href="https://acsf.aero/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
                   <Image
-                    src="/images/LOGOS/acsf_logo.png"
+                    src="/images/LOGOS/ascf_logo.png"
                     alt="ACSF"
                     width={100}
                     height={40}
