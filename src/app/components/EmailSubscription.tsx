@@ -33,7 +33,7 @@ const EmailSubscription: React.FC = () => {
 
   return (
     <div className="text-center md:text-left   ">
-      <h2 className="md:text-3xl font-bold mb-6 text-white">
+      <h2 className="md:text-2xl font-bold mb-6 text-white">
         Subscribe to our CSM offers, special updates and much more ...
       </h2>
       <form onSubmit={handleSubmit} className="max-w-md  flex items-center">
