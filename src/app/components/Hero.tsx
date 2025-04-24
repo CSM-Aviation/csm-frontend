@@ -1,127 +1,343 @@
-import React from 'react';
-import Image from 'next/image';
-import Head from 'next/head';
-import JetInsightComponent from './JetInsight/JetInsightComponent3';
-import CSMVideoText from './AnimatedCSMVideoText'; // Import the new component
+import React, { useRef, useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-interface HeroProps {
-  desktopImage?: string;
-  mobileImage?: string;
-  videoSource?: string;
-  title: string;
-  subtitle: string;
-  isHome: boolean;
-  showJetInsight?: boolean;
-  showCSMVideoText?: boolean; // New prop to toggle the CSM video text effect
-}
-
-const Hero: React.FC<HeroProps> = ({
-  desktopImage,
-  mobileImage,
-  videoSource,
-  title,
-  subtitle,
-  isHome,
-  showJetInsight = false,
-  showCSMVideoText = false // Default to false for backward compatibility
-}) => {
-  return (
-    <>
-      <Head>
-        {isHome && videoSource && (
-          <link
-            rel="preload"
-            href={videoSource}
-            as="video"
-            type="video/mp4"
-          />
-        )}
-      </Head>
-      <section className="relative w-full h-screen overflow-hidden">
-        {/* Conditional rendering based on showCSMVideoText prop */}
-        {showCSMVideoText ? (
-          <CSMVideoText videoSource={videoSource} />
-        ) : (
-          /* Original video/image background logic */
-          <>
-            {videoSource ? (
-              <>
-                <video
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="auto"
-                  className="absolute top-0 left-0 w-full h-full object-cover"
-                  style={{ pointerEvents: 'none' }}
-                >
-                  <source src={videoSource} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-                {/* Subtle video overlay to hide granulation */}
-                <div
-                  className="absolute top-0 left-0 w-full h-full pointer-events-none"
-                  style={{
-                    background: 'linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3))',
-                    mixBlendMode: 'overlay'
-                  }}
-                ></div>
-              </>
-            ) : (
-              <div className="absolute top-0 left-0 w-full h-full">
-                {/* Desktop Image */}
-                <div className="hidden md:block w-full h-full">
-                  <Image
-                    src={desktopImage || '/images/default-desktop.jpg'}
-                    alt="Background"
-                    layout="fill"
-                    objectPosition="center"
-                    quality={85}
-                    priority
-                    className="transition-opacity duration-300"
-                  />
-                </div>
-                
-                {/* Mobile Image */}
-                <div className="block md:hidden w-full h-full">
-                  <Image
-                    src={mobileImage || '/images/default-mobile.jpg'}
-                    alt="Background"
-                    layout="fill"
-                    objectPosition="center"
-                    quality={85}
-                    priority
-                    className="transition-opacity duration-300"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-black opacity-10"></div>
-              </div>
-            )}
-          </>
-        )}
+const AnimatedCSMVideoText = ({ videoSource }) => {
+  const containerRef = useRef(null);
+  const videoRef = useRef(null);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [showInitialText, setShowInitialText] = useState(true);
+  const [transition, setTransition] = useState(false);
+  
+  useEffect(() => {
+    if (!videoRef.current || !containerRef.current) return;
+    
+    // Ensure video is loaded and ready
+    const video = videoRef.current;
+    video.load();
+    video.muted = true;
+    video.playsInline = true;
+    
+    // Play video once loaded
+    const handleCanPlay = () => {
+      video.play().catch(error => {
+        console.error("Video autoplay failed:", error);
+      });
+      
+      // Start transition animation sequence
+      setTimeout(() => {
+        setTransition(true); // Begin scaling/fading transition
         
-        <div className="relative z-20 flex flex-col justify-center items-center h-full text-white px-4">
-          {/* Only show title and subtitle if not using CSM video text */}
-          {!showCSMVideoText && (
-            <div className="max-sm:mb-52">
-              <h1 className="text-4xl md:text-6xl font-bold mb-4 text-center [text-shadow:5px_5px_8px_rgba(0,0,0,0.5)]">
-                {title}
-              </h1>
-              <p className="text-xl md:text-2xl mb-8 text-center [text-shadow:5px_5px_8px_rgba(0,0,0,0.5)]">
-                {subtitle}
-              </p>
-              
-              {showJetInsight && (
-                <div className="flex justify-center items-center w-full">
-                  <JetInsightComponent />
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      </section>
-    </>
+        setTimeout(() => {
+          setShowInitialText(false); // Remove initial text
+          setTimeout(() => {
+            setIsVideoLoaded(true); // Show video cutout letters
+          }, 200);
+        }, 800); // Time for the transition animation
+      }, 1000); // Initial delay before starting transition
+    };
+    
+    video.addEventListener('canplay', handleCanPlay);
+    
+    return () => {
+      video.removeEventListener('canplay', handleCanPlay);
+    };
+  }, [videoSource]);
+
+  // Animation variants for text reveal
+  const textVariants = {
+    hidden: {
+      opacity: 0
+    },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 1.5,
+        ease: "easeInOut",
+        staggerChildren: 0.15
+      }
+    }
+  };
+
+  const letterVariants = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+      filter: "blur(10px)"
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.8,
+        ease: "easeOut"
+      }
+    }
+  };
+  
+  // Initial text animation variants for smooth morphing to cutout
+  const initialTextVariants = {
+    initial: { 
+      opacity: 1,
+      scale: 1,
+      y: 0
+    },
+    transition: { 
+      opacity: [1, 0.8, 0.6],
+      scale: [1, 1.2, 1.5],
+      y: [0, -10, -20],
+      transition: {
+        duration: 0.8,
+        ease: "easeInOut"
+      }
+    },
+    exit: { 
+      opacity: 0,
+      scale: 1.8,
+      filter: "blur(8px)",
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+  
+  return (
+    <div className="relative w-full h-screen flex items-center justify-center" ref={containerRef}>
+      {/* Gradient background with radial gradient from blue to dark blue */}
+      <div className="absolute inset-0 z-0" style={{
+        background: '#002040'
+      }}></div>
+      
+      {/* Hidden video element that serves as the source */}
+      <video 
+        ref={videoRef}
+        className="hidden"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+      >
+        <source src={videoSource} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      
+      {/* Initial plain white CSM text shown before video loads */}
+      <AnimatePresence mode="wait">
+        {showInitialText && (
+          <motion.div 
+            className="absolute z-10 flex justify-center items-center"
+            initial="initial"
+            animate={transition ? "transition" : "initial"}
+            exit="exit"
+            variants={initialTextVariants}
+          >
+            <h1 className="text-white text-8xl md:text-9xl font-bold tracking-wider">CSM</h1>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
+      {/* SVG for the text with animation - centered with adjusted viewBox */}
+      <motion.div 
+        className="relative w-full max-w-4xl mx-auto h-screen flex items-center justify-center overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={isVideoLoaded ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.8, ease: "easeIn" }}
+      >
+        <svg 
+          className="w-full h-auto" 
+          viewBox="0 0 840 400" 
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <defs>
+            {/* Define clip paths for each letter to contain the video */}
+            <clipPath id="clip-c">
+              <path 
+                d="M150,50 C80,50 30,120 30,200 C30,280 80,350 150,350 C200,350 240,320 260,280 L200,240 C190,260 170,275 150,275 C110,275 80,240 80,200 C80,160 110,125 150,125 C170,125 190,140 200,160 L260,120 C240,80 200,50 150,50 Z" 
+              />
+            </clipPath>
+            
+            <clipPath id="clip-s">
+              <path 
+                d="M400,50 C320,50 280,100 280,150 C280,240 400,240 400,280 C400,300 380,310 360,310 C340,310 320,300 310,280 L260,320 C280,350 320,370 360,370 C440,370 480,320 480,270 C480,180 360,180 360,140 C360,120 380,110 400,110 C420,110 440,120 450,140 L500,100 C480,70 440,50 400,50 Z" 
+              />
+            </clipPath>
+            
+            <clipPath id="clip-m">
+              <path 
+                d="M550,50 L550,350 L630,350 L630,160 L680,280 L730,160 L730,350 L810,350 L810,50 L730,50 L680,170 L630,50 Z" 
+              />
+            </clipPath>
+            
+            {/* Video filter for texture */}
+            <filter id="noise" x="0%" y="0%" width="100%" height="100%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" result="noise" />
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+            
+            {/* Blue glow filter */}
+            <filter id="blue-glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="15" result="blur" />
+              <feFlood floodColor="#23B2EE" floodOpacity="0.7" result="color" />
+              <feComposite in="color" in2="blur" operator="in" result="glow" />
+              <feMerge>
+                <feMergeNode in="glow" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+            
+            {/* Blue gradient for letter outlines */}
+            <linearGradient id="blue-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#87CEEB" /> {/* Light blue */}
+              <stop offset="100%" stopColor="#23B2EE" /> {/* Electric blue */}
+            </linearGradient>
+          </defs>
+          
+          {/* Animated letter C */}
+          <motion.g variants={letterVariants}>
+            {/* Blue glow around letter C */}
+            <path 
+              d="M150,50 C80,50 30,120 30,200 C30,280 80,350 150,350 C200,350 240,320 260,280 L200,240 C190,260 170,275 150,275 C110,275 80,240 80,200 C80,160 110,125 150,125 C170,125 190,140 200,160 L260,120 C240,80 200,50 150,50 Z" 
+              fill="none" 
+              stroke="url(#blue-gradient)" 
+              strokeWidth="6" 
+              filter="url(#blue-glow)"
+              opacity="0.8"
+            />
+            
+            {/* Using a foreignObject with clipping to contain the video within the letter C */}
+            <foreignObject x="30" y="50" width="230" height="300" style={{ clipPath: "url(#clip-c)" }}>
+              <div className="w-full h-full overflow-hidden">
+                {videoSource && (
+                  <video 
+                    className="w-full h-full object-cover"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                    style={{ transform: "scale(1.6)" }}
+                  >
+                    <source src={videoSource} type="video/mp4" />
+                  </video>
+                )}
+              </div>
+            </foreignObject>
+            
+            {/* Outline for letter C */}
+            <path 
+              d="M150,50 C80,50 30,120 30,200 C30,280 80,350 150,350 C200,350 240,320 260,280 L200,240 C190,260 170,275 150,275 C110,275 80,240 80,200 C80,160 110,125 150,125 C170,125 190,140 200,160 L260,120 C240,80 200,50 150,50 Z" 
+              fill="none" 
+              stroke="rgba(255,255,255,0.9)" 
+              strokeWidth="2" 
+            />
+          </motion.g>
+          
+          {/* Animated letter S */}
+          <motion.g variants={letterVariants}>
+            {/* Blue glow around letter S */}
+            <path 
+              d="M400,50 C320,50 280,100 280,150 C280,240 400,240 400,280 C400,300 380,310 360,310 C340,310 320,300 310,280 L260,320 C280,350 320,370 360,370 C440,370 480,320 480,270 C480,180 360,180 360,140 C360,120 380,110 400,110 C420,110 440,120 450,140 L500,100 C480,70 440,50 400,50 Z" 
+              fill="none" 
+              stroke="url(#blue-gradient)" 
+              strokeWidth="6" 
+              filter="url(#blue-glow)"
+              opacity="0.8"
+            />
+          
+            {/* Using a foreignObject with clipping to contain the video within the letter S */}
+            <foreignObject x="260" y="50" width="240" height="320" style={{ clipPath: "url(#clip-s)" }}>
+              <div className="w-full h-full overflow-hidden">
+                {videoSource && (
+                  <video 
+                    className="w-full h-full object-cover"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                    style={{ transform: "scale(1.6) translateX(-10%)" }}
+                  >
+                    <source src={videoSource} type="video/mp4" />
+                  </video>
+                )}
+              </div>
+            </foreignObject>
+            
+            {/* Outline for letter S */}
+            <path 
+              d="M400,50 C320,50 280,100 280,150 C280,240 400,240 400,280 C400,300 380,310 360,310 C340,310 320,300 310,280 L260,320 C280,350 320,370 360,370 C440,370 480,320 480,270 C480,180 360,180 360,140 C360,120 380,110 400,110 C420,110 440,120 450,140 L500,100 C480,70 440,50 400,50 Z" 
+              fill="none" 
+              stroke="rgba(255,255,255,0.9)" 
+              strokeWidth="2" 
+            />
+          </motion.g>
+          
+          {/* Animated letter M */}
+          <motion.g variants={letterVariants}>
+            {/* Blue glow around letter M */}
+            <path 
+              d="M550,50 L550,350 L630,350 L630,160 L680,280 L730,160 L730,350 L810,350 L810,50 L730,50 L680,170 L630,50 Z" 
+              fill="none" 
+              stroke="url(#blue-gradient)" 
+              strokeWidth="6" 
+              filter="url(#blue-glow)"
+              opacity="0.8"
+            />
+          
+            {/* Using a foreignObject with clipping to contain the video within the letter M */}
+            <foreignObject x="550" y="50" width="260" height="300" style={{ clipPath: "url(#clip-m)" }}>
+              <div className="w-full h-full overflow-hidden">
+                {videoSource && (
+                  <video 
+                    className="w-full h-full object-cover"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                    style={{ transform: "scale(2.2) translateX(-15%) translateY(-5%)" }}
+                  >
+                    <source src={videoSource} type="video/mp4" />
+                  </video>
+                )}
+              </div>
+            </foreignObject>
+            
+            {/* Outline for letter M */}
+            <path 
+              d="M550,50 L550,350 L630,350 L630,160 L680,280 L730,160 L730,350 L810,350 L810,50 L730,50 L680,170 L630,50 Z" 
+              fill="none" 
+              stroke="rgba(255,255,255,0.9)" 
+              strokeWidth="2" 
+            />
+          </motion.g>
+        </svg>
+        
+        {/* Optional tagline that appears after the animation */}
+        <motion.div 
+          className="absolute bottom-16 text-white text-xl md:text-2xl text-center font-light w-full"
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: { 
+              opacity: 1, 
+              y: 0,
+              transition: { 
+                delay: 1.2, 
+                duration: 0.8 
+              }
+            }
+          }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isVideoLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+        >
+          Anywhere. Anytime. Private Air Charter.
+        </motion.div>
+      </motion.div>
+    </div>
   );
 };
 
-export default Hero;
+export default AnimatedCSMVideoText;

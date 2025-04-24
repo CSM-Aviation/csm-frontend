@@ -1,10 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const AnimatedCSMVideoText = ({ videoSource }) => {
   const containerRef = useRef(null);
   const videoRef = useRef(null);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [showInitialText, setShowInitialText] = useState(true);
+  const [transition, setTransition] = useState(false);
   
   useEffect(() => {
     if (!videoRef.current || !containerRef.current) return;
@@ -20,7 +22,18 @@ const AnimatedCSMVideoText = ({ videoSource }) => {
       video.play().catch(error => {
         console.error("Video autoplay failed:", error);
       });
-      setIsVideoLoaded(true);
+      
+      // Start transition animation sequence
+      setTimeout(() => {
+        setTransition(true); // Begin scaling/fading transition
+        
+        setTimeout(() => {
+          setShowInitialText(false); // Remove initial text
+          setTimeout(() => {
+            setIsVideoLoaded(true); // Show video cutout letters
+          }, 200);
+        }, 800); // Time for the transition animation
+      }, 1000); // Initial delay before starting transition
     };
     
     video.addEventListener('canplay', handleCanPlay);
@@ -62,8 +75,40 @@ const AnimatedCSMVideoText = ({ videoSource }) => {
     }
   };
   
+  // Initial text animation variants for smooth morphing to cutout
+  const initialTextVariants = {
+    initial: { 
+      opacity: 1,
+      scale: 1,
+      y: 0
+    },
+    transition: { 
+      opacity: [1, 0.8, 0.6],
+      scale: [1, 1.2, 1.5],
+      y: [0, -10, -20],
+      transition: {
+        duration: 0.8,
+        ease: "easeInOut"
+      }
+    },
+    exit: { 
+      opacity: 0,
+      scale: 1.8,
+      filter: "blur(8px)",
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+  
   return (
-    <div className="relative w-full h-screen flex items-center justify-center bg-[#004080]" ref={containerRef}>
+    <div className="relative w-full h-screen flex items-center justify-center" ref={containerRef}>
+      {/* Gradient background with radial gradient from blue to dark blue */}
+      <div className="absolute inset-0 z-0" style={{
+        background: '#002040'
+      }}></div>
+      
       {/* Hidden video element that serves as the source */}
       <video 
         ref={videoRef}
@@ -78,12 +123,27 @@ const AnimatedCSMVideoText = ({ videoSource }) => {
         Your browser does not support the video tag.
       </video>
       
+      {/* Initial plain white CSM text shown before video loads */}
+      <AnimatePresence mode="wait">
+        {showInitialText && (
+          <motion.div 
+            className="absolute z-10 flex justify-center items-center top-1/4 transform -translate-y-1/2"
+            initial="initial"
+            animate={transition ? "transition" : "initial"}
+            exit="exit"
+            variants={initialTextVariants}
+          >
+            <h1 className="text-white text-8xl md:text-9xl font-bold tracking-wider">CSM</h1>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
       {/* SVG for the text with animation - centered with adjusted viewBox */}
       <motion.div 
-        className="relative w-full max-w-4xl mx-auto h-screen flex items-center justify-center overflow-hidden"
-        initial="hidden"
-        animate={isVideoLoaded ? "visible" : "hidden"}
-        variants={textVariants}
+        className="relative w-full max-w-4xl mx-auto h-screen flex items-start justify-center overflow-hidden pt-24 md:pt-36"
+        initial={{ opacity: 0 }}
+        animate={isVideoLoaded ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.8, ease: "easeIn" }}
       >
         <svg 
           className="w-full h-auto" 
@@ -115,10 +175,43 @@ const AnimatedCSMVideoText = ({ videoSource }) => {
               <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" result="noise" />
               <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G" />
             </filter>
+            
+            {/* Blue glow filter */}
+            <filter id="blue-glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="8" result="blur" />
+              <feFlood floodColor="#23B2EE" floodOpacity="0.7" result="color" />
+              <feComposite in="color" in2="blur" operator="in" result="glow" />
+              <feMerge>
+                <feMergeNode in="glow" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+            
+            {/* Drop shadow filter for letter outlines */}
+            <filter id="letter-shadow" x="-10%" y="-10%" width="120%" height="120%">
+              <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#0C3C60" floodOpacity="0.8"/>
+              <feDropShadow dx="2" dy="2" stdDeviation="3" floodColor="#23B2EE" floodOpacity="0.6"/>
+            </filter>
+            
+            {/* Blue gradient for letter outlines */}
+            <linearGradient id="blue-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#87CEEB" /> {/* Light blue */}
+              <stop offset="100%" stopColor="#23B2EE" /> {/* Electric blue */}
+            </linearGradient>
           </defs>
           
           {/* Animated letter C */}
           <motion.g variants={letterVariants}>
+            {/* Blue glow around letter C */}
+            <path 
+              d="M150,50 C80,50 30,120 30,200 C30,280 80,350 150,350 C200,350 240,320 260,280 L200,240 C190,260 170,275 150,275 C110,275 80,240 80,200 C80,160 110,125 150,125 C170,125 190,140 200,160 L260,120 C240,80 200,50 150,50 Z" 
+              fill="none" 
+              stroke="url(#blue-gradient)" 
+              strokeWidth="6" 
+              filter="url(#blue-glow)"
+              opacity="0.9"
+            />
+            
             {/* Using a foreignObject with clipping to contain the video within the letter C */}
             <foreignObject x="30" y="50" width="230" height="300" style={{ clipPath: "url(#clip-c)" }}>
               <div className="w-full h-full overflow-hidden">
@@ -130,24 +223,36 @@ const AnimatedCSMVideoText = ({ videoSource }) => {
                     muted
                     playsInline
                     preload="auto"
-                    style={{ transform: "scale(1.5)" }}
+                    style={{ transform: "scale(1.6)" }}
                   >
                     <source src={videoSource} type="video/mp4" />
                   </video>
                 )}
               </div>
             </foreignObject>
+            
             {/* Outline for letter C */}
             <path 
               d="M150,50 C80,50 30,120 30,200 C30,280 80,350 150,350 C200,350 240,320 260,280 L200,240 C190,260 170,275 150,275 C110,275 80,240 80,200 C80,160 110,125 150,125 C170,125 190,140 200,160 L260,120 C240,80 200,50 150,50 Z" 
               fill="none" 
-              stroke="rgba(255,255,255,0.7)" 
-              strokeWidth="2" 
+              stroke="rgba(255,255,255,0.9)" 
+              strokeWidth="2"
+              filter="url(#letter-shadow)" 
             />
           </motion.g>
           
           {/* Animated letter S */}
           <motion.g variants={letterVariants}>
+            {/* Blue glow around letter S */}
+            <path 
+              d="M400,50 C320,50 280,100 280,150 C280,240 400,240 400,280 C400,300 380,310 360,310 C340,310 320,300 310,280 L260,320 C280,350 320,370 360,370 C440,370 480,320 480,270 C480,180 360,180 360,140 C360,120 380,110 400,110 C420,110 440,120 450,140 L500,100 C480,70 440,50 400,50 Z" 
+              fill="none" 
+              stroke="url(#blue-gradient)" 
+              strokeWidth="6" 
+              filter="url(#blue-glow)"
+              opacity="0.9"
+            />
+          
             {/* Using a foreignObject with clipping to contain the video within the letter S */}
             <foreignObject x="260" y="50" width="240" height="320" style={{ clipPath: "url(#clip-s)" }}>
               <div className="w-full h-full overflow-hidden">
@@ -159,24 +264,36 @@ const AnimatedCSMVideoText = ({ videoSource }) => {
                     muted
                     playsInline
                     preload="auto"
-                    style={{ transform: "scale(1.5) translateX(-10%)" }}
+                    style={{ transform: "scale(1.6) translateX(-10%)" }}
                   >
                     <source src={videoSource} type="video/mp4" />
                   </video>
                 )}
               </div>
             </foreignObject>
+            
             {/* Outline for letter S */}
             <path 
               d="M400,50 C320,50 280,100 280,150 C280,240 400,240 400,280 C400,300 380,310 360,310 C340,310 320,300 310,280 L260,320 C280,350 320,370 360,370 C440,370 480,320 480,270 C480,180 360,180 360,140 C360,120 380,110 400,110 C420,110 440,120 450,140 L500,100 C480,70 440,50 400,50 Z" 
               fill="none" 
-              stroke="rgba(255,255,255,0.7)" 
-              strokeWidth="2" 
+              stroke="rgba(255,255,255,0.9)" 
+              strokeWidth="2"
+              filter="url(#letter-shadow)"
             />
           </motion.g>
           
           {/* Animated letter M */}
           <motion.g variants={letterVariants}>
+            {/* Blue glow around letter M */}
+            <path 
+              d="M550,50 L550,350 L630,350 L630,160 L680,280 L730,160 L730,350 L810,350 L810,50 L730,50 L680,170 L630,50 Z" 
+              fill="none" 
+              stroke="url(#blue-gradient)" 
+              strokeWidth="6" 
+              filter="url(#blue-glow)"
+              opacity="0.9"
+            />
+          
             {/* Using a foreignObject with clipping to contain the video within the letter M */}
             <foreignObject x="550" y="50" width="260" height="300" style={{ clipPath: "url(#clip-m)" }}>
               <div className="w-full h-full overflow-hidden">
@@ -188,26 +305,28 @@ const AnimatedCSMVideoText = ({ videoSource }) => {
                     muted
                     playsInline
                     preload="auto"
-                    style={{ transform: "scale(1.5) translateX(-20%)" }}
+                    style={{ transform: "scale(2.2) translateX(-15%) translateY(-5%)" }}
                   >
                     <source src={videoSource} type="video/mp4" />
                   </video>
                 )}
               </div>
             </foreignObject>
+            
             {/* Outline for letter M */}
             <path 
               d="M550,50 L550,350 L630,350 L630,160 L680,280 L730,160 L730,350 L810,350 L810,50 L730,50 L680,170 L630,50 Z" 
               fill="none" 
-              stroke="rgba(255,255,255,0.7)" 
-              strokeWidth="2" 
+              stroke="rgba(255,255,255,0.9)" 
+              strokeWidth="2"
+              filter="url(#letter-shadow)"
             />
           </motion.g>
         </svg>
         
         {/* Optional tagline that appears after the animation */}
         <motion.div 
-          className="absolute bottom-16 text-white text-xl md:text-2xl text-center font-light w-full"
+          className="absolute bottom-32 text-white text-xl md:text-2xl text-center font-light w-full"
           variants={{
             hidden: { opacity: 0, y: 20 },
             visible: { 
@@ -219,6 +338,9 @@ const AnimatedCSMVideoText = ({ videoSource }) => {
               }
             }
           }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isVideoLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
         >
           Anywhere. Anytime. Private Air Charter.
         </motion.div>
