@@ -5,7 +5,7 @@ import { motion, AnimatePresence, m } from 'framer-motion';
 import JetInsightComponent from './JetInsight/JetInsightComponent3';
 import Link from 'next/link';
 import Image from 'next/image';
-import videoSource from '/videos/CSM_Desktop.mp4';
+
 
 const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
   const containerRef = useRef<HTMLDivElement>(null);
