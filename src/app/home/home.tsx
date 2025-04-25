@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Hero from "../components/Hero";
 import MaintManage from "../components/MaintManage";
 import ServicesCards from "../components/ServiceCard";
 import { useConfig } from "../contexts/ConfigContext";
@@ -8,12 +7,15 @@ import DonorNetworkSection from "../components/DonorNetworkSection";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import PopularDestinations from "../components/PopularDestinations";
 import Testimonials from "../components/Testimonials";
+import AnimatedCSMVideoText from "../components/Hero";
 
 export default function HomeBody() {
   const { config, error } = useConfig();
   const [scrollRange, setScrollRange] = useState(0);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
   const [windowHeight, setWindowHeight] = useState(typeof window !== 'undefined' ? window.innerHeight : 0);
+
+  const videoSource = "videos/video_i2_jetcenter_day2_cam2_046_064.mp4";
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -113,8 +115,8 @@ export default function HomeBody() {
   return (
     <>
       <div >
-        <Hero
-          videoSource={config?.home_video || ""}
+        <AnimatedCSMVideoText
+          videoSource={videoSource}
           // desktopImage={config?.home_image || ""}
           // mobileImage={config?.home_image || ""}
           // title="Welcome to CSM Aviation"

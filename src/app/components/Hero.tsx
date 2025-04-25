@@ -276,7 +276,7 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
                   />
                   
                   {/* Using a foreignObject with clipping to contain the video within the letter C */}
-                  <foreignObject x="30" y="50" width="230" height="300" style={{ clipPath: "url(#clip-c)" }}>
+                  <foreignObject x="30" y="50" width="230" height="300" clipPath="url(#clip-c)" xmlns="http://www.w3.org/1999/xhtml">
                     <div className="w-full h-full overflow-hidden">
                       {videoSource && (
                         <video 
@@ -286,7 +286,7 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
                           muted
                           playsInline
                           preload="auto"
-                          style={{ transform: "scale(1.6)" }}
+                          style={{ transform: isMobile ? "scale(1.8)" : "scale(1.6)" }}
                         >
                           <source src={videoSource} type="video/mp4" />
                         </video>
@@ -317,7 +317,7 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
                   />
                 
                   {/* Using a foreignObject with clipping to contain the video within the letter S */}
-                  <foreignObject x="260" y="50" width="240" height="320" style={{ clipPath: "url(#clip-s)" }}>
+                  <foreignObject x="260" y="50" width="240" height="320" clipPath="url(#clip-s)" xmlns="http://www.w3.org/1999/xhtml">
                     <div className="w-full h-full overflow-hidden">
                       {videoSource && (
                         <video 
@@ -327,7 +327,7 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
                           muted
                           playsInline
                           preload="auto"
-                          style={{ transform: "scale(1.6) translateX(-10%)" }}
+                          style={{ transform: isMobile ? "scale(1.8) translateX(-10%)" : "scale(1.6) translateX(-10%)" }}
                         >
                           <source src={videoSource} type="video/mp4" />
                         </video>
@@ -358,7 +358,7 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
                   />
                 
                   {/* Using a foreignObject with clipping to contain the video within the letter M */}
-                  <foreignObject x="550" y="50" width="260" height="300" style={{ clipPath: "url(#clip-m)" }}>
+                  <foreignObject x="550" y="50" width="260" height="300" clipPath="url(#clip-m)" xmlns="http://www.w3.org/1999/xhtml">
                     <div className="w-full h-full overflow-hidden">
                       {videoSource && (
                         <video 
@@ -368,7 +368,7 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
                           muted
                           playsInline
                           preload="auto"
-                          style={{ transform: "scale(2.2) translateX(-15%) translateY(-5%)" }}
+                          style={{ transform: isMobile ? "scale(2.4) translateX(-15%) translateY(-5%)" : "scale(2.2) translateX(-15%) translateY(-5%)" }}
                         >
                           <source src={videoSource} type="video/mp4" />
                         </video>
