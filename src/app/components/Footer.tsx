@@ -159,7 +159,7 @@ const Footer = () => {
               <div className="p-3 items-center justify-center">
                 <a href="https://nbaa.org/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
                   <Image
-                    src="/images/LOGOS/NBAA_logo_4:24.png"
+                    src="/images/LOGOS/NBAA_logo_4_24.png"
                     alt="NBAA"
                     width={100}
                     height={40}
