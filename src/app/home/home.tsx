@@ -19,7 +19,7 @@ export default function HomeBody() {
     typeof window !== 'undefined' ? window.innerHeight : 0
   );
 
-  const videoSource = 'videos/CSM_desktop.mp4';
+  const videoSource = 'videos/compressed/CSM_desktop.mp4';
 
   useEffect(() => {
     const updateDimensions = () => {
