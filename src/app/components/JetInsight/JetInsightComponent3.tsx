@@ -1,36 +1,22 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import styles from './JetInsight2.module.scss';
 
 const JetInsightComponent: React.FC = () => {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const modalRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const script = document.createElement('script');
     script.src =
       'https://client.jetinsight.com/embed/126d130e-be91-4071-a8dc-2f94b609c239/Web-Request.js';
     script.async = true;
     document.body.appendChild(script);
-
-    script.onload = () => {
-      if (buttonRef.current && modalRef.current && iframeRef.current) {
-        buttonRef.current.addEventListener('click', () => {
-          // Push custom event to dataLayer for Schedule Trip
-          window.dataLayer = window.dataLayer || [];
-          window.dataLayer.push({
-            event: 'cta_button_click',
-            category: 'conversion',
-            label: 'SCHEDULE_TRIP',
-          });
-          iframeRef.current!.src =
-            'https://client.jetinsight.com/embed/csm-aviation/Web-Request?';
-          modalRef.current!.style.display = 'block';
-        });
-      }
-    };
 
     return () => {
       if (document.body.contains(script)) {
@@ -39,9 +25,57 @@ const JetInsightComponent: React.FC = () => {
     };
   }, []);
 
+  const openModal = () => {
+    // Push custom event to dataLayer for Schedule Trip
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'cta_button_click',
+      category: 'conversion',
+      label: 'SCHEDULE_TRIP',
+    });
+    setShowModal(true);
+    document.body.style.overflow = 'hidden';
+    window.scrollTo(0, 120);
+  };
+
   const closeModal = () => {
-    if (iframeRef.current) iframeRef.current.src = '';
-    if (modalRef.current) modalRef.current.style.display = 'none';
+    if (iframeRef.current) {
+      iframeRef.current.src = '';
+    }
+    setShowModal(false);
+    document.body.style.overflow = '';
+  };
+
+  // Modal component that will be portaled
+  const ModalPortal = () => {
+    if (!showModal) return null;
+    
+    // Set iframe src when modal is shown
+    useEffect(() => {
+      if (showModal && iframeRef.current) {
+        iframeRef.current.src = 'https://client.jetinsight.com/embed/csm-aviation/Web-Request?';
+      }
+    }, [showModal]);
+    
+    return (
+      <div className={styles.jetinsightEmbeddedRequestModal}>
+        <div className={styles.modalOverlay} onClick={closeModal}></div>
+        <div className={styles.modalContent}>
+          <button
+            id='jetinsight-embedded-request-close-button'
+            className={styles.closeButton}
+            onClick={closeModal}
+          >
+            Close
+          </button>
+          <iframe
+            ref={iframeRef}
+            id='jetinsight-embedded-request-iframe'
+            className={styles.modalIframe}
+          ></iframe>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -52,7 +86,7 @@ const JetInsightComponent: React.FC = () => {
         <button
           ref={buttonRef}
           id='jetinsight-embedded-request-open-button'
-          onClick={() => window.scrollTo(0, 120)}
+          onClick={openModal}
           className={styles.jetinsightEmbeddedRequestButton}
         >
           SCHEDULE TRIP
@@ -72,24 +106,8 @@ const JetInsightComponent: React.FC = () => {
         </button>
       </div>
 
-      <div
-        id='jetinsight-embedded-request-modal'
-        ref={modalRef}
-        className={styles.jetinsightEmbeddedRequestModal}
-      >
-        <button
-          id='jetinsight-embedded-request-close-button'
-          className={styles.closeButton}
-          onClick={closeModal}
-        >
-          Close
-        </button>
-        <iframe
-          ref={iframeRef}
-          id='jetinsight-embedded-request-iframe'
-          className={styles.modalIframe}
-        ></iframe>
-      </div>
+      {/* Use createPortal to render the modal outside the current component hierarchy */}
+      {mounted && createPortal(<ModalPortal />, document.body)}
     </>
   );
 };
