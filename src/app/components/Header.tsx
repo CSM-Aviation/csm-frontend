@@ -94,26 +94,20 @@ const Header: React.FC = () => {
       }`}
       style={{ backgroundColor: transparent ? 'transparent' : '#002040' }}
     >
-      <div
-        className={` w-full flex items-center px-5 py-3 ${
-          pathName === '/' ? 'justify-end mt-12' : 'justify-between'
-        }`}
-      >
-        {pathName !== '/' && (
-          <Link href='/' className=''>
-            <Image
-              src='/images/whitebgcsmlogo.png'
-              alt='CSM Aviation'
-              className='w-40 h-40'
-              width={200}
-              height={200}
-            />
-          </Link>
-        )}
+      <div className="w-full flex items-center justify-between px-5 py-3">
+        <Link href='/' className=''>
+        <Image
+    src='/images/whitebgcsmlogo.png'
+    alt='CSM Aviation'
+    className='w-20 h-20'  // Changed from w-40 h-40 to w-20 h-20
+    width={100}           // Changed from 200 to 100
+    height={100}          // Changed from 200 to 100
+  />
+        </Link>
 
         {/* Phone Icon */}
         {/* <div className="hidden lg:flex items-center mx-4">
-          <a
+          
             href="tel:+18884359276"
             onClick={() => {
               window.dataLayer = window.dataLayer || [];
