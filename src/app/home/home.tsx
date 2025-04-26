@@ -19,7 +19,7 @@ export default function HomeBody() {
     typeof window !== 'undefined' ? window.innerHeight : 0
   );
 
-  const videoSource = 'https://s3.us-west-1.amazonaws.com/thisisatestspacefor.design/videos/2b145135-bc7a-45b3-9d20-004f34353da6.mp4';
+  const videoSource = 'videos/CSM_desktop.mp4';
 
   useEffect(() => {
     const updateDimensions = () => {
