@@ -109,7 +109,7 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
 
   return (
     <>
-      <AnimatePresence mode='wait'>
+      {/* <AnimatePresence mode='wait'>
         <motion.div
           style={{
             position: 'fixed',
@@ -135,7 +135,7 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
             </Link>
           </h1>
         </motion.div>
-      </AnimatePresence>
+      </AnimatePresence> */}
 
       <div
         style={{ top: 0, left: 0, backgroundColor: '#002040' }}
@@ -158,7 +158,7 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
               }}
             >
               <source
-                src={!isMobile ? videoSource : 'https://s3.us-west-1.amazonaws.com/thisisatestspacefor.design/videos/4590e986-03c7-4a8a-a56b-3132997d9249.mp4'}
+                src={!isMobile ? videoSource : 'videos/compressed/CSM_Mobile.mp4'}
                 type='video/mp4'
               />
             </video>
