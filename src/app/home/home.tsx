@@ -1,19 +1,25 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import Hero from "../components/Hero";
-import MaintManage from "../components/MaintManage";
-import ServicesCards from "../components/ServiceCard";
-import { useConfig } from "../contexts/ConfigContext";
-import DonorNetworkSection from "../components/DonorNetworkSection";
-import { motion, useMotionValue, useTransform } from "framer-motion";
-import PopularDestinations from "../components/PopularDestinations";
-import Testimonials from "../components/Testimonials";
+'use client';
+import React, { useEffect, useState } from 'react';
+import MaintManage from '../components/MaintManage';
+import ServicesCards from '../components/ServiceCard';
+import { useConfig } from '../contexts/ConfigContext';
+import DonorNetworkSection from '../components/DonorNetworkSection';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
+import PopularDestinations from '../components/PopularDestinations';
+import Testimonials from '../components/Testimonials';
+import AnimatedCSMVideoText from '../components/Hero';
 
 export default function HomeBody() {
   const { config, error } = useConfig();
   const [scrollRange, setScrollRange] = useState(0);
-  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
-  const [windowHeight, setWindowHeight] = useState(typeof window !== 'undefined' ? window.innerHeight : 0);
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== 'undefined' ? window.innerWidth : 0
+  );
+  const [windowHeight, setWindowHeight] = useState(
+    typeof window !== 'undefined' ? window.innerHeight : 0
+  );
+
+  const videoSource = 'videos/compressed/CSM_desktop.mp4';
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -30,22 +36,22 @@ export default function HomeBody() {
     };
 
     updateDimensions();
-    window.addEventListener("resize", updateDimensions);
-    
+    window.addEventListener('resize', updateDimensions);
+
     const observer = new MutationObserver(updateDimensions);
-    observer.observe(document.body, { 
-      childList: true, 
-      subtree: true 
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
     });
 
     return () => {
-      window.removeEventListener("resize", updateDimensions);
+      window.removeEventListener('resize', updateDimensions);
       observer.disconnect();
     };
   }, []);
 
   const scrollY = useMotionValue(0);
-  
+
   // Transform scroll progress to x position
   const xTransform = useTransform(
     scrollY,
@@ -54,19 +60,18 @@ export default function HomeBody() {
   );
 
   // Create curved path using quadratic bezier
-  const yTransform = useTransform(
-    scrollY,
-    (value) => {
-      const progress = value / scrollRange;
-      // Quadratic bezier curve calculation
-      const startY = windowHeight - 100; // Bottom left
-      const controlY = windowHeight - 300; // Control point height
-      const endY = windowHeight - 100; // Bottom right
-      
-      const t = progress;
-      return (1 - t) * (1 - t) * startY + 2 * (1 - t) * t * controlY + t * t * endY;
-    }
-  );
+  const yTransform = useTransform(scrollY, (value) => {
+    const progress = value / scrollRange;
+    // Quadratic bezier curve calculation
+    const startY = windowHeight - 100; // Bottom left
+    const controlY = windowHeight - 300; // Control point height
+    const endY = windowHeight - 100; // Bottom right
+
+    const t = progress;
+    return (
+      (1 - t) * (1 - t) * startY + 2 * (1 - t) * t * controlY + t * t * endY
+    );
+  });
 
   // Rotation based on curve tangent
   const rotateTransform = useTransform(
@@ -84,7 +89,7 @@ export default function HomeBody() {
       const updateScroll = () => {
         const targetY = window.scrollY;
         const diff = targetY - currentY;
-        
+
         if (Math.abs(diff) > 0.1) {
           currentY += diff * smoothness;
           scrollY.set(currentY);
@@ -101,9 +106,9 @@ export default function HomeBody() {
       rafId = requestAnimationFrame(updateScroll);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
       if (rafId) {
         cancelAnimationFrame(rafId);
       }
@@ -112,9 +117,9 @@ export default function HomeBody() {
 
   return (
     <>
-      <div >
-        <Hero
-          videoSource={config?.home_video || ""}
+      <div>
+        <AnimatedCSMVideoText
+          videoSource={videoSource}
           // desktopImage={config?.home_image || ""}
           // mobileImage={config?.home_image || ""}
           // title="Welcome to CSM Aviation"

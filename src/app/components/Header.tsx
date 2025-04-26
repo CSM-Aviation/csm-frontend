@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -16,25 +16,28 @@ interface HeaderProps {
   headerColor: string;
 }
 
-const JetInsightComponent = dynamic(() => import('../components/JetInsight/JetInsightComponent'), {
-  ssr: false,
-});
+const JetInsightComponent = dynamic(
+  () => import('../components/JetInsight/JetInsightComponent'),
+  {
+    ssr: false,
+  }
+);
 
 const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [transparent, setTransparent] = useState(true);
 
-  const pathName = usePathname()
-  const currentPath = useNextPathname()
+  const pathName = usePathname();
+  const currentPath = useNextPathname();
 
   const headerRef = useRef<HTMLElement>(null);
   const { config } = useConfig();
-  const headerColor = config?.header_color || "#ffffff";  // Default color if config is not loaded yet
+  const headerColor = config?.header_color || '#ffffff'; // Default color if config is not loaded yet
   const router = useRouter();
   const isMobile = useMobile({
-    breakPoint: 1024
-  })
+    breakPoint: 1024,
+  });
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -43,11 +46,12 @@ const Header: React.FC = () => {
   useEffect(() => {
     // Determine if we're on home page to manage transparent header behavior
     const isHomePage = currentPath === '/';
-    
+
     const handleScroll = () => {
       // On home page, start with transparent header that becomes solid after scrolling
       if (isHomePage) {
-        if (window.scrollY > 650) { // Increased to avoid CSM text clipping
+        if (window.scrollY > 650) {
+          // Increased to avoid CSM text clipping
           setScrolled(true);
           setTransparent(false);
         } else {
@@ -67,7 +71,7 @@ const Header: React.FC = () => {
 
     // Run once on mount to set initial state
     handleScroll();
-    
+
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -76,18 +80,34 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     setMobileMenuOpen(false);
-  }, [pathName])
+  }, [pathName]);
 
   return (
-    <header ref={headerRef} className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${transparent ? 'bg-opacity-0' : scrolled ? 'bg-opacity-90 shadow-lg' : 'bg-opacity-100'}`} style={{ backgroundColor: transparent ? 'transparent' : headerColor }}>
+    <header
+      ref={headerRef}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        transparent
+          ? 'bg-opacity-0'
+          : scrolled
+          ? 'bg-opacity-90 shadow-lg'
+          : 'bg-opacity-100'
+      }`}
+      style={{ backgroundColor: transparent ? 'transparent' : '#002040' }}
+    >
       <div className="w-full flex items-center justify-between px-5 py-3">
-        <Link href="/" className="flex-shrink-0">
-          <Image src="/images/whitebgcsmlogo.png" alt="CSM Aviation" className='' width={100} height={100} />
+        <Link href='/' className=''>
+        <Image
+    src='/images/whitebgcsmlogo.png'
+    alt='CSM Aviation'
+    className='w-20 h-20'  // Changed from w-40 h-40 to w-20 h-20
+    width={100}           // Changed from 200 to 100
+    height={100}          // Changed from 200 to 100
+  />
         </Link>
 
         {/* Phone Icon */}
         {/* <div className="hidden lg:flex items-center mx-4">
-          <a
+          
             href="tel:+18884359276"
             onClick={() => {
               window.dataLayer = window.dataLayer || [];
@@ -116,17 +136,21 @@ const Header: React.FC = () => {
 
         {/* Menu Toggle Button */}
         <button
-          className="text-gray-800 focus:outline-none"
+          className='text-gray-800 focus:outline-none'
           onClick={toggleMobileMenu}
         >
-          <FontAwesomeIcon className='text-white' icon={mobileMenuOpen ? faTimes : faBars} size="lg" />
+          <FontAwesomeIcon
+            className='text-white'
+            icon={mobileMenuOpen ? faTimes : faBars}
+            size='lg'
+          />
         </button>
       </div>
 
       {/* Menu Content - Always use accordion style, just toggle visibility */}
       {mobileMenuOpen && (
-        <div style={{ backgroundColor: headerColor }} className="py-4">
-          <div className="container mx-auto">
+        <div style={{ backgroundColor: '#002040' }} className='py-4'>
+          <div className='container mx-auto'>
             <HeaderMobileAccordion />
           </div>
         </div>
@@ -134,7 +158,7 @@ const Header: React.FC = () => {
 
       <Script
         src='https://client.jetinsight.com/embed/126d130e-be91-4071-a8dc-2f94b609c239/empty'
-        strategy="afterInteractive"
+        strategy='afterInteractive'
       />
     </header>
   );

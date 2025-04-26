@@ -1,6 +1,8 @@
 import React from 'react';
 import HomeBody from './home/home';
-import Seo, { generateMetadata as seoGenerateMetadata } from './components/seo/Seo';
+import Seo, {
+  generateMetadata as seoGenerateMetadata,
+} from './components/seo/Seo';
 import StructuredData from './components/seo/StructuredData';
 import { apiService, SeoData } from './services/apiService';
 import { Metadata } from 'next';
