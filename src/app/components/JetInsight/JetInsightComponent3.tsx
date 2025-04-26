@@ -25,6 +25,18 @@ const JetInsightComponent: React.FC = () => {
     };
   }, []);
 
+  // Set iframe src when modal is shown
+  useEffect(() => {
+    if (showModal && iframeRef.current) {
+      // Small delay to ensure the modal is rendered before setting src
+      setTimeout(() => {
+        if (iframeRef.current) {
+          iframeRef.current.src = 'https://client.jetinsight.com/embed/csm-aviation/Web-Request?';
+        }
+      }, 100);
+    }
+  }, [showModal]);
+
   const openModal = () => {
     // Push custom event to dataLayer for Schedule Trip
     window.dataLayer = window.dataLayer || [];
@@ -50,13 +62,6 @@ const JetInsightComponent: React.FC = () => {
   const ModalPortal = () => {
     if (!showModal) return null;
     
-    // Set iframe src when modal is shown
-    useEffect(() => {
-      if (showModal && iframeRef.current) {
-        iframeRef.current.src = 'https://client.jetinsight.com/embed/csm-aviation/Web-Request?';
-      }
-    }, [showModal]);
-    
     return (
       <div className={styles.jetinsightEmbeddedRequestModal}>
         <div className={styles.modalOverlay} onClick={closeModal}></div>
@@ -72,6 +77,8 @@ const JetInsightComponent: React.FC = () => {
             ref={iframeRef}
             id='jetinsight-embedded-request-iframe'
             className={styles.modalIframe}
+            title="JetInsight Request Form"
+            allow="geolocation"
           ></iframe>
         </div>
       </div>
