@@ -88,7 +88,7 @@ const JetInsightComponent: React.FC = () => {
   return (
     <>
       <div
-        className={`${styles.jetInsightOut} flex flex-row flex-nowrap w-full gap-1 p-3 md:p-none`}
+        className={`${styles.jetInsightOut} flex md:translate-y-0 translate-y-6 flex-row flex-nowrap w-full gap-1 p-3 md:p-none`}
       >
         <button
           ref={buttonRef}
