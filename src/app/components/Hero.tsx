@@ -167,8 +167,8 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
         </div>
         <div className='absolute   md:bottom-[15%] bottom-1/4 left-0 right-0 text-black z-10'>
           <div className='flex flex-col gap-2 items-center justify-center w-full px-4'>
-            <div className=' md:translate-y-0 text-white translate-y-4 text-xs md:text-lg lg:text-2xl font-bold tracking-wider'>
-              <p>Anywhere Anytime Private Jet Charter</p>
+            <div className=' md:translate-y-0 text-white translate-y-4 text-sm md:text-lg lg:text-2xl font-bold tracking-wider'>
+              <p className=''>ANYWHERE ANYTIME PRIVATE JET CHARTER</p>
             </div>
             <JetInsightComponent />
           </div>
