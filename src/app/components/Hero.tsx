@@ -139,14 +139,14 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
 
       <div
         style={{ top: 0, left: 0, backgroundColor: '#002040' }}
-        className='relative w-full h-screen flex items-center justify-center'
+        className='relative md:h-screen w-full h-[60vh] flex items-center justify-center'
         ref={containerRef}
       >
         {/* Full screen background video */}
-        <div className='absolute inset-0 w-full h-full overflow-hidden'>
+        <div className='absolute md:mt-0 mt-6 inset-0 w-full h-full overflow-hidden'>
           {videoSource && (
             <video
-              className='absolute w-full h-full object-contain lg:object-cover'
+              className='absolute md:scale-100 md:-translate-y-6 scale-150 -translate-y-12 w-full h-full object-contain lg:object-cover'
               autoPlay
               loop
               muted
@@ -158,16 +158,16 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
               }}
             >
               <source
-                src={!isMobile ? videoSource : 'videos/compressed/CSM_Mobile.mp4'}
+                src={!isMobile ? videoSource : 'videos/compressed/CSM_Mobile1.mp4'}
                 type='video/mp4'
               />
             </video>
           )}
           {/* Dark overlay for better text visibility */}
         </div>
-        <div className='absolute md:bottom-[15%] bottom-1/4 left-0 right-0 text-black z-10'>
+        <div className='absolute   md:bottom-[15%] bottom-1/4 left-0 right-0 text-black z-10'>
           <div className='flex flex-col gap-2 items-center justify-center w-full px-4'>
-            <div className='text-white text-xs md:text-lg lg:text-2xl font-bold tracking-wider'>
+            <div className=' md:translate-y-0 text-white translate-y-4 text-xs md:text-lg lg:text-2xl font-bold tracking-wider'>
               <p>Anywhere Anytime Private Jet Charter</p>
             </div>
             <JetInsightComponent />
