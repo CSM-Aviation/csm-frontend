@@ -5,18 +5,18 @@
   width: 100%;
   height: 100%;
 }
-  
+
 .jetinsightEmbeddedRequestButton {
   align-items: center !important;
   appearance: none !important;
-  background-color: #23B2EE !important;
+  background-color: #23b2ee !important;
   border-radius: 4px !important;
   border-width: 0 !important;
   box-sizing: border-box !important;
   color: #010101 !important;
   cursor: pointer !important;
   display: inline-flex !important;
-  font-family: "Inter", sans-serif !important;
+  font-family: 'Inter', sans-serif !important;
   font-weight: bolder;
   height: 60px !important;
   justify-content: center !important;
@@ -35,19 +35,19 @@
   white-space: nowrap !important;
   will-change: box-shadow, transform !important;
   font-size: 18px !important;
-  
+
   &:hover {
     background-color: #ffffff;
-    color: #23B2EE;
+    color: #23b2ee;
     box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
       rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset !important;
     transform: translateY(-5px) !important;
-  
+
     svg {
       transform: translateX(8px);
     }
   }
-  
+
   svg {
     transition: transform 0.3s ease-in-out;
   }
@@ -84,7 +84,7 @@
   height: 95%;
   max-width: 900px;
   max-height: 700px;
-  background: #FFF;
+  background: #fff;
   padding: 1px;
   z-index: 99999; /* Same as modal wrapper */
   border-radius: 0px;
@@ -128,7 +128,7 @@
 
 @media (max-width: 450px) {
   .jetinsightEmbeddedRequestButton {
-    width: 65% !important;
+    width: 100% !important;
     height: 35px !important;
     font-size: 10px !important;
   }

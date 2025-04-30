@@ -1,6 +1,8 @@
+'use client';
 import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComments } from '@fortawesome/free-solid-svg-icons';
+import { usePathname } from 'next/navigation';
 
 // Declare the global MessageDeskChatbot type
 declare global {
@@ -17,11 +19,14 @@ interface MessageDeskControllerProps {
 
 const MessageDeskController: React.FC<MessageDeskControllerProps> = ({ shouldHide = false }) => {
 
-
+  const pathname = usePathname();
+  // Hide on homepage (when pathname is just '/')
+  const isHomepage = pathname === '/';
+  const shouldHideComponent = shouldHide || isHomepage;
 
   useEffect(() => {
 
-    if (shouldHide) {
+    if (shouldHideComponent) {
       return
     }
 
@@ -35,7 +40,7 @@ const MessageDeskController: React.FC<MessageDeskControllerProps> = ({ shouldHid
     return () => {
       document.body.removeChild(script);
     };
-  }, []);
+  }, [shouldHideComponent]);
 
   const openChatbot = () => {
     if (window.MessageDeskChatbot) {
@@ -43,7 +48,7 @@ const MessageDeskController: React.FC<MessageDeskControllerProps> = ({ shouldHid
     }
   };
 
-  if (shouldHide) {
+  if (shouldHideComponent) {
     return null
   }
 

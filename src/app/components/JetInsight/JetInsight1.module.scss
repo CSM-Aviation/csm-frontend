@@ -5,7 +5,7 @@
 .jetinsightEmbeddedRequestButton {
   align-items: center !important;
   appearance: none !important;
-  background-color: #23B2EE !important;
+  background-color: #23b2ee !important;
   border-radius: 4px !important;
   border-width: 0 !important;
   // box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
@@ -14,14 +14,14 @@
   color: #010101 !important;
   cursor: pointer !important;
   display: inline-flex !important;
-  font-family: "Playfair Display", serif !important;
-  font-weight:bolder;
+  font-family: 'Playfair Display', serif !important;
+  font-weight: bolder;
   height: 60px !important;
   justify-content: center !important;
   line-height: 1 !important;
   list-style: none !important;
   overflow: hidden !important;
-  padding-left: 40px!important;
+  padding-left: 40px !important;
   padding-right: 40px !important;
   position: relative !important;
   text-align: left !important;
@@ -61,7 +61,7 @@
   height: 95%;
   max-width: 900px;
   max-height: 700px;
-  background: #FFF;
+  background: #fff;
   display: none;
   padding: 1px;
   z-index: 99999;
@@ -111,7 +111,7 @@
 
 @media (max-width: 450px) {
   .jetinsightEmbeddedRequestButton {
-    width: 65% !important;
+    width: 100% !important;
     height: 35px !important;
     font-size: 10px !important;
   }
