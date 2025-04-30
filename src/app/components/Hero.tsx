@@ -6,7 +6,6 @@ import JetInsightComponent from './JetInsight/JetInsightComponent3';
 import Link from 'next/link';
 import Image from 'next/image';
 
-
 const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -158,7 +157,9 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
               }}
             >
               <source
-                src={!isMobile ? videoSource : 'videos/compressed/CSM_Mobile1.mp4'}
+                src={
+                  !isMobile ? videoSource : '/videos/compressed/CSM_Mobile1.mp4'
+                }
                 type='video/mp4'
               />
             </video>
