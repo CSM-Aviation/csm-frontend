@@ -1,23 +1,23 @@
-'use client';
-import React, { useState, useRef, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
-import dynamic from 'next/dynamic';
-import Script from 'next/script';
-import { useConfig } from '../contexts/ConfigContext';
-import { usePathname, useRouter } from 'next/navigation';
-import HeaderMobileAccordion from './HeaderMobileAccordion';
-import useMobile from '../hooks/useMobile';
-import { usePathname as useNextPathname } from 'next/navigation';
+"use client";
+import React, { useState, useRef, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPhone, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import dynamic from "next/dynamic";
+import Script from "next/script";
+import { useConfig } from "../contexts/ConfigContext";
+import { usePathname, useRouter } from "next/navigation";
+import HeaderMobileAccordion from "./HeaderMobileAccordion";
+import useMobile from "../hooks/useMobile";
+import { usePathname as useNextPathname } from "next/navigation";
 
 interface HeaderProps {
   headerColor: string;
 }
 
 const JetInsightComponent = dynamic(
-  () => import('../components/JetInsight/JetInsightComponent'),
+  () => import("../components/JetInsight/JetInsightComponent"),
   {
     ssr: false,
   }
@@ -35,7 +35,7 @@ const Header: React.FC = () => {
 
   const headerRef = useRef<HTMLElement>(null);
   const { config } = useConfig();
-  const headerColor = config?.header_color || '#ffffff'; // Default color if config is not loaded yet
+  const headerColor = config?.header_color || "#ffffff"; // Default color if config is not loaded yet
   const router = useRouter();
   const isMobile = useMobile({
     breakPoint: 1024,
@@ -47,22 +47,24 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     // Determine if we're on home page to manage transparent header behavior
-    const isHomePage = currentPath === '/';
-    
+    const isHomePage = currentPath === "/";
+
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
-      
+
       // Determine scroll direction
       const isScrollingDown = currentScrollPos > prevScrollPos;
-      
+
       // Only change visibility based on scroll direction
       // When scrolling down: hide header
       // When scrolling up: show header
       // When not scrolling (equal positions): maintain previous state
-      if (currentScrollPos > 100) { // Only apply hide/show behavior after scrolling past threshold
+      if (currentScrollPos > 100) {
+        // Only apply hide/show behavior after scrolling past threshold
         if (isScrollingDown) {
           setVisible(false);
-        } else if (currentScrollPos < prevScrollPos) { // Explicitly check for upward scrolling
+        } else if (currentScrollPos < prevScrollPos) {
+          // Explicitly check for upward scrolling
           setVisible(true);
         }
         // If currentScrollPos === prevScrollPos (stopped scrolling), maintain current visible state
@@ -70,13 +72,14 @@ const Header: React.FC = () => {
         // Always show header at the top of the page
         setVisible(true);
       }
-      
+
       // Update previous scroll position
       setPrevScrollPos(currentScrollPos);
-      
+
       // On home page, start with transparent header that becomes solid after scrolling
       if (isHomePage) {
-        if (currentScrollPos > 650) { // Increased to avoid CSM text clipping
+        if (currentScrollPos > 650) {
+          // Increased to avoid CSM text clipping
           setScrolled(true);
           setTransparent(false);
         } else {
@@ -97,9 +100,9 @@ const Header: React.FC = () => {
     // Run once on mount to set initial state
     handleScroll();
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [currentPath, prevScrollPos]);
 
@@ -112,23 +115,25 @@ const Header: React.FC = () => {
       ref={headerRef}
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         transparent
-          ? 'bg-opacity-0'
+          ? "bg-opacity-0"
           : scrolled
-          ? 'bg-opacity-90 shadow-lg'
-          : 'bg-opacity-100'
-      } ${visible ? 'translate-y-0' : '-translate-y-full'}`}
-      style={{ backgroundColor: transparent ? 'transparent' : '#002040' }}
+          ? "bg-opacity-90 shadow-lg"
+          : "bg-opacity-100"
+      } ${visible ? "translate-y-0" : "-translate-y-full"}`}
+      style={{ backgroundColor: transparent ? "transparent" : "#002040" }}
     >
       <div className="w-full flex items-center justify-between px-5 py-3">
-        <Link href='/' className=''>
-        <Image
-    src='/images/whitebgcsmlogo.png'
-    alt='CSM Aviation'
-    className='w-20 h-20'  // Changed from w-40 h-40 to w-20 h-20
-    width={100}           // Changed from 200 to 100
-    height={100}          // Changed from 200 to 100
-  />
-        </Link>
+        <div className="relative z-50">
+          <Link href="/" className="">
+            <Image
+              src="/images/whitebgcsmlogo.png"
+              alt="CSM Aviation"
+              className="w-20 h-20" // Changed from w-40 h-40 to w-20 h-20
+              width={100} // Changed from 200 to 100
+              height={100} // Changed from 200 to 100
+            />
+          </Link>
+        </div>
 
         {/* Phone Icon */}
         {/* <div className="hidden lg:flex items-center mx-4">
@@ -160,30 +165,33 @@ const Header: React.FC = () => {
         </div> */}
 
         {/* Menu Toggle Button */}
-        <button
-          className='text-gray-800 focus:outline-none'
+        {/* <button
+          className="text-gray-800 focus:outline-none"
           onClick={toggleMobileMenu}
         >
           <FontAwesomeIcon
-            className='text-white'
+            className="text-white"
             icon={mobileMenuOpen ? faTimes : faBars}
-            size='lg'
+            size="lg"
           />
-        </button>
+        </button> */}
+        <div>
+          <HeaderMobileAccordion />
+        </div>
       </div>
 
       {/* Menu Content - Always use accordion style, just toggle visibility */}
-      {mobileMenuOpen && (
-        <div style={{ backgroundColor: '#002040' }} className='py-4'>
-          <div className='container mx-auto'>
+      {/* {mobileMenuOpen && (
+        <div style={{ backgroundColor: "#002040" }} className="py-4">
+          <div className="container mx-auto">
             <HeaderMobileAccordion />
           </div>
         </div>
-      )}
+      )} */}
 
       <Script
-        src='https://client.jetinsight.com/embed/126d130e-be91-4071-a8dc-2f94b609c239/empty'
-        strategy='afterInteractive'
+        src="https://client.jetinsight.com/embed/126d130e-be91-4071-a8dc-2f94b609c239/empty"
+        strategy="afterInteractive"
       />
     </header>
   );

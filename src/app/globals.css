@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -68,7 +70,7 @@ body {
 
 /* Optional: Add these styles if you want to maintain a specific aspect ratio */
 .video-container::before {
-  content: '';
+  content: "";
   display: block;
   padding-top: 56.25%; /* 16:9 Aspect Ratio */
 }
@@ -83,18 +85,60 @@ body {
 
 .clip-c {
   clip-path: path(
-    'M150,50 C80,50 30,120 30,200 C30,280 80,350 150,350 C200,350 240,320 260,280 L200,240 C190,260 170,275 150,275 C110,275 80,240 80,200 C80,160 110,125 150,125 C170,125 190,140 200,160 L260,120 C240,80 200,50 150,50 Z'
+    "M150,50 C80,50 30,120 30,200 C30,280 80,350 150,350 C200,350 240,320 260,280 L200,240 C190,260 170,275 150,275 C110,275 80,240 80,200 C80,160 110,125 150,125 C170,125 190,140 200,160 L260,120 C240,80 200,50 150,50 Z"
   );
 }
 
 .clip-s {
   clip-path: path(
-    'M 406 48 C 326 48 286 96 286 144 C 286 230.4 406 230.4 406 268.8 C 406 288 386 297.6 366 297.6 C 346 297.6 326 288 316 268.8 L 266 307.2 C 286 336 326 355.2 366 355.2 C 446 355.2 486 307.2 486 259.2 C 486 172.8 366 172.8 366 134.4 C 366 115.2 386 105.6 406 105.6 C 426 105.6 446 115.2 456 134.4 L 506 96 C 486 67.2 446 48 406 48 Z'
+    "M 406 48 C 326 48 286 96 286 144 C 286 230.4 406 230.4 406 268.8 C 406 288 386 297.6 366 297.6 C 346 297.6 326 288 316 268.8 L 266 307.2 C 286 336 326 355.2 366 355.2 C 446 355.2 486 307.2 486 259.2 C 486 172.8 366 172.8 366 134.4 C 366 115.2 386 105.6 406 105.6 C 426 105.6 446 115.2 456 134.4 L 506 96 C 486 67.2 446 48 406 48 Z"
   );
 }
 
 .clip-m {
   clip-path: path(
-    'M550,50 L550,350 L630,350 L630,160 L680,280 L730,160 L730,350 L810,350 L810,50 L730,50 L680,170 L630,50 Z'
+    "M550,50 L550,350 L630,350 L630,160 L680,280 L730,160 L730,350 L810,350 L810,50 L730,50 L680,170 L630,50 Z"
   );
+}
+
+#cloud-clip-path {
+  clip-path: polygon(
+    50% 0%,
+    80% 10%,
+    100% 35%,
+    100% 70%,
+    80% 90%,
+    50% 100%,
+    20% 90%,
+    0% 70%,
+    0% 35%,
+    20% 10%
+  );
+}
+
+.navbar {
+  font-family: "Untitled Sans", "DM Sans", Helvetica, Arial, Lucida, sans-serif;
+}
+
+body {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #282828;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2e2e2e;
 }
