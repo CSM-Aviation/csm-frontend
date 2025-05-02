@@ -44,7 +44,7 @@ export default function RootLayout({
           {/* <div className="container mx-auto px-4 py-4"> */}
           <Breadcrumb />
           {/* </div> */}
-          <main>{children}
+          <main className="mt-24 md:mt-20">{children}
             <Analytics />
             <SpeedInsights />
             <AnalyticsTracker />

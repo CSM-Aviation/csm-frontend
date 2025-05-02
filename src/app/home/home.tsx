@@ -9,6 +9,7 @@ import PopularDestinations from '../components/PopularDestinations';
 import Testimonials from '../components/Testimonials';
 import AnimatedCSMVideoText from '../components/Hero';
 
+
 export default function HomeBody() {
   const { config, error } = useConfig();
   const [scrollRange, setScrollRange] = useState(0);
@@ -18,6 +19,7 @@ export default function HomeBody() {
   const [windowHeight, setWindowHeight] = useState(
     typeof window !== 'undefined' ? window.innerHeight : 0
   );
+
 
   const videoSource = '/videos/compressed/CSM_desktop.mp4';
 
@@ -117,21 +119,14 @@ export default function HomeBody() {
 
   return (
     <>
-      <div>
+      <div className='-mt-24 md:-mt-20'>
         <AnimatedCSMVideoText
           videoSource={videoSource}
-          // desktopImage={config?.home_image || ""}
-          // mobileImage={config?.home_image || ""}
-          // title="Welcome to CSM Aviation"
-          // subtitle="Anywhere Anytime Private Air Charter"
-          // isHome={true}
-          // showJetInsight={true}
-          // showCSMVideoText={true} // Enable the CSM video text effect
+
         />
         <ServicesCards />
         <MaintManage />
         <PopularDestinations />
-        {/* <DonorNetworkSection /> */}
         <Testimonials />
       </div>
     </>
