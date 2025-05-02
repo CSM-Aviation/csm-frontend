@@ -27,6 +27,8 @@ const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [transparent, setTransparent] = useState(true);
+  const [visible, setVisible] = useState(true);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
 
   const pathName = usePathname();
   const currentPath = useNextPathname();
@@ -46,12 +48,35 @@ const Header: React.FC = () => {
   useEffect(() => {
     // Determine if we're on home page to manage transparent header behavior
     const isHomePage = currentPath === '/';
-
+    
     const handleScroll = () => {
+      const currentScrollPos = window.scrollY;
+      
+      // Determine scroll direction
+      const isScrollingDown = currentScrollPos > prevScrollPos;
+      
+      // Only change visibility based on scroll direction
+      // When scrolling down: hide header
+      // When scrolling up: show header
+      // When not scrolling (equal positions): maintain previous state
+      if (currentScrollPos > 100) { // Only apply hide/show behavior after scrolling past threshold
+        if (isScrollingDown) {
+          setVisible(false);
+        } else if (currentScrollPos < prevScrollPos) { // Explicitly check for upward scrolling
+          setVisible(true);
+        }
+        // If currentScrollPos === prevScrollPos (stopped scrolling), maintain current visible state
+      } else {
+        // Always show header at the top of the page
+        setVisible(true);
+      }
+      
+      // Update previous scroll position
+      setPrevScrollPos(currentScrollPos);
+      
       // On home page, start with transparent header that becomes solid after scrolling
       if (isHomePage) {
-        if (window.scrollY > 650) {
-          // Increased to avoid CSM text clipping
+        if (currentScrollPos > 650) { // Increased to avoid CSM text clipping
           setScrolled(true);
           setTransparent(false);
         } else {
@@ -60,7 +85,7 @@ const Header: React.FC = () => {
         }
       } else {
         // On other pages, header is always solid
-        if (window.scrollY > 100) {
+        if (currentScrollPos > 100) {
           setScrolled(true);
         } else {
           setScrolled(false);
@@ -76,7 +101,7 @@ const Header: React.FC = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [currentPath]);
+  }, [currentPath, prevScrollPos]);
 
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -91,7 +116,7 @@ const Header: React.FC = () => {
           : scrolled
           ? 'bg-opacity-90 shadow-lg'
           : 'bg-opacity-100'
-      }`}
+      } ${visible ? 'translate-y-0' : '-translate-y-full'}`}
       style={{ backgroundColor: transparent ? 'transparent' : '#002040' }}
     >
       <div className="w-full flex items-center justify-between px-5 py-3">
