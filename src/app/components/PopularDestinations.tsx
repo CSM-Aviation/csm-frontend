@@ -62,7 +62,7 @@ const PopularDestinations = () => {
                   priority={destination.name === "Miami"} // Prioritize loading for first image
                 />
               </div>
-              <div className="text-center font-semibold py-4 bg-white">
+              <div className="text-center font-semibold py-4 text-[#004080] bg-white">
                 {destination.name}
               </div>
             </div>
