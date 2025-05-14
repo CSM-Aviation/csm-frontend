@@ -24,7 +24,7 @@ const services: ServiceCardProps[] = [
   },
   {
     id: 2,
-    image: service1,
+    image: service2,
     title: "Medical Charter",
     description:
       "We are proud to provide medavac air charter service to the Organ Donor community; providing On-Demand Air Medical Transportation services for over ten years with a perfect safety record.",
@@ -32,7 +32,7 @@ const services: ServiceCardProps[] = [
   },
   {
     id: 3,
-    image: service2,
+    image: service3,
     title: "Wholesale - Jet Brokers",
     description:
       "24/7 Responsive Air Charter service, providing air charter solutions. From intake to booking to wheels down and final ground transportation; constant communication and transparency every step of the way is our standard routine.",
