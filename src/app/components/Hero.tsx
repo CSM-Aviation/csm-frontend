@@ -158,7 +158,7 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
             >
               <source
                 src={
-                  !isMobile ? videoSource : '/videos/compressed/CSM_Mobile1.mp4'
+                  !isMobile ? videoSource : '/videos/compressed/CSM_Mobile.mp4'
                 }
                 type='video/mp4'
               />
