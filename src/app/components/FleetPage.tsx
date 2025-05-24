@@ -117,31 +117,17 @@ const AircraftCardRight = ({ aircraft }: { aircraft: typeof aircraftData[0] }) =
 
 const FleetPage = () => {
   return (
-    <section className="min-h-screen overflow-x-hidden text-white relative">
-      {/* Background Image using Next.js Image component */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/imageshomefleet/LIGHT BLUE.svg"
-          alt="Fleet background"
-          fill
-          style={{ objectFit: "cover" }}
-          className="w-full h-full"
-          priority
-          sizes="100vw"
-        />
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 w-full h-full flex justify-center items-center">
+    <section id="fleetpage" className="min-h-screen overflow-x-hidden text-white">
+      <div className="w-full h-full flex justify-center items-center">
         <div className="w-full h-full">
-          <div className="grid grid-cols-1 md:grid-cols-2 h-full">
+          <div className="grid grid-cols-2 h-full">
             {/* Turboprops Column */}
-            <div className="bg-[#163659]/95 min-h-screen backdrop-blur-sm">
-              <div className="flex flex-col p-4 md:p-0">
-                <h1 className="italic text-2xl md:text-4xl xl:text-6xl font-bold text-center font-staatliches pt-8">
+            <div className="bg-[#163659] opacity-95 min-h-screen">
+              <div className="flex flex-col">
+                <h1 className="italic text-2xl md:text-4xl xl:text-6xl font-bold text-center font-staatliches">
                   <span className="text-4xl md:text-6xl xl:text-9xl">T</span>URBO PROPS
                 </h1>
-                <div className="flex flex-col gap-6 md:gap-10 mt-6 md:mt-10">
+                <div className="flex flex-col gap-10 mt-10">
                   {aircraftData.map((aircraft, index) => (
                     <AircraftCard key={index} aircraft={aircraft} />
                   ))}
@@ -150,17 +136,15 @@ const FleetPage = () => {
             </div>
 
             {/* Jets Column */}
-            <div className="bg-[#395a84]/95 min-h-screen backdrop-blur-sm">
-              <div className="flex flex-col p-4 md:p-0">
-                <h1 className="italic text-2xl md:text-4xl xl:text-6xl font-bold text-center font-staatliches pt-8">
-                  <span className="text-4xl md:text-6xl xl:text-9xl">L</span>IGHT | MIDSIZE JETS
-                </h1>
-                <div className="flex flex-col gap-6 md:gap-10 mt-6 md:mt-10">
-                    {lightjets.map((aircraft, index) => (
-                      <AircraftCardRight key={index} aircraft={aircraft} />
-                    ))}
-                  </div>
-              </div>
+            <div className="bg-[#395a84] opacity-95 min-h-screen">
+              <h1 className="italic text-2xl md:text-4xl xl:text-6xl font-bold text-center font-staatliches">
+                <span className="text-4xl md:text-6xl xl:text-9xl">L</span>IGHT | MIDSIZE JETS
+              </h1>
+              <div className="flex flex-col gap-10 mt-10">
+                  {lightjets.map((aircraft, index) => (
+                    <AircraftCardRight key={index} aircraft={aircraft} />
+                  ))}
+                </div>
             </div>
           </div>
         </div>
