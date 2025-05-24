@@ -144,7 +144,7 @@ body {
 }
 
 #fleetpage {
-  background-image: url('/imageshomefleet/LIGHT BLUE.svg'); /* Fixed path for Next.js */
+  background-image: url('/images/LOGOS/LIGHT BLUE.svg'); /* Fixed path for Next.js */
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
