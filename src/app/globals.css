@@ -142,3 +142,19 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #2e2e2e;
 }
+
+#fleetpage {
+  background-image: url('/images/LOGOS/LIGHT BLUE.svg'); /* Fixed path for Next.js */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  #fleetpage {
+    background-size: contain; 
+    background-position: center center;
+    background-repeat: repeat;
+  }
+}
