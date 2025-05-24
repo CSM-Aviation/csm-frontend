@@ -91,7 +91,7 @@ const AircraftLeftCard = ({ aircraft }: { aircraft: (typeof aircraftData)[0] }) 
     </div>
     <div className="flex flex-[0.8] flex-col justify-center items-center">
     <h1 className="text-[10px] md:text-[16px] lg:text-xl xl:text-2xl font-bold italic">{aircraft.name}</h1>
-    <div className="bg-[#000f1c] p-2 md:p-6 relative">
+   <div className="bg-[#000f1c] p-2 md:p-6 relative transform -skew-x-12">
         <div className="w-full">
           <h1 className="text-[6px] md:text-sm xl:text-xl italic">
             Tail Number:{" "}
@@ -126,7 +126,7 @@ const AircraftCardRight = ({
     </div>
     <div className="flex flex-[0.8] flex-col justify-center items-center">
       <h1 className="text-[10px] md:text-[16px] lg:text-xl xl:text-2xl font-bold italic">{aircraft.name}</h1>
-    <div className="bg-[#000f1c] p-2 md:p-6 relative">
+    <div className="bg-[#000f1c] p-2 md:p-6 relative transform -skew-x-12">
         <div className="w-full">
           <h1 className="text-[6px] md:text-sm xl:text-xl italic">
             Tail Number:{" "}
