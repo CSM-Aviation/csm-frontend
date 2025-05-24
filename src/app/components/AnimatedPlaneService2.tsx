@@ -186,14 +186,14 @@ const Carousel: React.FC = () => {
   // Find the current active card data
 
   return (
-    <main className="min-h-screen bg-white flex flex-col items-center justify-center py-8">
-      <h1 className="text-[#143D4F] mt-10 text-4xl md:text-7xl text-center  font-bold">Our Services</h1>
+    <main className="min-h-screen bg-white flex flex-col items-center justify-center py-8 lg:py-12">
+      <h1 className="text-[#143D4F] text-4xl md:text-7xl text-center font-bold">Our Services</h1>
       <div className="carousel-container flex flex-col md:flex-row-reverse">
         <div className="carousel" ref={carouselRef}>
           {cardData.map((card, index) => (
             <div
               key={index}
-              className="item p-4 md:p-10 relative overflow-hidden"
+              className="item p-6 md:p-10 relative overflow-hidden"
               ref={(el: HTMLDivElement | null) => {
                 itemsRef.current[index] = el;
               }}
@@ -209,8 +209,8 @@ const Carousel: React.FC = () => {
                 <div className="absolute inset-0 bg-black bg-opacity-50 rounded-2xl"></div>
               </div>
               <div className="relative z-10">
-                <h1 className="text-center text-lg md:text-[2rem] text-white mb-1 md:mb-2">{card.label}</h1>
-                <p className="text-[8px] md:text-sm lg:text-base text-center font-normal text-white">
+                <h1 className="text-center text-[1.3rem] md:text-[3rem] text-white mb-1 md:mb-2 leading-7">{card.label}</h1>
+                <p className="text-[10px] md:text-sm lg:text-base text-center font-normal text-white">
                   {card.text}
                 </p>
               </div>
