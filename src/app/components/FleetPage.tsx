@@ -9,6 +9,7 @@ import GulfStreamG150 from "../../../public/images/image2/n8821c 1.png";
 import GulfStreamG150_2 from "../../../public/images/image2/N518KH 4.png";
 import GulfStreamG150_3 from "../../../public/images/image2/N360 AV 5.png";
 import Cesnna from "../../../public/images/image2/561 CC 6.png";
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 
 const aircraftData = [
   {
@@ -82,14 +83,14 @@ const lightjets = [
 const AircraftLeftCard = ({ aircraft }: { aircraft: (typeof aircraftData)[0] }) => (
   <div className="flex justify-center">
   <div className="flex">
-    <div className="flex flex-[0.5]">
+    <motion.div initial={{opacity: 0, x:-50}} whileInView={{opacity: 1, x:0}} transition={{duration: 1.5}} viewport={{once: true}} className="flex flex-[0.5]">
       <Image
         src={aircraft.image}
         alt={aircraft.name}
         className=""
       />
-    </div>
-    <div className="flex flex-[0.8] flex-col justify-center items-center">
+    </motion.div>
+    <motion.div initial={{opacity: 0, x:50}} whileInView={{opacity: 1, x:0}} transition={{duration: 2}} viewport={{once: true}} className="flex flex-[0.8] flex-col justify-center items-center">
     <h1 className="text-[10px] md:text-[16px] lg:text-xl xl:text-2xl font-bold italic">{aircraft.name}</h1>
    <div className="bg-[#000f1c] p-2 md:p-6 relative transform -skew-x-12">
         <div className="w-full">
@@ -105,7 +106,7 @@ const AircraftLeftCard = ({ aircraft }: { aircraft: (typeof aircraftData)[0] }) 
           </h1>
         </div>
       </div>
-  </div>
+  </motion.div>
   </div>
   </div>
 );
@@ -117,14 +118,14 @@ const AircraftCardRight = ({
 }) => (
   <div className="flex justify-center">
   <div className="flex">
-    <div className="flex-[0.5]">
+    <motion.div initial={{opacity: 0, x:-50}} whileInView={{opacity: 1, x:0}} transition={{duration: 1.5}} viewport={{once: true}} className="flex-[0.5]">
       <Image
         src={aircraft.image}
         alt={aircraft.name}
         className="h-auto"
       />
-    </div>
-    <div className="flex flex-[0.8] flex-col justify-center items-center">
+    </motion.div>
+    <motion.div initial={{opacity: 0, x:50}} whileInView={{opacity: 1, x:0}} transition={{duration: 2}} viewport={{once: true}}  className="flex flex-[0.8] flex-col justify-center items-center">
       <h1 className="text-[10px] md:text-[16px] lg:text-xl xl:text-2xl font-bold italic">{aircraft.name}</h1>
     <div className="bg-[#000f1c] p-2 md:p-6 relative transform -skew-x-12">
         <div className="w-full">
@@ -140,7 +141,7 @@ const AircraftCardRight = ({
           </h1>
         </div>
       </div>
-  </div>
+  </motion.div>
   </div>
   </div>
 );
@@ -152,13 +153,13 @@ const FleetPage = () => {
       className="overflow-x-hidden text-white"
     >
       <div className="grid grid-cols-2 grid-rows-1">
-        <div className="col-span-1 row-span-1 bg-[#163659] opacity-95">
+        <div className="col-span-1 row-span-1 bg-[#163659] opacity-95 py-8 lg:py-12">
           <div className="w-full h-full">
             <div className="flex flex-col">
-              <h1 className="italic text-xs md:text-xl xl:text-4xl font-bold text-center font-staatliches">
+              <motion.h1 initial={{opacity: 0, y:-50}} whileInView={{opacity: 1, y:0}} transition={{duration: 2}} viewport={{once: true}} className="italic text-xs md:text-xl xl:text-4xl font-bold text-center font-staatliches">
                 <span className="text-lg md:text-3xl xl:text-6xl">T</span>URBO
                 PROPS
-              </h1>
+              </motion.h1>
               <div className="flex flex-col gap-10 mt-10">
                 {aircraftData.map((aircraft, index) => (
                   <AircraftLeftCard key={index} aircraft={aircraft} />
@@ -167,12 +168,12 @@ const FleetPage = () => {
             </div>
           </div>
         </div>
-        <div className="col-span-1 row-span-1 bg-[#3d5e86] opacity-95">
+        <div className="col-span-1 row-span-1 bg-[#3d5e86] opacity-95 py-8 lg:py-12">
           <div className="w-full h-full">
             <div className="flex flex-col">
-              <h1 className="italic text-xs md:text-xl xl:text-4xl font-bold text-center font-staatliches">
+              <motion.h1 initial={{opacity: 0, y:-50}} whileInView={{opacity: 1, y:0}} transition={{duration: 2}} viewport={{once: true}} className="italic text-xs md:text-xl xl:text-4xl font-bold text-center font-staatliches">
                 <span className="text-lg md:text-3xl xl:text-6xl">L</span>IGHT/ MIDSIZE JETS
-              </h1>
+              </motion.h1>
               <div className="flex flex-col gap-10 mt-10">
                 {lightjets.map((aircraft, index) => (
                   <AircraftCardRight key={index} aircraft={aircraft} />
