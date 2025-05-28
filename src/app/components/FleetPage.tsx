@@ -219,7 +219,7 @@ const FleetPage: React.FC = () => {
   }
 
   return (
-    <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white overflow-hidden min-h-screen">
+    <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white overflow-hidden min-h-screen flex flex-col">
       {/* Animated Background */}
       <div className="absolute inset-0">
         {/* Floating particles */}
@@ -228,26 +228,26 @@ const FleetPage: React.FC = () => {
         <div className="absolute bottom-40 left-20 w-1.5 h-1.5 bg-blue-300 rounded-full animate-bounce opacity-50" style={{ animationDelay: '2s', animationDuration: '5s' }}></div>
       </div>
 
-      <div className="relative z-10 px-4 py-8 lg:py-12">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in">
+      <div className="relative z-10 px-4 py-4 md:py-6">
+        {/* Compact Header */}
+        <div className="text-center mb-4 md:mb-6">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2 animate-fade-in">
             <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
               Our Fleet
             </span>
           </h1>
-          <div className="w-20 h-1 bg-gradient-to-r from-blue-400 to-cyan-300 mx-auto mb-4 animate-expand"></div>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto animate-slide-up">
+          <div className="w-16 h-0.5 bg-gradient-to-r from-blue-400 to-cyan-300 mx-auto mb-2 animate-expand"></div>
+          <p className="text-sm md:text-base text-gray-300 max-w-xl mx-auto animate-slide-up">
             Experience excellence with our premium aircraft collection
           </p>
         </div>
 
         {/* Category Toggle */}
-        <div className="flex justify-center mb-8">
-          <div className="bg-black/30 backdrop-blur-md rounded-full p-1.5 border border-blue-500/30 animate-glow">
+        <div className="flex justify-center mb-4 md:mb-6">
+          <div className="bg-black/30 backdrop-blur-md rounded-full p-1 border border-blue-500/30 animate-glow">
             <button
               onClick={() => handleCategoryChange("Turbo")}
-              className={`px-6 py-3 rounded-l-full text-sm font-semibold transition-all duration-500 transform ${selectedCategory === "Turbo"
+              className={`px-3 md:px-4 py-2 rounded-l-full text-xs md:text-sm font-semibold transition-all duration-500 transform ${selectedCategory === "Turbo"
                   ? "bg-gradient-to-r from-blue-500 to-cyan-400 text-white shadow-lg scale-105"
                   : "text-gray-300 hover:text-white hover:scale-105"
                 }`}
@@ -256,7 +256,7 @@ const FleetPage: React.FC = () => {
             </button>
             <button
               onClick={() => handleCategoryChange("Midsize")}
-              className={`px-6 py-3 rounded-r-full text-sm font-semibold transition-all duration-500 transform ${selectedCategory === "Midsize"
+              className={`px-3 md:px-4 py-2 rounded-r-full text-xs md:text-sm font-semibold transition-all duration-500 transform ${selectedCategory === "Midsize"
                   ? "bg-gradient-to-r from-blue-500 to-cyan-400 text-white shadow-lg scale-105"
                   : "text-gray-300 hover:text-white hover:scale-105"
                 }`}
@@ -267,15 +267,15 @@ const FleetPage: React.FC = () => {
         </div>
 
         {/* Aircraft Title with Animation */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-4 md:mb-6">
           <h2 
-            className={`text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent mb-2 transition-all duration-400 transform ease-out ${
+            className={`text-xl md:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent mb-1 transition-all duration-400 transform ease-out ${
               textAnimating ? "translate-y-5 opacity-0" : "translate-y-0 opacity-100"
             }`}
           >
             {currentAircraft?.aircraftName}
           </h2>
-          <p className={`text-lg text-gray-400 transition-all duration-400 transform ease-out ${
+          <p className={`text-sm md:text-base text-gray-400 transition-all duration-400 transform ease-out ${
             textAnimating ? "translate-y-5 opacity-0" : "translate-y-0 opacity-100"
           }`}>
             {currentAircraft?.tail}
@@ -283,7 +283,7 @@ const FleetPage: React.FC = () => {
         </div>
 
         {/* Carousel Container */}
-        <div className="relative h-80 md:h-96 lg:h-[450px] mb-8">
+        <div className="relative h-48 md:h-64 lg:h-80 mb-4 md:mb-6">
           {/* Aircraft Slides */}
           {cardData.map((item, index) => {
             const position = getSlidePosition(index);
@@ -292,16 +292,16 @@ const FleetPage: React.FC = () => {
                 key={index}
                 className={`absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 transition-all duration-1000 ease-in-out cursor-pointer
                   ${position === "now" 
-                    ? "scale-100 opacity-100 z-20 translate-x-[-50%]" 
+                    ? "scale-90 md:scale-100 opacity-100 z-20 translate-x-[-50%]" 
                     : position === "next"
-                    ? "scale-75 opacity-70 z-10 translate-x-[30%] brightness-75"
+                    ? "scale-50 md:scale-75 opacity-40 md:opacity-70 z-10 translate-x-[60%] md:translate-x-[30%] brightness-75"
                     : position === "prev"
-                    ? "scale-75 opacity-70 z-10 translate-x-[-130%] brightness-75"
-                    : "scale-50 opacity-0 z-0"
+                    ? "scale-50 md:scale-75 opacity-40 md:opacity-70 z-10 translate-x-[-160%] md:translate-x-[-130%] brightness-75"
+                    : "scale-30 opacity-0 z-0"
                   }`}
                 onClick={() => position !== "now" && goToSlide(index)}
               >
-                <div className="bg-gradient-to-br from-blue-900/30 to-slate-900/30 rounded-3xl border-2 border-blue-400/40 backdrop-blur-sm p-6 md:p-8 w-72 md:w-80 lg:w-96 h-56 md:h-64 lg:h-72 shadow-2xl hover:shadow-blue-500/25 transition-all duration-500">
+                <div className="bg-gradient-to-br from-blue-900/30 to-slate-900/30 rounded-2xl md:rounded-3xl border border-blue-400/40 md:border-2 backdrop-blur-sm p-3 md:p-6 lg:p-8 w-56 md:w-72 lg:w-80 h-32 md:h-48 lg:h-56 shadow-2xl hover:shadow-blue-500/25 transition-all duration-500">
                   <img
                     src={item.imageUrl}
                     alt={item.aircraftName}
@@ -311,11 +311,11 @@ const FleetPage: React.FC = () => {
                 </div>
                 
                 {/* Aircraft Badge */}
-                {position === "now" && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-cyan-400 px-4 py-2 rounded-full text-xs font-bold shadow-lg animate-bounce-subtle">
+                {/* {position === "now" && (
+                  <div className="absolute -top-2 md:-top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-cyan-400 px-2 md:px-4 py-1 md:py-2 rounded-full text-xs font-bold shadow-lg animate-bounce-subtle">
                     {selectedCategory === "Turbo" ? "TURBOPROP" : "JET"} CLASS
                   </div>
-                )}
+                )} */}
               </div>
             );
           })}
@@ -323,89 +323,89 @@ const FleetPage: React.FC = () => {
           {/* Navigation Arrows */}
           <button
             onClick={goToPrev}
-            className="absolute left-1 md:left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-full p-3 transition-all duration-300 hover:scale-125 z-30"
+            className="absolute left-1 md:left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-full p-2 md:p-3 transition-all duration-300 hover:scale-125 z-30"
             disabled={isAnimating}
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={16} className="md:w-5 md:h-5" />
           </button>
           <button
             onClick={goToNext}
-            className="absolute right-1 md:right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-full p-3 transition-all duration-300 hover:scale-125 z-30"
+            className="absolute right-1 md:right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-full p-2 md:p-3 transition-all duration-300 hover:scale-125 z-30"
             disabled={isAnimating}
           >
-            <ChevronRight size={20} />
+            <ChevronRight size={16} className="md:w-5 md:h-5" />
           </button>
         </div>
 
         {/* Progress Dots */}
-        <div className="flex justify-center mb-8 space-x-2">
+        <div className="flex justify-center mb-4 md:mb-6 space-x-1 md:space-x-2">
           {cardData.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`h-2 rounded-full transition-all duration-500 hover:scale-125 ${index === currentIndex
-                  ? 'bg-gradient-to-r from-blue-400 to-cyan-300 w-8 animate-glow'
-                  : 'bg-gray-600 hover:bg-gray-400 w-2'
+              className={`h-1.5 md:h-2 rounded-full transition-all duration-500 hover:scale-125 ${index === currentIndex
+                  ? 'bg-gradient-to-r from-blue-400 to-cyan-300 w-6 md:w-8 animate-glow'
+                  : 'bg-gray-600 hover:bg-gray-400 w-1.5 md:w-2'
                 }`}
             />
           ))}
         </div>
 
         {/* Aircraft Details */}
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto text-center px-2 md:px-4">
           {/* Stats Grid */}
-          <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 transition-all duration-400 transform ease-out ${textAnimating ? "translate-y-5 opacity-0" : "translate-y-0 opacity-100"}`}>
-            <div className="bg-black/30 backdrop-blur-sm rounded-xl p-4 border border-blue-500/20 hover:border-blue-400/40 transition-all duration-300 hover:scale-105">
-              <div className="flex items-center justify-center mb-2">
-                <Users className="w-6 h-6 text-blue-400 mr-2" />
-                <p className="text-blue-400 font-semibold">Seats</p>
+          <div className={`grid grid-cols-3 gap-2 md:gap-4 mb-4 md:mb-6 transition-all duration-400 transform ease-out ${textAnimating ? "translate-y-5 opacity-0" : "translate-y-0 opacity-100"}`}>
+            <div className="bg-black/30 backdrop-blur-sm rounded-lg md:rounded-xl p-2 md:p-4 border border-blue-500/20 hover:border-blue-400/40 transition-all duration-300 hover:scale-105">
+              <div className="flex flex-col md:flex-row items-center justify-center mb-1 md:mb-2">
+                <Users className="w-4 h-4 md:w-6 md:h-6 text-blue-400 md:mr-2" />
+                <p className="text-blue-400 font-semibold text-xs md:text-sm">Seats</p>
               </div>
-              <p className="text-2xl font-bold">{currentAircraft?.seats}</p>
+              <p className="text-sm md:text-2xl font-bold">{currentAircraft?.seats}</p>
             </div>
 
-            <div className="bg-black/30 backdrop-blur-sm rounded-xl p-4 border border-blue-500/20 hover:border-blue-400/40 transition-all duration-300 hover:scale-105">
-              <div className="flex items-center justify-center mb-2">
-                <MapPin className="w-6 h-6 text-blue-400 mr-2" />
-                <p className="text-blue-400 font-semibold">Range</p>
+            <div className="bg-black/30 backdrop-blur-sm rounded-lg md:rounded-xl p-2 md:p-4 border border-blue-500/20 hover:border-blue-400/40 transition-all duration-300 hover:scale-105">
+              <div className="flex flex-col md:flex-row items-center justify-center mb-1 md:mb-2">
+                <MapPin className="w-4 h-4 md:w-6 md:h-6 text-blue-400 md:mr-2" />
+                <p className="text-blue-400 font-semibold text-xs md:text-sm">Range</p>
               </div>
-              <p className="text-2xl font-bold">{currentAircraft?.range}</p>
+              <p className="text-sm md:text-2xl font-bold">{currentAircraft?.range}</p>
             </div>
 
-            <div className="bg-black/30 backdrop-blur-sm rounded-xl p-4 border border-blue-500/20 hover:border-blue-400/40 transition-all duration-300 hover:scale-105">
-              <div className="flex items-center justify-center mb-2">
-                <Plane className="w-6 h-6 text-blue-400 mr-2" />
-                <p className="text-blue-400 font-semibold">Speed</p>
+            <div className="bg-black/30 backdrop-blur-sm rounded-lg md:rounded-xl p-2 md:p-4 border border-blue-500/20 hover:border-blue-400/40 transition-all duration-300 hover:scale-105">
+              <div className="flex flex-col md:flex-row items-center justify-center mb-1 md:mb-2">
+                <Plane className="w-4 h-4 md:w-6 md:h-6 text-blue-400 md:mr-2" />
+                <p className="text-blue-400 font-semibold text-xs md:text-sm">Speed</p>
               </div>
-              <p className="text-2xl font-bold">{currentAircraft?.speed}</p>
+              <p className="text-sm md:text-2xl font-bold">{currentAircraft?.speed}</p>
             </div>
           </div>
 
           {/* Performance Details */}
-          <div className={`bg-gradient-to-r from-blue-900/30 to-slate-900/30 rounded-2xl p-6 border border-blue-500/20 backdrop-blur-sm mb-6 transition-all duration-400 transform ease-out hover:shadow-lg hover:shadow-blue-500/10 ${textAnimating ? "translate-y-5 opacity-0" : "translate-y-0 opacity-100"}`}>
-            <h3 className="text-xl font-bold text-blue-400 mb-4">Performance Specifications</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-base">
+          <div className={`bg-gradient-to-r from-blue-900/30 to-slate-900/30 rounded-xl md:rounded-2xl p-3 md:p-6 border border-blue-500/20 backdrop-blur-sm mb-4 md:mb-6 transition-all duration-400 transform ease-out hover:shadow-lg hover:shadow-blue-500/10 ${textAnimating ? "translate-y-5 opacity-0" : "translate-y-0 opacity-100"}`}>
+            <h3 className="text-sm md:text-xl font-bold text-blue-400 mb-2 md:mb-4">Performance Specifications</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4 text-xs md:text-base">
               <div>
                 <span className="text-gray-300">Top Speed:</span>
-                <p className="font-bold text-white text-lg">{currentAircraft?.speed}</p>
+                <p className="font-bold text-white text-sm md:text-lg">{currentAircraft?.speed}</p>
               </div>
               <div>
                 <span className="text-gray-300">Service Ceiling:</span>
-                <p className="font-bold text-white text-lg">{currentAircraft?.altitude}</p>
+                <p className="font-bold text-white text-sm md:text-lg">{currentAircraft?.altitude}</p>
               </div>
               <div>
                 <span className="text-gray-300">Maximum Range:</span>
-                <p className="font-bold text-white text-lg">{currentAircraft?.range}</p>
+                <p className="font-bold text-white text-sm md:text-lg">{currentAircraft?.range}</p>
               </div>
             </div>
           </div>
 
           {/* Call to Action Buttons */}
-          <div className={`space-y-3 transition-all duration-400 transform ease-out ${textAnimating ? "translate-y-5 opacity-0" : "translate-y-0 opacity-100"}`}>
-            <button className="w-full md:w-auto bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white font-bold py-3 px-8 rounded-xl text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+          <div className={`space-y-2 md:space-y-3 transition-all duration-400 transform ease-out ${textAnimating ? "translate-y-5 opacity-0" : "translate-y-0 opacity-100"}`}>
+            <button className="w-full md:w-auto bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white font-bold py-2 md:py-3 px-4 md:px-8 rounded-lg md:rounded-xl text-sm md:text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
               View Details - {currentAircraft?.aircraftName}
             </button>
             <div className="md:ml-3 md:inline-block">
-              <button className="w-full md:w-auto bg-transparent border-2 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white font-bold py-3 px-8 rounded-xl text-lg transition-all duration-300 hover:scale-105">
+              <button className="w-full md:w-auto bg-transparent border-2 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white font-bold py-2 md:py-3 px-4 md:px-8 rounded-lg md:rounded-xl text-sm md:text-lg transition-all duration-300 hover:scale-105">
                 Request Charter Quote
               </button>
             </div>
