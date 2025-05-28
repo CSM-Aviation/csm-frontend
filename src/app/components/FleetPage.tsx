@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, TouchEvent } from "react";
 import { ChevronLeft, ChevronRight, Users, MapPin, Plane, Loader2 } from 'lucide-react';
 
 // Aircraft data interfaces
@@ -19,6 +19,13 @@ const FleetPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [textAnimating, setTextAnimating] = useState(false);
   const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Touch handling state
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  
+  // Minimum swipe distance (in px)
+  const minSwipeDistance = 50;
 
   // Fleet data - replace with your actual aircraft data
   const turboFleet: CardData[] = [
@@ -164,6 +171,34 @@ const FleetPage: React.FC = () => {
     });
   };
 
+  // Touch event handlers
+  const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
+    setTouchStart(e.targetTouches[0].clientX);
+    setTouchEnd(null);
+  };
+
+  const handleTouchMove = (e: TouchEvent<HTMLDivElement>) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe && !isAnimating) {
+      goToNext();
+    } else if (isRightSwipe && !isAnimating) {
+      goToPrev();
+    }
+    
+    // Reset values
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
+
   // Component loading animation
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -283,7 +318,12 @@ const FleetPage: React.FC = () => {
         </div>
 
         {/* Carousel Container */}
-        <div className="relative h-48 md:h-64 lg:h-80 mb-4 md:mb-6">
+        <div 
+          className="relative h-48 md:h-64 lg:h-80 mb-4 md:mb-6"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           {/* Aircraft Slides */}
           {cardData.map((item, index) => {
             const position = getSlidePosition(index);
