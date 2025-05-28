@@ -183,8 +183,6 @@ const Carousel: React.FC = () => {
     });
   }, [positions]);
 
-  // Find the current active card data
-
   return (
     <main className="min-h-screen bg-white flex flex-col items-center justify-center py-8 lg:py-12">
       <h1 className="text-[#143D4F] text-4xl md:text-7xl text-center font-bold">Our Services</h1>
@@ -208,9 +206,12 @@ const Carousel: React.FC = () => {
                 {/* Black overlay with transparency */}
                 <div className="absolute inset-0 bg-black bg-opacity-50 rounded-2xl"></div>
               </div>
-              <div className="relative z-10">
-                <h1 className="text-center text-[1.3rem] md:text-[3rem] text-white mb-1 md:mb-2 leading-7">{card.label}</h1>
-                <p className="text-[10px] md:text-sm lg:text-base text-center font-normal text-white">
+              <div className="relative z-10 md:flex md:flex-col md:justify-center md:h-full">
+                {/* Keep original sizing for mobile/tablet, only fix larger screens */}
+                <h1 className="text-center text-[1.3rem] md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl text-white mb-1 md:mb-4 leading-7 md:leading-tight font-bold md:px-2">
+                  {card.label}
+                </h1>
+                <p className="text-[10px] md:text-base lg:text-lg text-center font-normal text-white md:px-2 md:leading-relaxed">
                   {card.text}
                 </p>
               </div>
