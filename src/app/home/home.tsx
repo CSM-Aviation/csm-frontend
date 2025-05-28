@@ -128,7 +128,7 @@ export default function HomeBody() {
         />
         {/* <ServicesCards /> */}
         <AnimatedPlaneService2 />
-        <h1 className="text-[#143D4F] text-4xl md:text-7xl text-center font-bold mb-10">Our Fleet</h1>
+     
         <FleetPage />
         <div className="my-16"></div> {/* Added spacing between FleetPage and MaintManage */}
         <MaintManage />
