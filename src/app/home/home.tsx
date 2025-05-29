@@ -134,7 +134,7 @@ export default function HomeBody() {
         <div className="my-16"></div> {/* Added spacing between FleetPage and MaintManage */}
         <MaintManage />
         <PopularDestinations />
-        <Testimonials />
+        {/* <Testimonials /> */}
       </div>
     </>
   );
