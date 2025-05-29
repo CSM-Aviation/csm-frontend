@@ -1,13 +1,15 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from 'next/link';
 import Arrow from "../../../public/assets/aircrafts/arrow.svg";
+
 interface CardData {
   imageUrl: string;
   aircraftName: string;
   tail: string;
   seats: string;
-    range: string;
+  range: string;
 }
 
 const FleetMob = () => {
@@ -25,28 +27,28 @@ const FleetMob = () => {
       aircraftName: "King Air 200",
       tail: "N923AS",
       seats: "7+1",
-         range: "1450NM"
+      range: "1450NM"
     },
     {
       imageUrl: "/images/wheels_removed_fleet/30GT.png",
       aircraftName: "King Air F90",
       tail: "N30GT",
       seats: "6",
-         range: "1450NM"
+      range: "1450NM"
     },
     {
       imageUrl: "/images/wheels_removed_fleet/132N.png",
       aircraftName: "King Air B200",
       tail: "N132N",
       seats: "7+1",
-         range: "1400NM"
+      range: "1400NM"
     },
     {
       imageUrl: "/images/wheels_removed_fleet/177TA.png",
       aircraftName: "King Air B200GT",
       tail: "N177TA",
       seats: "7", 
-         range: "1450NM"
+      range: "1450NM"
     },
   ];
 
@@ -186,6 +188,8 @@ const FleetMob = () => {
     };
   }, [selectedCategory, currentFleet, isInitialLoad]);
 
+  // Get current aircraft for the View Details button
+  const currentAircraft = currentFleet[centeredCardIndex];
 
   return (
     <section className="min-h-screen flex flex-col lg:hidden justify-center items-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
@@ -275,36 +279,46 @@ const FleetMob = () => {
                   <li className="text-sm text-gray-300 italic">
                     Seats: {aircraft.seats}
                   </li>
-                    <li className="text-sm text-gray-300 italic">
+                  <li className="text-sm text-gray-300 italic">
                     Range: {aircraft.range}
                   </li>
-                 
                 </ul>
               </div>
             </div>
           ))}
         </div>
       </div>
-      <div className="flex mt-4 gap-4 items-center">
-  <Image 
-    onClick={handlePrevCard}  
-    src={Arrow} 
-    alt="Previous" 
-    className="rotate-180 w-[32px] h-[32px] cursor-pointer hover:opacity-80 transition-opacity"
-  />
-  <button className="md:w-auto bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white font-bold py-2 md:py-3 px-4 md:px-8 rounded-lg md:rounded-xl text-sm md:text-lg hover:shadow-2xl">
-    {centeredCardIndex !== null
-      ? `View Details - ${currentFleet[centeredCardIndex].aircraftName}`
-      : "View Details -"}
-  </button>
-  <Image 
-    onClick={handleNextCard}  
-    src={Arrow} 
-    alt="Previous" 
-    className="rotate-1 w-[32px] h-[32px] cursor-pointer hover:opacity-80 transition-opacity"
-  />
 
-</div>
+      {/* Navigation Controls with View Details Button */}
+      <div className="flex mt-4 gap-4 items-center">
+        <Image 
+          onClick={handlePrevCard}  
+          src={Arrow} 
+          alt="Previous" 
+          className="rotate-180 w-[32px] h-[32px] cursor-pointer hover:opacity-80 transition-opacity"
+        />
+        
+        {/* View Details Button with Navigation */}
+        {currentAircraft && (
+          <Link
+            href={{
+              pathname: `/charter/fleet/${currentAircraft.tail}`,
+              query: { model: currentAircraft.aircraftName },
+            }}
+          >
+            <button className="md:w-auto bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white font-bold py-2 md:py-3 px-4 md:px-8 rounded-lg md:rounded-xl text-sm md:text-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+              View Details - {currentAircraft.aircraftName}
+            </button>
+          </Link>
+        )}
+        
+        <Image 
+          onClick={handleNextCard}  
+          src={Arrow} 
+          alt="Next" 
+          className="rotate-0 w-[32px] h-[32px] cursor-pointer hover:opacity-80 transition-opacity"
+        />
+      </div>
     </section>
   );
 };
