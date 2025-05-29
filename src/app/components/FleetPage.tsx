@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, TouchEvent } from "react";
 import { ChevronLeft, ChevronRight, Users, MapPin, Plane, Loader2 } from 'lucide-react';
+import Link from 'next/link';
 
 // Aircraft data interfaces
 interface CardData {
@@ -439,15 +440,22 @@ const FleetPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Call to Action Buttons */}
+        {/* Call to Action Buttons with Navigation */}
           <div className={`space-y-2 md:space-y-3 transition-all duration-400 transform ease-out ${textAnimating ? "translate-y-5 opacity-0" : "translate-y-0 opacity-100"}`}>
-            <button className="w-full md:w-auto bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white font-bold py-2 md:py-3 px-4 md:px-8 rounded-lg md:rounded-xl text-sm md:text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
-              View Details - {currentAircraft?.aircraftName}
-            </button>
-            <div className="md:ml-3 md:inline-block">
-              <button className="w-full md:w-auto bg-transparent border-2 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white font-bold py-2 md:py-3 px-4 md:px-8 rounded-lg md:rounded-xl text-sm md:text-lg transition-all duration-300 hover:scale-105">
-                Request Charter Quote
+            <Link
+              href={{
+                pathname: `/charter/fleet/${currentAircraft?.tail}`,
+                query: { model: currentAircraft?.aircraftName },
+              }}
+            >
+              <button className="w-full md:w-auto bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white font-bold py-2 md:py-3 px-4 md:px-8 rounded-lg md:rounded-xl text-sm md:text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+                View Details - {currentAircraft?.aircraftName}
               </button>
+            </Link>
+            <div className="md:ml-3 md:inline-block">
+              {/* <button className="w-full md:w-auto bg-transparent border-2 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white font-bold py-2 md:py-3 px-4 md:px-8 rounded-lg md:rounded-xl text-sm md:text-lg transition-all duration-300 hover:scale-105">
+                Request Charter Quote
+              </button> */}
             </div>
           </div>
         </div>
