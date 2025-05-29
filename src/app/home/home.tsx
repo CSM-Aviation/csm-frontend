@@ -10,6 +10,7 @@ import Testimonials from '../components/Testimonials';
 import AnimatedCSMVideoText from '../components/Hero';
 import AnimatedPlaneService2 from '../components/AnimatedPlaneService2';
 import FleetPage from '../components/FleetPage';
+import MobileFleet from '../components/MobileFleet';
 
 
 export default function HomeBody() {
@@ -128,7 +129,7 @@ export default function HomeBody() {
         />
         {/* <ServicesCards /> */}
         <AnimatedPlaneService2 />
-     
+        <MobileFleet />
         <FleetPage />
         <div className="my-16"></div> {/* Added spacing between FleetPage and MaintManage */}
         <MaintManage />

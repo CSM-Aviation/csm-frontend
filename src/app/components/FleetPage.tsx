@@ -254,7 +254,7 @@ const FleetPage: React.FC = () => {
   }
 
   return (
-    <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white overflow-hidden min-h-screen flex flex-col">
+    <section className=" hidden lg:flex relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white overflow-hidden min-h-screen  flex-col">
       {/* Animated Background */}
       <div className="absolute inset-0">
         {/* Floating particles */}
