@@ -59,7 +59,7 @@ const QuoteContent: React.FC = () => {
         </div>
       </div>
 
-      <div ref={tuvoliWidgetRef} className='py-20 bg-white'>
+      {/* <div ref={tuvoliWidgetRef} className='py-20 bg-white'>
         <div className='container mx-auto px-4'>
           <h2 className='text-center text-4xl mb-4'>INSTANT CHARTER QUOTE</h2>
           <p className='text-center text-xl mb-10'>
@@ -67,7 +67,7 @@ const QuoteContent: React.FC = () => {
           </p>
           <TuvoliWidget />
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

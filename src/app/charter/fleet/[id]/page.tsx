@@ -269,7 +269,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
         <p>{aircraftDetails.description}</p>
       </div>
 
-      <div ref={tuvoliWidgetRef} className='mt-20 py-20 bg-gray-200'>
+      {/* <div ref={tuvoliWidgetRef} className='mt-20 py-20 bg-gray-200'>
         <div className='container mx-auto px-4'>
           <h2 className='text-center text-4xl mb-4'>INSTANT CHARTER QUOTE</h2>
           <p className='text-center text-xl mb-10'>
@@ -277,7 +277,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
           </p>
           <TuvoliWidget />
         </div>
-      </div>
+      </div> */}
 
       {/* More JSX here... */}
       {isFullScreen && (

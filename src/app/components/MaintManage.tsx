@@ -22,8 +22,6 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, image, content, link }
                 <Image
                     src={image}
                     alt={title}
-                    layout="fill"
-                    objectFit="cover"
                     fill
                     style={{ objectFit: "cover" }}
                     className="transition-transform duration-500 ease-in-out group-hover:scale-110"

@@ -3,9 +3,9 @@ import React, { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import "./Carousel.css";
 import Image from "next/image";
-import Aviation from "../../../public/images/service/services.jpg";
-import Aviation2 from "../../../public/images/service/medical.png";
-import Aviation3 from "../../../public/images/service/Aviation.jpg";
+// import Aviation from "../../../public/images/service/services.jpg";
+// import Aviation2 from "../../../public/images/service/medical.png";
+// import Aviation3 from "../../../public/images/service/Aviation.jpg";
 
 const Carousel: React.FC = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -19,17 +19,17 @@ const Carousel: React.FC = () => {
     {
       label: "Direct Charter to Public",
       text: "Located in Central California, we are positioned well to depart from all Northern and Southern California airport locations, including Las Vegas and Reno, Nevada. We offer the Luxury Travel Experience, with safety and overall trip experience as our primary focus.",
-      image: Aviation,
+      image: "/images/service/Aviation.jpg",
     },
     {
       label: "Medical Charter",
       text: "We are proud to provide medavac air charter service to the Organ Donor community; providing On-Demand Air Medical Transportation services for over ten years with a perfect safety record.",
-      image: Aviation2,
+      image: "/images/service/medical.png",
     },
     {
       label: "Wholesale - Jet Brokers",
       text: "24/7 Responsive Air Charter service, providing air charter solutions. From intake to booking to wheels down and final ground transportation; constant communication and transparency every step of the way is our standard routine.",
-      image: Aviation3,
+      image: "/images/service/services.jpg",
     },
   ];
 
@@ -202,6 +202,8 @@ const Carousel: React.FC = () => {
                   className="w-full h-full object-cover rounded-2xl"
                   src={card.image}
                   alt=""
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
                 {/* Black overlay with transparency */}
                 <div className="absolute inset-0 bg-black bg-opacity-50 rounded-2xl"></div>
