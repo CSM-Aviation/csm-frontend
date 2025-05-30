@@ -113,7 +113,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
 
   return (
     <div className="container mx-auto mt-10 text-black p-5">
-      <p className="text-5xl max-md:text-3xl md:mt-10 text-center mb-6">
+      <p className="text-5xl max-md:text-3xl max-md:mt-10 mt-24 text-center mb-6">
         {aircraftDetails.registration} - {aircraftDetails.aircraftName}
       </p>
       <div className="flex px-10   flex-col md:flex-row gap-10">
@@ -238,7 +238,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
         {/* Cabin Configuration */}
 
         <div className="lg:w-1/2 lg:mr-10">
-          <h3 className="text-2xl font-bold mb-4">Cabin Configuration</h3>
+          <h3 className="text-2xl mt-10 md:mt-0 font-bold mb-4">Cabin Configuration</h3>
           <div className='w-full mt-5 h-1 bg-black'></div>
           <div className="flex justify-center">
             {configurationImageUrl ? (

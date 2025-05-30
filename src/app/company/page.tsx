@@ -27,8 +27,9 @@ const Company = () => {
         style={{
           backgroundImage: "url(/images/contactus/contactusdesktop.jpg)",
           backgroundRepeat: "no-repeat",
-          backgroundSize: "100% auto", // Shows the image at its full width
+          backgroundSize: "cover",
           backgroundPosition: "center",
+        
         }}
         className="w-screen  min-h-[87.3vh] flex items-center justify-center relative"
       >
@@ -65,14 +66,15 @@ const Company = () => {
             </div>
 
             {/* Image Block */}
-           <div className="md:w-1/2 p-4">
-              <div className="h-64 w-full relative">
+           <div className="w-full md:w-1/2 p-4">
+              <div className=" w-full relative rounded-lg overflow-hidden">
                 <Image
                   src={service.img}
                   alt={service.heading}
-                  layout="fill"
+                  width={500}
+                  height={500}
                   objectFit="cover"
-                  className="rounded-lg"
+                
                 />
               </div>
             </div>

@@ -72,14 +72,14 @@ const Charter = () => {
             </div>
 
             {/* Image Block */}
-            <div className="md:w-1/2 p-4">
-              <div className="h-64 w-full relative rounded-lg overflow-hidden">
+            <div className="w-full md:w-1/2 p-4 ">
+              <div className="w-full relative rounded-lg overflow-hidden">
                 <Image
                   src={service.img}
                   alt={service.name}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  style={{ objectFit: "cover" }}
+                  width={500}
+                  height={500}
+                  
                 />
               </div>
             </div>
