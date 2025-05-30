@@ -18,19 +18,19 @@ async function getData(): Promise<SeoData> {
     return response.data;
   } catch (error) {
     console.error('Error fetching SEO data:', error);
-    return {
-      title: 'CSM Aviation',
-      description: 'Luxury air travel services',
-      keywords: ['private jet', 'charter'],
-      ogImage: '/images/default.jpg',
-      canonicalUrl: 'https://www.csmaviation.com',
-      robots: 'index, follow',
-      author: 'CSM Aviation',
-      language: 'en',
-      siteName: 'CSM Aviation',
-      type: 'website',
-      twitterHandle: '@CSMAviation',
-    };
+   return {
+  title: 'CSM Aviation',
+  description: 'Luxury air travel services',
+  keywords: ['private jet', 'charter'],
+  ogImage: '/images/service/Aviation.jpg', // Change this line
+  canonicalUrl: 'https://www.csmaviation.com',
+  robots: 'index, follow',
+  author: 'CSM Aviation',
+  language: 'en',
+  siteName: 'CSM Aviation',
+  type: 'website',
+  twitterHandle: '@CSMAviation',
+};
   }
 }
 
