@@ -16,7 +16,7 @@ const Company = () => {
       name: "Get in Touch",
       link: "/company/contact",
       para: "Have questions or ready to connect? Reach out to us through our contact page. We're here to assist you with prompt and professional support.",
-      img: "/images/contactus/contactus.jpg", // Placeholder image for Contact
+      img: "/images/contactus/contactus.png", // Placeholder image for Contact
     },
   ];
 
