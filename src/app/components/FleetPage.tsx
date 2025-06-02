@@ -106,7 +106,7 @@ const FleetPage: React.FC = () => {
       altitude: "45,000 ft"
     },
     {
-      imageUrl: "/images/wheels_removed_fleet/N518KH.png",
+      imageUrl: "/images/wheels_removed_fleet/561CC.png",
       aircraftName: "Cessna Citation CE560 Ultra",
       tail: "561CC",
       seats: "7+1",
