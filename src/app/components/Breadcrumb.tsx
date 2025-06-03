@@ -14,6 +14,7 @@ const Breadcrumb: React.FC = () => {
   // Check if current page should have white text
   const doWhite =
     pathname.includes("newyear") ||
+    pathname.includes("donornetworkwest") ||
     pathname === "/charter/fleet" ||
     pathname.includes("management") ||
     pathname === "charter" ||
