@@ -158,3 +158,53 @@ body {
     background-repeat: repeat;
   }
 }
+#fleetdetails{
+  background-image:  url('/images/skybackground.jpeg');
+  background-size: cover;
+  background-position: start;
+  background-repeat: no-repeat;
+}
+#fleetdetailsd{
+  background-image: linear-gradient(to bottom, rgba(0, 1, 33, 0.755) 10%, transparent 50%), url('/images/skybackground.jpg');
+  background-size: cover;
+  background-position: start;
+  background-repeat: no-repeat;
+}
+
+.shiny-button {
+  background: linear-gradient(135deg, #002d2f, #0270d1);
+  border-radius: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.shiny-button::before {
+  content: '';
+  position: absolute;
+  border: none;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 60%);
+  transform: rotate(45deg);
+  animation: shine 2s infinite linear;
+}
+
+@keyframes shine {
+  0% {
+    transform: translate(-100%, -100%) rotate(45deg);
+  }
+  100% {
+    transform: translate(100%, 100%) rotate(45deg);
+  }
+}
+
+.shiny-button:hover {
+  box-shadow: 0 6px 20px rgba(0, 242, 254, 0.6);
+  transform: translateY(-2px);
+}

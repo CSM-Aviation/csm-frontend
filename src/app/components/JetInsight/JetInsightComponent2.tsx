@@ -44,7 +44,7 @@ const JetInsightComponent: React.FC = () => {
         <button
           ref={buttonRef}
           id="jetinsight-embedded-request-open-button"
-          className={styles.jetinsightEmbeddedRequestButton}
+          className={`shiny-button px-6 py-4 max-sm:p-3 max-sm:rounded-md text-white`}
         >
            REQUEST QUOTE
         </button>
