@@ -78,8 +78,7 @@ const Charter = () => {
                   src={service.img}
                   alt={service.name}
                   width={500}
-                  height={500}
-                  
+                  height={500}  
                 />
               </div>
             </div>
