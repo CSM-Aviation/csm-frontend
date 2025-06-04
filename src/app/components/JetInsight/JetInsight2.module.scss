@@ -28,7 +28,7 @@
   position: relative !important;
   text-align: left !important;
   text-decoration: none !important;
-  transition: box-shadow 0.15s, transform 0.15s !important;
+  transition: all 0.3s ease !important;
   user-select: none !important;
   -webkit-user-select: none !important;
   touch-action: manipulation !important;
@@ -37,19 +37,87 @@
   font-size: 18px !important;
 
   &:hover {
-    background-color: #ffffff;
-    color: #23b2ee;
-    box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
-      rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset !important;
-    transform: translateY(-5px) !important;
+    background-color: #ffffff !important;
+    color: #23b2ee !important;
+    transform: translateY(-5px) scale(1.05) !important;
+    box-shadow: 0 10px 25px rgba(35, 178, 238, 0.3) !important;
 
     svg {
-      transform: translateX(8px);
+      transform: translateX(8px) scale(1.2) !important;
+      animation: iconBounce 0.6s ease-in-out !important;
+    }
+
+    // Add a subtle pulse effect for all buttons
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(35, 178, 238, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      animation: pulseEffect 0.6s ease-out;
     }
   }
 
   svg {
-    transition: transform 0.3s ease-in-out;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+  }
+
+  // Nested anchor tag styling for call button
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+// Special styling for Call Now button
+.callNowButton {
+  position: relative !important;
+  overflow: hidden !important;
+
+  &:hover {
+    .phoneIcon {
+      transform: rotate(15deg) scale(1.2) !important;
+      animation: phoneRing 0.6s ease-in-out !important;
+    }
+  }
+
+  .phoneIcon {
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+  }
+}
+
+// Keyframe animations
+@keyframes phoneRing {
+  0%, 100% { transform: rotate(15deg) scale(1.2); }
+  25% { transform: rotate(25deg) scale(1.3); }
+  75% { transform: rotate(5deg) scale(1.1); }
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateX(8px) scale(1.2); }
+  25% { transform: translateX(12px) scale(1.3); }
+  75% { transform: translateX(4px) scale(1.1); }
+}
+
+@keyframes pulseEffect {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.7;
+  }
+  100% {
+    width: 100px;
+    height: 100px;
+    opacity: 0;
   }
 }
 

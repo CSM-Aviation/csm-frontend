@@ -3,9 +3,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import "./Carousel.css";
 import Image from "next/image";
-// import Aviation from "../../../public/images/service/services.jpg";
-// import Aviation2 from "../../../public/images/service/medical.png";
-// import Aviation3 from "../../../public/images/service/Aviation.jpg";
+import { useRouter } from "next/navigation";
 
 const Carousel: React.FC = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -13,6 +11,7 @@ const Carousel: React.FC = () => {
   const [positions, setPositions] = useState(["left", "center", "right"]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const isAnimating = useRef(false);
+  const router = useRouter();
 
   // Card content data
   const cardData = [
@@ -20,16 +19,19 @@ const Carousel: React.FC = () => {
       label: "Direct Charter to Public",
       text: "Located in Central California, we are positioned well to depart from all Northern and Southern California airport locations, including Las Vegas and Reno, Nevada. We offer the Luxury Travel Experience, with safety and overall trip experience as our primary focus.",
       image: "/images/service/Aviation.jpg",
+      redirectUrl: null,
     },
     {
       label: "Medical Charter",
       text: "We are proud to provide medavac air charter service to the Organ Donor community; providing On-Demand Air Medical Transportation services for over ten years with a perfect safety record.",
       image: "/images/service/medical.png",
+      redirectUrl: "/donornetworkwest",
     },
     {
       label: "Wholesale - Jet Brokers",
       text: "24/7 Responsive Air Charter service, providing air charter solutions. From intake to booking to wheels down and final ground transportation; constant communication and transparency every step of the way is our standard routine.",
       image: "/images/service/services.jpg",
+      redirectUrl: null,
     },
   ];
 
@@ -109,7 +111,13 @@ const Carousel: React.FC = () => {
 
   const handleItemClick = (index: number) => {
     const position = positions[index];
-    if (position !== "center") {
+    const card = cardData[index];
+    
+    if (position === "center" && card.redirectUrl) {
+      // If the card is centered and has a redirect URL, navigate to it
+      router.push(card.redirectUrl);
+    } else if (position !== "center") {
+      // If not centered, bring it to center
       animateCarousel("toCenter", index);
     }
   };
@@ -191,7 +199,11 @@ const Carousel: React.FC = () => {
           {cardData.map((card, index) => (
             <div
               key={index}
-              className="item p-6 md:p-10 relative overflow-hidden"
+              className={`item p-6 md:p-10 relative overflow-hidden cursor-pointer ${
+                positions[index] === "center" && card.redirectUrl 
+                  ? "hover:scale-105 transition-transform duration-200" 
+                  : ""
+              }`}
               ref={(el: HTMLDivElement | null) => {
                 itemsRef.current[index] = el;
               }}
@@ -217,6 +229,24 @@ const Carousel: React.FC = () => {
                   {card.text}
                 </p>
               </div>
+              {/* Optional: Add a visual indicator for clickable cards when centered */}
+              {positions[index] === "center" && card.redirectUrl && (
+                <div className="absolute bottom-4 right-4 bg-white bg-opacity-20 rounded-full p-2">
+                  <svg 
+                    className="w-4 h-4 text-white" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth={2} 
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" 
+                    />
+                  </svg>
+                </div>
+              )}
             </div>
           ))}
         </div>
