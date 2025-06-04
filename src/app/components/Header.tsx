@@ -122,16 +122,15 @@ const Header: React.FC = () => {
       } ${visible ? "translate-y-0" : "-translate-y-full"}`}
       style={{ backgroundColor: transparent ? "transparent" : "#002040" }}
     >
-      <div className="w-full flex items-center justify-between px-5 py-3 lg:justify-between">
-        {/* Logo - centered on mobile, left-aligned on desktop */}
-        <div className="flex-1 flex justify-center lg:flex-none lg:justify-start relative z-50">
+      <div className="w-full flex items-center justify-between px-5 py-3">
+        <div className="relative z-50 max-md:left-1/2 max-md:-translate-x-[50%]">
           <Link href="/" className="">
             <Image
               src="/images/whitebgcsmlogo.png"
               alt="CSM Aviation"
-              className="w-20 h-20"
-              width={100}
-              height={100}
+              className="w-20 h-20" // Changed from w-40 h-40 to w-20 h-20
+              width={100} // Changed from 200 to 100
+              height={100} // Changed from 200 to 100
             />
           </Link>
         </div>
@@ -165,13 +164,18 @@ const Header: React.FC = () => {
           <JetInsightComponent />
         </div> */}
 
-        {/* Menu Toggle Button - positioned on the right */}
-        <div className="lg:hidden absolute right-5 top-1/2 transform -translate-y-1/2">
-          <HeaderMobileAccordion />
-        </div>
-        
-        {/* Desktop menu - hidden on mobile */}
-        <div className="hidden lg:block">
+        {/* Menu Toggle Button */}
+        {/* <button
+          className="text-gray-800 focus:outline-none"
+          onClick={toggleMobileMenu}
+        >
+          <FontAwesomeIcon
+            className="text-white"
+            icon={mobileMenuOpen ? faTimes : faBars}
+            size="lg"
+          />
+        </button> */}
+        <div>
           <HeaderMobileAccordion />
         </div>
       </div>
