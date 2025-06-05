@@ -38,12 +38,23 @@
     color: #002040 !important; // Dark blue text on hover
     transform: scale(1.05) !important; // Same scale as Call Now button
     box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3) !important; // Electric blue shadow
+    
+    // Arrow animation on hover
+    .buttonArrow {
+      transform: translateX(4px) !important;
+    }
   }
 
   &:focus {
     outline: none !important;
     box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.5) !important; // Blue focus ring
   }
+}
+
+// Arrow styling
+.buttonArrow {
+  transition: transform 0.3s ease !important;
+  margin-left: 8px !important;
 }
 
 .jetinsightEmbeddedRequestModal {
