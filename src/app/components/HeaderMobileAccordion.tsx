@@ -88,7 +88,7 @@ const HeaderMobileAccordion: React.FC = () => {
       >
         {/* Hamburger Button */}
         <button
-          className=" relative z-50 py-2"
+          className=" relative z-[70] py-2"
           onClick={toggleMenu}
           aria-label={isOpen ? "Close menu" : "Open menu"}
         >
@@ -120,7 +120,7 @@ const HeaderMobileAccordion: React.FC = () => {
         <AnimatePresence onExitComplete={() => setComplete(true)}>
           {isOpen && (
             <motion.div
-              className="fixed top-0 left-0 h-screen w-screen z-40 bg-[#D7DAE3] overflow-y-auto pt-24"
+              className="fixed top-0 left-0 h-screen w-screen z-[60] bg-[#D7DAE3] overflow-y-auto pt-24"
               initial={{ clipPath: "circle(0% at calc(100% - 2rem) 2rem)" }}
               animate={{ clipPath: "circle(150% at 2rem 2rem)" }}
               exit={{ clipPath: "circle(0% at calc(100% - 2rem) 2rem)" }}
