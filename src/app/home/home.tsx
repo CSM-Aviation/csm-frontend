@@ -128,8 +128,8 @@ export default function HomeBody() {
           videoSource={videoSource}
 
         />
-        {/* <ServicesCards /> */}
-        <AnimatedPlaneService2 />
+        <ServicesCards />
+        {/* <AnimatedPlaneService2 /> */}
         {/* <MobileFleet /> */}
         <FleetPageSec />
         <div className="my-8"></div> 
