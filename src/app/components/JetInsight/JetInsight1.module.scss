@@ -5,51 +5,45 @@
 .jetinsightEmbeddedRequestButton {
   align-items: center !important;
   appearance: none !important;
-  background-color: #23b2ee !important;
-  border-radius: 4px !important;
-  border-width: 0 !important;
-  // box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
-  //   rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #28282a 0 -3px 0 inset !important;
+  background-color: #23B2EE !important; // Electric blue color
+  border-radius: 6px !important; // Same as Call Now button (rounded-md = 6px)
+  border: none !important; // Removed white border
   box-sizing: border-box !important;
-  color: #010101 !important;
+  color: black !important; // Black text
   cursor: pointer !important;
   display: inline-flex !important;
   font-family: 'Playfair Display', serif !important;
-  font-weight: bolder;
-  height: 60px !important;
+  font-weight: 600 !important; // semibold equivalent
+  height: 48px !important; // Match Call Now button mobile height
   justify-content: center !important;
   line-height: 1 !important;
   list-style: none !important;
   overflow: hidden !important;
-  padding-left: 40px !important;
-  padding-right: 40px !important;
+  padding-left: 12px !important; // Reduced padding for mobile
+  padding-right: 12px !important;
   position: relative !important;
-  text-align: left !important;
+  text-align: center !important;
   text-decoration: none !important;
-  transition: box-shadow 0.15s, transform 0.15s !important;
+  transition: all 0.3s ease-in-out !important; // Same transition as Call Now
   user-select: none !important;
   -webkit-user-select: none !important;
   touch-action: manipulation !important;
   white-space: nowrap !important;
-  will-change: box-shadow, transform !important;
-  font-size: 18px !important;
-
-  // &:focus {
-  //   // box-shadow: #d6d6e7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
-  //   //   rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset !important;
-  // }
+  will-change: transform, background-color !important;
+  font-size: 12px !important; // Small font for mobile
+  width: 100% !important;
 
   &:hover {
-    box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
-      rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset !important;
-    transform: translateY(-5px) !important;
-    background-color: white !important;
+    background-color: white !important; // White background on hover
+    color: #002040 !important; // Dark blue text on hover
+    transform: scale(1.05) !important; // Same scale as Call Now button
+    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3) !important; // Electric blue shadow
   }
 
-  // &:active {
-  //   box-shadow: #d6d6e7 0 3px 7px inset !important;
-  //   transform: translateY(2px) !important;
-  // }
+  &:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.5) !important; // Blue focus ring
+  }
 }
 
 .jetinsightEmbeddedRequestModal {
@@ -64,7 +58,7 @@
   background: #fff;
   display: none;
   padding: 1px;
-  z-index: 99999;
+  z-index: 1000;
   margin: auto;
   border-radius: 0px;
   border: 1px solid darkgrey;
@@ -88,7 +82,7 @@
   padding: 6px 10px;
   cursor: pointer;
   font-weight: bold;
-
+  z-index: 1000;
   &:hover {
     background-color: #0aa3c3 !important;
   }
@@ -100,19 +94,36 @@
   border: none;
 }
 
-@media (max-width: 800px) {
+// Mobile-first responsive styles to match Call Now button heights
+@media (max-width: 640px) {
   .jetinsightEmbeddedRequestButton {
-    width: 80% !important;
-    height: 40px !important;
-    font-size: 16px !important;
-    margin-top: 10px !important;
+    height: 48px !important; // Match Call Now py-3
+    font-size: 12px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
   }
 }
 
-@media (max-width: 450px) {
+@media (min-width: 641px) {
   .jetinsightEmbeddedRequestButton {
-    width: 100% !important;
-    height: 35px !important;
-    font-size: 10px !important;
+    height: 48px !important; // Match Call Now sm:py-3
+    font-size: 14px !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .jetinsightEmbeddedRequestButton {
+    height: 64px !important; // Match Call Now md:py-4
+    font-size: 16px !important;
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .jetinsightEmbeddedRequestButton {
+    font-size: 18px !important;
   }
 }
