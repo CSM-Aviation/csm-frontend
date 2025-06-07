@@ -226,8 +226,8 @@ const FleetPageSec = () => {
       </div>
 
       {/* Category Toggle Buttons as Tabs */}
-      <div className="px-14 box-border mb-8">
-        <div className="flex justify-center border-b border-gray-300">
+      <div className="px-4 sm:px-8 md:px-14 box-border mb-8">
+        <div className="flex flex-row justify-center border-b border-gray-300">
           {/* <button 
           onClick={() => setActiveCategory("all")}
           className={`px-8 py-3 font-medium text-lg transition-all duration-300 ${
@@ -240,7 +240,7 @@ const FleetPageSec = () => {
         </button> */}
           <button
             onClick={() => setActiveCategory("turboprops")}
-            className={`px-10 py-4 font-medium text-4xl transition-all duration-300 ${activeCategory === "turboprops"
+            className={`px-2 sm:px-4 md:px-6 lg:px-10 py-2 sm:py-3 md:py-4 font-medium text-sm sm:text-lg md:text-2xl lg:text-4xl transition-all duration-300 ${activeCategory === "turboprops"
               ? "text-[#133d4f] border-b-3 border-[#133d4f] -mb-[1px]"
               : "text-gray-500 hover:text-gray-700"
               }`}
@@ -249,7 +249,7 @@ const FleetPageSec = () => {
           </button>
           <button
             onClick={() => setActiveCategory("lightjets")}
-            className={`px-10 py-4 font-medium text-4xl transition-all duration-300 ${activeCategory === "lightjets"
+            className={`px-2 sm:px-4 md:px-6 lg:px-10 py-2 sm:py-3 md:py-4 font-medium text-sm sm:text-lg md:text-2xl lg:text-4xl transition-all duration-300 ${activeCategory === "lightjets"
               ? "text-[#133d4f] border-b-3 border-[#133d4f] -mb-[1px]"
               : "text-gray-500 hover:text-gray-700"
               }`}
@@ -258,7 +258,7 @@ const FleetPageSec = () => {
           </button>
           <button
             onClick={() => setActiveCategory("midsize")}
-            className={`px-10 py-4 font-medium text-4xl transition-all duration-300 ${activeCategory === "midsize"
+            className={`px-2 sm:px-4 md:px-6 lg:px-10 py-2 sm:py-3 md:py-4 font-medium text-sm sm:text-lg md:text-2xl lg:text-4xl transition-all duration-300 ${activeCategory === "midsize"
               ? "text-[#133d4f] border-b-3 border-[#133d4f] -mb-[1px]"
               : "text-gray-500 hover:text-gray-700"
               }`}
