@@ -45,6 +45,7 @@ const JetInsightComponent: React.FC = () => {
           ref={buttonRef}
           id="jetinsight-embedded-request-open-button"
           className={styles.jetinsightEmbeddedRequestButton}
+          style={{ flex: '1 1 auto', width: '100%' }}
         >
            SCHEDULE TRIP
         </button>

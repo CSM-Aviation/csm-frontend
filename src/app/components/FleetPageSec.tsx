@@ -21,6 +21,7 @@ const FleetPageSec = () => {
   const [midSizeData, setMidSizeData] = useState<FleetItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string>("turboprops");
 
   const turboFleet: CardData[] = [
     {
@@ -99,8 +100,8 @@ const FleetPageSec = () => {
         altitude: "45,000 ft",
       },
       {
-        imageUrl: "/images/wheels_removed_fleet/N518KH.png",
-        aircraftName: "Cessna Citation CE560 Ultra",
+        imageUrl: "/images/wheels_removed_fleet/561CC.png",
+        aircraftName: "Citation Ultra",
         tail: "561CC",
         seats: "7+1",
         range: "1960NM",
@@ -183,7 +184,7 @@ const FleetPageSec = () => {
               <h3 className="text-xl font-semibold ">
                 {aircraft.aircraftName}
               </h3>
-              <p className="text-black">Tail Number: {aircraft.registration}</p>
+              {/* <p className="text-black">Tail Number: {aircraft.registration}</p> */}
              
             </div>
 
@@ -210,22 +211,63 @@ const FleetPageSec = () => {
 
   return (
     <>
-    <div className="px-14  box-border">
-        <h1 className="text-[#133d4f] text-7xl max-lg:text-6xl max-md:text-5xl max-sm:text-4xl  mb-12 font-bold text-center">Our Fleet</h1>
+    <div className="px-14 box-border">
+        <h1 className="text-[#133d4f] text-7xl max-lg:text-6xl max-md:text-5xl max-sm:text-4xl mb-12 font-bold text-center">Our Fleet</h1>
     </div>
-    <div className="px-14  box-border">
-      <h2 className="text-3xl max-sm:text-2xl font-bold my-6 text-black max-md:text-center">Turbo Props</h2>
-      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
-        {renderAircraftCards(turboPropData, turboFleet)}
+    
+    {/* Category Toggle Buttons as Tabs */}
+    <div className="px-14 box-border mb-8">
+      <div className="flex justify-center border-b border-gray-300">
+        {/* <button 
+          onClick={() => setActiveCategory("all")}
+          className={`px-8 py-3 font-medium text-lg transition-all duration-300 ${
+            activeCategory === "all" 
+              ? "text-[#133d4f] border-b-2 border-[#133d4f] -mb-[1px]" 
+              : "text-gray-500 hover:text-gray-700"
+          }`}
+        >
+          All Aircraft
+        </button> */}
+        <button 
+          onClick={() => setActiveCategory("turboprops")}
+          className={`px-10 py-4 font-medium text-4xl transition-all duration-300 ${
+            activeCategory === "turboprops" 
+              ? "text-[#133d4f] border-b-3 border-[#133d4f] -mb-[1px]" 
+              : "text-gray-500 hover:text-gray-700"
+          }`}
+        >
+          Turbo Props
+        </button>
+        <button 
+          onClick={() => setActiveCategory("midsize")}
+          className={`px-10 py-4 font-medium text-4xl transition-all duration-300 ${
+            activeCategory === "midsize" 
+              ? "text-[#133d4f] border-b-3 border-[#133d4f] -mb-[1px]" 
+              : "text-gray-500 hover:text-gray-700"
+          }`}
+        >
+          Midsize Jets
+        </button>
       </div>
     </div>
 
-    <div className="px-14 box-border mt-10">
-      <h2 className="text-3xl max-sm:text-2xl font-bold my-6 text-black max-md:text-center">Midsize Jets</h2>
-      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
-        {renderAircraftCards(midSizeData, midsizeFleet)}
+    {/* Turbo Props Section */}
+    {(activeCategory === "turboprops") && (
+      <div className="px-14 box-border">
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
+          {renderAircraftCards(turboPropData, turboFleet)}
+        </div>
       </div>
-    </div>
+    )}
+
+    {/* Midsize Jets Section */}
+    {(activeCategory === "midsize") && (
+      <div className="px-14 box-border mt-10">
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
+          {renderAircraftCards(midSizeData, midsizeFleet)}
+        </div>
+      </div>
+    )}
     </>
   );
 };

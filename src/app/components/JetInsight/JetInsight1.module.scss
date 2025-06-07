@@ -6,7 +6,7 @@
   align-items: center !important;
   appearance: none !important;
   background-color: #23B2EE !important; // Electric blue color
-  border-radius: 6px !important; // Same as Call Now button (rounded-md = 6px)
+  border-radius: 9999px !important; // Fully rounded like Twitter buttons
   border: none !important; // Removed white border
   box-sizing: border-box !important;
   color: black !important; // Black text
@@ -32,17 +32,81 @@
   will-change: transform, background-color !important;
   font-size: 12px !important; // Small font for mobile
   width: 100% !important;
+  max-width: 325px !important; // Match Call Now button width
+
+  // White ripple effect that moves left to right
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3) 30%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0.3) 70%,
+      transparent
+    );
+    transition: left 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 1;
+  }
 
   &:hover {
     background-color: white !important; // White background on hover
     color: #002040 !important; // Dark blue text on hover
     transform: scale(1.05) !important; // Same scale as Call Now button
     box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3) !important; // Electric blue shadow
+
+    &::before {
+      left: 100%;
+    }
+
+    svg {
+      transform: translateX(8px) scale(1.2) !important;
+      animation: iconBounce 0.6s ease-in-out !important;
+    }
+  }
+
+  // Trigger ripple on click/active
+  &:active,
+  &.rippleActive {
+    &::before {
+      transition: left 0.4s ease-out;
+      left: 100%;
+    }
   }
 
   &:focus {
     outline: none !important;
     box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.5) !important; // Blue focus ring
+  }
+
+  svg {
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+    position: relative;
+    z-index: 2;
+  }
+
+  // Button text and content should be above the ripple
+  span, div {
+    position: relative;
+    z-index: 2;
+  }
+
+  // Nested anchor tag styling for call button
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: relative;
+    z-index: 2;
   }
 }
 
@@ -110,6 +174,7 @@
     font-size: 14px !important;
     padding-left: 24px !important;
     padding-right: 24px !important;
+    max-width: 275px !important; // Match Call Now button sm width
   }
 }
 
@@ -119,11 +184,57 @@
     font-size: 16px !important;
     padding-left: 32px !important;
     padding-right: 32px !important;
+    max-width: 350px !important; // Match Call Now button md width
   }
 }
 
 @media (min-width: 1024px) {
   .jetinsightEmbeddedRequestButton {
     font-size: 18px !important;
+  }
+}
+
+// Manual ripple trigger class for programmatic activation
+.rippleClick {
+  &::before {
+    animation: manualRipple 1s ease-out;
+  }
+}
+
+// Keyframe animations
+@keyframes phoneRing {
+  0%, 100% { transform: rotate(15deg) scale(1.2); }
+  25% { transform: rotate(25deg) scale(1.3); }
+  75% { transform: rotate(5deg) scale(1.1); }
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateX(8px) scale(1.2); }
+  25% { transform: translateX(12px) scale(1.3); }
+  75% { transform: translateX(4px) scale(1.1); }
+}
+
+@keyframes manualRipple {
+  0% {
+    left: -100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4) 30%,
+      rgba(255, 255, 255, 0.6) 50%,
+      rgba(255, 255, 255, 0.4) 70%,
+      transparent
+    );
+  }
+  100% {
+    left: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2) 30%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0.2) 70%,
+      transparent
+    );
   }
 }

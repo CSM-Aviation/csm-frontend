@@ -12,6 +12,7 @@ import AnimatedPlaneService2 from '../components/AnimatedPlaneService2';
 import FleetPage from '../components/FleetPage';
 import MobileFleet from '../components/MobileFleet';
 import FleetPageSec from '../components/FleetPageSec';
+import HeroVideoSection from '../components/HeroVideoSection';
 
 
 export default function HomeBody() {
@@ -25,7 +26,7 @@ export default function HomeBody() {
   );
 
 
-  const videoSource = '/videos/compressed/CSM_desktop.mp4';
+  const videoSource = '/videos/compressed/CSM_Desktop.mp4';
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -124,10 +125,8 @@ export default function HomeBody() {
   return (
     <>
       <div className='-mt-24 md:-mt-20'>
-        <AnimatedCSMVideoText
-          videoSource={videoSource}
-
-        />
+        <AnimatedCSMVideoText videoSource={videoSource}/>
+        {/* <HeroVideoSection /> */}
         <ServicesCards />
         {/* <AnimatedPlaneService2 /> */}
         {/* <MobileFleet /> */}

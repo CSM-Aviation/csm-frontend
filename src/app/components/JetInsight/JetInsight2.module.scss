@@ -10,7 +10,7 @@
   align-items: center !important;
   appearance: none !important;
   background-color: #23b2ee !important;
-  border-radius: 4px !important;
+  border-radius: 33px !important;
   border-width: 0 !important;
   box-sizing: border-box !important;
   color: #010101 !important;
@@ -18,15 +18,16 @@
   display: inline-flex !important;
   font-family: 'Inter', sans-serif !important;
   font-weight: bolder;
-  height: 60px !important;
+  height: 65px !important;
+  width: 350px !important;
   justify-content: center !important;
   line-height: 1 !important;
   list-style: none !important;
   overflow: hidden !important;
-  padding-left: 40px !important;
-  padding-right: 40px !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
   position: relative !important;
-  text-align: left !important;
+  text-align: center !important;
   text-decoration: none !important;
   transition: all 0.3s ease !important;
   user-select: none !important;
@@ -36,34 +37,62 @@
   will-change: box-shadow, transform !important;
   font-size: 18px !important;
 
+  // White ripple effect that moves left to right
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3) 30%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0.3) 70%,
+      transparent
+    );
+    transition: left 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 1;
+  }
+
+  // Trigger ripple on hover
   &:hover {
     background-color: #ffffff !important;
     color: #23b2ee !important;
     transform: translateY(-5px) scale(1.05) !important;
     box-shadow: 0 10px 25px rgba(35, 178, 238, 0.3) !important;
 
+    &::before {
+      left: 100%;
+    }
+
     svg {
       transform: translateX(8px) scale(1.2) !important;
       animation: iconBounce 0.6s ease-in-out !important;
     }
+  }
 
-    // Add a subtle pulse effect for all buttons
+  // Trigger ripple on click/active
+  &:active,
+  &.rippleActive {
     &::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      background: rgba(35, 178, 238, 0.2);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      animation: pulseEffect 0.6s ease-out;
+      transition: left 0.4s ease-out;
+      left: 100%;
     }
   }
 
   svg {
     transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+    position: relative;
+    z-index: 2;
+  }
+
+  // Button text and content should be above the ripple
+  span, div {
+    position: relative;
+    z-index: 2;
   }
 
   // Nested anchor tag styling for call button
@@ -75,6 +104,8 @@
     justify-content: center !important;
     width: 100% !important;
     height: 100% !important;
+    position: relative;
+    z-index: 2;
   }
 }
 
@@ -95,6 +126,13 @@
   }
 }
 
+// Manual ripple trigger class for programmatic activation
+.rippleClick {
+  &::before {
+    animation: manualRipple 1s ease-out;
+  }
+}
+
 // Keyframe animations
 @keyframes phoneRing {
   0%, 100% { transform: rotate(15deg) scale(1.2); }
@@ -108,16 +146,28 @@
   75% { transform: translateX(4px) scale(1.1); }
 }
 
-@keyframes pulseEffect {
+@keyframes manualRipple {
   0% {
-    width: 0;
-    height: 0;
-    opacity: 0.7;
+    left: -100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4) 30%,
+      rgba(255, 255, 255, 0.6) 50%,
+      rgba(255, 255, 255, 0.4) 70%,
+      transparent
+    );
   }
   100% {
-    width: 100px;
-    height: 100px;
-    opacity: 0;
+    left: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2) 30%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0.2) 70%,
+      transparent
+    );
   }
 }
 

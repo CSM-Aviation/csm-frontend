@@ -20,7 +20,7 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
       setIsMobile(window.innerWidth < 768);
       setIsIOS(
         /iPad|iPhone|iPod/.test(navigator.userAgent) &&
-          !(window as any).MSStream
+        !(window as any).MSStream
       );
     };
 
@@ -163,7 +163,7 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
             >
               <source
                 src={
-                  !isMobile ? videoSource : '/videos/compressed/CSM_Mobile1.mp4'
+                  !isMobile ? videoSource : '/videos/compressed/CSM_Mobile.mp4'
                 }
                 type='video/mp4'
               />
@@ -171,29 +171,30 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
           )}
           {/* Dark overlay for better text visibility */}
         </div>
-        <div className='absolute md:bottom-[15%] bottom-[15%] left-0 right-0 text-black z-[1.5]'>
-          <div className='flex flex-col gap-10 md:gap-4 items-center justify-center w-full px-4'>
-            <div className='md:translate-y-0 text-white translate-y-4 text-sm md:text-lg lg:text-2xl font-bold tracking-wider'>
-              <p className='text-center'>ANYWHERE ANYTIME PRIVATE JET CHARTER</p>
+        <div className='absolute md:bottom-[15%] bottom-[10%] left-0 right-0 text-black z-[1.5]'>
+          <div className='flex flex-col gap-9 items-center justify-center w-full px-4'>
+            <div className='md:translate-y-0 text-white text-base md:text-xl lg:text-4xl font-bold tracking-wider'>
+              <p className='text-center'>24/7 Live Support - Global Reach - Private Jet Charter</p>
             </div>
-            
+
             {/* Button Container - Centered with controlled spacing */}
             <div className='flex flex-row gap-2 md:gap-4 items-center justify-center w-full max-w-xs sm:max-w-md md:max-w-lg'>
-              {/* JetInsight Component */}
-              <div className='flex-1'>
+              {/* JetInsight Component - Match width with Call Now button */}
+              <div className='flex-1' style={{ maxWidth: 'calc(50% - 0.25rem)', width: '100%' }}>
                 <JetInsightComponent />
               </div>
-              
+
               {/* Call Now Button */}
               <button
                 onClick={handleCallNow}
-                className='flex-1 px-3 py-3 sm:px-6 sm:py-3 md:px-8 md:py-4 bg-electric-blue text-black font-semibold text-xs sm:text-sm md:text-base lg:text-lg rounded-md hover:bg-white hover:text-[#002040] transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 h-12 sm:h-12 md:h-16'
+                className='flex-1 px-3 py-3 sm:px-6 sm:py-3 md:px-8 md:py-4 bg-electric-blue text-black font-semibold text-xs sm:text-sm md:text-base lg:text-lg rounded-full hover:bg-white hover:text-[#002040] transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 h-12 sm:h-12 md:h-16'
+                style={{ maxWidth: 'calc(50% - 0.25rem)', width: '100%' }}
                 aria-label='Call CSM Aviation at +1-888-435-9276'
               >
                 <span className='flex items-center justify-center gap-1 sm:gap-2'>
-                  <svg 
-                    className='w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5' 
-                    fill='currentColor' 
+                  <svg
+                    className='w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5'
+                    fill='currentColor'
                     viewBox='0 0 20 20'
                     xmlns='http://www.w3.org/2000/svg'
                   >
