@@ -26,7 +26,7 @@ export default function HomeBody() {
   );
 
 
-  const videoSource = '/videos/compressed/CSM_Desktop.mp4';
+  const videoSource = '/videos/compressed/CSM_desktop.mp4';
 
   
   useEffect(() => {
