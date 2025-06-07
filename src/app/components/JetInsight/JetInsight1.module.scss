@@ -76,6 +76,10 @@
     &::before {
       transition: left 0.4s ease-out;
       left: 100%;
+    
+    // Arrow animation on hover
+    .buttonArrow {
+      transform: translateX(4px) !important;
     }
   }
 
@@ -108,6 +112,12 @@
     position: relative;
     z-index: 2;
   }
+}
+
+// Arrow styling
+.buttonArrow {
+  transition: transform 0.3s ease !important;
+  margin-left: 8px !important;
 }
 
 .jetinsightEmbeddedRequestModal {

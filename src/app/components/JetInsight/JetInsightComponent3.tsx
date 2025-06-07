@@ -47,7 +47,20 @@ const JetInsightComponent: React.FC = () => {
           className={styles.jetinsightEmbeddedRequestButton}
           style={{ flex: '1 1 auto', width: '100%' }}
         >
-           SCHEDULE TRIP
+          SCHEDULE TRIP
+          <svg 
+            width="16" 
+            height="16" 
+            viewBox="0 0 16 16" 
+            fill="currentColor"
+            style={{ 
+              marginLeft: '8px',
+              transition: 'transform 0.3s ease'
+            }}
+            className={styles.buttonArrow}
+          >
+            <path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.44 8.5H2.75a.75.75 0 0 1 0-1.5h8.69L8.22 4.03a.75.75 0 0 1 0-1.06Z"/>
+          </svg>
         </button>
       </div>
       <div id="jetinsight-embedded-request-modal" ref={modalRef} className={styles.jetinsightEmbeddedRequestModal}>
