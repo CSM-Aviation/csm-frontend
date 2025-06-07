@@ -273,9 +273,9 @@ const FleetMob = () => {
               <div className="flex flex-col justify-center items-center w-full bg-gradient-to-br from-cyan-900/90 via-slate-900/95 to-blue-950/98 backdrop-blur-sm p-4 rounded-2xl">
                 <h3 className="text-lg font-bold">{aircraft.aircraftName}</h3>
                 <ul className="list-disc">
-                  <li className="text-sm text-gray-300 italic">
+                  {/* <li className="text-sm text-gray-300 italic">
                     Tail Number: <span>{aircraft.tail}</span>
-                  </li>
+                  </li> */}
                   <li className="text-sm text-gray-300 italic">
                     Seats: {aircraft.seats}
                   </li>

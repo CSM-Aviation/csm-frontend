@@ -184,7 +184,7 @@ const Light_Midsize = () => {
               <h3 className="text-xl font-semibold mb-2">
                 {aircraft.aircraftName}
               </h3>
-              <p className="text-gray-600">{aircraft.registration}</p>
+              {/* <p className="text-gray-600">{aircraft.registration}</p> */}
               <p className="mt-2">Seats: {aircraft.seats}</p>
               <p>Range: {aircraft.range}</p>
             </div>

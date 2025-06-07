@@ -18,6 +18,7 @@ interface CardData {
 
 const FleetPageSec = () => {
   const [turboPropData, setTurboPropData] = useState<FleetItem[]>([]);
+  const [lightJetData, setLightJetData] = useState<FleetItem[]>([]);
   const [midSizeData, setMidSizeData] = useState<FleetItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -25,89 +26,94 @@ const FleetPageSec = () => {
 
   const turboFleet: CardData[] = [
     {
-        imageUrl: "/images/wheels_removed_fleet/N923AS.png",
-        aircraftName: "King Air 200",
-        tail: "N923AS",
-        seats: "7+1",
-        range: "1450NM",
-        speed: "285 kts",
-        altitude: "35,000 ft",
-      },
-      {
-        imageUrl: "/images/wheels_removed_fleet/30GT.png",
-        aircraftName: "King Air F90",
-        tail: "N30GT",
-        seats: "6",
-        range: "1450NM",
-        speed: "270 kts",
-        altitude: "31,000 ft",
-      },
-      {
-        imageUrl: "/images/wheels_removed_fleet/132N.png",
-        aircraftName: "King Air B200",
-        tail: "N132N",
-        seats: "7+1",
-        range: "1400NM",
-        speed: "285 kts",
-        altitude: "35,000 ft",
-      },
-      {
-        imageUrl: "/images/wheels_removed_fleet/177TA.png",
-        aircraftName: "King Air B200GT",
-        tail: "N177TA",
-        seats: "7",
-        range: "1450NM",
-        speed: "290 kts",
-        altitude: "35,000 ft",
-      },
+      imageUrl: "/images/wheels_removed_fleet/N923AS.png",
+      aircraftName: "King Air 200",
+      tail: "N923AS",
+      seats: "7+1",
+      range: "1450NM",
+      speed: "285 kts",
+      altitude: "35,000 ft",
+    },
+    {
+      imageUrl: "/images/wheels_removed_fleet/30GT.png",
+      aircraftName: "King Air F90",
+      tail: "N30GT",
+      seats: "6",
+      range: "1450NM",
+      speed: "270 kts",
+      altitude: "31,000 ft",
+    },
+    {
+      imageUrl: "/images/wheels_removed_fleet/132N.png",
+      aircraftName: "King Air B200",
+      tail: "N132N",
+      seats: "7+1",
+      range: "1400NM",
+      speed: "285 kts",
+      altitude: "35,000 ft",
+    },
+    {
+      imageUrl: "/images/wheels_removed_fleet/177TA.png",
+      aircraftName: "King Air B200GT",
+      tail: "N177TA",
+      seats: "7",
+      range: "1450NM",
+      speed: "290 kts",
+      altitude: "35,000 ft",
+    },
   ];
 
-  const midsizeFleet: CardData[] = [
+  const lightJetFleet: CardData[] = [
     {
-        imageUrl: "/images/wheels_removed_fleet/N550ML.png",
-        aircraftName: "Citation Bravo",
-        tail: "N550ML",
-        seats: "7",
-        range: "1980NM",
-        speed: "420 kts",
-        altitude: "45,000 ft",
-      },
-      {
-        imageUrl: "/images/wheels_removed_fleet/N8821C.png",
-        aircraftName: "Gulfstream G150",
-        tail: "N8821C",
-        seats: "8+1",
-        range: "2760NM",
-        speed: "470 kts",
-        altitude: "45,000 ft",
-      },
-      {
-        imageUrl: "/images/wheels_removed_fleet/N518KH.png",
-        aircraftName: "Gulfstream G150",
-        tail: "N518KH",
-        seats: "8+1",
-        range: "2760NM",
-        speed: "470 kts",
-        altitude: "45,000 ft",
-      },
-      {
-        imageUrl: "/images/wheels_removed_fleet/N360AV.png",
-        aircraftName: "Gulfstream G150",
-        tail: "N360AV",
-        seats: "7",
-        range: "2760NM",
-        speed: "470 kts",
-        altitude: "45,000 ft",
-      },
-      {
-        imageUrl: "/images/wheels_removed_fleet/561CC.png",
-        aircraftName: "Citation Ultra",
-        tail: "561CC",
-        seats: "7+1",
-        range: "1960NM",
-        speed: "430 kts",
-        altitude: "45,000 ft",
-      },
+      imageUrl: "/images/wheels_removed_fleet/N550ML.png",
+      aircraftName: "Citation Bravo",
+      tail: "N550ML",
+      seats: "7",
+      range: "1980NM",
+      speed: "420 kts",
+      altitude: "45,000 ft",
+    },
+    {
+      imageUrl: "/images/wheels_removed_fleet/561CC.png",
+      aircraftName: "Citation Ultra",
+      tail: "561CC",
+      seats: "7+1",
+      range: "1960NM",
+      speed: "430 kts",
+      altitude: "45,000 ft",
+    },
+  ]
+
+  const midsizeFleet: CardData[] = [
+
+    {
+      imageUrl: "/images/wheels_removed_fleet/N8821C.png",
+      aircraftName: "Gulfstream G150",
+      tail: "N8821C",
+      seats: "8+1",
+      range: "2760NM",
+      speed: "470 kts",
+      altitude: "45,000 ft",
+    },
+    {
+      imageUrl: "/images/wheels_removed_fleet/N518KH.png",
+      aircraftName: "Gulfstream G150",
+      tail: "N518KH",
+      seats: "8+1",
+      range: "2760NM",
+      speed: "470 kts",
+      altitude: "45,000 ft",
+    },
+    {
+      imageUrl: "/images/wheels_removed_fleet/N360AV.png",
+      aircraftName: "Gulfstream G150",
+      tail: "N360AV",
+      seats: "7",
+      range: "2760NM",
+      speed: "470 kts",
+      altitude: "45,000 ft",
+    },
+
   ];
 
   useEffect(() => {
@@ -117,16 +123,20 @@ const FleetPageSec = () => {
         if (response.error) {
           throw new Error(response.error);
         }
-        
+
         const turboPropAircraft = response.data?.filter(
           (aircraft: FleetItem) => aircraft.category === "TURBOPROPS"
         ) || [];
-        
+        const lightJetAircraft = response.data?.filter(
+          (aircraft: FleetItem) => aircraft.category === "LIGHT"
+        ) || [];
+
         const midSizeAircraft = response.data?.filter(
           (aircraft: FleetItem) => aircraft.category === "LIGHT | MIDSIZE JETS"
         ) || [];
-        
+
         setTurboPropData(turboPropAircraft);
+        setLightJetData(lightJetAircraft);
         setMidSizeData(midSizeAircraft);
       } catch (err) {
         console.error("Error fetching aircraft data:", err);
@@ -160,11 +170,11 @@ const FleetPageSec = () => {
           }}
           key={aircraft._id}
         >
-          <motion.div 
-            initial={{ scale: 0 }} 
-            whileInView={{ scale: 1 }} 
-            transition={{ duration: 0.5 }} 
-            viewport={{ once: true }} 
+          <motion.div
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
             className="flex cursor-pointer flex-col items-center rounded-lg overflow-hidden group relative"
           >
             {/* Default Image (no wheels) */}
@@ -185,7 +195,7 @@ const FleetPageSec = () => {
                 {aircraft.aircraftName}
               </h3>
               {/* <p className="text-black">Tail Number: {aircraft.registration}</p> */}
-             
+
             </div>
 
             {/* Hover Effect - Shows API image */}
@@ -211,14 +221,14 @@ const FleetPageSec = () => {
 
   return (
     <>
-    <div className="px-14 box-border">
+      <div className="px-14 box-border">
         <h1 className="text-[#133d4f] text-7xl max-lg:text-6xl max-md:text-5xl max-sm:text-4xl mb-12 font-bold text-center">Our Fleet</h1>
-    </div>
-    
-    {/* Category Toggle Buttons as Tabs */}
-    <div className="px-14 box-border mb-8">
-      <div className="flex justify-center border-b border-gray-300">
-        {/* <button 
+      </div>
+
+      {/* Category Toggle Buttons as Tabs */}
+      <div className="px-14 box-border mb-8">
+        <div className="flex justify-center border-b border-gray-300">
+          {/* <button 
           onClick={() => setActiveCategory("all")}
           className={`px-8 py-3 font-medium text-lg transition-all duration-300 ${
             activeCategory === "all" 
@@ -228,46 +238,65 @@ const FleetPageSec = () => {
         >
           All Aircraft
         </button> */}
-        <button 
-          onClick={() => setActiveCategory("turboprops")}
-          className={`px-10 py-4 font-medium text-4xl transition-all duration-300 ${
-            activeCategory === "turboprops" 
-              ? "text-[#133d4f] border-b-3 border-[#133d4f] -mb-[1px]" 
+          <button
+            onClick={() => setActiveCategory("turboprops")}
+            className={`px-10 py-4 font-medium text-4xl transition-all duration-300 ${activeCategory === "turboprops"
+              ? "text-[#133d4f] border-b-3 border-[#133d4f] -mb-[1px]"
               : "text-gray-500 hover:text-gray-700"
-          }`}
-        >
-          Turbo Props
-        </button>
-        <button 
-          onClick={() => setActiveCategory("midsize")}
-          className={`px-10 py-4 font-medium text-4xl transition-all duration-300 ${
-            activeCategory === "midsize" 
-              ? "text-[#133d4f] border-b-3 border-[#133d4f] -mb-[1px]" 
+              }`}
+          >
+            Turbo Props
+          </button>
+          <button
+            onClick={() => setActiveCategory("lightjets")}
+            className={`px-10 py-4 font-medium text-4xl transition-all duration-300 ${activeCategory === "lightjets"
+              ? "text-[#133d4f] border-b-3 border-[#133d4f] -mb-[1px]"
               : "text-gray-500 hover:text-gray-700"
-          }`}
-        >
-          Midsize Jets
-        </button>
-      </div>
-    </div>
+              }`}
+          >
+            Light Jets
+          </button>
+          <button
+            onClick={() => setActiveCategory("midsize")}
+            className={`px-10 py-4 font-medium text-4xl transition-all duration-300 ${activeCategory === "midsize"
+              ? "text-[#133d4f] border-b-3 border-[#133d4f] -mb-[1px]"
+              : "text-gray-500 hover:text-gray-700"
+              }`}
+          >
+            Midsize Jets
+          </button>
 
-    {/* Turbo Props Section */}
-    {(activeCategory === "turboprops") && (
-      <div className="px-14 box-border">
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
-          {renderAircraftCards(turboPropData, turboFleet)}
         </div>
       </div>
-    )}
 
-    {/* Midsize Jets Section */}
-    {(activeCategory === "midsize") && (
-      <div className="px-14 box-border mt-10">
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
-          {renderAircraftCards(midSizeData, midsizeFleet)}
+      {/* Turbo Props Section */}
+      {(activeCategory === "turboprops") && (
+        <div className="px-14 box-border">
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
+            {renderAircraftCards(turboPropData, turboFleet)}
+          </div>
         </div>
-      </div>
-    )}
+      )}
+
+      {/* Light Jets Section */}
+      {(activeCategory === "lightjets") && (
+        <div className="px-14 box-border mt-10">
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
+            {renderAircraftCards(lightJetData, lightJetFleet)}
+          </div>
+        </div>
+      )}
+
+      {/* Midsize Jets Section */}
+      {(activeCategory === "midsize") && (
+        <div className="px-14 box-border mt-10">
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
+            {renderAircraftCards(midSizeData, midsizeFleet)}
+          </div>
+        </div>
+      )}
+
+
     </>
   );
 };

@@ -14,50 +14,12 @@ interface CardData {
   speed: string;
   altitude: string;
 }
-const TurboProps = () => {
+const Light = () => {
   const [aircraftData, setAircraftData] = useState<FleetItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const turboFleet: CardData[] = [
-    {
-      imageUrl: "/images/wheels_removed_fleet/N923AS.png",
-      aircraftName: "King Air 200",
-      tail: "N923AS",
-      seats: "7+1",
-      range: "1450NM",
-      speed: "285 kts",
-      altitude: "35,000 ft",
-    },
-    {
-      imageUrl: "/images/wheels_removed_fleet/30GT.png",
-      aircraftName: "King Air F90",
-      tail: "N30GT",
-      seats: "6",
-      range: "1450NM",
-      speed: "270 kts",
-      altitude: "31,000 ft",
-    },
-    {
-      imageUrl: "/images/wheels_removed_fleet/132N.png",
-      aircraftName: "King Air B200",
-      tail: "N132N",
-      seats: "7+1",
-      range: "1400NM",
-      speed: "285 kts",
-      altitude: "35,000 ft",
-    },
-    {
-      imageUrl: "/images/wheels_removed_fleet/177TA.png",
-      aircraftName: "King Air B200GT",
-      tail: "N177TA",
-      seats: "7",
-      range: "1450NM",
-      speed: "290 kts",
-      altitude: "35,000 ft",
-    },
-  ];
 
-  const midsizeFleet: CardData[] = [
+  const lightFleet: CardData[] = [
     {
       imageUrl: "/images/wheels_removed_fleet/N550ML.png",
       aircraftName: "Citation Bravo",
@@ -68,35 +30,8 @@ const TurboProps = () => {
       altitude: "45,000 ft",
     },
     {
-      imageUrl: "/images/wheels_removed_fleet/N8821C.png",
-      aircraftName: "Gulfstream G150",
-      tail: "N8821C",
-      seats: "8+1",
-      range: "2760NM",
-      speed: "470 kts",
-      altitude: "45,000 ft",
-    },
-    {
-      imageUrl: "/images/wheels_removed_fleet/N518KH.png",
-      aircraftName: "Gulfstream G150",
-      tail: "N518KH",
-      seats: "8+1",
-      range: "2760NM",
-      speed: "470 kts",
-      altitude: "45,000 ft",
-    },
-    {
-      imageUrl: "/images/wheels_removed_fleet/N360AV.png",
-      aircraftName: "Gulfstream G150",
-      tail: "N360AV",
-      seats: "7",
-      range: "2760NM",
-      speed: "470 kts",
-      altitude: "45,000 ft",
-    },
-    {
-      imageUrl: "/images/wheels_removed_fleet/N518KH.png",
-      aircraftName: "Cessna Citation CE560 Ultra",
+      imageUrl: "/images/wheels_removed_fleet/561CC.png",
+      aircraftName: "Citation Ultra",
       tail: "561CC",
       seats: "7+1",
       range: "1960NM",
@@ -114,7 +49,7 @@ const TurboProps = () => {
         // Filter for TURBOPROPS aircraft only
         const turboPropAircraft =
           response.data?.filter(
-            (aircraft: FleetItem) => aircraft.category === "TURBOPROPS"
+            (aircraft: FleetItem) => aircraft.category === "LIGHT"
           ) || [];
         setAircraftData(turboPropAircraft);
       } catch (err) {
@@ -146,7 +81,7 @@ const TurboProps = () => {
             <div className="w-full max-2xl:h-64 h-96 relative">
               {aircraft.imageUrls && aircraft.imageUrls.length > 0 ? (
                 (() => {
-                  const matchingCard = turboFleet.find(
+                  const matchingCard = lightFleet.find(
                     (item) => item.tail === aircraft.registration
                   );
                   const imageUrl =
@@ -209,4 +144,4 @@ const TurboProps = () => {
   );
 };
 
-export default TurboProps;
+export default Light;

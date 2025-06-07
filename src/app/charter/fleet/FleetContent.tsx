@@ -6,11 +6,12 @@ import Light_Midsize from "./Light_Midsize";
 import AllAircrafts from "./All_Aircrafts";
 import { motion } from "motion/react";
 import JetInsightComponent from "@/app/components/JetInsight/JetInsightComponent2";
+import Light from "./Light";
 
 const FleetContent: React.FC = () => {
-  const [selected, setSelected] = useState("all aircraft");
+  const [selected, setSelected] = useState("turbo props");
   const headRef = useRef<HTMLDivElement>(null);
-  const tabs = ["all aircraft", "turbo props", "light/midsize jets"];
+  const tabs = ["turbo props", "light jets", "midsize jets"];
   return (
     <section id="fleetdetails" className="min-h-screen relative inset-0 flex justify-center items-center py-[120px] max-md:py-[80px]">
       <div className="px-6 w-full flex flex-col justify-center items-center text-black gap-10 max-sm:gap-6 ">
@@ -22,7 +23,7 @@ const FleetContent: React.FC = () => {
           className="text-center"
         >
           <h1 className="uppercase text-6xl max-sm:text-3xl max-md:text-6xl leading-[100%] font-bold text-[#00254a]">
-            explore your options
+            Our Fleet
           </h1>
         
         </motion.div>
@@ -73,9 +74,10 @@ const FleetContent: React.FC = () => {
         </motion.div>
 
         <div className="w-full">
-          {selected === "all aircraft" && <AllAircrafts />}
+          {/* {selected === "all aircraft" && <AllAircrafts />} */}
           {selected === "turbo props" && <TurboProps />}
-          {selected === "light/midsize jets" && <Light_Midsize />}
+          {selected === "light jets" && <Light />}
+          {selected === "midsize jets" && <Light_Midsize />}
         </div>
       </div>
     </section>

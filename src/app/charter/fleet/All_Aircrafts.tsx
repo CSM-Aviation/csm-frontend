@@ -178,7 +178,7 @@ const AllAircrafts = () => {
                     <Image
                       src={imageUrl}
                       loader={customLoader}
-                      alt={`${aircraft.registration} - ${aircraft.aircraftName}`}
+                      alt={`${aircraft.aircraftName}`}
                       height={500}
                       width={500}
                       className="object-cover w-full"
@@ -197,7 +197,7 @@ const AllAircrafts = () => {
               <h3 className="text-2xl font-semibold mb-2 text-[#1e1e1e]">
                 {aircraft.aircraftName}
               </h3>
-              <p className="text-[#00254a] font-bold italic">Tail Number: <span className="text-[#565656]">{aircraft.registration}</span></p>
+              {/* <p className="text-[#00254a] font-bold italic">Tail Number: <span className="text-[#565656]">{aircraft.registration}</span></p> */}
               <p className="text-[#00254a] font-bold italic">Seats: <span className="text-[#565656]">{aircraft.seats}</span></p>
               <p className="text-[#00254a] font-bold italic">Range: <span  className="text-[#565656]">{aircraft.range}</span></p>
             </div>
@@ -209,7 +209,7 @@ const AllAircrafts = () => {
                   <Image
                     src={aircraft.imageUrls[0]}
                     loader={customLoader}
-                    alt={`${aircraft.registration} - ${aircraft.aircraftName}`}
+                    alt={`${aircraft.aircraftName}`}
                     fill
                     className="scale-125 group-hover:scale-100 transition-transform duration-700 ease-in-out object-cover"
                   />
