@@ -28,6 +28,7 @@ export default function HomeBody() {
 
   const videoSource = '/videos/compressed/CSM_Desktop.mp4';
 
+  
   useEffect(() => {
     const updateDimensions = () => {
       requestAnimationFrame(() => {
