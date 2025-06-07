@@ -87,6 +87,11 @@
     outline: none !important;
     box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.5) !important; // Blue focus ring
   }
+  .buttonArrow {
+    transition: transform 0.3s ease !important;
+    margin-left: 8px !important;
+  }
+}
 
   svg {
     transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
@@ -114,11 +119,7 @@
   }
 }
 
-// Arrow styling
-.buttonArrow {
-  transition: transform 0.3s ease !important;
-  margin-left: 8px !important;
-}
+
 
 .jetinsightEmbeddedRequestModal {
   left: 50%;
