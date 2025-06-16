@@ -113,7 +113,7 @@ const Header: React.FC = () => {
   return (
     <header
       ref={headerRef}
-      className={`fixed top-0 left-0 w-full z-[1] transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         transparent
           ? "bg-opacity-0"
           : scrolled
@@ -123,14 +123,14 @@ const Header: React.FC = () => {
       style={{ backgroundColor: transparent ? "transparent" : "#002040" }}
     >
       <div className="w-full flex items-center justify-between px-5 py-3">
-        <div className="relative z-[1] max-md:left">
+        <div className="relative z-50 max-md:left-1/2 max-md:-translate-x-[50%]">
           <Link href="/" className="">
             <Image
               src="/images/whitebgcsmlogo.png"
               alt="CSM Aviation"
-              className="w-16 h-16" // Changed from w-40 h-40 to w-20 h-20
-              width={80} // Changed from 200 to 100
-              height={80} // Changed from 200 to 100
+              className="w-20 h-20" // Changed from w-40 h-40 to w-20 h-20
+              width={100} // Changed from 200 to 100
+              height={100} // Changed from 200 to 100
             />
           </Link>
         </div>
@@ -175,7 +175,7 @@ const Header: React.FC = () => {
             size="lg"
           />
         </button> */}
-        <div className="z-[1]">
+        <div>
           <HeaderMobileAccordion />
         </div>
       </div>
