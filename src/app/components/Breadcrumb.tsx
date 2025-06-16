@@ -5,7 +5,13 @@ import { usePathname } from "next/navigation";
 
 const Breadcrumb: React.FC = () => {
   const pathname = usePathname();
-  const pathSegments = pathname.split("/").filter((segment) => segment);
+  let pathSegments = pathname.split("/").filter((segment) => segment);
+
+  // Check if we're on an aircraft detail page and remove the registration segment
+  if (pathSegments.length >= 3 && pathSegments[0] === "charter" && pathSegments[1] === "fleet") {
+    // Remove the last segment (registration) for aircraft detail pages
+    pathSegments = pathSegments.slice(0, -1);
+  }
 
   if (pathSegments.length === 0) {
     return null; // Hide breadcrumb on home page
