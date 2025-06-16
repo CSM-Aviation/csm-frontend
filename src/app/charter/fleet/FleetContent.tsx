@@ -34,7 +34,7 @@ const FleetContent: React.FC = () => {
         >
           <JetInsightComponent/>
         </motion.div>
-        <motion.div
+<motion.div
           initial="hidden"
           animate="visible"
           variants={{
@@ -48,7 +48,7 @@ const FleetContent: React.FC = () => {
               },
             },
           }}
-          className="flex  justify-center items-center gap-6 max-sm:gap-2"
+          className="flex justify-center items-center gap-6 max-sm:gap-2"
         >
           {tabs.map((tab) => (
             <motion.h1
@@ -59,14 +59,14 @@ const FleetContent: React.FC = () => {
               }}
               transition={{ duration: 0.1 }}
               onClick={() => setSelected(tab)}
-              className={`max-md:text-[12px] text-[14px] py-4 px-6 max-sm:p-2 text-center uppercase w-fit cursor-pointer transition-all 
-    rounded-[120px] max-sm:rounded-md border-4 ${
+              className={`max-md:text-[12px] text-[14px] py-4 px-6 max-sm:p-2 text-center uppercase w-fit cursor-pointer transition-all duration-300 ease-in-out
+    rounded-[120px] max-sm:rounded-md font-semibold ${
       selected === tab
-        ? "border-none bg-white text-[#1d7eb3] font-bold"
-        : "border-none hover:border-white hover:scale-105 shiny-button text-white"
+        ? "bg-[#00254a] text-white shadow-lg shadow-[#00254a]/30 border-2 border-[#00254a]"
+        : "bg-white/80 backdrop-blur-sm text-[#00254a] border-2 border-[#00254a]/20 hover:border-[#00254a] hover:bg-white hover:shadow-md"
     }`}
               whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.9 }}
+              whileTap={{ scale: 0.95 }}
             >
               {tab}
             </motion.h1>
