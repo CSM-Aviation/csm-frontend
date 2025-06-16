@@ -114,7 +114,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
   return (
     <div className="container mx-auto mt-10 text-black p-5">
       <p className="text-5xl max-md:text-3xl max-md:mt-10 mt-24 text-center mb-6">
-        {aircraftDetails.registration} - {aircraftDetails.aircraftName}
+         {aircraftDetails.aircraftName}
       </p>
       <div className="flex px-10   flex-col md:flex-row gap-10">
         <div className="flex-grow ">
@@ -191,7 +191,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({ params, searchP
       </div>
       <div className="mt-10 px-10 grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-4">
         {renderDetailRow("Aircraft Name", aircraftDetails.aircraftName)}
-        {renderDetailRow("Registration", aircraftDetails.registration)}
+        {/* {renderDetailRow("Registration", aircraftDetails.registration)} */}
         {renderDetailRow("Seats", aircraftDetails.seats)}
         {renderDetailRow("Lavatory", aircraftDetails.lavatory)}
         {renderDetailRow("Altitude", aircraftDetails.altitude)}
