@@ -47,7 +47,7 @@ const JetInsightComponent: React.FC = () => {
           className={styles.jetinsightEmbeddedRequestButton}
           style={{ flex: '1 1 auto', width: '100%' }}
         >
-          SCHEDULE TRIP
+         Get A Quote
           <svg 
             width="16" 
             height="16" 
