@@ -214,8 +214,12 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  const customLoader = ({ src }) => {
+interface ImageLoaderProps {
+  src: string;
+  width?: number;
+  quality?: number;
+}
+const customLoader = ({ src }: ImageLoaderProps) => {
     return src;
   };
 
