@@ -171,7 +171,7 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
           )}
           {/* Dark overlay for better text visibility */}
         </div>
-        <div className='absolute md:bottom-[15%] bottom-[10%] left-0 right-0 text-black z-[1.5]'>
+        <div className='absolute md:bottom-[10%] bottom-[10%] left-0 right-0 text-black z-[1.5]'>
           <div className='flex flex-col gap-9 items-center justify-center w-full px-4'>
             <div className='md:translate-y-0 text-white text-base md:text-xl lg:text-4xl font-bold tracking-wider'>
               <p className='text-center'>24/7 Live Support - Global Reach - Private Jet Charter</p>
