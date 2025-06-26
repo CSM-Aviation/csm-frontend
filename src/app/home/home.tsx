@@ -1,34 +1,37 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import MaintManage from '../components/MaintManage';
-import ServicesCards from '../components/ServiceCard';
-import { useConfig } from '../contexts/ConfigContext';
-import DonorNetworkSection from '../components/DonorNetworkSection';
-import { motion, useMotionValue, useTransform } from 'framer-motion';
-import PopularDestinations from '../components/PopularDestinations';
-import Testimonials from '../components/Testimonials';
-import AnimatedCSMVideoText from '../components/Hero';
-import AnimatedPlaneService2 from '../components/AnimatedPlaneService2';
-import FleetPage from '../components/FleetPage';
-import MobileFleet from '../components/MobileFleet';
-import FleetPageSec from '../components/FleetPageSec';
-import HeroVideoSection from '../components/HeroVideoSection';
-
+"use client";
+import React, { useEffect, useState } from "react";
+import MaintManage from "../components/MaintManage";
+import ServicesCards from "../components/ServiceCard";
+import { useConfig } from "../contexts/ConfigContext";
+import DonorNetworkSection from "../components/DonorNetworkSection";
+import { motion, useMotionValue, useTransform } from "framer-motion";
+import PopularDestinations from "../components/PopularDestinations";
+import Testimonials from "../components/Testimonials";
+import AnimatedCSMVideoText from "../components/Hero";
+import AnimatedPlaneService2 from "../components/AnimatedPlaneService2";
+import FleetPage from "../components/FleetPage";
+import MobileFleet from "../components/MobileFleet";
+import FleetPageSec from "../components/FleetPageSec";
+import HeroVideoSection from "../components/HeroVideoSection";
+import Fireworks from "@fireworks-js/react";
+import { HeroAnimated } from "../components/HeroAnimated";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import Marquee from "../components/Marquee";
 
 export default function HomeBody() {
   const { config, error } = useConfig();
   const [scrollRange, setScrollRange] = useState(0);
   const [windowWidth, setWindowWidth] = useState(
-    typeof window !== 'undefined' ? window.innerWidth : 0
+    typeof window !== "undefined" ? window.innerWidth : 0
   );
   const [windowHeight, setWindowHeight] = useState(
-    typeof window !== 'undefined' ? window.innerHeight : 0
+    typeof window !== "undefined" ? window.innerHeight : 0
   );
 
 
-  const videoSource = '/videos/compressed/CSM_desktop.mp4';
+  const videoSource = '/videos/compressed/newdesktopvideo.mp4';
 
-  
+
   useEffect(() => {
     const updateDimensions = () => {
       requestAnimationFrame(() => {
@@ -44,7 +47,7 @@ export default function HomeBody() {
     };
 
     updateDimensions();
-    window.addEventListener('resize', updateDimensions);
+    window.addEventListener("resize", updateDimensions);
 
     const observer = new MutationObserver(updateDimensions);
     observer.observe(document.body, {
@@ -53,7 +56,7 @@ export default function HomeBody() {
     });
 
     return () => {
-      window.removeEventListener('resize', updateDimensions);
+      window.removeEventListener("resize", updateDimensions);
       observer.disconnect();
     };
   }, []);
@@ -114,9 +117,9 @@ export default function HomeBody() {
       rafId = requestAnimationFrame(updateScroll);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
       if (rafId) {
         cancelAnimationFrame(rafId);
       }
@@ -125,20 +128,39 @@ export default function HomeBody() {
 
   return (
     <>
-      <div className='-mt-24 md:-mt-20'>
-        <AnimatedCSMVideoText videoSource={videoSource}/>
+      <div className="-mt-24 md:-mt-20">
+        <Marquee/>
+        <HeroAnimated />
+        <AnimatedCSMVideoText videoSource={videoSource} />
         {/* <HeroVideoSection /> */}
         <ServicesCards />
         {/* <AnimatedPlaneService2 /> */}
         {/* <MobileFleet /> */}
         <FleetPageSec />
-        <div className="my-8"></div> 
+        <div className="my-8"></div>
         <MaintManage />
         <PopularDestinations />
-
-        
-
-       
+        <motion.div initial={{scale: 0}} whileInView={{scale: 1}} transition={{duration: 1.3}} className="absolute top-[100%] w-[400px]">
+        <DotLottieReact
+          src="https://lottie.host/79da910c-62ae-41c5-ba8c-3a1df8fbaaea/DMuVRQdaYO.lottie"
+          loop
+          autoplay
+        />
+        </motion.div>
+        <motion.div initial={{scale: 0}} whileInView={{scale: 1}} transition={{duration: 1.3}} className="absolute top-[180%] right-0 w-[400px]">
+        <DotLottieReact
+          src="https://lottie.host/79da910c-62ae-41c5-ba8c-3a1df8fbaaea/DMuVRQdaYO.lottie"
+          loop
+          autoplay
+        />
+        </motion.div>
+        <motion.div initial={{scale: 0}} whileInView={{scale: 1}} transition={{duration: 1.3}} className="absolute top-[320%] right-1/2 w-[400px]">
+        <DotLottieReact
+          src="https://lottie.host/79da910c-62ae-41c5-ba8c-3a1df8fbaaea/DMuVRQdaYO.lottie"
+          loop
+          autoplay
+        />
+        </motion.div>
       </div>
     </>
   );

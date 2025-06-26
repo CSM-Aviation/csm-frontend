@@ -94,23 +94,17 @@ const HeaderMobileAccordion: React.FC = () => {
         >
           <div className="flex  flex-col ">
             <motion.span
-              className={`h-1 rounded-full w-8 ${
-                isOpen ? "bg-black" : "bg-white"
-              }`}
+              className={`h-1 rounded-full w-8 bg-black`}
               animate={{ rotate: isOpen ? 45 : 0, y: isOpen ? 7 : -3 }}
               transition={{ duration: 0.3 }}
             />
             <motion.span
-              className={`h-1 rounded-full w-8 ${
-                isOpen ? "bg-black" : "bg-white"
-              }`}
+              className={`h-1 rounded-full w-8 bg-black`}
               animate={{ opacity: isOpen ? 0 : 1 }}
               transition={{ duration: 0.3 }}
             />
             <motion.span
-              className={`h-1 rounded-full w-8 ${
-                isOpen ? "bg-black" : "bg-white"
-              }`}
+              className={`h-1 rounded-full w-8 bg-black`}
               animate={{ rotate: isOpen ? -45 : 0, y: isOpen ? -1 : 3 }}
               transition={{ duration: 0.3 }}
             />
