@@ -152,73 +152,87 @@ const FleetPageSec = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div className="text-red-500">{error}</div>;
 
-  const renderAircraftCards = (aircraftData: FleetItem[], fallbackData: CardData[]) => {
-    return aircraftData.map((aircraft) => {
-      // Find matching no-wheels image from fallback data
-      const noWheelsImage = fallbackData.find(
-        (item) => item.tail === aircraft.registration
-      )?.imageUrl || "/images/default-aircraft.jpg";
+const renderAircraftCards = (aircraftData: FleetItem[], fallbackData: CardData[]) => {
+  return aircraftData.map((aircraft) => {
+    // Find matching no-wheels image from fallback data
+    const noWheelsImage = fallbackData.find(
+      (item) => item.tail === aircraft.registration
+    )?.imageUrl || "/images/default-aircraft.jpg";
 
-      // Get the first API image if available
-      const apiImage = aircraft.imageUrls?.[0] || noWheelsImage;
+    // Filter out .DS_Store and other non-image files
+    const validImageUrls = aircraft.imageUrls?.filter(url => 
+      !url.includes('.DS_Store') && 
+      (url.includes('.jpg') || url.includes('.png') || url.includes('.jpeg'))
+    ) || [];
 
-      return (
-        <Link
-          href={{
-            pathname: `/charter/fleet/${aircraft.registration}`,
-            query: { model: aircraft.aircraftName },
-          }}
-          key={aircraft._id}
+    // Get the first valid API image if available
+    const apiImage = validImageUrls[0] || noWheelsImage;
+
+    // Debug logging (remove this in production)
+    console.log(`Aircraft ${aircraft.registration}:`, {
+      hasImageUrls: !!aircraft.imageUrls,
+      totalUrls: aircraft.imageUrls?.length || 0,
+      validUrls: validImageUrls.length,
+      apiImage,
+      noWheelsImage,
+      sameImage: apiImage === noWheelsImage
+    });
+
+    return (
+      <Link
+        href={{
+          pathname: `/charter/fleet/${aircraft.registration}`,
+          query: { model: aircraft.aircraftName },
+        }}
+        key={aircraft._id}
+      >
+        <motion.div
+          initial={{ scale: 0 }}
+          whileInView={{ scale: 1 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="flex cursor-pointer flex-col items-center rounded-lg overflow-hidden group relative"
         >
-          <motion.div
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="flex cursor-pointer flex-col items-center rounded-lg overflow-hidden group relative"
-          >
-            {/* Default Image (no wheels) */}
-            <div className="w-full h-32 relative">
+          {/* Default Image (no wheels) */}
+          <div className="w-full h-32 relative">
+            <Image
+              src={noWheelsImage}
+              loader={customLoader}
+              alt={`${aircraft.registration} - ${aircraft.aircraftName}`}
+              height={500}
+              width={500}
+              className="object-cover w-full h-full"
+            />
+          </div>
+
+          {/* Text Info */}
+          <div className="p-4 text-center text-black">
+            <h3 className="text-xl font-semibold ">
+              {aircraft.aircraftName}
+            </h3>
+            {/* <p className="text-black">Tail Number: {aircraft.registration}</p> */}
+          </div>
+
+          {/* Hover Effect - Shows API image */}
+          <div className="absolute inset-0 bg-black bg-opacity-60 text-white flex items-center justify-center text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
+            <div className="relative w-full h-full overflow-hidden">
               <Image
-                src={noWheelsImage}
+                src={apiImage}
                 loader={customLoader}
                 alt={`${aircraft.registration} - ${aircraft.aircraftName}`}
-                height={500}
-                width={500}
-                className="object-cover w-full h-full"
+                fill
+                className="scale-125 group-hover:scale-100 transition-transform duration-700 ease-in-out object-cover"
               />
             </div>
-
-            {/* Text Info */}
-            <div className="p-4 text-center text-black">
-              <h3 className="text-xl font-semibold ">
-                {aircraft.aircraftName}
-              </h3>
-              {/* <p className="text-black">Tail Number: {aircraft.registration}</p> */}
-
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold w-full text-center">
+              <h1 className="w-full">{aircraft.aircraftName}</h1>
             </div>
-
-            {/* Hover Effect - Shows API image */}
-            <div className="absolute inset-0 bg-black bg-opacity-60 text-white flex items-center justify-center text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
-              <div className="relative w-full h-full overflow-hidden">
-                <Image
-                  src={apiImage}
-                  loader={customLoader}
-                  alt={`${aircraft.registration} - ${aircraft.aircraftName}`}
-                  fill
-                  className="scale-125 group-hover:scale-100 transition-transform duration-700 ease-in-out object-cover"
-                />
-              </div>
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold w-full text-center">
-                <h1 className="w-full">{aircraft.aircraftName}</h1>
-              </div>
-            </div>
-          </motion.div>
-        </Link>
-      );
-    });
-  };
-
+          </div>
+        </motion.div>
+      </Link>
+    );
+  });
+};
   return (
     <>
       <div className="px-14 box-border">

@@ -21,7 +21,6 @@ const Breadcrumb: React.FC = () => {
   const doWhite =
     pathname.includes("newyear") ||
     pathname.includes("donornetworkwest") ||
-    pathname === "/charter/fleet" ||
     pathname.includes("management") ||
     pathname === "charter" ||
     pathname.includes("maintenance") ||

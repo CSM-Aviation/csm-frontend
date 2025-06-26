@@ -47,7 +47,7 @@ const AboutUsComponent = () => {
           /> */}
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col md:flex-row items-center">
+          <div className="flex flex-col-reverse md:flex-row items-center">
             {/* Left side - Core Values */}
             <div className="md:w-1/2 mb-8 md:mb-0">
               <h2 className="text-4xl font-bold mb-6">CSM Core Values</h2>
@@ -84,7 +84,7 @@ const AboutUsComponent = () => {
             </div>
             
             {/* Right side - Image */}
-            <div className="md:w-1/2">
+            <div className="w-full md:w-1/2">
               <div className="relative w-full h-[500px] rounded-lg overflow-hidden shadow-2xl">
                 <Image
                   src="/images/aboutlatest.png"
