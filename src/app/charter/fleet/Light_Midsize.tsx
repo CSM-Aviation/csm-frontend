@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import { apiService, FleetItem } from "../../services/apiService";
 import customLoader from "../../../../image-loader";
+
 interface CardData {
   imageUrl: string;
   aircraftName: string;
@@ -14,10 +15,12 @@ interface CardData {
   speed: string;
   altitude: string;
 }
+
 const Light_Midsize = () => {
   const [aircraftData, setAircraftData] = useState<FleetItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
   const turboFleet: CardData[] = [
     {
       imageUrl: "/images/wheels_removed_fleet/N550ML.png",
@@ -113,6 +116,7 @@ const Light_Midsize = () => {
       altitude: "45,000 ft",
     },
   ];
+
   useEffect(() => {
     const fetchAircraftData = async () => {
       try {
@@ -120,7 +124,7 @@ const Light_Midsize = () => {
         if (response.error) {
           throw new Error(response.error);
         }
-        // Filter for TURBOPROPS aircraft only
+        // Filter for LIGHT | MIDSIZE JETS aircraft only
         const turboPropAircraft =
           response.data?.filter(
             (aircraft: FleetItem) => aircraft.category === "LIGHT | MIDSIZE JETS"
@@ -141,79 +145,88 @@ const Light_Midsize = () => {
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
-    <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-6 w-full">
-      {aircraftData.map((aircraft) => (
-        <Link
-          href={{
-            pathname: `/charter/fleet/${aircraft.registration}`,
-            query: { model: aircraft.aircraftName },
-          }}
-          key={aircraft._id}
-        >
-          <motion.div initial={{scale: 0}} whileInView={{scale: 1}} transition={{duration : 0.5}} viewport={{once: true}} className="flex cursor-pointer flex-col items-center rounded-lg overflow-hidden group relative">
-            {/* Image */}
-            <div className="w-full max-2xl:h-64 h-96 relative">
-              {aircraft.imageUrls && aircraft.imageUrls.length > 0 ? (
-                (() => {
-                  const matchingCard = turboFleet.find(
-                    (item) => item.tail === aircraft.registration
-                  );
-                  const imageUrl =
-                    matchingCard?.imageUrl || aircraft.imageUrls[0];
+    <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
+      {aircraftData.map((aircraft) => {
+        // Find matching no-wheels image from fallback data
+        const matchingCard = turboFleet.find(
+          (item) => item.tail === aircraft.registration
+        );
+        const noWheelsImage = matchingCard?.imageUrl || "/images/default-aircraft.jpg";
 
-                  return (
-                    <Image
-                      src={imageUrl}
-                      loader={customLoader}
-                      alt={`${aircraft.registration} - ${aircraft.aircraftName}`}
-                      height={500}
-                      width={500}
-                      className="object-cover w-full"
-                    />
-                  );
-                })()
-              ) : (
-                <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                  No Image Available
-                </div>
-              )}
-            </div>
+        // Filter out .DS_Store and other non-image files
+        const validImageUrls = aircraft.imageUrls?.filter(url => 
+          !url.includes('.DS_Store') && 
+          (url.includes('.jpg') || url.includes('.png') || url.includes('.jpeg'))
+        ) || [];
 
-            {/* Text Info */}
-            <div className="p-4 text-center">
-              <h3 className="text-xl font-semibold mb-2">
-                {aircraft.aircraftName}
-              </h3>
-              {/* <p className="text-gray-600">{aircraft.registration}</p> */}
-              <p className="mt-2">Seats: {aircraft.seats}</p>
-              <p>Range: {aircraft.range}</p>
-            </div>
+        // Get the first valid API image if available
+        const apiImage = validImageUrls[0] || noWheelsImage;
 
-            {/* Hidden on default, visible on hover */}
-            <div className="absolute inset-0 bg-black bg-opacity-60 text-white flex items-center justify-center text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
-              {aircraft.imageUrls && aircraft.imageUrls.length > 0 ? (
+        // Debug logging (remove in production)
+        console.log(`Aircraft ${aircraft.registration}:`, {
+          hasImageUrls: !!aircraft.imageUrls,
+          totalUrls: aircraft.imageUrls?.length || 0,
+          validUrls: validImageUrls.length,
+          apiImage,
+          noWheelsImage,
+          sameImage: apiImage === noWheelsImage
+        });
+
+        return (
+          <Link
+            href={{
+              pathname: `/charter/fleet/${aircraft.registration}`,
+              query: { model: aircraft.aircraftName },
+            }}
+            key={aircraft._id}
+          >
+            <motion.div 
+              initial={{scale: 0}} 
+              whileInView={{scale: 1}} 
+              transition={{duration: 0.5}} 
+              viewport={{once: true}} 
+              className="flex cursor-pointer flex-col items-center rounded-lg overflow-hidden group relative"
+            >
+              {/* Default Image (no wheels) */}
+              <div className="w-full max-2xl:h-64 h-96 relative">
+                <Image
+                  src={noWheelsImage}
+                  loader={customLoader}
+                  alt={`${aircraft.registration} - ${aircraft.aircraftName}`}
+                  height={500}
+                  width={500}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+
+              {/* Text Info */}
+              <div className="p-4 text-center">
+                <h3 className="text-xl font-semibold mb-2">
+                  {aircraft.aircraftName}
+                </h3>
+                <p className="mt-2">Seats: {aircraft.seats}</p>
+                <p>Range: {aircraft.range}</p>
+              </div>
+
+              {/* Hover Effect - Shows filtered API image */}
+              <div className="absolute inset-0 bg-black bg-opacity-60 text-white flex items-center justify-center text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
                 <div className="relative w-full h-full overflow-hidden">
                   <Image
-                    src={aircraft.imageUrls[0]}
+                    src={apiImage}
                     loader={customLoader}
                     alt={`${aircraft.registration} - ${aircraft.aircraftName}`}
                     fill
                     className="scale-125 group-hover:scale-100 transition-transform duration-700 ease-in-out object-cover"
                   />
                 </div>
-              ) : (
-                <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                  No Image Available
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold w-full text-center">
+                  <h1 className="w-full">{aircraft.aircraftName}</h1>
                 </div>
-              )}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold w-full text-center">
-                <h1 className="w-full">{aircraft.aircraftName}</h1>
               </div>
-            </div>
-            
-          </motion.div>
-        </Link>
-      ))}
+            </motion.div>
+          </Link>
+        );
+      })}
     </div>
   );
 };

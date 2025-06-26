@@ -1,7 +1,8 @@
+'use client'
 import React from 'react';
 import { useRouter } from "next/navigation";
 import Image from 'next/image';
-
+import { motion } from "motion/react"
 interface ServiceCardProps {
   image: string;
   title: string;
@@ -20,7 +21,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ image, title, description, li
   };
 
   return (
-    <div 
+    <motion.div initial={{scale: 0.2}} whileInView={{scale:1}} transition={{duration: 0.5}} viewport={{once: true}}
       className="relative bg-emerald-400 overflow-hidden group rounded-lg shadow-lg h-[400px] cursor-pointer"
       onClick={handleClick}
     >
@@ -37,7 +38,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ image, title, description, li
           <p className="text-base leading-relaxed">{description}</p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
