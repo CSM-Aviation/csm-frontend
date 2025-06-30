@@ -113,33 +113,6 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
 
   return (
     <>
-      {/* <AnimatePresence mode='wait'>
-        <motion.div
-          style={{
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%,-50%)',
-          }}
-          className='z-100'
-          initial='initial'
-          animate={transition ? 'transition' : 'initial'}
-          exit='exit'
-          variants={initialTextVariants}
-        >
-          <h1 className='text-white text-8xl md:text-9xl font-bold tracking-wider'>
-            <Link href='/' className=''>
-              <Image
-                src='/images/whitebgcsmlogo.png'
-                alt='CSM Aviation'
-                className=''
-                width={100}
-                height={100}
-              />
-            </Link>
-          </h1>
-        </motion.div>
-      </AnimatePresence> */}
 
       <div
         style={{ top: 0, left: 0, backgroundColor: '#002040' }}
@@ -147,7 +120,7 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
         ref={containerRef}
       >
         {/* Full screen background video */}
-        <div className='absolute md:mt-0 mt-6 inset-0 w-full h-full overflow-hidden'>
+        <div className='absolute inset-0 w-full h-full overflow-hidden bg-[#002040]'>
           {videoSource && (
             <video
               className='absolute md:scale-100 md:-translate-y-6 scale-150 -translate-y-12 w-full h-full object-contain lg:object-cover'
@@ -163,7 +136,7 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
             >
               <source
                 src={
-                  !isMobile ? videoSource : '/videos/compressed/CSM_Mobile.mp4'
+                  !isMobile ? videoSource : '/videos/compressed/newdesktopvideo.mp4'
                 }
                 type='video/mp4'
               />
@@ -171,7 +144,7 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
           )}
           {/* Dark overlay for better text visibility */}
         </div>
-        <div className='absolute md:bottom-[10%] bottom-[10%] left-0 right-0 text-black z-[1.5]'>
+        <div className='absolute md:bottom-[10%] bottom-[10%] left-0 right-0 text-black z-[1.5] '>
           <div className='flex flex-col gap-9 items-center justify-center w-full px-4'>
             <div className='md:translate-y-0 text-white text-base md:text-xl lg:text-4xl font-bold tracking-wider'>
               <p className='text-center'>24/7 Live Support - Global Reach - Private Jet Charter</p>
