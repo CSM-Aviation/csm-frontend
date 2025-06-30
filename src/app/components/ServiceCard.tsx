@@ -23,7 +23,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   bgColor,
 }) => {
   const router = useRouter();
-  const tooltipRef = useRef<HTMLDivElement>(null);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
 
   const handleClick = () => {
     if (link) {
@@ -40,93 +40,76 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
     return `#${((1 << 24) | (R << 16) | (G << 8) | B).toString(16).slice(1)}`;
   };
 
-  const [tooltip, setTooltip] = useState({
-    show: false,
-    content: "",
-    x: 0,
-    y: 0,
-  });
-  
-  const showTooltip = (e: React.MouseEvent, content: string) => {
-    setTooltip({
-      show: true,
-      content,
-      x: e.clientX + 10,
-      y: e.clientY + 10,
-    });
-  };
-
-  const hideTooltip = () => {
-    setTooltip({ ...tooltip, show: false });
-  };
-
   return (
-    <Tippy 
-      content={description}
-      placement="bottom" 
-      delay={[300, 0]}
-      followCursor={true}
-      className="!bg-white font-bold p-4 !rounded-3xl !text-black"
+    <motion.div
+      initial={{
+        scale: 0.9,
+        y: 20,
+        rotateX: 60,
+        rotateY: 20,
+        perspective: 1000,
+        opacity: 0,
+      }}
+      whileInView={{
+        scale: 1,
+        y: 0,
+        rotateX: 0,
+        rotateY: 0,
+        opacity: 1,
+      }}
+      transition={{
+        duration: 0.8,
+        damping: 15,
+        stiffness: 80,
+      }}
+      viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+      style={{
+        background: `radial-gradient(ellipse 60% 90% at 50% 50%, ${bgColor} 80%,  ${lightenColor(
+          bgColor,
+          30
+        )})`,
+        backgroundColor: bgColor,
+        transformStyle: "preserve-3d",
+      }}
+      className={`relative overflow-hidden group rounded-3xl shadow-lg cursor-pointer p-6 py-10`}
+      onClick={handleClick}
     >
-      <motion.div
-        initial={{
-          scale: 0.9,
-          y: 20,
-          rotateX: 60,
-          rotateY: 20,
-          perspective: 1000,
-          opacity: 0,
-        }}
-        whileInView={{
-          scale: 1,
-          y: 0,
-          rotateX: 0,
-          rotateY: 0,
-          opacity: 1,
-        }}
-        transition={{
-          duration: 0.8,
-          damping: 15,
-          stiffness: 80,
-        }}
-        viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-        style={{
-          background: `radial-gradient(ellipse 60% 90% at 50% 50%, ${bgColor} 80%,  ${lightenColor(
-            bgColor,
-            30
-          )})`,
-          backgroundColor: bgColor,
-          transformStyle: "preserve-3d",
-        }}
-        className={`relative overflow-hidden group rounded-3xl shadow-lg cursor-pointer p-6 py-10`}
-        onClick={handleClick}
+      <div
+        className="h-full flex flex-col"
+        style={{ transformStyle: "preserve-3d" }}
       >
-        <div
-          className="h-full flex flex-col"
-          style={{ transformStyle: "preserve-3d" }}
-        >
-          <div className="text-white mb-4 flex-grow">
-            <h3 className="text-3xl font-semibold mb-3 text-left">
-              {title}
-            </h3>
+        <div className="text-white mb-4 flex-grow">
+          <h3 className="text-3xl font-semibold mb-3 text-left">
+            {title}
+          </h3>
 
-            <p className="leading lg:line-clamp-3 text-left text-sm text-neutral-300 font-semibold">
+          <Tippy 
+            content={description}
+            placement="bottom-start"
+            delay={[300, 0]}
+            reference={descriptionRef}
+            className="!bg-white font-bold p-4 !rounded-3xl !text-black !max-w-sm"
+          >
+            <p 
+              ref={descriptionRef}
+              className="leading lg:line-clamp-3 text-left text-sm text-neutral-300 font-semibold"
+            >
               {description}
             </p>
-          </div>
-
-          <div className="relative w-full h-48 md:h-64 lg:h-96 mt-6 rounded-3xl">
-            <Image
-              src={image}
-              alt={title}
-              fill
-              className="object-cover rounded-[inherit]"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-          </div>
+          </Tippy>
         </div>
-      </motion.div>
-    </Tippy>
+
+        <div className="relative w-full h-48 md:h-64 lg:h-96 mt-6 rounded-3xl">
+          <Image
+            src={image}
+            alt={title}
+            fill
+            className="object-cover rounded-[inherit]"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        </div>
+      </div>
+    </motion.div>
   );
 };
 
