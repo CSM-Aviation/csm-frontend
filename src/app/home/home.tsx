@@ -218,11 +218,11 @@ export default function HomeBody() {
           transition={{ duration: 1.3 }}
           className="absolute top-[240%] right-0 w-[560px]"
         >
-          <DotLottieReact
+          {/* <DotLottieReact
             src="https://lottie.host/194c4d76-5445-48c0-8774-51a9e65a006f/34slhN4CDU.lottie"
             loop
             autoplay
-          />
+          /> */}
         </motion.div>
         <motion.div
           initial={{ scale: 0 }}
