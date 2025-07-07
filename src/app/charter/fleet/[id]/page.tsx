@@ -26,25 +26,25 @@ import {
   Users,
   X,
   Zap,
+  Download,
 } from "lucide-react";
 import { motion } from "motion/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { FaToilet } from "react-icons/fa6";
+
 gsap.registerPlugin(ScrollTrigger);
+
 interface AircraftDetailPageProps {
   params: { id: string };
   searchParams: { model: string };
 }
+
 const JetInsightComponent = dynamic(
   () => import("../../../components/JetInsight/JetInsightComponent2"),
   {
     ssr: false,
   }
 );
-const TuvoliWidget = dynamic(() => import("../../../components/TuvoliWidget"), {
-  ssr: false,
-});
 
 interface CarouselImage {
   id: number;
@@ -61,6 +61,7 @@ interface AircraftDetailsTypes extends FleetItem {
   lifestyleImages: string[];
   otherImages: string[];
 }
+
 interface CardData {
   imageUrl: string;
   aircraftName: string;
@@ -70,6 +71,7 @@ interface CardData {
   speed: string;
   altitude: string;
 }
+
 const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
   params,
   searchParams,
@@ -78,17 +80,19 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
   const { model } = searchParams;
   const [aircraftDetails, setAircraftDetails] =
     useState<AircraftDetailsTypes | null>(null);
-  const [selectedImage, setSelectedImage] = useState(0);
-  const [isFullScreen, setIsFullScreen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [configurationImageUrl, setConfigurationImageUrl] = useState<
     string | null
   >(null);
-  const tuvoliWidgetRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState("overview");
+
+  // Image carousel states
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalIndex, setModalIndex] = useState(0);
 
   const turbopropModels = [
     "King Air 200",
@@ -189,13 +193,6 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
     },
   ];
 
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalIndex, setModalIndex] = useState(0);
-
-
   const getAllImages = (): CarouselImage[] => {
     if (!aircraftDetails) return [];
     
@@ -210,7 +207,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
       id: index,
       url: url,
       alt: `${aircraftDetails.aircraftName} - Image ${index + 1}`,
-      thumbnail: url // Using same URL for thumbnail for simplicity
+      thumbnail: url
     }));
   };
 
@@ -266,13 +263,13 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
       document.body.style.overflow = 'unset';
     };
   }, [isModalOpen]);
-
   
   interface ImageLoaderProps {
     src: string;
     width?: number;
     quality?: number;
   }
+  
   const customLoader = ({ src }: ImageLoaderProps) => {
     return src;
   };
@@ -300,112 +297,37 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
     }
   };
 
-
-  const scrollToTuvoliWidget = () => {
-    tuvoliWidgetRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-  const handlePrevImage = () => {
-    setSelectedImage((prev) =>
-      prev > 0 ? prev - 1 : aircraftDetails!.imageUrls.length - 1
-    );
-  };
-
-  const handleNextImage = () => {
-    setSelectedImage((prev) =>
-      prev < aircraftDetails!.imageUrls.length - 1 ? prev + 1 : 0
-    );
-  };
-
-  const toggleFullScreen = () => {
-    setIsFullScreen(!isFullScreen);
-  };
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [activeCategory, setActiveCategory] = useState<
-    "exterior" | "interior" | "lifestyle"
-  >("exterior");
-  // const categoryImages = {
-  //   exterior: aircraftDetails?.imageUrls || [],
-  //   interior: aircraftDetails?.imageUrls || [],
-  //   lifestyle: aircraftDetails?.imageUrls || []
-  // };
-
-  const getCurrentCategoryImages = () => {
-    if (!aircraftDetails) return [];
-
-    switch (activeCategory) {
-      case "exterior":
-        return aircraftDetails.exteriorImages.map((src, index) => ({
-          id: index,
-          src,
-        }));
-      case "interior":
-        return aircraftDetails.interiorImages.map((src, index) => ({
-          id: index,
-          src,
-        }));
-      case "lifestyle":
-        return aircraftDetails.lifestyleImages.map((src, index) => ({
-          id: index,
-          src,
-        }));
-      default:
-        return [];
+  // Download PDF function
+  const downloadPDF = () => {
+    if (pdfUrl) {
+      const link = document.createElement('a');
+      link.href = pdfUrl;
+      link.download = `${aircraftDetails?.aircraftName}_${aircraftDetails?.registration}_Details.pdf`;
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
   };
 
-  // const localImageCategories = {
-  //   exterior: [Exterior_1, Exterior_2, Exterior_3, Interior_4],
-  //   interior: [Interior_1, Interior_2, Interior_3],
-  //   lifestyle: [Lifestyle_1, Lifestyle_2, Lifestyle_3, Lifestyle_4],
-  // };
-
-  const scrollToImage = (direction: "left" | "right") => {
-    if (!carouselRef.current) return;
-
-    const container = carouselRef.current;
-    const scrollAmount = container.clientWidth * 0.8; // 80% of container width (matches image width)
-
-    container.scrollBy({
-      left: direction === "right" ? scrollAmount : -scrollAmount,
-      behavior: "smooth",
-    });
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+      },
+    },
   };
 
-  const SpecificationCard = ({
-    label,
-    value,
-  }: {
-    label: string;
-    value: string;
-  }) => (
-    <div className="group flex items-center justify-between p-8 relative">
-      <div className="flex items-center space-x-4 w-1/2">
-        <span className="text-gray-600 font-extralight text-lg md:text-xl uppercase">
-          {label}
-        </span>
-      </div>
-      <span className="text-gray-900 font-bold text-lg text-left w-1/2">
-        {value}
-      </span>
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[90%] h-px bg-black"></div>
-    </div>
-  );
-
-  useEffect(() => {
-    if (!aircraftDetails || !mainRef.current) return;
-
-    // Background color change - only runs when aircraftDetails is available
-    // gsap.to(mainRef.current, {
-    //   backgroundColor: "rgba(30, 41, 59, 0)",
-    //   scrollTrigger: {
-    //     trigger: mainRef.current,
-    //     start: "4% center",
-    //     end: "center center",
-    //     scrub: true,
-    //     markers: false,
-    //   },
-    // });
-  }, [aircraftDetails]); // <-- Run this effect when aircraftDetails changes
+  const childVariants = {
+    hidden: { opacity: 0, y: 80 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 1 },
+    },
+  };
 
   useEffect(() => {
     const fetchAircraftDetails = async () => {
@@ -478,77 +400,26 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
     fetchAircraftDetails();
   }, [id]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
- 
-
-  const renderDetailRow = (label: string, value: string) => (
-    <div className="flex justify-between py-2 border-b">
-      <span className="font-semibold">{label}</span>
-      <span>{value}</span>
-    </div>
-  );
-  const getNoWheelsImage = (registration: string): string | undefined => {
-    const matchedAircraft = sampleFleet.find(
-      (aircraft) => aircraft.tail === registration
-    );
-    return matchedAircraft?.imageUrl;
-  };
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3,
-      },
-    },
-  };
-
-  const childVariants = {
-    hidden: { opacity: 0, y: 80 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 1 },
-    },
-  };
-
-  // useEffect(() => {
-  //   if (carouselRef.current && getCurrentCategoryImages().length > 0) {
-  //     const container = carouselRef.current;
-  //     const scrollAmount = container.clientWidth * 0.8; // 80% of container width
-
-  //     // Disable smooth scrolling for initial load
-  //     container.style.scrollBehavior = "auto";
-  //     container.scrollLeft = scrollAmount;
-
-  //     // Re-enable smooth scrolling after initial positioning
-  //     setTimeout(() => {
-  //       container.style.scrollBehavior = "smooth";
-  //     }, 0);
-  //   }
-  // }, [activeCategory, aircraftDetails]); // Run when category or aircraft data changes
-  // // Then proceed with your JSX that uses aircraftDetails
-
-  if (!aircraftDetails) {
-    return <div>Loading aircraft details...</div>; // Or some loading state
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">Loading aircraft details...</div>;
   }
 
-  // Then proceed with your JSX that uses aircraftDetails
+  if (error) {
+    return <div className="min-h-screen flex items-center justify-center text-red-600">{error}</div>;
+  }
+
+  if (!aircraftDetails) {
+    return <div className="min-h-screen flex items-center justify-center">Aircraft not found</div>;
+  }
+
   return (
     <section ref={mainRef} className="min-h-screen bg-white relative">
+      {/* Hero Section */}
       <div className="relative w-full h-screen flex justify-center items-center">
-      
-     <div className="relative z-50">
-
+        <div className="relative z-50">
           <JetInsightComponent />
-     </div>
-       
-      <Image
+        </div>
+        <Image
           src={aircraftDetails.imageUrls[0]}
           width={400}
           height={400}
@@ -557,8 +428,8 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
         />
       </div>
 
-      {/* <div className="w-full h-full overlay absolute z-[-5]"></div> */}
-      <div className="mx-auto  relative ">
+      {/* Aircraft Title and Specs */}
+      <div className="mx-auto relative">
         <div className="flex flex-col justify-between items-center max-md:mt-10 mt-24 px-10 max-sm:px-6">
           <motion.div
             initial="hidden"
@@ -568,7 +439,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
           >
             <motion.p
               variants={childVariants}
-              className="text-8xl max-lg:text-6xl max-md:text-4xl  font-bold text bg-gradient-to-r from-neutral-800 via-neutral-500 to-neutral-800 text-transparent bg-clip-text pb-4"
+              className="text-8xl max-lg:text-6xl max-md:text-4xl font-bold text bg-gradient-to-r from-neutral-800 via-neutral-500 to-neutral-800 text-transparent bg-clip-text pb-4"
             >
               {aircraftDetails.aircraftName}
             </motion.p>
@@ -579,19 +450,19 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
               {aircraftDetails.registration}
             </motion.p>
           </motion.div>
+          
+          {/* Specifications */}
           <div className="flex justify-evenly box-border w-full mt-10">
             <motion.div
               initial={{ opacity: 0, y: 80 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.3 }}
-              className=""
             >
               <div className="flex flex-col items-center group">
                 <div className="relative mb-4 md:mb-6">
                   <div className="w-16 h-16 md:w-24 md:h-24 border-2 border-dotted border-gray-500 rounded-full flex items-center justify-center transition-colors duration-300">
-                    <Users className="w-6 h-6 md:w-10 md:h-10 text-black  transition-colors duration-300" />
+                    <Users className="w-6 h-6 md:w-10 md:h-10 text-black transition-colors duration-300" />
                   </div>
-                  <div className="absolute inset-0 bg-blue-500/10  rounded-full scale-0 group-hover:scale-110 transition-transform duration-300 ease-out"></div>
                 </div>
                 <h3 className="text-black text-sm md:text-xl font-semibold mb-1 md:mb-2 group-hover:text-black transition-colors duration-300">
                   Seats
@@ -601,18 +472,17 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
                 </p>
               </div>
             </motion.div>
+            
             <motion.div
               initial={{ opacity: 0, y: 80 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.3 }}
-              className=""
             >
               <div className="flex flex-col items-center group">
                 <div className="relative mb-4 md:mb-6">
-                  <div className="w-16 h-16 md:w-24 md:h-24 border-2 border-dotted border-gray-500 rounded-full flex items-center justify-center  transition-colors duration-300">
+                  <div className="w-16 h-16 md:w-24 md:h-24 border-2 border-dotted border-gray-500 rounded-full flex items-center justify-center transition-colors duration-300">
                     <MapPin className="w-6 h-6 md:w-10 md:h-10 text-black transition-colors duration-300" />
                   </div>
-                  <div className="absolute inset-0 bg-blue-500/10 rounded-full scale-0 group-hover:scale-110 transition-transform duration-300 ease-out"></div>
                 </div>
                 <h3 className="text-black text-sm md:text-xl font-semibold mb-1 md:mb-2 group-hover:text-black transition-colors duration-300">
                   Range
@@ -622,18 +492,17 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
                 </p>
               </div>
             </motion.div>
+            
             <motion.div
               initial={{ opacity: 0, y: 80 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.3 }}
-              className=""
             >
               <div className="flex flex-col items-center group">
                 <div className="relative mb-4 md:mb-6">
-                  <div className="w-16 h-16 md:w-24 md:h-24 border-2 border-dotted border-gray-500 rounded-full flex items-center justify-center  transition-colors duration-300">
-                    <GaugeIcon className="w-6 h-6 md:w-10 md:h-10 text-black  transition-colors duration-300" />
+                  <div className="w-16 h-16 md:w-24 md:h-24 border-2 border-dotted border-gray-500 rounded-full flex items-center justify-center transition-colors duration-300">
+                    <GaugeIcon className="w-6 h-6 md:w-10 md:h-10 text-black transition-colors duration-300" />
                   </div>
-                  <div className="absolute inset-0 bg-blue-500/10 rounded-full scale-0 group-hover:scale-110 transition-transform duration-300 ease-out"></div>
                 </div>
                 <h3 className="text-black text-sm md:text-xl font-semibold mb-1 md:mb-2 group-hover:text-black transition-colors duration-300">
                   Speed
@@ -645,332 +514,91 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
             </motion.div>
           </div>
         </div>
-        </div>
+      </div>
 
-        {/* <div className="flex md:px-10 flex-col gap-4">
-          <div className="flex-grow  py-10">
-            <div className="relative w-full h-full mb-4 flex flex-col">
-         
-              <div className="h-[60vh] lg:h-[80vh] relative overflow-hidden">
-                {getCurrentCategoryImages().length > 0 ? (
-                  <div
-                    ref={carouselRef}
-                    className="flex h-full w-full gap-4 px-[10%] overflow-x-auto scroll-smooth items-center scrollbar-custom"
-                    style={{
-                      scrollSnapType: "x mandatory",
-                      scrollbarColor: "blue",
-                    }}
+      {/* Image Gallery */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+        <div className="relative group">
+          {/* Main Image */}
+          <div className="relative bg-stone-200 rounded-2xl overflow-hidden aspect-video shadow-2xl">
+            {allImages.length > 0 ? (
+              <>
+                <Image
+                  src={allImages[currentIndex].url}
+                  alt={allImages[currentIndex].alt}
+                  fill
+                  className="w-full h-full object-cover transition-opacity duration-500"
+                  loader={customLoader}
+                />
+                
+                {/* Plus Icon Overlay */}
+                <div className="absolute top-6 left-6">
+                  <button
+                    onClick={openModal}
+                    className="bg-amber-600/20 backdrop-blur-sm rounded-full p-3 hover:bg-amber-600/30 transition-all duration-300 cursor-pointer transform hover:scale-110"
+                    aria-label="View full size image"
                   >
-                    {getCurrentCategoryImages().map((image) => (
-                      <div
-                        key={image.id}
-                        id={`image-${image.id}`}
-                        className="relative h-[100%] w-[80%] flex-shrink-0 snap-always snap-center transition-all duration-300"
-                        style={{
-                          minWidth: "80%",
-                        }}
-                      >
-                        <Image
-                          src={image.src}
-                          alt={`${
-                            aircraftDetails.aircraftName
-                          } - ${activeCategory} Image ${image.id + 1}`}
-                          fill
-                          className="object-cover rounded-lg"
-                          priority={image.id === 0}
-                          onClick={() => openModal(image)}
-                        />
-                        {isModalOpen && currentImage && (
-                          <div
-                            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
-                            onClick={closeModal}
-                          >
-                            <div className="relative w-full h-full max-w-6xl max-h-[90vh]">
-                              <Image
-                                src={image.src}
-                                alt={`Full view - ${aircraftDetails.aircraftName} - ${activeCategory} Image`}
-                                fill
-                                className="object-contain"
-                              />
-                              <button
-                                className="absolute top-4 right-4 text-4xl text-blue-700 hover:text-blue-800"
-                                onClick={closeModal}
-                              >
-                                &times;
-                              </button>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                    No Image Available
-                  </div>
-                )}
-
-         
-                {getCurrentCategoryImages().length > 1 && (
-                  <>
-                    <button
-                      onClick={() => scrollToImage("left")}
-                      className="absolute right-4 bottom-4 -translate-y-1/2 border border-neutral-400 p-4 rounded-full bg-black/50 hover:bg-black/70 transition"
-                    >
-                      <ChevronLeft color="#fff" />
-                    </button>
-                    <button
-                      onClick={() => scrollToImage("right")}
-                      className="absolute right-4 bottom-20 -translate-y-1/2 border border-neutral-400 p-4 rounded-full bg-black/50 hover:bg-black/70 transition"
-                    >
-                      <ChevronRight color="#fff" />
-                    </button>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div className="px-6">
-            <div className="flex w-full justify-evenly">
-              <button
-                onClick={() => setActiveCategory("exterior")}
-                className={`uppercase text-base md:text-[18px] border-t-4 w-full flex justify-center p-2 transition-colors cursor-pointer ${
-                  activeCategory === "exterior"
-                    ? "border-[#002040] text-[#002040] font-medium"
-                    : "border-transparent text-gray-800"
-                }`}
-              >
-                Exterior
-              </button>
-              <button
-                onClick={() => setActiveCategory("interior")}
-                className={`uppercase text-base md:text-[18px] border-t-4 w-full flex justify-center p-2 transition-colors cursor-pointer pointer-events-auto ${
-                  activeCategory === "interior"
-                    ? "border-[#002040] text-[#002040] font-medium"
-                    : "border-transparent text-gray-800"
-                }`}
-              >
-                Interior
-              </button>
-              <button
-                onClick={() => setActiveCategory("lifestyle")}
-                className={`uppercase text-base md:text-[18px] border-t-4 w-full flex justify-center p-2 transition-colors ${
-                  activeCategory === "lifestyle"
-                    ? "border-[#002040] text-[#002040] font-medium"
-                    : "border-transparent text-gray-800"
-                }`}
-              >
-                Lifestyle
-              </button>
-            </div>
-          </div>
-        </div>
-
-
-        <div className=" bg-[#f2f6fe] py-12 mt-10 px-6 ">
-          <div className="w-full flex justify-center">
-            <div className="uppercase text-black flex gap-2 ">
-              <button
-                onClick={() => setActiveTab("overview")}
-                className={`text-xs md:text-sm   ${
-                  activeTab === "overview"
-                    ? "text-[#0c2f6a] bg-white p-4 rounded-3xl shadow-lg"
-                    : "text-gray-600 p-4"
-                }  uppercase font-semibold transition-all duration-300`}
-              >
-                Capacity
-              </button>
-              <button
-                onClick={() => setActiveTab("dimensions")}
-                className={`text-xs  md:text-sm  ${
-                  activeTab === "dimensions"
-                    ? "text-[#0c2f6a] bg-white p-4 rounded-3xl shadow-lg"
-                    : "text-gray-600 p-4"
-                }  uppercase font-semibold transition-all duration-300`}
-              >
-                Performance
-              </button>
-              <button
-                onClick={() => setActiveTab("cargo")}
-                className={`text-xs  md:text-sm  ${
-                  activeTab === "cargo"
-                    ? "text-[#0c2f6a] bg-white p-4 rounded-3xl shadow-lg"
-                    : "text-gray-600 p-4"
-                }  uppercase font-semibold transition-all duration-300`}
-              >
-                Specs
-              </button>
-            </div>
-          </div>
-
-          
-          <div className="mt-10 flex px-6  justify-center">
-            {activeTab === "overview" && (
-              <div className="flex flex-col gap-20">
-                <div className="text-black flex flex-col w-full  gap-6">
-                  <div className="w-full">
-                    <div className="flex gap-16 mt-8">
-                      <ul className="text-sm lg:text-lg space-y-2 font-bold text-gray-500">
-                        <li>Seats:</li>
-                        <li>Cabin Length:</li>
-                        <li>Cabin Height:</li>
-                        <li>Cabin Width:</li>
-                        <li>Luggage Capacity:</li>
-                        <li>Lavatory:</li>
-                      </ul>
-                      <ul className="text-sm lg:text-lg space-y-2 text-neutral-500">
-                        <li>{aircraftDetails.seats}</li>
-                        <li>{aircraftDetails.cabinLength}</li>
-                        <li>{aircraftDetails.cabinHeight}</li>
-                        <li>{aircraftDetails.cabinWidth}</li>
-                        <li>{aircraftDetails.luggageCapacity}</li>
-                        <li>{aircraftDetails.lavatory}</li>
-                      </ul>
-                    </div>
-                  </div>
+                    <Plus className="w-6 h-6 text-white" />
+                  </button>
                 </div>
-              </div>
-            )}
-            {activeTab === "dimensions" && (
-              <div className="flex flex-col gap-20">
-                <div className="text-black flex flex-col w-full  gap-6">
-                  <div className="w-full">
-                    <div className="flex gap-16 mt-8">
-                      <ul className="text-sm lg:text-lg space-y-2 font-bold text-gray-500">
-                        <li>Altitude:</li>
-                        <li>Range:</li>
-                        <li>Speed:</li>
-                      </ul>
-                      <ul className="text-sm lg:text-lg space-y-2 text-neutral-500">
-                        <li>{aircraftDetails.altitude}</li>
-                        <li>{aircraftDetails.range}</li>
-                        <li>{aircraftDetails.speed}</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            {activeTab === "cargo" && (
-              <div className="flex flex-col gap-20">
-                <div className="text-black flex flex-col w-full  gap-6">
-                  <div className="w-full">
-                    <div className="flex gap-16 mt-8">
-                      <ul className="text-sm lg:text-lg space-y-2 font-bold text-gray-500">
-                        <li>Wi-Fi:</li>
-                        <li>Door Height:</li>
-                        <li>Door Width:</li>
-                        <li>Year of Manufacture:</li>
-                      </ul>
-                      <ul className="text-sm lg:text-lg space-y-2 text-neutral-500">
-                        <li>Yes</li>
-                        <li>{aircraftDetails.doorHeight}</li>
-                        <li>{aircraftDetails.doorWidth}</li>
-                        <li>{aircraftDetails.yom}</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+
+                {/* Navigation Arrows */}
+                <button
+                  onClick={prevSlide}
+                  className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-amber-600/20 backdrop-blur-sm rounded-full p-3 hover:bg-amber-600/30 transition-all duration-300 opacity-0 group-hover:opacity-100"
+                  aria-label="Previous image"
+                  disabled={allImages.length <= 1}
+                >
+                  <ChevronLeft className="w-6 h-6 text-white" />
+                </button>
+                <button
+                  onClick={nextSlide}
+                  className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-amber-600/20 backdrop-blur-sm rounded-full p-3 hover:bg-amber-600/30 transition-all duration-300 opacity-0 group-hover:opacity-100"
+                  aria-label="Next image"
+                  disabled={allImages.length <= 1}
+                >
+                  <ChevronRight className="w-6 h-6 text-white" />
+                </button>
+              </>
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-gray-200">
+                No images available
               </div>
             )}
           </div>
-          {pdfUrl && (
-            <div className="mt-10 flex justify-center">
-              <a
-                href={pdfUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#002040] shiny-button text-white font-bold py-3 px-6 md:py-4 md:px-8 rounded-3xl"
-              >
-                Download Aircraft Details
-              </a>
-            </div>
-          )}
-        </div> */}
-     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 ">
-          <div className="relative group">
-            {/* Main Image */}
-            <div className="relative bg-stone-200 rounded-2xl overflow-hidden aspect-video shadow-2xl">
-              {allImages.length > 0 ? (
-                <>
+
+          {/* Thumbnail Gallery */}
+          {allImages.length > 0 && (
+            <div className="mt-6 grid grid-cols-6 md:grid-cols-8 lg:grid-cols-12 gap-2">
+              {allImages.map((image, index) => (
+                <button
+                  key={image.id}
+                  onClick={() => goToSlide(index)}
+                  className={`relative aspect-square rounded-3xl overflow-hidden transition-all duration-300 hover:scale-105 ${
+                    index === currentIndex
+                      ? 'ring-2 ring-blue-600 shadow-lg'
+                      : 'hover:ring-2 hover:ring-blue-400'
+                  }`}
+                >
                   <Image
-                    src={allImages[currentIndex].url}
-                    alt={allImages[currentIndex].alt}
+                    src={image.thumbnail}
+                    alt={image.alt}
                     fill
-                    className="w-full h-full object-cover transition-opacity duration-500"
+                    className="w-full h-full object-cover"
                     loader={customLoader}
                   />
-                  
-                  {/* Plus Icon Overlay */}
-                  <div className="absolute top-6 left-6">
-                    <button
-                      onClick={openModal}
-                      className="bg-amber-600/20 backdrop-blur-sm rounded-full p-3 hover:bg-amber-600/30 transition-all duration-300 cursor-pointer transform hover:scale-110"
-                      aria-label="View full size image"
-                    >
-                      <Plus className="w-6 h-6 text-white" />
-                    </button>
-                  </div>
-
-                  {/* Navigation Arrows */}
-                  <button
-                    onClick={prevSlide}
-                    className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-amber-600/20 backdrop-blur-sm rounded-full p-3 hover:bg-amber-600/30 transition-all duration-300 opacity-0 group-hover:opacity-100"
-                    aria-label="Previous image"
-                    disabled={allImages.length <= 1}
-                  >
-                    <ChevronLeft className="w-6 h-6 text-white" />
-                  </button>
-                  <button
-                    onClick={nextSlide}
-                    className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-amber-600/20 backdrop-blur-sm rounded-full p-3 hover:bg-amber-600/30 transition-all duration-300 opacity-0 group-hover:opacity-100"
-                    aria-label="Next image"
-                    disabled={allImages.length <= 1}
-                  >
-                    <ChevronRight className="w-6 h-6 text-white" />
-                  </button>
-                </>
-              ) : (
-                <div className="w-full h-full flex items-center justify-center bg-gray-200">
-                  No images available
-                </div>
-              )}
+                  {index === currentIndex && (
+                    <div className="absolute inset-0 bg-blue-600/20"></div>
+                  )}
+                </button>
+              ))}
             </div>
+          )}
+        </div>
+      </div>
 
-            {/* Thumbnail Gallery */}
-            {allImages.length > 0 && (
-              <div className="mt-6 grid grid-cols-6 md:grid-cols-8 lg:grid-cols-12 gap-2">
-                {allImages.map((image, index) => (
-                  <button
-                    key={image.id}
-                    onClick={() => goToSlide(index)}
-                    className={`relative aspect-square rounded-3xl overflow-hidden transition-all duration-300 hover:scale-105 ${
-                      index === currentIndex
-                        ? 'ring-2 ring-blue-600 shadow-lg'
-                        : 'hover:ring-2 hover:ring-blue-400'
-                    }`}
-                  >
-                    <Image
-                      src={image.thumbnail}
-                      alt={image.alt}
-                      fill
-                      className="w-full h-full object-cover"
-                      loader={customLoader}
-                    />
-                    {index === currentIndex && (
-                      <div className="absolute inset-0 bg-blue-600/20"></div>
-                    )}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-          </div>
-
-          {/* Modal */}
-
-          {isModalOpen && (
+      {/* Modal */}
+      {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           {/* Backdrop */}
           <div 
@@ -1024,221 +652,310 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
         </div>
       )}
 
+      {/* Aircraft Details Tabs */}
+      <div className="bg-[#f2f6fe] py-12 mt-10 px-6">
+        <div className="w-full flex justify-center">
+          <div className="uppercase text-black flex gap-2">
+            <button
+              onClick={() => setActiveTab("overview")}
+              className={`text-xs md:text-sm ${
+                activeTab === "overview"
+                  ? "text-[#0c2f6a] bg-white p-4 rounded-3xl shadow-lg"
+                  : "text-gray-600 p-4"
+              } uppercase font-semibold transition-all duration-300`}
+            >
+              Capacity
+            </button>
+            <button
+              onClick={() => setActiveTab("dimensions")}
+              className={`text-xs md:text-sm ${
+                activeTab === "dimensions"
+                  ? "text-[#0c2f6a] bg-white p-4 rounded-3xl shadow-lg"
+                  : "text-gray-600 p-4"
+              } uppercase font-semibold transition-all duration-300`}
+            >
+              Performance
+            </button>
+            <button
+              onClick={() => setActiveTab("cargo")}
+              className={`text-xs md:text-sm ${
+                activeTab === "cargo"
+                  ? "text-[#0c2f6a] bg-white p-4 rounded-3xl shadow-lg"
+                  : "text-gray-600 p-4"
+              } uppercase font-semibold transition-all duration-300`}
+            >
+              Specs
+            </button>
+          </div>
+        </div>
 
-
-        <div className="flex justify-center p-10 text-black bg-[#002040] mt-20">
-          <div className="flex max-sm:flex-col justify-between w-full max-w-6xl  gap-2">
-            {/* Aircraft Amenities */}
-            <section className="flex flex-col justify-center items-center">
-              <h1 className="uppercase text-white lg:text-4xl">
-                Aricraft Amenities
-              </h1>
-              <ul className="mt-10 space-y-4 text-gray-500">
-                <li className="flex gap-4">
-                  <Armchair />
-                  <div>
-                    <li className="font-bold text-white">
-                      Custom Leather Upholstery
-                    </li>
-                    <li>
-                      Premium leather seating crafted for ultimate comfort
-                    </li>
+        {/* Tab Content */}
+        <div className="mt-10 flex px-6 justify-center">
+          {activeTab === "overview" && (
+            <div className="flex flex-col gap-20">
+              <div className="text-black flex flex-col w-full gap-6">
+                <div className="w-full">
+                  <div className="flex gap-16 mt-8">
+                    <ul className="text-sm lg:text-lg space-y-2 font-bold text-gray-500">
+                      <li>Seats:</li>
+                      <li>Cabin Length:</li>
+                      <li>Cabin Height:</li>
+                      <li>Cabin Width:</li>
+                      <li>Luggage Capacity:</li>
+                      <li>Lavatory:</li>
+                    </ul>
+                    <ul className="text-sm lg:text-lg space-y-2 text-neutral-500">
+                      <li>{aircraftDetails.seats}</li>
+                      <li>{aircraftDetails.cabinLength}</li>
+                      <li>{aircraftDetails.cabinHeight}</li>
+                      <li>{aircraftDetails.cabinWidth}</li>
+                      <li>{aircraftDetails.luggageCapacity}</li>
+                      <li>{aircraftDetails.lavatory}</li>
+                    </ul>
                   </div>
-                </li>
-                <li className="flex gap-4">
-                  <Zap />
-                  <div>
-                    <li className="font-bold text-white">Power Outlets</li>
-                    <li>Convenient charging solutions throughout the cabin</li>
-                  </div>
-                </li>
-                <li className="flex gap-4">
-                  <Luggage />
-                  <div>
-                    <li className="font-bold text-white">
-                      Luggage Racks and Hangars
-                    </li>
-                    <li>Spacious storage for all your travel essentials</li>
-                  </div>
-                </li>
-                <li className="flex gap-4">
-                  <ChefHat />
-                  <div>
-                    <li className="font-bold text-white">Galley Area</li>
-                    <li>
-                      Fully equipped kitchen facilities for in-flight dining
-                    </li>
-                  </div>
-                </li>
-                <li className="flex gap-4">
-                  <Snowflake />
-                  <div>
-                    <li className="font-bold text-white">Chiller</li>
-                    <li>
-                      Temperature-controlled storage for beverages and
-                      refreshments
-                    </li>
-                  </div>
-                </li>
-                <li className="flex gap-4">
-                  <Bath />
-                  <div>
-                    <li className="font-bold text-white">
-                      Aft Lavatory with Full Vanity
-                    </li>
-                    <li>Complete washroom facilities with premium amenities</li>
-                  </div>
-                </li>
-              </ul>
-            </section>
-            <div className="bg-[#002040] px-6">
-              <h3 className="text-2xl md:mt-0 font-bold mb-4 text-white">
-                Cabin Configuration
-              </h3>
-              <div className="w-full mt-5 h-1 bg-neutral-600"></div>
-              <div className="flex justify-center">
-                {configurationImageUrl ? (
-                  <Image
-                    src={configurationImageUrl}
-                    alt="Cabin Configuration"
-                    width={800}
-                    height={400}
-                    layout="responsive"
-                    loader={customLoader}
-                    className="rounded-lg mt-10"
-                  />
-                ) : (
-                  <div>No configuration image available</div>
-                )}
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div className="remainingPlanes  bg-[#002040] py-20 px-6">
-          <h2 className="text-8xl max-lg:text-6xl max-md:text-4xl text-center flex flex-col gap-4 font-bold text bg-gradient-to-r from-neutral-500 via-neutral-200 to-neutral-500 text-transparent bg-clip-text pb-4">
-            <span className="text-2xl">View More</span>
-            <span className="text-2xl">
-              {getCategoryDisplayName(aircraftDetails.aircraftName)}
-            </span>
-          </h2>
-          <div className="relative">
-            <Swiper
-              cssMode={true}
-              navigation={{
-                nextEl: ".custom-next",
-                prevEl: ".custom-prev",
-              }}
-              pagination={false}
-              mousewheel={true}
-              keyboard={true}
-              modules={[Navigation, Pagination, Mousewheel, Keyboard]}
-              className=""
-              breakpoints={{
-                640: {
-                  slidesPerView: 1,
-                  spaceBetween: 20,
-                },
-                768: {
-                  slidesPerView: 2,
-                  spaceBetween: 30,
-                },
-                1024: {
-                  slidesPerView: 3,
-                  spaceBetween: 40,
-                },
-              }}
-            >
-              {sampleFleet
-                .filter((plane) => {
-                  // Exclude current plane
-                  if (plane.tail === aircraftDetails.registration) return false;
-
-                  // Get current aircraft category
-                  const currentCategory = getAircraftCategory(
-                    aircraftDetails.aircraftName
-                  );
-                  const planeCategory = getAircraftCategory(plane.aircraftName);
-
-                  // Show only aircraft from the same category
-                  return currentCategory === planeCategory;
-                })
-                .map((plane, index) => (
-                  <SwiperSlide key={index} className="bg-transparent">
-                    <div className="flex flex-col items-center p-6">
-                      <div className="relative w-full h-64 mb-4">
-                        <Image
-                          src={plane.imageUrl}
-                          alt={plane.aircraftName}
-                          fill
-                          className="object-contain"
-                          loader={customLoader}
-                        />
-                      </div>
-                      <div className="bg-gradient-to-r from-gray-500 via-gray-200 to-gray-500 p-4 rounded-3xl">
-                        <h3 className="text-2xl font-bold text-black mb-2 text-center">
-                          {plane.aircraftName}
-                        </h3>
-                        <div className="text-gray-700 text-center">
-                          <p>Range: {plane.range}</p>
-                          <p>Seats: {plane.seats}</p>
-                        </div>
-                      </div>
-                      <Link
-                        href={`/charter/fleet/${
-                          plane.tail
-                        }?model=${encodeURIComponent(plane.aircraftName)}`}
-                        className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-                      >
-                        View Details
-                      </Link>
-                    </div>
-                  </SwiperSlide>
-                ))}
-            </Swiper>
-
-            <button className="custom-prev absolute left-0 top-1/2 z-10 text-white hover:text-blue-300 transition">
-              <CircleArrowLeft size={40} />
-            </button>
-            <button className="custom-next absolute right-0 top-1/2 z-10 text-white hover:text-blue-300 transition">
-              <CircleArrowRight size={40} />
-            </button>
-          </div>
-        </div>
-
-        {/* More JSX here... */}
-        {isFullScreen && (
-          <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center">
-            <div className="relative w-full h-full">
-              <Image
-                src={aircraftDetails.imageUrls[selectedImage]}
-                alt={`${aircraftDetails.aircraftName} - Full Screen Image`}
-                fill
-                loader={customLoader}
-                style={{ objectFit: "contain" }}
-              />
-              <button
-                className="absolute top-4 right-4 p-2 bg-white bg-opacity-50 rounded-full hover:bg-opacity-75 transition-opacity"
-                onClick={toggleFullScreen}
-              >
-                <X size={24} />
-              </button>
-              <button
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 p-2 bg-white bg-opacity-50 rounded-full hover:bg-opacity-75 transition-opacity"
-                onClick={handlePrevImage}
-              >
-                <ChevronLeft size={24} />
-              </button>
-              <button
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 bg-white bg-opacity-50 rounded-full hover:bg-opacity-75 transition-opacity"
-                onClick={handleNextImage}
-              >
-                <ChevronRight size={24} />
-              </button>
+          )}
+          {activeTab === "dimensions" && (
+            <div className="flex flex-col gap-20">
+              <div className="text-black flex flex-col w-full gap-6">
+                <div className="w-full">
+                  <div className="flex gap-16 mt-8">
+                    <ul className="text-sm lg:text-lg space-y-2 font-bold text-gray-500">
+                      <li>Altitude:</li>
+                      <li>Range:</li>
+                      <li>Speed:</li>
+                    </ul>
+                    <ul className="text-sm lg:text-lg space-y-2 text-neutral-500">
+                      <li>{aircraftDetails.altitude}</li>
+                      <li>{aircraftDetails.range}</li>
+                      <li>{aircraftDetails.speed}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
+          )}
+          {activeTab === "cargo" && (
+            <div className="text-black flex flex-col w-full gap-6">
+              <div className="w-full">
+                <div className="flex gap-16 mt-8 justify-center">
+                  <ul className="text-sm lg:text-lg space-y-2 font-bold text-gray-500">
+                    <li>Wi-Fi:</li>
+                    <li>Door Height:</li>
+                    <li>Door Width:</li>
+                    <li>YOR:</li>
+                  </ul>
+                  <ul className="text-sm lg:text-lg space-y-2 text-neutral-500">
+                    <li>Yes</li>
+                    <li>{aircraftDetails.doorHeight}</li>
+                    <li>{aircraftDetails.doorWidth}</li>
+                    <li>{aircraftDetails.yom}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+        
+        {/* Download PDF Button */}
+        {pdfUrl && (
+          <div className="mt-10 flex justify-center">
+            <button
+              onClick={downloadPDF}
+              className="bg-[#002040] text-white font-bold py-3 px-6 md:py-4 md:px-8 rounded-3xl hover:bg-[#003060] transition-colors duration-300 flex items-center gap-2"
+            >
+              <Download className="w-5 h-5" />
+              Download Aircraft Details
+            </button>
           </div>
         )}
- 
+      </div>
+
+      {/* Aircraft Amenities and Configuration */}
+      <div className="flex justify-center p-10 text-black bg-[#002040] mt-20">
+        <div className="flex max-sm:flex-col justify-between w-full max-w-6xl gap-2">
+          {/* Aircraft Amenities */}
+          <section className="flex flex-col justify-center items-center">
+            <h1 className="uppercase text-white lg:text-4xl">
+              Aircraft Amenities
+            </h1>
+            <ul className="mt-10 space-y-4 text-gray-500">
+              <li className="flex gap-4">
+                <Armchair />
+                <div>
+                  <li className="font-bold text-white">
+                    Custom Leather Upholstery
+                  </li>
+                  <li>
+                    Premium leather seating crafted for ultimate comfort
+                  </li>
+                </div>
+              </li>
+              <li className="flex gap-4">
+                <Zap />
+                <div>
+                  <li className="font-bold text-white">Power Outlets</li>
+                  <li>Convenient charging solutions throughout the cabin</li>
+                </div>
+              </li>
+              <li className="flex gap-4">
+                <Luggage />
+                <div>
+                  <li className="font-bold text-white">
+                    Luggage Racks and Hangars
+                  </li>
+                  <li>Spacious storage for all your travel essentials</li>
+                </div>
+              </li>
+              <li className="flex gap-4">
+                <ChefHat />
+                <div>
+                  <li className="font-bold text-white">Galley Area</li>
+                  <li>
+                    Fully equipped kitchen facilities for in-flight dining
+                  </li>
+                </div>
+              </li>
+              <li className="flex gap-4">
+                <Snowflake />
+                <div>
+                  <li className="font-bold text-white">Chiller</li>
+                  <li>
+                    Temperature-controlled storage for beverages and
+                    refreshments
+                  </li>
+                </div>
+              </li>
+              <li className="flex gap-4">
+                <Bath />
+                <div>
+                  <li className="font-bold text-white">
+                    Aft Lavatory with Full Vanity
+                  </li>
+                  <li>Complete washroom facilities with premium amenities</li>
+                </div>
+              </li>
+            </ul>
+          </section>
+          
+          {/* Cabin Configuration */}
+          <div className="bg-[#002040] px-6">
+            <h3 className="text-2xl md:mt-0 font-bold mb-4 text-white">
+              Cabin Configuration
+            </h3>
+            <div className="w-full mt-5 h-1 bg-neutral-600"></div>
+            <div className="flex justify-center">
+              {configurationImageUrl ? (
+                <Image
+                  src={configurationImageUrl}
+                  alt="Cabin Configuration"
+                  width={800}
+                  height={400}
+                  layout="responsive"
+                  loader={customLoader}
+                  className="rounded-lg mt-10"
+                />
+              ) : (
+                <div className="text-white mt-10">No configuration image available</div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Related Aircraft */}
+      <div className="remainingPlanes bg-[#002040] py-20 px-6">
+        <h2 className="text-8xl max-lg:text-6xl max-md:text-4xl text-center flex flex-col gap-4 font-bold text bg-gradient-to-r from-neutral-500 via-neutral-200 to-neutral-500 text-transparent bg-clip-text pb-4">
+          <span className="text-2xl">View More</span>
+          <span className="text-2xl">
+            {getCategoryDisplayName(aircraftDetails.aircraftName)}
+          </span>
+        </h2>
+        <div className="relative">
+          <Swiper
+            cssMode={true}
+            navigation={{
+              nextEl: ".custom-next",
+              prevEl: ".custom-prev",
+            }}
+            pagination={false}
+            mousewheel={true}
+            keyboard={true}
+            modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+            className=""
+            breakpoints={{
+              640: {
+                slidesPerView: 1,
+                spaceBetween: 20,
+              },
+              768: {
+                slidesPerView: 2,
+                spaceBetween: 30,
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 40,
+              },
+            }}
+          >
+            {sampleFleet
+              .filter((plane) => {
+                // Exclude current plane
+                if (plane.tail === aircraftDetails.registration) return false;
+
+                // Get current aircraft category
+                const currentCategory = getAircraftCategory(
+                  aircraftDetails.aircraftName
+                );
+                const planeCategory = getAircraftCategory(plane.aircraftName);
+
+                // Show only aircraft from the same category
+                return currentCategory === planeCategory;
+              })
+              .map((plane, index) => (
+                <SwiperSlide key={index} className="bg-transparent">
+                  <div className="flex flex-col items-center p-6">
+                    <div className="relative w-full h-64 mb-4">
+                      <Image
+                        src={plane.imageUrl}
+                        alt={plane.aircraftName}
+                        fill
+                        className="object-contain"
+                        loader={customLoader}
+                      />
+                    </div>
+                    <div className="bg-gradient-to-r from-gray-500 via-gray-200 to-gray-500 p-4 rounded-3xl">
+                      <h3 className="text-2xl font-bold text-black mb-2 text-center">
+                        {plane.aircraftName}
+                      </h3>
+                      <div className="text-gray-700 text-center">
+                        <p>Range: {plane.range}</p>
+                        <p>Seats: {plane.seats}</p>
+                      </div>
+                    </div>
+                    <Link
+                      href={`/charter/fleet/${
+                        plane.tail
+                      }?model=${encodeURIComponent(plane.aircraftName)}`}
+                      className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                    >
+                      View Details
+                    </Link>
+                  </div>
+                </SwiperSlide>
+              ))}
+          </Swiper>
+
+          <button className="custom-prev absolute left-0 top-1/2 z-10 text-white hover:text-blue-300 transition">
+            <CircleArrowLeft size={40} />
+          </button>
+          <button className="custom-next absolute right-0 top-1/2 z-10 text-white hover:text-blue-300 transition">
+            <CircleArrowRight size={40} />
+          </button>
+        </div>
+      </div>
     </section>
   );
 };
