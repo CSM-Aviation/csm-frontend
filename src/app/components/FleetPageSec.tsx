@@ -35,7 +35,7 @@ const FleetPageSec = () => {
       altitude: "35,000 ft",
     },
     {
-      imageUrl: "/images/wheels_removed_fleet/30GT.png",
+      imageUrl: "/images/wheels_removed_fleet/30GT2.png",
       aircraftName: "King Air F90",
       tail: "N30GT",
       seats: "6",
@@ -74,7 +74,7 @@ const FleetPageSec = () => {
       altitude: "45,000 ft",
     },
     {
-      imageUrl: "/images/wheels_removed_fleet/561CC.png",
+      imageUrl: "/images/wheels_removed_fleet/561CC3.png",
       aircraftName: "Citation Ultra",
       tail: "561CC",
       seats: "7+1",
