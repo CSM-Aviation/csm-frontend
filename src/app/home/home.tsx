@@ -13,10 +13,10 @@ import FleetPage from "../components/FleetPage";
 import MobileFleet from "../components/MobileFleet";
 import FleetPageSec from "../components/FleetPageSec";
 import HeroVideoSection from "../components/HeroVideoSection";
-import Fireworks from "@fireworks-js/react";
-import { HeroAnimated } from "../components/HeroAnimated";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import Marquee from "../components/Marquee";
+
+
+
+
 
 export default function HomeBody() {
   const { config, error } = useConfig();
@@ -129,8 +129,8 @@ export default function HomeBody() {
   return (
     <>
       <div className="-mt-24 md:-mt-20">
-        {/* <Marquee/> */}
-        <HeroAnimated />
+      
+    
         <AnimatedCSMVideoText videoSource={videoSource} />
         {/* <HeroVideoSection /> */}
         <ServicesCards />
@@ -146,11 +146,7 @@ export default function HomeBody() {
           transition={{ duration: 1.3 }}
           className="absolute top-[100%] "
         >
-          <DotLottieReact
-                  src="https://lottie.host/564dc67b-f10f-4db7-bdc6-d4224659c198/u7WeoCnmxa.lottie"
-            loop
-            autoplay
-          />
+         
         </motion.div>
         <motion.div
           initial={{ scale: 0 }}
@@ -158,11 +154,7 @@ export default function HomeBody() {
           transition={{ duration: 1.3 }}
           className="absolute top-[110%] left-[20%]"
         >
-          <DotLottieReact
-                  src="https://lottie.host/564dc67b-f10f-4db7-bdc6-d4224659c198/u7WeoCnmxa.lottie"
-            loop
-            autoplay
-          />
+        
         </motion.div>
         <motion.div
           initial={{ scale: 0 }}
@@ -170,11 +162,7 @@ export default function HomeBody() {
           transition={{ duration: 1.3 }}
           className="absolute top-[180%] left-[20%]"
         >
-          <DotLottieReact
-                  src="https://lottie.host/564dc67b-f10f-4db7-bdc6-d4224659c198/u7WeoCnmxa.lottie"
-            loop
-            autoplay
-          />
+         
         </motion.div>
         <motion.div
           initial={{ scale: 0 }}
@@ -182,11 +170,7 @@ export default function HomeBody() {
           transition={{ duration: 1.3 }}
           className="absolute top-[120%] right-0 w-[400px]"
         >
-          <DotLottieReact
-            src="https://lottie.host/56b00b84-9561-4e2f-87cd-8d98bf1a822e/pkKgUqCk8a.lottie"
-            loop
-            autoplay
-          />
+         
         </motion.div>
         <motion.div
           initial={{ scale: 0 }}
@@ -194,11 +178,7 @@ export default function HomeBody() {
           transition={{ duration: 1.3 }}
           className="absolute top-[180%] left-0 w-[400px]"
         >
-          <DotLottieReact
-            src="https://lottie.host/56b00b84-9561-4e2f-87cd-8d98bf1a822e/pkKgUqCk8a.lottie"
-            loop
-            autoplay
-          />
+         
         </motion.div>
         <motion.div
           initial={{ scale: 0 }}
@@ -206,11 +186,7 @@ export default function HomeBody() {
           transition={{ duration: 1.3 }}
           className="absolute top-[180%] right-0 w-[400px]"
         >
-          <DotLottieReact
-            src="https://lottie.host/194c4d76-5445-48c0-8774-51a9e65a006f/34slhN4CDU.lottie"
-            loop
-            autoplay
-          />
+         
         </motion.div>
         <motion.div
           initial={{ scale: 0 }}
@@ -218,11 +194,7 @@ export default function HomeBody() {
           transition={{ duration: 1.3 }}
           className="absolute top-[240%] right-0 w-[560px]"
         >
-          {/* <DotLottieReact
-            src="https://lottie.host/194c4d76-5445-48c0-8774-51a9e65a006f/34slhN4CDU.lottie"
-            loop
-            autoplay
-          /> */}
+        
         </motion.div>
         <motion.div
           initial={{ scale: 0 }}
@@ -230,11 +202,7 @@ export default function HomeBody() {
           transition={{ duration: 1.3 }}
           className="absolute top-[240%] left-0"
         >
-          <DotLottieReact
-            src="https://lottie.host/194c4d76-5445-48c0-8774-51a9e65a006f/34slhN4CDU.lottie"
-            loop
-            autoplay
-          />
+          
         </motion.div>
         <motion.div
           initial={{ scale: 0 }}
@@ -242,11 +210,7 @@ export default function HomeBody() {
           transition={{ duration: 1.3 }}
           className="absolute top-[280%] right-0 "
         >
-          <DotLottieReact
-            src="https://lottie.host/79da910c-62ae-41c5-ba8c-3a1df8fbaaea/DMuVRQdaYO.lottie"
-            loop
-            autoplay
-          />
+       
         </motion.div>
         <motion.div
           initial={{ scale: 0 }}
@@ -254,11 +218,7 @@ export default function HomeBody() {
           transition={{ duration: 1.3 }}
           className="absolute top-[280%] left-0 w-[400px]"
         >
-          <DotLottieReact
-                src="https://lottie.host/27cc01b7-950e-4de5-b4d8-fce42e32f9a3/3QgCPRlZxS.lottie"
-            loop
-            autoplay
-          />
+        
         </motion.div>
         <motion.div
           initial={{ scale: 0 }}
@@ -266,12 +226,7 @@ export default function HomeBody() {
           transition={{ duration: 1.3 }}
           className="absolute top-[320%] right-1/2 w-[560px]"
         >
-          <DotLottieReact
-                  src="https://lottie.host/037d6e58-d1cf-4930-b00a-f50c14bb7cd6/rCO1swXSla.lottie"
-
-            loop
-            autoplay
-          />
+        
         </motion.div>
       </div>
     </>

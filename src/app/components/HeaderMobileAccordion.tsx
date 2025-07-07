@@ -30,7 +30,7 @@ const menuItems = [
 
 
   {
-    label: "Login",
+    label: "LOGIN",
     href: "/admin/login",
   },
 ];
@@ -139,7 +139,7 @@ const HeaderMobileAccordion: React.FC = () => {
                       }
                     >
                       {item.subLinks ? (
-                        <span className="font-medium hover:text-blue-600">
+                        <span className="font-medium hover:text-blue-600 uppercase">
                           {item.label}
                         </span>
                       ) : (
@@ -160,7 +160,7 @@ const HeaderMobileAccordion: React.FC = () => {
                       ) : (
                         <div
                         onClick={() => handleLinkClick(item.href)}
-                        className="font-medium hover:text-blue-600"
+                        className="font-medium hover:text-blue-600 uppercase"
                       >
                         <FaArrowRight className="ml-2" />
                       </div>
@@ -181,7 +181,7 @@ const HeaderMobileAccordion: React.FC = () => {
                             <div
                               key={i}
                               onClick={() => handleLinkClick(sub.href)}
-                              className="flex items-center cursor-pointer justify-between text-sm text-gray-700 hover:text-blue-500"
+                              className="flex items-center cursor-pointer justify-between text-sm text-gray-700 hover:text-blue-500 uppercase"
                             >
                               <span>{sub.label}</span>
                               <FaArrowRight className="text-xs ml-1" />
@@ -192,19 +192,6 @@ const HeaderMobileAccordion: React.FC = () => {
                     </AnimatePresence>
                   </motion.div>
                 ))}
-
-                {/* Animated Login Button */}
-                {/* <motion.button
-                  onClick={handleLoginClick}
-                  className="flex items-center w-full justify-between text-sm text-gray-800 hover:text-blue-600"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                >
-                  <span className="font-medium">LOGIN</span>
-                  <FaArrowRight className="text-xs ml-1" size={18} />
-                </motion.button> */}
               </motion.nav>
             </motion.div>
           )}
