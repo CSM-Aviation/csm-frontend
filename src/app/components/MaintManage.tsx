@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 
 interface ServiceCardProps {
@@ -14,15 +13,12 @@ interface ServiceCardProps {
     index: number;
 }
 
-// Desktop/Laptop ServiceCard (Enhanced Version)
+// Desktop/Laptop ServiceCard (No Animation Version)
 const DesktopServiceCard: React.FC<ServiceCardProps> = ({ title, image, content, link, index }) => {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
-        <motion.div
-            initial={{ opacity: 0, x: index === 0 ? -50 : 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: index * 0.2 }}
+        <div
             className={`transition-all duration-700 ease-in-out ${
                 isHovered ? 'md:w-[70%]' : 'md:w-1/2'
             } w-full h-[70vh] relative group overflow-hidden`}
@@ -48,68 +44,43 @@ const DesktopServiceCard: React.FC<ServiceCardProps> = ({ title, image, content,
                     {/* Content Container */}
                     <div className="absolute inset-0 flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 text-white z-10">
                         {/* Title with Enhanced Styling */}
-                        <motion.h2 
-                            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 text-center transition-all duration-500 group-hover:scale-105 bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent"
-                            whileHover={{ scale: 1.05 }}
-                        >
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 text-center transition-all duration-500 group-hover:scale-105 bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent">
                             {title}
-                        </motion.h2>
+                        </h2>
                         
                         {/* Content List with Smooth Animation */}
-                        <motion.div
+                        <div
                             className={`flex-grow flex flex-col justify-center items-center transition-all duration-500 ${
                                 isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                             } max-w-md`}
-                            animate={{
-                                opacity: isHovered ? 1 : 0,
-                                y: isHovered ? 0 : 16
-                            }}
-                            transition={{ duration: 0.3 }}
                         >
                             <ul className="space-y-2 sm:space-y-3 w-full">
                                 {content.map((item, itemIndex) => (
-                                    <motion.li 
+                                    <li 
                                         key={itemIndex} 
                                         className="flex items-start text-sm sm:text-base lg:text-lg xl:text-xl text-center justify-center"
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ 
-                                            opacity: isHovered ? 1 : 0,
-                                            x: isHovered ? 0 : -20
-                                        }}
-                                        transition={{ 
-                                            duration: 0.3,
-                                            delay: itemIndex * 0.1
-                                        }}
                                     >
                                         <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400 mr-2 mt-1 flex-shrink-0" />
                                         <span className="text-left leading-relaxed">{item}</span>
-                                    </motion.li>
+                                    </li>
                                 ))}
                             </ul>
                             
                             {/* Call to Action Button */}
-                            <motion.div
-                                className="mt-6 sm:mt-8"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ 
-                                    opacity: isHovered ? 1 : 0,
-                                    y: isHovered ? 0 : 20
-                                }}
-                                transition={{ duration: 0.3, delay: 0.2 }}
-                            >
+                            <div className="mt-6 sm:mt-8">
                                 <div className="group/btn inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-sm sm:text-base">
                                     Learn More
                                     <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
                                 </div>
-                            </motion.div>
-                        </motion.div>
+                            </div>
+                        </div>
                     </div>
                     
                     {/* Subtle Shine Effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></div>
                 </div>
             </Link>
-        </motion.div>
+        </div>
     );
 };
 
@@ -179,8 +150,6 @@ const MaintManage: React.FC = () => {
         <div className="w-full bg-gradient-to-b from-slate-50 to-white">
             {/* Desktop/Laptop Version (md and above) */}
             <div className="hidden md:block">
-              
-                
                 {/* Service Cards Container */}
                 <div className="flex flex-row w-full min-h-[65vh] lg:h-[70vh] shadow-2xl rounded-t-lg overflow-hidden">
                     {services.map((service, index) => (
