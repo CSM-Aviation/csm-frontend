@@ -775,7 +775,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
       </div>
 
       {/* Aircraft Amenities and Configuration */}
-      <div className="flex justify-center p-10 text-black bg-[#002040] mt-20">
+      <div className="flex justify-center p-10 text-black bg-[#002040] ">
         <div className="flex max-sm:flex-col justify-between w-full max-w-6xl gap-2">
           {/* Aircraft Amenities */}
           <section className="flex flex-col justify-center items-center">
