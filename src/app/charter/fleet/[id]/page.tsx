@@ -415,21 +415,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
 
   return (
     <section ref={mainRef} className="min-h-screen bg-white relative">
-      {/* Hero Section */}
-      <div className="relative w-full h-screen flex justify-center items-center">
-        <div className="relative z-50">
-          <JetInsightComponent />
-        </div>
-        <Image
-          src={aircraftDetails.imageUrls[0]}
-          width={400}
-          height={400}
-          className="w-full h-full absolute top-0 z-[1]"
-          alt=""
-        />
-      </div>
-
-      {/* Aircraft Title and Specs */}
+   
       <div className="mx-auto relative">
         <div className="flex flex-col justify-between items-center max-md:mt-10 mt-24 px-10 max-sm:px-6">
           <motion.div
@@ -440,7 +426,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
           >
             <motion.p
               variants={childVariants}
-              className="text-8xl max-lg:text-6xl max-md:text-4xl font-bold text bg-gradient-to-r from-neutral-800 via-neutral-500 to-neutral-800 text-transparent bg-clip-text pb-4"
+              className="text-8xl max-lg:text-6xl mt-20 max-md:text-4xl font-bold text bg-gradient-to-r from-neutral-800 via-neutral-500 to-neutral-800 text-transparent bg-clip-text pb-4"
             >
               {aircraftDetails.aircraftName}
             </motion.p>
@@ -450,8 +436,9 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
             >
               {aircraftDetails.registration}
             </motion.p>
-          </motion.div>
           
+          </motion.div>
+             <JetInsightComponent />
           {/* Specifications */}
           <div className="flex justify-evenly box-border w-full mt-10">
             <motion.div
