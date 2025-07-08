@@ -54,6 +54,7 @@ interface CarouselImage {
 }
 
 interface AircraftDetailsTypes extends FleetItem {
+  yor: string;
   configurationUrls: string[] | undefined;
   pdfUrls: string[] | undefined;
   exteriorImages: string[];
@@ -748,10 +749,10 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
                     <li>YOR:</li>
                   </ul>
                   <ul className="text-sm lg:text-lg space-y-2 text-neutral-500">
-                    <li>Yes</li>
+                    <li>{aircraftDetails.wifi}</li>
                     <li>{aircraftDetails.doorHeight}</li>
                     <li>{aircraftDetails.doorWidth}</li>
-                    <li>{aircraftDetails.yom}</li>
+                    <li>{aircraftDetails.yor}</li>
                   </ul>
                 </div>
               </div>
