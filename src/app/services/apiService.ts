@@ -276,7 +276,7 @@ export interface FleetItem {
   wifi: string;
   amenities: string;
   category: string;
-  yom: string;
+  yor: string;
   imageUrls: string[];
 }
 
