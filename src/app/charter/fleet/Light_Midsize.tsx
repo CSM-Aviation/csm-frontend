@@ -22,22 +22,14 @@ const Light_Midsize = () => {
   const [error, setError] = useState<string | null>(null);
 
   const turboFleet: CardData[] = [
-    {
-      imageUrl: "/images/wheels_removed_fleet/N550ML.png",
-      aircraftName: "Citation Bravo",
-      tail: "N550ML",
-      seats: "7",
-      range: "1980NM",
-      speed: "420 kts",
-      altitude: "45,000 ft"
-    },
+   
     {
       imageUrl: "/images/wheels_removed_fleet/N8821C.png",
       aircraftName: "Gulfstream G150",
       tail: "N8821C",
       seats: "8+1",
-      range: "2760NM",
-      speed: "470 kts",
+      range: "3400NM",
+      speed: "537 MPH",
       altitude: "45,000 ft"
     },
     {
@@ -53,69 +45,15 @@ const Light_Midsize = () => {
       imageUrl: "/images/wheels_removed_fleet/N360AV.png",
       aircraftName: "Gulfstream G150",
       tail: "N360AV",
-      seats: "7",
-      range: "2760NM",
-      speed: "470 kts",
+      seats: "6+1",
+      range: "3400NM",
+      speed: "537MPH",
       altitude: "45,000 ft"
-    },
-    {
-      imageUrl: "/images/wheels_removed_fleet/N518KH.png",
-      aircraftName: "Cessna Citation CE560 Ultra",
-      tail: "561CC",
-      seats: "7+1",
-      range: "1960NM",
-      speed: "430 kts",
-      altitude: "45,000 ft"
-    },
+    }
+    
   ];
 
-  const midsizeFleet: CardData[] = [
-    {
-      imageUrl: "/images/wheels_removed_fleet/N550ML.png",
-      aircraftName: "Citation Bravo",
-      tail: "N550ML",
-      seats: "7",
-      range: "1980NM",
-      speed: "420 kts",
-      altitude: "45,000 ft",
-    },
-    {
-      imageUrl: "/images/wheels_removed_fleet/N8821C.png",
-      aircraftName: "Gulfstream G150",
-      tail: "N8821C",
-      seats: "8+1",
-      range: "2760NM",
-      speed: "470 kts",
-      altitude: "45,000 ft",
-    },
-    {
-      imageUrl: "/images/wheels_removed_fleet/N518KH.png",
-      aircraftName: "Gulfstream G150",
-      tail: "N518KH",
-      seats: "8+1",
-      range: "2760NM",
-      speed: "470 kts",
-      altitude: "45,000 ft",
-    },
-    {
-      imageUrl: "/images/wheels_removed_fleet/N360AV.png",
-      aircraftName: "Gulfstream G150",
-      tail: "N360AV",
-      seats: "7",
-      range: "2760NM",
-      speed: "470 kts",
-      altitude: "45,000 ft",
-    },
-    {
-      imageUrl: "/images/wheels_removed_fleet/N518KH.png",
-      aircraftName: "Cessna Citation CE560 Ultra",
-      tail: "561CC",
-      seats: "7+1",
-      range: "1960NM",
-      speed: "430 kts",
-      altitude: "45,000 ft",
-    },
-  ];
+
 
   useEffect(() => {
     const fetchAircraftData = async () => {
@@ -188,14 +126,14 @@ const Light_Midsize = () => {
               className="flex cursor-pointer flex-col items-center rounded-lg overflow-hidden group relative"
             >
               {/* Default Image (no wheels) */}
-              <div className="w-full max-2xl:h-64 h-96 relative">
+              <div className="w-full relative">
                 <Image
                   src={noWheelsImage}
                   loader={customLoader}
                   alt={`${aircraft.registration} - ${aircraft.aircraftName}`}
                   height={500}
                   width={500}
-                  className="object-cover w-full h-full"
+                  className="object-cover  h-full"
                 />
               </div>
 
