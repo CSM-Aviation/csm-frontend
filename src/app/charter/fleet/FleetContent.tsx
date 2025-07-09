@@ -13,7 +13,10 @@ const FleetContent: React.FC = () => {
   const headRef = useRef<HTMLDivElement>(null);
   const tabs = ["turbo props", "light jets", "midsize jets"];
   return (
-    <section id="fleetdetails" className="min-h-screen relative inset-0 flex justify-center items-center py-[120px] max-md:py-[80px]">
+    <section
+      id="fleetdetails"
+      className="min-h-screen relative inset-0 flex justify-center items-center py-[120px] max-md:py-[80px]"
+    >
       <div className="px-6 w-full flex flex-col justify-center items-center text-black gap-10 max-sm:gap-6 ">
         <motion.div
           initial={{ opacity: 0, y: 120 }}
@@ -25,16 +28,15 @@ const FleetContent: React.FC = () => {
           <h1 className="uppercase text-6xl max-sm:text-3xl max-md:text-6xl leading-[100%] font-bold text-[#00254a]">
             Our Fleet
           </h1>
-        
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
         >
-          <JetInsightComponent/>
+          <JetInsightComponent />
         </motion.div>
-<motion.div
+        <motion.div
           initial="hidden"
           animate="visible"
           variants={{

@@ -430,13 +430,13 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
             >
               {aircraftDetails.aircraftName}
             </motion.p>
-            <motion.p
+            {/* <motion.p
               variants={childVariants}
               className="text-5xl max-lg:text-4xl max-md:text-3xl max-sm:text-2xl mb-6 bg-gradient-to-r from-neutral-800 via-neutral-500 to-neutral-800 text-transparent bg-clip-text"
             >
               {aircraftDetails.registration}
             </motion.p>
-          
+           */}
           </motion.div>
              <JetInsightComponent />
           {/* Specifications */}
