@@ -157,13 +157,10 @@ const jobListings: Job[] = [
     benefits: [
       'Flexible scheduling with rotation options (8 days on/6 days off or 15 days on/13 days off)',
       'Home-based position with company-provided positioning flights',
-      'Comprehensive health, dental, and vision insurance',
+      'Comprehensive health insurance',
       '401(k) retirement plan with company matching',
       'Paid time off and holiday pay (double pay for holiday work)',
-      'Per diem allowances: $75/day domestic, $120/day international',
       'Company-provided uniforms and travel equipment',
-      'Type rating training and recurrent training fully paid',
-      'Known Crewmember (KCM) badge and medical exam reimbursement',
       'Professional development opportunities and career advancement',
       'Exposure to luxury aviation industry and networking opportunities'
     ],
