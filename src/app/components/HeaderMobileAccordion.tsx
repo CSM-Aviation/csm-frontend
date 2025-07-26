@@ -25,6 +25,7 @@ const menuItems = [
     subLinks: [
       { label: "ABOUT US", href: "/company/about" },
       { label: "CONTACT", href: "/company/contact" },
+      { label: "CAREERS", href: "/company/careers" },
     ],
   },
 
