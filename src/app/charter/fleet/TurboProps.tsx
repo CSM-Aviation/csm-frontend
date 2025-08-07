@@ -29,7 +29,7 @@ const TurboProps = () => {
       altitude: "35,000 ft",
     },
     {
-      imageUrl: "/images/wheels_removed_fleet/30GT.png",
+      imageUrl: "/images/wheels_removed_fleet/N30ext1.png",
       aircraftName: "King Air F90",
       tail: "N30GT",
       seats: "6",
