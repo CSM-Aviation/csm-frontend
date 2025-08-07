@@ -215,14 +215,56 @@ export const apiService = {
 
   async updateVendorStatus(id: string, status: 'Approved' | 'Rejected' | 'Pending', rejectReason?: string): Promise<ApiResponse<void>> {
     const data: { status: string; rejectReason?: string } = { status };
-    
+
     // Only include rejectReason if it's provided and status is 'Rejected'
     if (status === 'Rejected' && rejectReason) {
-        data.rejectReason = rejectReason;
+      data.rejectReason = rejectReason;
     }
-    
+
     return this.put<void>(`/api/vendor-form/${id}/status`, data);
-}
+  },
+
+  async exportAnalyticsToExcel(timeframe: string = '7d'): Promise<void> {
+    try {
+      const token = isLocalStorageAvailable ? localStorage.getItem('token') : null;
+      const response = await fetch(`${BASE_URL}api/analytics/export-excel?timeframe=${timeframe}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': token ? `Bearer ${token}` : '',
+          'X-API-Key': API_KEY || ''
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Get the filename from the response headers
+      const contentDisposition = response.headers.get('Content-Disposition');
+      let filename = `CSM_Aviation_Analytics_${timeframe}_${new Date().toISOString().split('T')[0]}.xlsx`;
+      
+      if (contentDisposition && contentDisposition.includes('filename=')) {
+        const filenameMatch = contentDisposition.match(/filename="?([^"]*)"?/);
+        if (filenameMatch) {
+          filename = filenameMatch[1];
+        }
+      }
+
+      // Create blob and download
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error exporting analytics to Excel:', error);
+      throw error;
+    }
+  },
 
   // Add more methods as needed
 };

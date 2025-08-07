@@ -118,6 +118,12 @@ const Footer = () => {
                     Sitemap
                   </Link>
                 </li>
+                <li>
+                  <Link href="/company/careers" className="hover:underline hover:text-white/80 transition-colors flex items-center">
+                    <FaArrowRight className="mr-2 text-sm" />
+                    Careers
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { apiService, AnalyticsDashboardData } from '../../services/apiService';
-import { Loader2, ArrowUpRight, ArrowDownRight, Clock } from 'lucide-react';
+import { Loader2, ArrowUpRight, ArrowDownRight, Clock, Download } from 'lucide-react';
 import VisitorTrendChart from './VisitorTrendChart';
 import HourlyActivityChart from './HourlyActivityChart';
 import TrafficSourcesChart from './TrafficSourcesChart';
@@ -49,6 +49,7 @@ const AdminAnalyticsDashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
+  const [exportLoading, setExportLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -95,6 +96,21 @@ const AdminAnalyticsDashboard: React.FC = () => {
     const interval = setInterval(fetchData, 300000); // 5 minutes
     return () => clearInterval(interval);
   }, [timeframe]);
+
+  const handleExportToExcel = async () => {
+    setExportLoading(true);
+    try {
+      await apiService.exportAnalyticsToExcel(timeframe);
+      // Success feedback could be added here if needed
+    } catch (error) {
+      console.error('Failed to export analytics:', error);
+      setError('Failed to export analytics to Excel');
+      // Clear error after 3 seconds
+      setTimeout(() => setError(null), 3000);
+    } finally {
+      setExportLoading(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -152,6 +168,18 @@ const AdminAnalyticsDashboard: React.FC = () => {
             </div>
           </div>
           <div className="mt-4 md:mt-0 flex items-center gap-4">
+            <button
+              onClick={handleExportToExcel}
+              disabled={exportLoading}
+              className="bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white px-4 py-2 rounded-md shadow-sm flex items-center gap-2 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              {exportLoading ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Download className="w-4 h-4" />
+              )}
+              {exportLoading ? 'Exporting...' : 'Export to Excel'}
+            </button>
             <select
               value={timeframe}
               onChange={(e) => setTimeframe(e.target.value)}
