@@ -1,6 +1,7 @@
-"use client";
-import React, { useState } from 'react';
-import { MapPin, Clock, Building, DollarSign, Users, Plane, CheckCircle, Link, ChevronLeft, Menu } from 'lucide-react';
+'use client'
+import React, { useState, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
+import { MapPin, Clock, Building, DollarSign, Users, Plane, ChevronRight, Search, ChevronDown, X, ExternalLink } from 'lucide-react';
 
 interface Job {
   id: string;
@@ -17,6 +18,15 @@ interface Job {
   benefits: string[];
   posted: string;
   department: string;
+  workLocation: string;
+  workFlexibility: string;
+  skills: string[];
+}
+
+interface FilterState {
+  team: string;
+  workLocation: string;
+  workFlexibility: string;
 }
 
 const jobListings: Job[] = [
@@ -28,6 +38,9 @@ const jobListings: Job[] = [
     type: 'Part-time',
     salary: 'Competitive salary',
     department: 'Marketing',
+    workLocation: 'Remote',
+    workFlexibility: 'Part-time',
+    skills: ['Adobe Creative Suite', 'Social Media', 'Video Editing', 'Graphic Design'],
     overview: 'Join our marketing team and help promote exclusive private jet charter services. Create compelling visual content that captures the sophistication and premium nature of luxury aviation.',
     description: 'Work independently under our Marketing Manager while bringing fresh creative solutions to showcase our fleet across multiple channels.',
     responsibilities: [
@@ -64,16 +77,19 @@ const jobListings: Job[] = [
       'Collaborative work environment with supportive team',
       'Exposure to luxury travel industry and networking opportunities'
     ],
-    posted: '2025-07-20'
+    posted: '2025-01-20'
   },
   {
     id: '2',
     title: 'Flight Coordinator',
     company: 'CSM Aviation',
     location: 'Fresno, CA',
-    type: 'Part-time/Full-time',
+    type: 'Full-time',
     salary: 'Competitive salary',
     department: 'Operations',
+    workLocation: 'On-site',
+    workFlexibility: 'Full-time',
+    skills: ['Office 365', 'Customer Service', 'Aviation Operations', 'Communication'],
     overview: 'CSM Aviation seeks a Private Air Charter Coordinator to join our operations team. Serve as logistics and scheduling representative for part 91 and part 135 flight operations.',
     description: 'Act as primary contact for crew coordination and assist with private charter bookings while handling various administrative duties in a fast-paced aviation environment.',
     responsibilities: [
@@ -107,7 +123,7 @@ const jobListings: Job[] = [
       'Dynamic work environment with growth potential',
       'Opportunity to work with luxury aviation services'
     ],
-    posted: '2025-07-20'
+    posted: '2025-01-20'
   },
   {
     id: '3',
@@ -117,6 +133,9 @@ const jobListings: Job[] = [
     type: 'Full-time',
     salary: 'Competitive salary',
     department: 'Operations',
+    workLocation: 'Travel',
+    workFlexibility: 'Full-time',
+    skills: ['ATP Certificate', 'Aviation', 'Safety', 'Customer Service'],
     overview: 'CSM Aviation seeks experienced and professional pilots to join our elite flight operations team. Operate state-of-the-art private aircraft for high-net-worth individuals and corporate clients.',
     description: 'Maintain the highest standards of safety, service, and professionalism. Serve as both Part 91 and Part 135 operations pilot providing exceptional luxury aviation experiences across domestic and international destinations.',
     responsibilities: [
@@ -164,310 +183,385 @@ const jobListings: Job[] = [
       'Professional development opportunities and career advancement',
       'Exposure to luxury aviation industry and networking opportunities'
     ],
-    posted: '2025-07-20'
+    posted: '2025-01-20'
   }
 ];
 
 export default function CareersPage() {
-  const [selectedJob, setSelectedJob] = useState<Job>(jobListings[0]);
-  const [showJobList, setShowJobList] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState('');
 
-  // Check if mobile on component mount and window resize
-  React.useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
-      if (window.innerWidth >= 1024) {
-        setShowJobList(false);
-      }
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  const handleJobSelect = (job: Job) => {
-    setSelectedJob(job);
-    setShowJobList(false);
+  const filterOptions = {
+    team: ['All', 'Marketing', 'Operations'],
+    workLocation: ['All', 'Remote', 'On-site', 'Travel'],
+    workFlexibility: ['All', 'Full-time', 'Part-time', 'Hybrid']
   };
 
-  const handleApplyClick = () => {
+  const [filters, setFilters] = useState<FilterState>({
+    team: 'All',
+    workLocation: 'All',
+    workFlexibility: 'All'
+  });
+
+  const [dropdownStates, setDropdownStates] = useState({
+    team: false,
+    workLocation: false,
+    workFlexibility: false
+  });
+
+  // Enhanced search and filter logic
+  const filteredJobs = useMemo(() => {
+    return jobListings.filter(job => {
+      // Text search logic
+      const searchLower = searchQuery.toLowerCase();
+      const textMatch = !searchQuery || 
+        job.title.toLowerCase().includes(searchLower) ||
+        job.description.toLowerCase().includes(searchLower) ||
+        job.overview.toLowerCase().includes(searchLower) ||
+        job.location.toLowerCase().includes(searchLower) ||
+        job.department.toLowerCase().includes(searchLower) ||
+        job.skills.some(skill => skill.toLowerCase().includes(searchLower)) ||
+        job.responsibilities.some(resp => resp.toLowerCase().includes(searchLower)) ||
+        job.requirements.some(req => req.toLowerCase().includes(searchLower));
+
+      // Filter logic
+      const teamMatch = filters.team === 'All' || job.department === filters.team;
+      const locationMatch = filters.workLocation === 'All' || job.workLocation === filters.workLocation;
+      const flexibilityMatch = filters.workFlexibility === 'All' || job.workFlexibility === filters.workFlexibility;
+
+      return textMatch && teamMatch && locationMatch && flexibilityMatch;
+    });
+  }, [searchQuery, filters]);
+
+  // Close dropdowns when clicking outside
+  React.useEffect(() => {
+    const handleClickOutside = () => {
+      setDropdownStates({
+        team: false,
+        workLocation: false,
+        workFlexibility: false
+      });
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
+
+  const handleFilterChange = (filterType: keyof FilterState, value: string) => {
+    setFilters(prev => ({
+      ...prev,
+      [filterType]: value
+    }));
+    setDropdownStates(prev => ({
+      ...prev,
+      [filterType]: false
+    }));
+  };
+
+  const toggleDropdown = (dropdown: keyof typeof dropdownStates, event: React.MouseEvent) => {
+    event.stopPropagation();
+    setDropdownStates(prev => ({
+      team: false,
+      workLocation: false,
+      workFlexibility: false,
+      [dropdown]: !prev[dropdown]
+    }));
+  };
+
+  const handleJobClick = (jobId: string) => {
+    router.push(`/company/careers/${jobId}`);
+  };
+
+  const handleApplyClick = (e: React.MouseEvent, jobId?: string) => {
+    e.stopPropagation();
     window.open("https://form.jotform.com/252066358425156", "_blank");
   };
 
+  const clearFilters = () => {
+    setFilters({
+      team: 'All',
+      workLocation: 'All',
+      workFlexibility: 'All'
+    });
+    setSearchQuery('');
+  };
+
+  const activeFiltersCount = Object.values(filters).filter(value => value !== 'All').length;
+
+  // CSM Blue color
+  const csmBlue = '#2563eb';
+
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-gradient-to-br from-[#002040] to-[#004080] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-          <div className="text-center">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2 sm:mb-4">
+      {/* Hero Section */}
+      <div
+        className="relative bg-gray-900 text-white overflow-hidden"
+        style={{
+          backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2484&q=80")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+          <div className="text-center max-w-4xl mx-auto mb-12">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
               CSM Aviation Career Center
             </h1>
-            <p className="text-base sm:text-lg lg:text-xl text-blue-100 max-w-3xl mx-auto px-2">
+            <p className="text-xl sm:text-2xl text-gray-200 mb-8">
               Shape the future of luxury aviation with innovative solutions and exceptional service
+            </p>
+          </div>
+
+          {/* Search Bar */}
+          <div className="max-w-2xl mx-auto mb-8">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                placeholder="Search by job title, skills, location..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="block w-full pl-10 pr-12 py-4 border border-gray-300 rounded-full leading-5 bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute inset-y-0 right-12 flex items-center pr-3"
+                >
+                  <X className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                </button>
+              )}
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                <button 
+                  style={{ backgroundColor: csmBlue }}
+                  className="hover:opacity-90 text-white p-3 rounded-full transition-colors"
+                >
+                  <Search className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Filter Dropdowns */}
+          <div className="flex flex-wrap justify-center gap-4">
+            <div className="relative">
+              <button
+                onClick={(e) => toggleDropdown('team', e)}
+                className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 text-white px-6 py-3 rounded-full transition-colors"
+              >
+                <span>Team{filters.team !== 'All' && `: ${filters.team}`}</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${dropdownStates.team ? 'rotate-180' : ''}`} />
+              </button>
+
+              {dropdownStates.team && (
+                <div className="absolute top-full mt-2 left-0 bg-white rounded-lg shadow-lg border border-gray-200 min-w-[150px] z-50">
+                  {filterOptions.team.map((option) => (
+                    <button
+                      key={option}
+                      onClick={() => handleFilterChange('team', option)}
+                      className={`w-full text-left px-4 py-2 hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg transition-colors ${filters.team === option ? 'bg-blue-50 text-blue-600 font-medium' : 'text-gray-700'
+                        }`}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="relative">
+              <button
+                onClick={(e) => toggleDropdown('workLocation', e)}
+                className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 text-white px-6 py-3 rounded-full transition-colors"
+              >
+                <span>Where You Work{filters.workLocation !== 'All' && `: ${filters.workLocation}`}</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${dropdownStates.workLocation ? 'rotate-180' : ''}`} />
+              </button>
+
+              {dropdownStates.workLocation && (
+                <div className="absolute top-full mt-2 left-0 bg-white rounded-lg shadow-lg border border-gray-200 min-w-[150px] z-50">
+                  {filterOptions.workLocation.map((option) => (
+                    <button
+                      key={option}
+                      onClick={() => handleFilterChange('workLocation', option)}
+                      className={`w-full text-left px-4 py-2 hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg transition-colors ${filters.workLocation === option ? 'bg-blue-50 text-blue-600 font-medium' : 'text-gray-700'
+                        }`}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="relative">
+              <button
+                onClick={(e) => toggleDropdown('workFlexibility', e)}
+                className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 text-white px-6 py-3 rounded-full transition-colors"
+              >
+                <span>Work Flexibility{filters.workFlexibility !== 'All' && `: ${filters.workFlexibility}`}</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${dropdownStates.workFlexibility ? 'rotate-180' : ''}`} />
+              </button>
+
+              {dropdownStates.workFlexibility && (
+                <div className="absolute top-full mt-2 left-0 bg-white rounded-lg shadow-lg border border-gray-200 min-w-[150px] z-50">
+                  {filterOptions.workFlexibility.map((option) => (
+                    <button
+                      key={option}
+                      onClick={() => handleFilterChange('workFlexibility', option)}
+                      className={`w-full text-left px-4 py-2 hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg transition-colors ${filters.workFlexibility === option ? 'bg-blue-50 text-blue-600 font-medium' : 'text-gray-700'
+                        }`}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {(activeFiltersCount > 0 || searchQuery) && (
+              <button
+                onClick={clearFilters}
+                className="flex items-center space-x-2 bg-red-500/10 hover:bg-red-500/20 backdrop-blur-sm border border-red-300/20 text-red-200 px-6 py-3 rounded-full transition-colors"
+              >
+                <X className="w-4 h-4" />
+                <span>Clear All</span>
+              </button>
+            )}
+          </div>
+
+          {/* Results Count */}
+          <div className="text-center mt-6">
+            <p className="text-gray-300">
+              {filteredJobs.length} position{filteredJobs.length !== 1 ? 's' : ''} found
+              {(searchQuery || activeFiltersCount > 0) && ` matching your criteria`}
             </p>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
-        {/* Mobile Job Selector Button */}
-        {isMobile && (
-          <div className="mb-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {filteredJobs.length === 0 ? (
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
+            <div className="text-gray-400 mb-4">
+              <Search className="w-12 h-12 mx-auto" />
+            </div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No jobs found</h3>
+            <p className="text-gray-600 mb-4">
+              Try adjusting your search criteria or clearing filters
+            </p>
             <button
-              onClick={() => setShowJobList(!showJobList)}
-              className="w-full bg-white rounded-lg shadow-sm border border-gray-200 p-4 flex items-center justify-between"
+              onClick={clearFilters}
+              style={{ backgroundColor: csmBlue }}
+              className="hover:opacity-90 text-white px-4 py-2 rounded-lg transition-colors"
             >
-              <div className="text-left">
-                <h3 className="font-semibold text-gray-900 text-sm sm:text-base">
-                  {selectedJob.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-gray-600">
-                  {selectedJob.location} • {selectedJob.type}
-                </p>
-              </div>
-              <Menu className="w-5 h-5 text-gray-400" />
+              Clear Filters
             </button>
           </div>
-        )}
-
-        {/* Mobile Job List Overlay */}
-        {isMobile && showJobList && (
-          <div className="fixed inset-0 bg-white z-50 overflow-y-auto">
-            <div className="p-4">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold text-gray-900">
-                  Available Positions ({jobListings.length})
-                </h2>
-                <button
-                  onClick={() => setShowJobList(false)}
-                  className="p-2 hover:bg-gray-100 rounded-lg"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-              </div>
-              
-              <div className="space-y-3">
-                {jobListings.map((job) => (
-                  <div
-                    key={job.id}
-                    onClick={() => handleJobSelect(job)}
-                    className={`p-4 rounded-lg border cursor-pointer transition-all duration-200 ${
-                      selectedJob.id === job.id
-                        ? 'border-blue-500 bg-blue-50'
-                        : 'border-gray-200 hover:border-gray-300'
-                    }`}
-                  >
-                    <h3 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
-                      {job.title}
-                    </h3>
-                    
-                    <div className="space-y-2">
-                      <div className="flex items-center text-xs sm:text-sm text-gray-600">
-                        <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-2 flex-shrink-0" />
-                        {job.location}
-                      </div>
-                      
-                      <div className="flex items-center gap-2">
-                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                          {job.type}
-                        </span>
-                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                          {job.department}
-                        </span>
-                      </div>
-                    </div>
-                    
-                    <p className="mt-3 text-xs sm:text-sm text-gray-600 line-clamp-2">
-                      {job.overview}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Desktop Layout */}
-        <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
-          {/* Desktop Job Listings Sidebar */}
-          <div className="hidden lg:block w-1/3 space-y-4">
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                {jobListings.length} Jobs Available
+        ) : (
+          <div className="space-y-4">
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold text-gray-900">
+                {filteredJobs.length} Position{filteredJobs.length !== 1 ? 's' : ''} Available
               </h2>
-              
-              <div className="space-y-3">
-                {jobListings.map((job) => (
-                  <div
-                    key={job.id}
-                    onClick={() => setSelectedJob(job)}
-                    className={`p-4 rounded-lg border cursor-pointer transition-all duration-200 hover:shadow-md ${
-                      selectedJob.id === job.id
-                        ? 'border-blue-500 bg-blue-50 shadow-md'
-                        : 'border-gray-200 hover:border-gray-300'
-                    }`}
-                  >
-                    <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
-                      {job.title}
-                    </h3>
-                    
-                    <div className="space-y-2">
-                      <div className="flex items-center text-sm text-gray-600">
-                        <Building className="w-4 h-4 mr-2 flex-shrink-0" />
-                        {job.company}
+            </div>
+
+            <div className="grid gap-4">
+              {filteredJobs.map((job) => (
+                <div
+                  key={job.id}
+                  onClick={() => handleJobClick(job.id)}
+                  className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 lg:p-6 hover:shadow-md transition-all duration-200 cursor-pointer hover:border-blue-300"
+                >
+                  <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
+                    {/* Job Info */}
+                    <div className="flex-1">
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+                        <h3 className="font-semibold text-gray-900 text-lg lg:text-xl flex-1 hover:text-blue-600 transition-colors">
+                          {job.title}
+                        </h3>
+                        <div className="flex flex-wrap gap-2">
+                          <span 
+                            style={{ backgroundColor: `${csmBlue}20`, color: csmBlue }}
+                            className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium"
+                          >
+                            {job.workFlexibility}
+                          </span>
+                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                            {job.department}
+                          </span>
+                        </div>
                       </div>
-                      
-                      <div className="flex items-center text-sm text-gray-600">
-                        <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
-                        {job.location}
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 mb-3">
+                        <div className="flex items-center text-sm text-gray-600">
+                          <Building className="w-4 h-4 mr-2 flex-shrink-0" />
+                          {job.company}
+                        </div>
+                        <div className="flex items-center text-sm text-gray-600">
+                          <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
+                          {job.location}
+                        </div>
+                        <div className="flex items-center text-sm text-gray-600">
+                          <DollarSign className="w-4 h-4 mr-2 flex-shrink-0" />
+                          {job.salary}
+                        </div>
                       </div>
-                      
-                      <div className="flex items-center text-sm text-gray-600">
-                        <DollarSign className="w-4 h-4 mr-2 flex-shrink-0" />
-                        {job.salary}
+
+                      <p className="text-sm lg:text-base text-gray-600 mb-3 line-clamp-2">
+                        {job.overview}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2 mb-4 lg:mb-0">
+                        {job.skills.slice(0, 4).map((skill, index) => (
+                          <span key={index} className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-gray-50 text-gray-700 border">
+                            {skill}
+                          </span>
+                        ))}
+                        {job.skills.length > 4 && (
+                          <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-gray-50 text-gray-700 border">
+                            +{job.skills.length - 4} more
+                          </span>
+                        )}
                       </div>
-                      
-                      <div className="flex items-center gap-2">
-                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                          {job.type}
-                        </span>
-                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                          {job.department}
-                        </span>
+
+                      <div className="flex items-center text-xs text-gray-500 mt-2">
+                        <Clock className="w-3 h-3 mr-1" />
+                        Posted {new Date(job.posted).toLocaleDateString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                          year: 'numeric'
+                        })}
                       </div>
                     </div>
-                    
-                    <p className="mt-3 text-sm text-gray-600 line-clamp-2">
-                      {job.overview}
-                    </p>
+
+                    {/* Action Buttons */}
+                    <div className="flex flex-col sm:flex-row lg:flex-col gap-2 lg:min-w-[150px]">
+                      <button
+                        onClick={() => handleJobClick(job.id)}
+                        className="flex-1 lg:w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors text-sm flex items-center justify-center"
+                      >
+                        View Details
+                        <ChevronRight className="w-4 h-4 ml-1" />
+                      </button>
+                      <button
+                        onClick={(e) => handleApplyClick(e, job.id)}
+                        style={{ backgroundColor: csmBlue }}
+                        className="flex-1 lg:w-full hover:opacity-90 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm flex items-center justify-center"
+                      >
+                        Apply Now
+                        <ExternalLink className="w-4 h-4 ml-1" />
+                      </button>
+                    </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
-
-          {/* Job Details */}
-          <div className="flex-1">
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 lg:p-8">
-              {/* Job Header */}
-              <div className="mb-6 sm:mb-8">
-                <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
-                  {selectedJob.title}
-                </h1>
-                
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 mb-4">
-                  <div className="flex items-center text-gray-600 text-sm sm:text-base">
-                    <MapPin className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                    {selectedJob.location}
-                  </div>
-                  <div className="flex items-center text-gray-600 text-sm sm:text-base">
-                    <Clock className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                    {selectedJob.type}
-                  </div>
-                </div>
-                
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="flex items-center text-base sm:text-lg font-semibold text-green-600">
-                    <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 mr-1" />
-                    {selectedJob.salary}
-                  </div>
-                  <button 
-                    className="bg-[#002040] hover:bg-[#004080] text-white font-semibold py-2 sm:py-3 px-4 sm:px-8 rounded-lg transition-colors duration-300 text-sm sm:text-base"
-                    onClick={handleApplyClick}
-                  >
-                    Apply Now
-                  </button>
-                </div>
-              </div>
-
-              {/* Job Overview */}
-              <div className="mb-6 sm:mb-8">
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Job Overview</h2>
-                <p className="text-gray-700 leading-relaxed mb-3 sm:mb-4 text-sm sm:text-base">
-                  {selectedJob.overview}
-                </p>
-                <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
-                  {selectedJob.description}
-                </p>
-              </div>
-
-              {/* Responsibilities */}
-              <div className="mb-6 sm:mb-8">
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Responsibilities</h2>
-                <ul className="space-y-2 sm:space-y-3">
-                  {selectedJob.responsibilities.map((responsibility, index) => (
-                    <li key={index} className="flex items-start">
-                      <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 mr-2 sm:mr-3 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-700 text-sm sm:text-base">{responsibility}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Requirements */}
-              <div className="mb-6 sm:mb-8">
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Requirements</h2>
-                <ul className="space-y-2 sm:space-y-3">
-                  {selectedJob.requirements.map((requirement, index) => (
-                    <li key={index} className="flex items-start">
-                      <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 mr-2 sm:mr-3 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-700 text-sm sm:text-base">{requirement}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Preferred Qualifications */}
-              {selectedJob.preferredQualifications.length > 0 && (
-                <div className="mb-6 sm:mb-8">
-                  <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Preferred Qualifications</h2>
-                  <ul className="space-y-2 sm:space-y-3">
-                    {selectedJob.preferredQualifications.map((qualification, index) => (
-                      <li key={index} className="flex items-start">
-                        <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500 mr-2 sm:mr-3 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-700 text-sm sm:text-base">{qualification}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Benefits */}
-              <div className="mb-6 sm:mb-8">
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Benefits</h2>
-                <ul className="space-y-2 sm:space-y-3">
-                  {selectedJob.benefits.map((benefit, index) => (
-                    <li key={index} className="flex items-start">
-                      <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-purple-500 mr-2 sm:mr-3 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-700 text-sm sm:text-base">{benefit}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Apply Button */}
-              <div className="border-t border-gray-200 pt-6 sm:pt-8">
-                <button 
-                  className="w-full bg-[#002040] hover:bg-[#004080] text-white font-semibold py-3 sm:py-4 px-4 sm:px-8 rounded-lg transition-colors duration-300 text-base sm:text-lg"
-                  onClick= {handleApplyClick}
-                >
-                  Apply for this Position
-                </button>
-                <p className="text-center text-gray-600 mt-3 sm:mt-4 text-xs sm:text-sm">
-                  Posted on {new Date(selectedJob.posted).toLocaleDateString('en-US', { 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
-                  })}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
