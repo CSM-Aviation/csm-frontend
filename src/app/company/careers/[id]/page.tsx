@@ -72,7 +72,7 @@ const jobListings: Job[] = [
             'Collaborative work environment with supportive team',
             'Exposure to luxury travel industry and networking opportunities'
         ],
-        posted: '2025-01-20'
+        posted: '2025-08-02'
     },
     {
         id: '2',
@@ -118,7 +118,7 @@ const jobListings: Job[] = [
             'Dynamic work environment with growth potential',
             'Opportunity to work with luxury aviation services'
         ],
-        posted: '2025-01-20'
+        posted: '2025-08-02'
     },
     {
         id: '3',
@@ -178,7 +178,7 @@ const jobListings: Job[] = [
             'Professional development opportunities and career advancement',
             'Exposure to luxury aviation industry and networking opportunities'
         ],
-        posted: '2025-01-20'
+        posted: '2025-08-02'
     }
 ];
 
@@ -526,7 +526,7 @@ export default function JobDetailsPage() {
                                     </div>
                                     <div className="flex items-center text-gray-600">
                                         <Users className="w-4 h-4 mr-2" />
-                                        <span>Aviation & Aerospace</span>
+                                        <span>Aviation</span>
                                     </div>
                                     <div className="flex items-center text-gray-600">
                                         <Plane className="w-4 h-4 mr-2" />

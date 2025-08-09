@@ -77,7 +77,7 @@ const jobListings: Job[] = [
       'Collaborative work environment with supportive team',
       'Exposure to luxury travel industry and networking opportunities'
     ],
-    posted: '2025-01-20'
+    posted: '2025-08-02'
   },
   {
     id: '2',
@@ -123,7 +123,7 @@ const jobListings: Job[] = [
       'Dynamic work environment with growth potential',
       'Opportunity to work with luxury aviation services'
     ],
-    posted: '2025-01-20'
+    posted: '2025-08-02'
   },
   {
     id: '3',
@@ -183,7 +183,7 @@ const jobListings: Job[] = [
       'Professional development opportunities and career advancement',
       'Exposure to luxury aviation industry and networking opportunities'
     ],
-    posted: '2025-01-20'
+    posted: '2025-08-02'
   }
 ];
 
@@ -297,7 +297,8 @@ export default function CareersPage() {
       <div
         className="relative bg-gray-900 text-white overflow-hidden"
         style={{
-          backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2484&q=80")',
+          backgroundColor: '#002040',
+          // backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}

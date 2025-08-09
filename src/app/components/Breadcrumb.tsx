@@ -8,11 +8,12 @@ const Breadcrumb: React.FC = () => {
   let pathSegments = pathname.split("/").filter((segment) => segment);
 
   // Skip breadcrumb for careers page
-  if (pathname === "/company/careers") {
+  // Path like /company/careers
+  if (pathname.includes("/company/careers")) {
     return null;
   }
   // Check if we're on an aircraft detail page and remove the registration segment
-  if (pathSegments.length >= 3 && pathSegments[0] === "charter" && pathSegments[1] === "fleet") {
+  if (pathSegments.length >= 3 && pathSegments[0] === "company" && pathSegments[1] === "careers") {
     // Remove the last segment (registration) for aircraft detail pages
     pathSegments = pathSegments.slice(0, -1);
   }
