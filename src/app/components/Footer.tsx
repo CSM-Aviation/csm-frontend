@@ -124,6 +124,12 @@ const Footer = () => {
                     Careers
                   </Link>
                 </li>
+                <li>
+                  <Link href="/customer-experience" className="hover:underline hover:text-white/80 transition-colors flex items-center">
+                    <FaArrowRight className="mr-2 text-sm" />
+                    Feedback
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
