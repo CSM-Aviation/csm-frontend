@@ -345,7 +345,7 @@ export default function CareersPage() {
           </div>
 
           {/* Filter Dropdowns */}
-          <div className="flex flex-wrap justify-center gap-4">
+          {/* <div className="flex flex-wrap justify-center gap-4">
             <div className="relative">
               <button
                 onClick={(e) => toggleDropdown('team', e)}
@@ -430,15 +430,15 @@ export default function CareersPage() {
                 <span>Clear All</span>
               </button>
             )}
-          </div>
+          </div> */}
 
           {/* Results Count */}
-          <div className="text-center mt-6">
+          {/* <div className="text-center mt-6">
             <p className="text-gray-300">
               {filteredJobs.length} position{filteredJobs.length !== 1 ? 's' : ''} found
               {(searchQuery || activeFiltersCount > 0) && ` matching your criteria`}
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
 
