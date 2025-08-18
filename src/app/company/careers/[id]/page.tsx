@@ -84,9 +84,9 @@ const jobListings: Job[] = [
         department: 'Operations',
         workLocation: 'On-site',
         workFlexibility: 'Full-time',
-        skills: ['Office 365', 'Customer Service', 'Aviation Operations', 'Communication'],
+        skills: ['Office 365', 'Customer Service', 'Communication', 'Attention to detail', 'Organizational skills'],
         overview: 'CSM Aviation seeks a Private Air Charter Coordinator to join our operations team. Serve as logistics and scheduling representative for part 91 and part 135 flight operations.',
-        description: 'Act as primary contact for crew coordination and assist with private charter bookings while handling various administrative duties in a fast-paced aviation environment.',
+        description: 'Act as primary contact for crew coordination and assist with private charter bookings while handling various administrative duties in a fast-paced private aviation environment.',
         responsibilities: [
             'Coordinate flight crew rotations and travel logistics for assignments',
             'Handle phone reception and provide customer service to high-net-worth clients',
@@ -98,13 +98,10 @@ const jobListings: Job[] = [
             'Meet tight deadlines in fast-paced work environment'
         ],
         requirements: [
-            'Proficiency in Office 365 and Google Workspace/Suite/Drive required',
             'Exceptional verbal and written communication skills',
             'Strong organizational skills with ability to prioritize and multitask',
             'Ability to work with minimal supervision',
-            'Comfortable working with high-net-worth clients',
-            'Valid driver\'s license and reliable transportation',
-            'Bachelor\'s degree preferred, will consider equivalent work experience'
+            'Valid driver\'s license and reliable transportation'
         ],
         preferredQualifications: [
             'Knowledge of Jet Insight, Schedaro, or Avinode software',
@@ -155,8 +152,7 @@ const jobListings: Job[] = [
             'Valid passport and ability to travel internationally',
             'Clean driving record and ability to pass comprehensive background check',
             'Professional appearance and excellent communication skills',
-            'Flexibility for irregular schedules and on-call availability',
-            'Bachelor\'s degree preferred or equivalent aviation experience'
+            'Flexibility for irregular schedules and on-call availability'
         ],
         preferredQualifications: [
             'Part 135 experience with charter or corporate aviation background',
