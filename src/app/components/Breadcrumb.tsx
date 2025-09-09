@@ -9,7 +9,7 @@ const Breadcrumb: React.FC = () => {
 
   // Skip breadcrumb for careers page
   // Path like /company/careers
-  if (pathname.includes("/company/careers")) {
+  if (pathname.includes("/company/careers") || pathname.includes("privacy-policy")) {
     return null;
   }
   // Check if we're on an aircraft detail page and remove the registration segment
