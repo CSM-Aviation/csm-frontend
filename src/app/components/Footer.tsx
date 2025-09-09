@@ -366,7 +366,7 @@ const Footer = () => {
           <div className="border-t border-white/10 pt-8">
             <div className="text-center">
               <p className="text-gray-400 text-sm mb-4">
-                © {new Date().getFullYear()} All rights reserved. CSM Aviation Inc.
+                © {new Date().getFullYear()} All rights reserved. CSM Aviation.
               </p>
               <p className="text-gray-400 text-sm">
                 By accessing and using our website, you agree to our <a href="/privacy-policy" className="text-white hover:text-gray-300 transition-colors">Privacy Policy</a>.
