@@ -120,7 +120,7 @@ const Header: React.FC = () => {
           ? "bg-opacity-90 shadow-lg"
           : "bg-opacity-100"
       } ${visible ? "translate-y-0" : "-translate-y-full"}`}
-      style={{ backgroundColor: transparent ? "transparent" : "#002040" }}
+      style={{ backgroundColor: transparent ? "transparent" : "#002449" }}
     >
       <div className="w-full flex items-center justify-between px-5 py-3">
         <div className="relative z-50 max-md:left-1/2 max-md:-translate-x-[50%]">
