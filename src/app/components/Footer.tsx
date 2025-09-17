@@ -25,10 +25,9 @@ const Footer = () => {
 
         {/* First Row - Logo, Contact Info, and Social */}
         <div className="py-16 md:py-20 border-b border-white/20">
-          <div className="flex flex-col lg:flex-row justify-between items-center lg:items-start gap-12">
+          <div className="flex flex-col lg:flex-row justify-between items-center lg:items-start gap-5">
 
-            {/* Company Logo - Left */}
-            <div className="flex-shrink-0">
+            <div>
               <Image
                 src="/images/CSM-Logo-WHITE-01-web300.jpg"
                 alt="CSM Aviation Logo"
