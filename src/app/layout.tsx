@@ -83,7 +83,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* Additional meta tags for better social media preview control */}
-        <meta property="og:image:secure_url" content="https://www.csmaviation.com/images/G150.png" />
+        {/* <meta property="og:image:secure_url" content="https://www.csmaviation.com/images/G150.png" /> */}
         
         {/* Prevent indexing of service images */}
         <meta name="robots" content="noimageindex" />

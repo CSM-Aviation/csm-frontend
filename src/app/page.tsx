@@ -22,7 +22,7 @@ async function getData(): Promise<SeoData> {
   title: 'CSM Aviation',
   description: 'Luxury air travel services',
   keywords: ['private jet', 'charter'],
-  ogImage: '/images/service/Aviation.jpg', // Change this line
+  ogImage: '/images/G150.png',
   canonicalUrl: 'https://www.csmaviation.com',
   robots: 'index, follow',
   author: 'CSM Aviation',
@@ -34,8 +34,22 @@ async function getData(): Promise<SeoData> {
   }
 }
 
+const seoData = {
+  title: 'CSM Aviation',
+  description: 'Luxury air travel services',
+  keywords: ['private jet', 'charter'],
+  ogImage: '/images/G150.png',
+  canonicalUrl: 'https://www.csmaviation.com',
+  robots: 'index, follow',
+  author: 'CSM Aviation',
+  language: 'en',
+  siteName: 'CSM Aviation',
+  type: 'website' as const,
+  twitterHandle: '@CSMAviation',
+};
+
 async function generateMetadata(): Promise<Metadata> {
-  const seoData = await getData();
+  // const seoData = await getData();
   return seoGenerateMetadata(seoData);
 }
 
@@ -43,7 +57,7 @@ async function generateMetadata(): Promise<Metadata> {
 export { generateMetadata };
 
 export default async function Home() {
-  const seoData = await getData();
+  // const seoData = await getData();
   const structuredData = generateStructuredData(seoData);
 
   return (

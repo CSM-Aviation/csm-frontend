@@ -10,7 +10,7 @@ const seoData = {
   title: 'Donor Network West 5K Run/Walk - CSM Aviation',
   description: 'Join CSM Aviation in supporting the Donor Network West 5K Run/Walk. Help us raise awareness and funds for organ, eye, and tissue donation to save lives.',
   keywords: ['donor network west', '5k run walk', 'organ donation', 'CSM Aviation', 'charity event', 'fundraising'],
-  ogImage: '/images/donor-5k-hero.jpg',
+  ogImage: '/images/header2_stride.png',
   canonicalUrl: 'https://www.csmaviation.com/donor-5k',
   robots: 'index, follow',
   author: 'CSM Aviation',
