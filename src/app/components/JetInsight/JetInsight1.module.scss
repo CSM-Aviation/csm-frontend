@@ -5,36 +5,40 @@
 .jetinsightEmbeddedRequestButton {
   align-items: center !important;
   appearance: none !important;
-  background-color: #23B2EE !important; // Electric blue color
-  border-radius: 9999px !important; // Fully rounded like Twitter buttons
-  border: none !important; // Removed white border
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 9999px !important;
   box-sizing: border-box !important;
-  color: black !important; // Black text
+  color: white !important;
   cursor: pointer !important;
   display: inline-flex !important;
-  font-family: 'Playfair Display', serif !important;
-  font-weight: 600 !important; // semibold equivalent
-  height: 48px !important; // Match Call Now button mobile height
+  font-family: inherit !important;
+  font-weight: 500 !important;
+  height: 48px !important;
   justify-content: center !important;
-  line-height: 1 !important;
+  line-height: normal !important;
   list-style: none !important;
   overflow: hidden !important;
-  padding-left: 12px !important; // Reduced padding for mobile
+  padding-left: 12px !important;
   padding-right: 12px !important;
   position: relative !important;
   text-align: center !important;
   text-decoration: none !important;
-  transition: all 0.3s ease-in-out !important; // Same transition as Call Now
+  transition: all 0.3s ease-out !important;
   user-select: none !important;
   -webkit-user-select: none !important;
   touch-action: manipulation !important;
   white-space: nowrap !important;
-  will-change: transform, background-color !important;
-  font-size: 12px !important; // Small font for mobile
+  will-change: transform, background-color, box-shadow !important;
+  font-size: 12px !important;
   width: 100% !important;
-  max-width: 325px !important; // Match Call Now button width
+  max-width: 325px !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
 
-  // White ripple effect that moves left to right
+  // White ripple effect
   &::before {
     content: '';
     position: absolute;
@@ -45,9 +49,9 @@
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(255, 255, 255, 0.3) 30%,
-      rgba(255, 255, 255, 0.5) 50%,
-      rgba(255, 255, 255, 0.3) 70%,
+      rgba(255, 255, 255, 0.2) 30%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0.2) 70%,
       transparent
     );
     transition: left 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -55,43 +59,41 @@
   }
 
   &:hover {
-    background-color: white !important; // White background on hover
-    color: #002040 !important; // Dark blue text on hover
-    transform: scale(1.05) !important; // Same scale as Call Now button
-    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3) !important; // Electric blue shadow
+    background-color: white !important;
+    color: #002040 !important;
+    transform: scale(1.02) !important;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4) !important;
+    border-color: white !important;
 
     &::before {
       left: 100%;
     }
 
     svg {
-      transform: translateX(8px) scale(1.2) !important;
-      animation: iconBounce 0.6s ease-in-out !important;
+      transform: translateX(4px) scale(1.1) !important;
+      animation: none !important;
     }
   }
 
-  // Trigger ripple on click/active
   &:active,
   &.rippleActive {
     &::before {
       transition: left 0.4s ease-out;
       left: 100%;
-    
-    // Arrow animation on hover
-    .buttonArrow {
+    }
+     .buttonArrow {
       transform: translateX(4px) !important;
     }
   }
 
   &:focus {
     outline: none !important;
-    box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.5) !important; // Blue focus ring
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5) !important;
   }
   .buttonArrow {
     transition: transform 0.3s ease !important;
     margin-left: 8px !important;
   }
-}
 
   svg {
     transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;

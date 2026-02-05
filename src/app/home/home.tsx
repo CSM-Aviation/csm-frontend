@@ -14,30 +14,24 @@ import MobileFleet from "../components/MobileFleet";
 import FleetPageSec from "../components/FleetPageSec";
 import HeroVideoSection from "../components/HeroVideoSection";
 
-
-
-
-
 export default function HomeBody() {
   const { config, error } = useConfig();
   const [scrollRange, setScrollRange] = useState(0);
   const [windowWidth, setWindowWidth] = useState(
-    typeof window !== "undefined" ? window.innerWidth : 0
+    typeof window !== "undefined" ? window.innerWidth : 0,
   );
   const [windowHeight, setWindowHeight] = useState(
-    typeof window !== "undefined" ? window.innerHeight : 0
+    typeof window !== "undefined" ? window.innerHeight : 0,
   );
 
-
-  const videoSource = '/videos/compressed/newdesktopvideo.mp4';
-
+  const videoSource = "/videos/compressed/CSM_Hero.mp4";
 
   useEffect(() => {
     const updateDimensions = () => {
       requestAnimationFrame(() => {
         const scrollHeight = Math.max(
           document.documentElement.scrollHeight,
-          document.body.scrollHeight
+          document.body.scrollHeight,
         );
         const windowHeight = window.innerHeight;
         setScrollRange(scrollHeight - windowHeight);
@@ -67,7 +61,7 @@ export default function HomeBody() {
   const xTransform = useTransform(
     scrollY,
     [0, scrollRange],
-    [0, windowWidth - 100] // Move from left to right
+    [0, windowWidth - 100], // Move from left to right
   );
 
   // Create curved path using quadratic bezier
@@ -88,7 +82,7 @@ export default function HomeBody() {
   const rotateTransform = useTransform(
     scrollY,
     [0, scrollRange * 0.33, scrollRange * 0.66, scrollRange], // Three sections
-    [0, 15, 25, 45] // No rotation → 45° down → 90° down
+    [0, 15, 25, 45], // No rotation → 45° down → 90° down
   );
 
   useEffect(() => {
@@ -129,8 +123,6 @@ export default function HomeBody() {
   return (
     <>
       <div className="-mt-24 md:-mt-20">
-      
-    
         <AnimatedCSMVideoText videoSource={videoSource} />
         {/* <HeroVideoSection /> */}
         <ServicesCards />
@@ -145,89 +137,67 @@ export default function HomeBody() {
           whileInView={{ scale: 1 }}
           transition={{ duration: 1.3 }}
           className="absolute top-[100%] "
-        >
-         
-        </motion.div>
+        ></motion.div>
         <motion.div
           initial={{ scale: 0 }}
           whileInView={{ scale: 1 }}
           transition={{ duration: 1.3 }}
           className="absolute top-[110%] left-[20%]"
-        >
-        
-        </motion.div>
+        ></motion.div>
         <motion.div
           initial={{ scale: 0 }}
           whileInView={{ scale: 1 }}
           transition={{ duration: 1.3 }}
           className="absolute top-[180%] left-[20%]"
-        >
-         
-        </motion.div>
+        ></motion.div>
         <motion.div
           initial={{ scale: 0 }}
           whileInView={{ scale: 1 }}
           transition={{ duration: 1.3 }}
           className="absolute top-[120%] right-0 w-[400px]"
-        >
-         
-        </motion.div>
+        ></motion.div>
         <motion.div
           initial={{ scale: 0 }}
           whileInView={{ scale: 1 }}
           transition={{ duration: 1.3 }}
           className="absolute top-[180%] left-0 w-[400px]"
-        >
-         
-        </motion.div>
+        ></motion.div>
         <motion.div
           initial={{ scale: 0 }}
           whileInView={{ scale: 1 }}
           transition={{ duration: 1.3 }}
           className="absolute top-[180%] right-0 w-[400px]"
-        >
-         
-        </motion.div>
+        ></motion.div>
         <motion.div
           initial={{ scale: 0 }}
           whileInView={{ scale: 1 }}
           transition={{ duration: 1.3 }}
           className="absolute top-[240%] right-0 w-[560px]"
-        >
-        
-        </motion.div>
+        ></motion.div>
         <motion.div
           initial={{ scale: 0 }}
           whileInView={{ scale: 1 }}
           transition={{ duration: 1.3 }}
           className="absolute top-[240%] left-0"
-        >
-          
-        </motion.div>
+        ></motion.div>
         <motion.div
           initial={{ scale: 0 }}
           whileInView={{ scale: 1 }}
           transition={{ duration: 1.3 }}
           className="absolute top-[280%] right-0 "
-        >
-       
-        </motion.div>
+        ></motion.div>
         <motion.div
           initial={{ scale: 0 }}
           whileInView={{ scale: 1 }}
           transition={{ duration: 1.3 }}
           className="absolute top-[280%] left-0 w-[400px]"
-        >
-        
-        </motion.div>
+        ></motion.div>
         <motion.div
           initial={{ scale: 0 }}
           whileInView={{ scale: 1 }}
           transition={{ duration: 1.3 }}
           className="absolute top-[320%] right-1/2 w-[560px]"
-        >
-        
-        </motion.div>
+        ></motion.div>
       </div>
     </>
   );
