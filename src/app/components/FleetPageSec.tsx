@@ -181,7 +181,7 @@ const renderAircraftCards = (aircraftData: FleetItem[], fallbackData: CardData[]
     return (
       <Link
         href={{
-          pathname: `/charter/fleet/${aircraft.registration}`,
+          pathname: `/charter/fleet/${aircraft._id}`,
           query: { model: aircraft.aircraftName },
         }}
         key={aircraft._id}
