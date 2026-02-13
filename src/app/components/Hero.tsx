@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import React, { useRef, useEffect, useState } from 'react';
-import { motion, AnimatePresence, m } from 'framer-motion';
-import JetInsightComponent from './JetInsight/JetInsightComponent3';
-import Link from 'next/link';
-import Image from 'next/image';
+import React, { useRef, useEffect, useState } from "react";
+import { motion, AnimatePresence, m } from "framer-motion";
+import JetInsightComponent from "./JetInsight/JetInsightComponent3";
+import Link from "next/link";
+import Image from "next/image";
 
 const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -20,7 +20,7 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
       setIsMobile(window.innerWidth < 768);
       setIsIOS(
         /iPad|iPhone|iPod/.test(navigator.userAgent) &&
-        !(window as any).MSStream
+          !(window as any).MSStream,
       );
     };
 
@@ -28,10 +28,10 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
     checkDevice();
 
     // Add listener for window resize
-    window.addEventListener('resize', checkDevice);
+    window.addEventListener("resize", checkDevice);
 
     // Clean up
-    return () => window.removeEventListener('resize', checkDevice);
+    return () => window.removeEventListener("resize", checkDevice);
   }, []);
 
   useEffect(() => {
@@ -63,8 +63,8 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
     };
 
     handleResize(); // initialize
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   // Adjust scale based on screen size - smaller scale for mobile
@@ -82,8 +82,8 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
   const initialTextVariants = {
     initial: {
       scale: isMobile ? 1.5 : 2,
-      x: '-50%',
-      y: '-50%',
+      x: "-50%",
+      y: "-50%",
       zIndex: 50,
     },
     transition: {
@@ -93,7 +93,7 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
       zIndex: 50,
       transition: {
         duration: 0.8,
-        ease: 'easeInOut',
+        ease: "easeInOut",
       },
     },
     exit: {
@@ -101,80 +101,116 @@ const AnimatedCSMVideoText = ({ videoSource }: { videoSource: string }) => {
       y: isMobile ? mobileYPosition : desktopYPosition,
       transition: {
         duration: 0.5,
-        ease: 'easeOut',
+        ease: "easeOut",
       },
     },
   };
 
   // Handle call button click
   const handleCallNow = () => {
-    window.location.href = 'tel:+18884359276';
+    window.location.href = "tel:+18884359276";
   };
 
   return (
     <>
-
       <div
-        style={{ top: 0, left: 0, backgroundColor: '#002040' }}
-        className='relative md:h-screen w-full h-[60vh] flex items-center justify-center'
+        style={{ top: 0, left: 0, backgroundColor: "#002040" }}
+        className="relative md:h-screen w-full h-[60vh] flex items-center justify-center"
         ref={containerRef}
       >
         {/* Full screen background video */}
-        <div className='absolute inset-0 w-full h-full overflow-hidden bg-[#002040]'>
+        <div className="absolute inset-0 w-full h-full overflow-hidden bg-[#002040]">
           {videoSource && (
             <video
-              className='absolute md:scale-100 md:-translate-y-6 scale-150 -translate-y-12 w-full h-full object-contain lg:object-cover'
+              className="absolute md:scale-100 md:translate-y-0 scale-150 -translate-y-12 w-full h-full object-contain lg:object-cover"
               autoPlay
               loop
               muted
               playsInline
               onLoadedData={() => setIsVideoLoaded(true)}
-              preload='auto'
+              preload="auto"
               style={{
-                filter: 'brightness(1)',
+                filter: "brightness(1)",
               }}
             >
               <source
                 src={
-                  !isMobile ? videoSource : '/videos/compressed/newdesktopvideo.mp4'
+                  !isMobile
+                    ? videoSource
+                    : "/videos/compressed/CSM_Hero.mp4"
                 }
-                type='video/mp4'
+                type="video/mp4"
               />
             </video>
           )}
-          {/* Dark overlay for better text visibility */}
+          {/* Dark overlay for better text visibility (Optional - un-comment if logo needs more contrast) */}
+          {/* <div className="absolute inset-0 bg-black/30" /> */}
         </div>
-        <div className='absolute md:bottom-[10%] bottom-[10%] left-0 right-0 text-black z-[1.5] '>
-          <div className='flex flex-col gap-9 items-center justify-center w-full px-4'>
-            <div className='md:translate-y-0 text-white text-base md:text-xl lg:text-4xl font-bold tracking-wider'>
-              <p className='text-center'>24/7 Live Support - Global Reach - Private Jet Charter</p>
-            </div>
+
+        {/* Content Overlay */}
+        <div className="absolute md:bottom-[10%] bottom-[10%] left-0 right-0 text-black z-[1.5] ">
+          <div className="flex flex-col gap-6 md:gap-9 items-center justify-center w-full px-4">
+            
+            {/* --- LOGO ADDED HERE --- */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative w-48 md:w-72 lg:w-96 h-auto mb-4 md:mb-6"
+            >
+              <Image 
+                src="/images/CSM_Logo_WHITE-01_no_plane.png"
+                alt="CSM Aviation Logo"
+                width={500}
+                height={200}
+                priority
+                className="object-contain w-full h-auto drop-shadow-[0_0_15px_rgba(255,255,255,0.15)]"
+              />
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="md:translate-y-0 text-white font-medium tracking-[0.15em] uppercase text-xs sm:text-sm md:text-lg lg:text-xl"
+            >
+              <p className="text-center drop-shadow-md flex items-center justify-center flex-wrap gap-2 md:gap-4">
+                <span>24/7 Live Support</span>
+                <span className="opacity-50 hidden sm:inline">|</span>
+                <span>Global Reach</span>
+                <span className="opacity-50 hidden sm:inline">|</span>
+                <span>Private Jet Charter</span>
+              </p>
+            </motion.div>
 
             {/* Button Container - Centered with controlled spacing */}
-            <div className='flex flex-row gap-2 md:gap-4 items-center justify-center w-full max-w-xs sm:max-w-md md:max-w-lg'>
+            <div className="flex flex-row gap-2 md:gap-4 items-center justify-center w-full max-w-xs sm:max-w-md md:max-w-lg">
               {/* JetInsight Component - Match width with Call Now button */}
-              <div className='flex-1' style={{ maxWidth: 'calc(50% - 0.25rem)', width: '100%' }}>
+              <div
+                className="flex-1"
+                style={{ maxWidth: "calc(50% - 0.25rem)", width: "100%" }}
+              >
                 <JetInsightComponent />
               </div>
 
               {/* Call Now Button */}
               <button
                 onClick={handleCallNow}
-                className='flex-1 px-3 py-3 sm:px-6 sm:py-3 md:px-8 md:py-4 bg-electric-blue text-black font-semibold text-xs sm:text-sm md:text-base lg:text-lg rounded-full hover:bg-white hover:text-[#002040] transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 h-12 sm:h-12 md:h-16'
-                style={{ maxWidth: 'calc(50% - 0.25rem)', width: '100%' }}
-                aria-label='Call CSM Aviation at +1-888-435-9276'
+                className="flex-1 group px-6 py-3 sm:py-3 md:py-4 bg-white/10 backdrop-blur-md border border-white/30 text-white font-medium text-xs sm:text-sm md:text-base uppercase tracking-widest rounded-full hover:bg-white hover:text-[#002040] hover:border-white transition-all duration-300 ease-out shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] h-12 sm:h-12 md:h-16 flex items-center justify-center gap-2"
+                style={{ maxWidth: "calc(50% - 0.25rem)", width: "100%" }}
+                aria-label="Call CSM Aviation at +1-888-435-9276"
               >
-                <span className='flex items-center justify-center gap-1 sm:gap-2'>
+                <div className="flex items-center justify-center gap-2">
                   <svg
-                    className='w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5'
-                    fill='currentColor'
-                    viewBox='0 0 20 20'
-                    xmlns='http://www.w3.org/2000/svg'
+                    className="w-4 h-4 md:w-5 md:h-5 transition-transform duration-300 group-hover:scale-110"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <path d='M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z' />
+                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                   </svg>
-                  Call Now
-                </span>
+                  <span>Call Now</span>
+                </div>
               </button>
             </div>
           </div>
