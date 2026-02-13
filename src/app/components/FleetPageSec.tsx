@@ -82,10 +82,9 @@ const FleetPageSec = () => {
       speed: "430 kts",
       altitude: "45,000 ft",
     },
-  ]
+  ];
 
   const midsizeFleet: CardData[] = [
-
     {
       imageUrl: "/images/wheels_removed_fleet/N8821C.png",
       aircraftName: "Gulfstream G150",
@@ -113,7 +112,6 @@ const FleetPageSec = () => {
       speed: "470 kts",
       altitude: "45,000 ft",
     },
-
   ];
 
   useEffect(() => {
@@ -124,16 +122,19 @@ const FleetPageSec = () => {
           throw new Error(response.error);
         }
 
-        const turboPropAircraft = response.data?.filter(
-          (aircraft: FleetItem) => aircraft.category === "TURBOPROPS"
-        ) || [];
-        const lightJetAircraft = response.data?.filter(
-          (aircraft: FleetItem) => aircraft.category === "LIGHT"
-        ) || [];
-
-        const midSizeAircraft = response.data?.filter(
-          (aircraft: FleetItem) => aircraft.category === "LIGHT | MIDSIZE JETS"
-        ) || [];
+        const turboPropAircraft =
+          response.data?.filter(
+            (aircraft: FleetItem) => aircraft.category === "TURBOPROPS"
+          ) || [];
+        const lightJetAircraft =
+          response.data?.filter(
+            (aircraft: FleetItem) => aircraft.category === "LIGHT"
+          ) || [];
+        const midSizeAircraft =
+          response.data?.filter(
+            (aircraft: FleetItem) =>
+              aircraft.category === "LIGHT | MIDSIZE JETS"
+          ) || [];
 
         setTurboPropData(turboPropAircraft);
         setLightJetData(lightJetAircraft);
@@ -149,169 +150,157 @@ const FleetPageSec = () => {
     fetchAircraftData();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div className="text-red-500">{error}</div>;
+  const categories = [
+    { key: "turboprops", label: "Turbo Props" },
+    { key: "lightjets", label: "Light Jets" },
+    { key: "midsize", label: "Midsize Jets" },
+  ];
 
-const renderAircraftCards = (aircraftData: FleetItem[], fallbackData: CardData[]) => {
-  return aircraftData.map((aircraft) => {
-    // Find matching no-wheels image from fallback data
-    const noWheelsImage = fallbackData.find(
-      (item) => item.tail === aircraft.registration
-    )?.imageUrl || "/images/default-aircraft.jpg";
+  const getActiveData = (): { data: FleetItem[]; fallback: CardData[] } => {
+    switch (activeCategory) {
+      case "lightjets":
+        return { data: lightJetData, fallback: lightJetFleet };
+      case "midsize":
+        return { data: midSizeData, fallback: midsizeFleet };
+      default:
+        return { data: turboPropData, fallback: turboFleet };
+    }
+  };
 
-    // Filter out .DS_Store and other non-image files
-    const validImageUrls = aircraft.imageUrls?.filter(url => 
-      !url.includes('.DS_Store') && 
-      (url.includes('.jpg') || url.includes('.png') || url.includes('.jpeg'))
-    ) || [];
-
-    // Get the first valid API image if available
-    const apiImage = validImageUrls[0] || noWheelsImage;
-
-    // Debug logging (remove this in production)
-    console.log(`Aircraft ${aircraft.registration}:`, {
-      hasImageUrls: !!aircraft.imageUrls,
-      totalUrls: aircraft.imageUrls?.length || 0,
-      validUrls: validImageUrls.length,
-      apiImage,
-      noWheelsImage,
-      sameImage: apiImage === noWheelsImage
-    });
-
+  if (loading) {
     return (
-      <Link
-        href={{
-          pathname: `/charter/fleet/${aircraft._id}`,
-          query: { model: aircraft.aircraftName },
-        }}
-        key={aircraft._id}
-      >
-        <motion.div
-          initial={{ scale: 0 }}
-          whileInView={{ scale: 1 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="flex cursor-pointer flex-col items-center rounded-lg overflow-hidden group relative"
-        >
-          {/* Default Image (no wheels) */}
-          <div className="w-full h-32 relative">
-            <Image
-              src={noWheelsImage}
-              loader={customLoader}
-              alt={`${aircraft.registration} - ${aircraft.aircraftName}`}
-              height={500}
-              width={500}
-              className="object-cover w-full h-full"
-            />
-          </div>
-
-          {/* Text Info */}
-          <div className="p-4 text-center text-black">
-            <h3 className="text-xl font-semibold ">
-              {aircraft.aircraftName}
-            </h3>
-            {/* <p className="text-black">Tail Number: {aircraft.registration}</p> */}
-          </div>
-
-          {/* Hover Effect - Shows API image */}
-          <div className="absolute inset-0 bg-black bg-opacity-60 text-white flex items-center justify-center text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
-            <div className="relative w-full h-full overflow-hidden">
-              <Image
-                src={apiImage}
-                loader={customLoader}
-                alt={`${aircraft.registration} - ${aircraft.aircraftName}`}
-                fill
-                className="scale-125 group-hover:scale-100 transition-transform duration-700 ease-in-out object-cover"
-              />
-            </div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold w-full text-center">
-              <h1 className="w-full">{aircraft.aircraftName}</h1>
+      <section className="py-20 md:py-28 lg:py-32 bg-neutral-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="animate-pulse space-y-10">
+            <div className="h-10 bg-neutral-200 rounded-lg w-48 mx-auto" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="bg-white rounded-xl overflow-hidden">
+                  <div className="aspect-[16/10] bg-neutral-200" />
+                  <div className="p-4 space-y-2">
+                    <div className="h-5 bg-neutral-200 rounded w-3/4 mx-auto" />
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        </motion.div>
-      </Link>
+        </div>
+      </section>
     );
-  });
-};
+  }
+
+  if (error) {
+    return (
+      <section className="py-20 md:py-28 lg:py-32 bg-neutral-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-neutral-500">
+            Unable to load fleet data. Please try again later.
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  const { data: activeData, fallback: activeFallback } = getActiveData();
+
   return (
-    <>
-      <div className="px-14 box-border">
-        <h1 className="text-[#133d4f] text-7xl max-lg:text-6xl max-md:text-5xl max-sm:text-4xl mb-12 font-bold text-center">Our Fleet</h1>
-      </div>
-
-      {/* Category Toggle Buttons as Tabs */}
-      <div className="px-4 sm:px-8 md:px-14 box-border mb-8">
-        <div className="flex flex-row justify-center border-b border-gray-300">
-          {/* <button 
-          onClick={() => setActiveCategory("all")}
-          className={`px-8 py-3 font-medium text-lg transition-all duration-300 ${
-            activeCategory === "all" 
-              ? "text-[#133d4f] border-b-2 border-[#133d4f] -mb-[1px]" 
-              : "text-gray-500 hover:text-gray-700"
-          }`}
+    <section className="py-20 md:py-28 lg:py-32 bg-neutral-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
         >
-          All Aircraft
-        </button> */}
-          <button
-            onClick={() => setActiveCategory("turboprops")}
-            className={`px-2 sm:px-4 md:px-6 lg:px-10 py-2 sm:py-3 md:py-4 font-medium text-sm sm:text-lg md:text-2xl lg:text-4xl transition-all duration-300 ${activeCategory === "turboprops"
-              ? "text-[#133d4f] border-b-3 border-[#133d4f] -mb-[1px]"
-              : "text-gray-500 hover:text-gray-700"
-              }`}
-          >
-            Turbo Props
-          </button>
-          <button
-            onClick={() => setActiveCategory("lightjets")}
-            className={`px-2 sm:px-4 md:px-6 lg:px-10 py-2 sm:py-3 md:py-4 font-medium text-sm sm:text-lg md:text-2xl lg:text-4xl transition-all duration-300 ${activeCategory === "lightjets"
-              ? "text-[#133d4f] border-b-3 border-[#133d4f] -mb-[1px]"
-              : "text-gray-500 hover:text-gray-700"
-              }`}
-          >
-            Light Jets
-          </button>
-          <button
-            onClick={() => setActiveCategory("midsize")}
-            className={`px-2 sm:px-4 md:px-6 lg:px-10 py-2 sm:py-3 md:py-4 font-medium text-sm sm:text-lg md:text-2xl lg:text-4xl transition-all duration-300 ${activeCategory === "midsize"
-              ? "text-[#133d4f] border-b-3 border-[#133d4f] -mb-[1px]"
-              : "text-gray-500 hover:text-gray-700"
-              }`}
-          >
-            Midsize Jets
-          </button>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-csm-navy">
+            Our Fleet
+          </h2>
+          <p className="text-base md:text-lg text-neutral-500 font-normal text-center mt-3 mb-10 md:mb-12">
+            Premium aircraft for every mission
+          </p>
+        </motion.div>
 
+        {/* Category Tabs */}
+        <div className="flex flex-row justify-center border-b border-neutral-200 mb-10 md:mb-12">
+          {categories.map((cat) => (
+            <button
+              key={cat.key}
+              onClick={() => setActiveCategory(cat.key)}
+              className={`px-4 sm:px-6 md:px-8 py-2.5 font-medium text-sm md:text-base lg:text-lg transition-all duration-300 ${
+                activeCategory === cat.key
+                  ? "text-csm-navy border-b-2 border-csm-blue -mb-[1px] font-semibold"
+                  : "text-neutral-400 hover:text-neutral-600"
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Aircraft Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {activeData.map((aircraft, index) => {
+            const noWheelsImage =
+              activeFallback.find(
+                (item) => item.tail === aircraft.registration
+              )?.imageUrl || "/images/default-aircraft.jpg";
+
+            const validImageUrls =
+              aircraft.imageUrls?.filter(
+                (url) =>
+                  !url.includes(".DS_Store") &&
+                  (url.includes(".jpg") ||
+                    url.includes(".png") ||
+                    url.includes(".jpeg"))
+              ) || [];
+
+            const apiImage = validImageUrls[0] || noWheelsImage;
+
+            return (
+              <motion.div
+                key={aircraft._id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <Link
+                  href={{
+                    pathname: `/charter/fleet/${aircraft._id}`,
+                    query: { model: aircraft.aircraftName },
+                  }}
+                >
+                  <div className="group rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-lg transition-all duration-300">
+                    {/* Aircraft Image */}
+                    <div className="w-full aspect-[16/10] relative bg-neutral-50 overflow-hidden">
+                      <Image
+                        src={noWheelsImage}
+                        loader={customLoader}
+                        alt={`${aircraft.registration} - ${aircraft.aircraftName}`}
+                        fill
+                        className="object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                      />
+                    </div>
+
+                    {/* Info */}
+                    <div className="p-4 text-center border-t border-neutral-100">
+                      <h3 className="text-base sm:text-lg font-semibold text-csm-navy">
+                        {aircraft.aircraftName}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-neutral-400 mt-1 group-hover:text-csm-blue transition-colors">
+                        View Details
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
-
-      {/* Turbo Props Section */}
-      {(activeCategory === "turboprops") && (
-        <div className="px-14 box-border">
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
-            {renderAircraftCards(turboPropData, turboFleet)}
-          </div>
-        </div>
-      )}
-
-      {/* Light Jets Section */}
-      {(activeCategory === "lightjets") && (
-        <div className="px-14 box-border mt-10">
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
-            {renderAircraftCards(lightJetData, lightJetFleet)}
-          </div>
-        </div>
-      )}
-
-      {/* Midsize Jets Section */}
-      {(activeCategory === "midsize") && (
-        <div className="px-14 box-border mt-10">
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
-            {renderAircraftCards(midSizeData, midsizeFleet)}
-          </div>
-        </div>
-      )}
-
-
-    </>
+    </section>
   );
 };
 

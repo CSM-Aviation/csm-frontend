@@ -20,6 +20,11 @@ const config: Config = {
   			'sky-blue': '#87CEEB',
   			platinum: '#E5E4E2',
   			charcoal: '#36454F',
+  			'csm-navy': '#001B2E',
+  			'csm-deep': '#002449',
+  			'csm-blue': '#004080',
+  			'csm-steel': '#1A4B6E',
+  			'csm-gold': '#C9A96E',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
