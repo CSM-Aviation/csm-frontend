@@ -136,7 +136,7 @@ const TurboProps = () => {
       {aircraftData.map((aircraft) => (
         <Link
           href={{
-            pathname: `/charter/fleet/${aircraft.registration}`,
+            pathname: `/charter/fleet/${aircraft._id}`,
             query: { model: aircraft.aircraftName },
           }}
           key={aircraft._id}

@@ -5,7 +5,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Fetch dynamic routes from your API or database
     const fleetResponse = await apiService.fetchFleet();
     const fleetPages = fleetResponse.data ? fleetResponse.data.map(item => ({
-        url: `https://www.csmaviation.com/charter/fleet/${item.registration}+'?model='+${item.aircraftName}`,
+        url: `https://www.csmaviation.com/charter/fleet/${item._id}?model=${item.aircraftName}`,
         lastModified: new Date(),
         changeFrequency: 'monthly' as const,
         priority: 0.7

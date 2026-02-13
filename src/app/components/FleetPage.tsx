@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, TouchEvent } from "react";
 import { ChevronLeft, ChevronRight, Users, MapPin, Plane, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import { apiService, FleetItem } from "../services/apiService";
 
 // Aircraft data interfaces
 interface CardData {
@@ -27,6 +28,22 @@ const FleetPage: React.FC = () => {
   
   // Minimum swipe distance (in px)
   const minSwipeDistance = 50;
+
+  const [fleetIdMap, setFleetIdMap] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    const fetchFleetIds = async () => {
+      const response = await apiService.fetchFleet();
+      if (response.data) {
+        const map: Record<string, string> = {};
+        response.data.forEach((item: FleetItem) => {
+          map[item.registration] = item._id;
+        });
+        setFleetIdMap(map);
+      }
+    };
+    fetchFleetIds();
+  }, []);
 
   // Fleet data - replace with your actual aircraft data
   const turboFleet: CardData[] = [
@@ -444,7 +461,7 @@ const FleetPage: React.FC = () => {
           <div className={`space-y-2 md:space-y-3 transition-all duration-400 transform ease-out ${textAnimating ? "translate-y-5 opacity-0" : "translate-y-0 opacity-100"}`}>
             <Link
               href={{
-                pathname: `/charter/fleet/${currentAircraft?.tail}`,
+                pathname: `/charter/fleet/${currentAircraft?.tail ? fleetIdMap[currentAircraft.tail] || currentAircraft.tail : ''}`,
                 query: { model: currentAircraft?.aircraftName },
               }}
             >
