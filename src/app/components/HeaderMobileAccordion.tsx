@@ -115,7 +115,7 @@ const HeaderMobileAccordion: React.FC = () => {
         <AnimatePresence onExitComplete={() => setComplete(true)}>
           {isOpen && (
             <motion.div
-              className="fixed top-0 left-0 h-screen w-screen z-[60] bg-[#D7DAE3] overflow-y-auto pt-24"
+              className="fixed top-0 left-0 h-screen w-screen z-[60] bg-[#002040]/95 backdrop-blur-xl overflow-y-auto pt-24"
               initial={{ clipPath: "circle(0% at calc(100% - 2rem) 2rem)" }}
               animate={{ clipPath: "circle(150% at 2rem 2rem)" }}
               exit={{ clipPath: "circle(0% at calc(100% - 2rem) 2rem)" }}
@@ -130,23 +130,23 @@ const HeaderMobileAccordion: React.FC = () => {
                 {menuItems.map((item, index) => (
                   <motion.div
                     key={index}
-                    className="text-gray-800"
+                    className="text-white border-b border-white/10 pb-6 last:border-0"
                     variants={menuItemVariants}
                   >
                     <div
-                      className="flex items-center justify-between cursor-pointer"
+                      className="flex items-center justify-between cursor-pointer group"
                       onClick={() =>
                         item.subLinks ? toggleSubmenu(item.label) : null
                       }
                     >
                       {item.subLinks ? (
-                        <span className="font-medium hover:text-blue-600 uppercase">
+                        <span className="font-semibold text-lg hover:text-[#23B2EE] uppercase tracking-[0.15em] transition-colors duration-300">
                           {item.label}
                         </span>
                       ) : (
                         <div
                           onClick={() => handleLinkClick(item.href)}
-                          className="font-medium hover:text-blue-600 flex-1"
+                          className="font-semibold text-lg hover:text-[#23B2EE] flex-1 uppercase tracking-[0.15em] transition-colors duration-300"
                         >
                           {item.label}
                         </div>
@@ -154,16 +154,16 @@ const HeaderMobileAccordion: React.FC = () => {
 
                       {item.subLinks ? (
                         <FaChevronDown
-                          className={`ml-2 transition-transform duration-300 ${
-                            openSubmenu === item.label ? "rotate-180" : ""
+                          className={`ml-2 text-white/70 group-hover:text-[#23B2EE] transition-all duration-300 ${
+                            openSubmenu === item.label ? "rotate-180 text-[#23B2EE]" : ""
                           }`}
                         />
                       ) : (
                         <div
                         onClick={() => handleLinkClick(item.href)}
-                        className="font-medium hover:text-blue-600 uppercase"
+                        className="font-semibold hover:text-[#23B2EE] uppercase transition-colors duration-300"
                       >
-                        <FaArrowRight className="ml-2" />
+                        <FaArrowRight className="ml-2 text-white/70 group-hover:translate-x-1 group-hover:text-[#23B2EE] transition-all duration-300" />
                       </div>
                       )}
                     </div>
@@ -176,16 +176,16 @@ const HeaderMobileAccordion: React.FC = () => {
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.4 }}
-                          className="ml-4 mt-5 space-y-6 overflow-hidden"
+                          className="ml-2 mt-4 space-y-4 overflow-hidden border-l border-white/20 pl-6"
                         >
                           {item.subLinks.map((sub, i) => (
                             <div
                               key={i}
                               onClick={() => handleLinkClick(sub.href)}
-                              className="flex items-center cursor-pointer justify-between text-sm text-gray-700 hover:text-blue-500 uppercase"
+                              className="flex items-center cursor-pointer justify-between text-sm md:text-base text-white/80 hover:text-[#23B2EE] hover:pl-2 uppercase tracking-widest transition-all duration-300"
                             >
                               <span>{sub.label}</span>
-                              <FaArrowRight className="text-xs ml-1" />
+                              <FaArrowRight className="text-xs ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
                             </div>
                           ))}
                         </motion.div>

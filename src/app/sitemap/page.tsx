@@ -20,7 +20,7 @@ export default async function SitemapPage() {
   const fleetLinks = fleetResponse.data
     ? fleetResponse.data.map((item: any) => ({
         title: `${item.aircraftName} (${item.registration})`,
-        href: `/charter/fleet/${item.registration}?model=${encodeURIComponent(item.aircraftName)}`,
+        href: `/charter/fleet/${item._id}?model=${encodeURIComponent(item.aircraftName)}`,
       }))
     : [];
 

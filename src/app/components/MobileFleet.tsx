@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from 'next/link';
 import Arrow from "../../../public/assets/aircrafts/arrow.svg";
+import { apiService, FleetItem } from "../services/apiService";
 
 interface CardData {
   imageUrl: string;
@@ -20,6 +21,21 @@ const FleetMob = () => {
   const [centeredCardIndex, setCenteredCardIndex] = useState<number>(1);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [fleetIdMap, setFleetIdMap] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    const fetchFleetIds = async () => {
+      const response = await apiService.fetchFleet();
+      if (response.data) {
+        const map: Record<string, string> = {};
+        response.data.forEach((item: FleetItem) => {
+          map[item.registration] = item._id;
+        });
+        setFleetIdMap(map);
+      }
+    };
+    fetchFleetIds();
+  }, []);
 
   const turboFleet: CardData[] = [
     {
@@ -302,7 +318,7 @@ const FleetMob = () => {
         {currentAircraft && (
           <Link
             href={{
-              pathname: `/charter/fleet/${currentAircraft.tail}`,
+              pathname: `/charter/fleet/${fleetIdMap[currentAircraft.tail] || currentAircraft.tail}`,
               query: { model: currentAircraft.aircraftName },
             }}
           >

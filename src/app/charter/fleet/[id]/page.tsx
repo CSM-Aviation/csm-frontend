@@ -63,16 +63,6 @@ interface AircraftDetailsTypes extends FleetItem {
   otherImages: string[];
 }
 
-interface CardData {
-  imageUrl: string;
-  aircraftName: string;
-  tail: string;
-  seats: string;
-  range: string;
-  speed: string;
-  altitude: string;
-}
-
 const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
   params,
   searchParams,
@@ -81,6 +71,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
   const { model } = searchParams;
   const [aircraftDetails, setAircraftDetails] =
     useState<AircraftDetailsTypes | null>(null);
+  const [allFleet, setAllFleet] = useState<FleetItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
@@ -109,90 +100,6 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
   ];
 
   const midsizeJetModels = ["Gulfstream G150"];
-
-  const sampleFleet: CardData[] = [
-    {
-      imageUrl: "/images/wheels_removed_fleet/N923AS.png",
-      aircraftName: "King Air 200",
-      tail: "N923AS",
-      seats: "7+1",
-      range: "1450NM",
-      speed: "285 kts",
-      altitude: "35,000 ft",
-    },
-    {
-      imageUrl: "/images/wheels_removed_fleet/30GT.png",
-      aircraftName: "King Air F90",
-      tail: "N30GT",
-      seats: "6",
-      range: "1450NM",
-      speed: "270 kts",
-      altitude: "31,000 ft",
-    },
-    {
-      imageUrl: "/images/wheels_removed_fleet/132N.png",
-      aircraftName: "King Air B200",
-      tail: "N132N",
-      seats: "7+1",
-      range: "1400NM",
-      speed: "285 kts",
-      altitude: "35,000 ft",
-    },
-    {
-      imageUrl: "/images/wheels_removed_fleet/177TA.png",
-      aircraftName: "King Air B200GT",
-      tail: "N177TA",
-      seats: "7",
-      range: "1450NM",
-      speed: "290 kts",
-      altitude: "35,000 ft",
-    },
-    {
-      imageUrl: "/images/wheels_removed_fleet/N550ML.png",
-      aircraftName: "Citation Bravo",
-      tail: "N550ML",
-      seats: "7",
-      range: "1450NM",
-      speed: "290 kts",
-      altitude: "35,000 ft",
-    },
-    {
-      imageUrl: "/images/wheels_removed_fleet/N8821C.png",
-      aircraftName: "Gulfstream G150",
-      tail: "N8821C",
-      seats: "8+1",
-      range: "2760NM",
-      speed: "470 kts",
-      altitude: "45,000 ft",
-    },
-    {
-      imageUrl: "/images/wheels_removed_fleet/N518KH.png",
-      aircraftName: "Gulfstream G150",
-      tail: "N518KH",
-      seats: "8+1",
-      range: "2760NM",
-      speed: "470 kts",
-      altitude: "45,000 ft",
-    },
-    {
-      imageUrl: "/images/wheels_removed_fleet/N360AV.png",
-      aircraftName: "Gulfstream G150",
-      tail: "N360AV",
-      seats: "7",
-      range: "2760NM",
-      speed: "470 kts",
-      altitude: "45,000 ft",
-    },
-    {
-      imageUrl: "/images/wheels_removed_fleet/N518KH.png",
-      aircraftName: "Cessna Citation CE560 Ultra",
-      tail: "561CC",
-      seats: "7+1",
-      range: "1960NM",
-      speed: "430 kts",
-      altitude: "45,000 ft",
-    },
-  ];
 
   const getAllImages = (): CarouselImage[] => {
     if (!aircraftDetails) return [];
@@ -338,7 +245,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
           throw new Error(response.error);
         }
         const aircraft = response.data?.find(
-          (item: FleetItem) => item.registration === id
+          (item: FleetItem) => item._id === id
         );
 
         // Initialize categories
@@ -370,6 +277,10 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
               imageCategories.otherImages.push(item);
             }
           });
+        }
+
+        if (response.data) {
+          setAllFleet(response.data);
         }
 
         if (aircraft) {
@@ -888,10 +799,10 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
               },
             }}
           >
-            {sampleFleet
+            {allFleet
               .filter((plane) => {
                 // Exclude current plane
-                if (plane.tail === aircraftDetails.registration) return false;
+                if (plane._id === aircraftDetails._id) return false;
 
                 // Get current aircraft category
                 const currentCategory = getAircraftCategory(
@@ -902,12 +813,19 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
                 // Show only aircraft from the same category
                 return currentCategory === planeCategory;
               })
-              .map((plane, index) => (
+              .map((plane, index) => {
+                const validImages = plane.imageUrls?.filter(url =>
+                  !url.includes('.DS_Store') &&
+                  (url.includes('.jpg') || url.includes('.png') || url.includes('.jpeg'))
+                ) || [];
+                const thumbnailSrc = validImages[0] || `/images/wheels_removed_fleet/${plane.registration}.png`;
+
+                return (
                 <SwiperSlide key={index} className="bg-transparent">
                   <div className="flex flex-col items-center p-6">
                     <div className="relative w-full h-64 mb-4">
                       <Image
-                        src={plane.imageUrl}
+                        src={thumbnailSrc}
                         alt={plane.aircraftName}
                         fill
                         className="object-contain"
@@ -925,7 +843,7 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
                     </div>
                     <Link
                       href={`/charter/fleet/${
-                        plane.tail
+                        plane._id
                       }?model=${encodeURIComponent(plane.aircraftName)}`}
                       className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                     >
@@ -933,7 +851,8 @@ const AircraftDetailPage: NextPage<AircraftDetailPageProps> = ({
                     </Link>
                   </div>
                 </SwiperSlide>
-              ))}
+                );
+              })}
           </Swiper>
 
           <button className="custom-prev absolute left-0 top-1/2 z-10 text-white hover:text-blue-300 transition">
