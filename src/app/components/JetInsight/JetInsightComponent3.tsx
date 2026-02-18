@@ -1,11 +1,12 @@
 'use client'
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import styles from './JetInsight1.module.scss';
 
 const JetInsightComponent: React.FC = () => {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const modalRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -13,29 +14,24 @@ const JetInsightComponent: React.FC = () => {
     script.async = true;
     document.body.appendChild(script);
 
-    script.onload = () => {
-      if (buttonRef.current && modalRef.current && iframeRef.current) {
-        buttonRef.current.addEventListener('click', () => {
-          window.dataLayer = window.dataLayer || [];
-          window.dataLayer.push({
-            event: 'cta_button_click',
-            category: 'conversion',
-            label: 'REQUEST_QUOTE'
-          });
-          iframeRef.current!.src = "https://client.jetinsight.com/embed/csm-aviation/Web-Request?";
-          modalRef.current!.style.display = "block";
-        });
-      }
-    };
-
     return () => {
       document.body.removeChild(script);
     };
   }, []);
 
+  const openModal = () => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'cta_button_click',
+      category: 'conversion',
+      label: 'REQUEST_QUOTE'
+    });
+    setIsModalOpen(true);
+  };
+
   const closeModal = () => {
     if (iframeRef.current) iframeRef.current.src = "";
-    if (modalRef.current) modalRef.current.style.display = "none";
+    setIsModalOpen(false);
   };
 
   return (
@@ -46,14 +42,15 @@ const JetInsightComponent: React.FC = () => {
           id="jetinsight-embedded-request-open-button"
           className={styles.jetinsightEmbeddedRequestButton}
           style={{ flex: '1 1 auto', width: '100%' }}
+          onClick={openModal}
         >
          Get A Quote
-          <svg 
-            width="16" 
-            height="16" 
-            viewBox="0 0 16 16" 
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
             fill="currentColor"
-            style={{ 
+            style={{
               marginLeft: '8px',
               transition: 'transform 0.3s ease'
             }}
@@ -63,20 +60,24 @@ const JetInsightComponent: React.FC = () => {
           </svg>
         </button>
       </div>
-      <div id="jetinsight-embedded-request-modal" ref={modalRef} className={styles.jetinsightEmbeddedRequestModal}>
-        <button
-          id="jetinsight-embedded-request-close-button"
-          className={styles.closeButton}
-          onClick={closeModal}
-        >
-          Close
-        </button>
-        <iframe
-          ref={iframeRef}
-          id="jetinsight-embedded-request-iframe"
-          className={styles.modalIframe}
-        ></iframe>
-      </div>
+      {isModalOpen && createPortal(
+        <div id="jetinsight-embedded-request-modal" className={styles.jetinsightEmbeddedRequestModal} style={{ display: 'block' }}>
+          <button
+            id="jetinsight-embedded-request-close-button"
+            className={styles.closeButton}
+            onClick={closeModal}
+          >
+            Close
+          </button>
+          <iframe
+            ref={iframeRef}
+            id="jetinsight-embedded-request-iframe"
+            className={styles.modalIframe}
+            src="https://client.jetinsight.com/embed/csm-aviation/Web-Request?"
+          ></iframe>
+        </div>,
+        document.body
+      )}
     </>
   );
 };
