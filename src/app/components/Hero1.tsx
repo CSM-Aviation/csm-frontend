@@ -95,13 +95,12 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, videoSource, title, subtit
             <Image
               src={backgroundImage}
               alt="Background"
-              layout="fill"
-              objectFit="cover"
-              objectPosition="center"
+              fill
+              style={{ objectFit: "cover", objectPosition: "center" }}
               quality={100}
               priority
             />
-            <div className="absolute inset-0 bg-black opacity-50"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-csm-navy via-csm-navy/50 to-csm-navy/10" />
           </div>
         )}
         <div className="relative z-10 flex flex-col justify-center items-center h-full text-white px-4">
