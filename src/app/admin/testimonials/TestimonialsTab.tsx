@@ -104,11 +104,11 @@ const TestimonialsTab = () => {
         {filteredTestimonials.map((testimonial) => (
           <div
             key={testimonial._id}
-            className="bg-gray-50 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow"
+            className="bg-gray-50 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow overflow-hidden min-w-0"
           >
             <div className="flex justify-between items-start mb-4">
               <div>
-                <h3 className="font-semibold text-lg text-gray-800">
+                <h3 className="font-semibold text-lg text-gray-800 truncate max-w-[200px]" title={testimonial.fullName}>
                   {testimonial.fullName}
                 </h3>
                 <p className="text-sm text-gray-500">
