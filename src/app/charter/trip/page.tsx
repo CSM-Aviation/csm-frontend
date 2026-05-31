@@ -1,58 +1,42 @@
-import React from 'react';
-import dynamic from 'next/dynamic';
-import Seo, { generateMetadata as seoGenerateMetadata } from '../../components/seo/Seo';
-import StructuredData from '../../components/seo/StructuredData';
-import { apiService, SeoData } from '../../services/apiService';
-import { Metadata } from 'next';
-import { generateStructuredData } from '@/app/utils/structuredData';
+import type { Metadata } from "next";
+import { TripForm } from "@/components/forms/TripForm";
+import { PageHero } from "@/components/layout/PageHero";
+import { SectionBand } from "@/components/layout/SectionBand";
+import { SupportAside } from "@/components/sections/SupportAside";
 
-const TripRequestForm = dynamic(() => import('./TripRequestForm'), { ssr: false });
-
-async function getData(): Promise<SeoData> {
-  try {
-    const response = await apiService.fetchSeoData('trip');
-    if (response.error || !response.data) {
-      throw new Error(response.error || 'Failed to fetch SEO data');
-    }
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching SEO data:', error);
-    return {
-      title: 'CSM Aviation',
-      description: 'Luxury air travel services',
-      keywords: ['private jet', 'charter'],
-      ogImage: '/images/default.jpg',
-      canonicalUrl: 'https://csmaviation.com',
-      robots: 'index, follow',
-      author: 'CSM Aviation',
-      language: 'en',
-      siteName: 'CSM Aviation',
-      type: 'website',
-      twitterHandle: '@CSMAviation',
-    };
-  }
-}
-
-async function generateMetadata(): Promise<Metadata> {
-  const seoData = await getData();
-  return seoGenerateMetadata(seoData);
-}
-
-// Export the metadata generator for Next.js
-export { generateMetadata };
-
-
-const TripPage: React.FC = async () => {
-  const seoData = await getData();
-  const structuredData = generateStructuredData(seoData);
-
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <StructuredData data={structuredData} />
-      <h1 className="text-4xl font-bold text-center mb-8 text-blue-900">Trip Request</h1>
-      <TripRequestForm />
-    </div>
-  );
+export const metadata: Metadata = {
+  title: "Plan a Trip",
+  description:
+    "Share your itinerary and let CSM Aviation build the trip around it — the right aircraft, the right field, constant communication start to finish.",
+  alternates: { canonical: "/charter/trip" },
 };
 
-export default TripPage;
+export default function TripPage({
+  searchParams,
+}: {
+  searchParams: { category?: string; aircraft?: string };
+}) {
+  return (
+    <>
+      <PageHero
+        eyebrow="Plan a Trip"
+        title="Let's build it around you."
+        lead="Tell us where you're going and what matters. We'll shape the trip — aircraft, timing, ground — and keep you posted at every step."
+      />
+
+      <SectionBand tone="light">
+        <div className="grid gap-s8 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <TripForm
+              defaultCategory={searchParams.category}
+              defaultAircraft={searchParams.aircraft}
+            />
+          </div>
+          <div className="lg:col-span-5">
+            <SupportAside />
+          </div>
+        </div>
+      </SectionBand>
+    </>
+  );
+}
