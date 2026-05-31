@@ -1,57 +1,97 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
+import Link from "next/link";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
 
-import { cn } from "@/lib/utils"
-
-const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+/**
+ * Calm, architectural buttons (design doc §08). Near-square (--r-md), Inter
+ * 600, generous --s-4 × --s-6 padding, no shadow, no gradient. Hover lifts via
+ * background shift + a 1px underline-draw (never scale-bounce, §06). Focus is a
+ * 2px --focus outline at 2px offset (ground-agnostic, never removed — §18).
+ */
+export const buttonVariants = cva(
+  "group/btn relative inline-flex select-none items-center justify-center rounded-md font-body text-body font-semibold transition-colors duration-fast ease-calm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        default:
-          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-        outline:
-          "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+        primary: "bg-gold px-s6 py-s4 text-petrol hover:bg-gold-hover active:bg-gold-press",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-      },
-      size: {
-        default: "h-9 px-4 py-2",
-        sm: "h-8 rounded-md px-3 text-xs",
-        lg: "h-10 rounded-md px-8",
-        icon: "h-9 w-9",
+          "border border-petrol bg-transparent px-s6 py-s4 text-petrol hover:bg-petrol hover:text-fog",
+        ghost:
+          "border border-fog bg-transparent px-s6 py-s4 text-fog hover:bg-fog hover:text-petrol",
+        text: "bg-transparent p-0 text-saddle hover:text-gold",
       },
     },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
-)
+    defaultVariants: { variant: "primary" },
+  },
+);
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean
+type Variant = NonNullable<VariantProps<typeof buttonVariants>["variant"]>;
+
+interface BaseProps {
+  variant?: Variant;
+  className?: string;
+  children: React.ReactNode;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button"
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      />
-    )
-  }
-)
-Button.displayName = "Button"
+type ButtonAsButton = BaseProps &
+  Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof BaseProps> & {
+    as?: "button";
+    href?: undefined;
+  };
 
-export { Button, buttonVariants }
+type ButtonAsAnchor = BaseProps &
+  Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof BaseProps> & {
+    as?: "a";
+    href: string;
+  };
+
+export type ButtonProps = ButtonAsButton | ButtonAsAnchor;
+
+function Underline() {
+  return (
+    <span
+      aria-hidden
+      className="pointer-events-none absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-current transition-transform duration-base ease-calm group-hover/btn:scale-x-100"
+    />
+  );
+}
+
+export function Button(props: ButtonProps) {
+  const variant = props.variant ?? "primary";
+  const cls = cn(buttonVariants({ variant }), props.className);
+  const withUnderline = variant === "primary" || variant === "text";
+
+  const label = (
+    <span className="relative inline-flex items-center gap-s2">
+      {props.children}
+      {withUnderline && <Underline />}
+    </span>
+  );
+
+  if (props.href !== undefined) {
+    const { href, children, className, variant: _v, as: _a, ...rest } = props;
+    void children;
+    void className;
+    if (href.startsWith("/")) {
+      return (
+        <Link href={href} className={cls} {...rest}>
+          {label}
+        </Link>
+      );
+    }
+    return (
+      <a href={href} className={cls} {...rest}>
+        {label}
+      </a>
+    );
+  }
+
+  const { children, className, variant: _v, as: _a, ...rest } = props;
+  void children;
+  void className;
+  return (
+    <button className={cls} {...rest}>
+      {label}
+    </button>
+  );
+}

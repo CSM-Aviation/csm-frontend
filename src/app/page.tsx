@@ -1,69 +1,166 @@
-import React from 'react';
-import HomeBody from './home/home';
-import Seo, {
-  generateMetadata as seoGenerateMetadata,
-} from './components/seo/Seo';
-import StructuredData from './components/seo/StructuredData';
-import { apiService, SeoData } from './services/apiService';
-import { Metadata } from 'next';
-import { generateStructuredData } from './utils/structuredData';
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { home } from "@/content/home";
+import { homeProof } from "@/content/proof";
+import { site } from "@/content/site";
+import { DestinationsTeaser } from "@/components/sections/DestinationsTeaser";
+import { PageHero } from "@/components/layout/PageHero";
+import { HeroVideo } from "@/components/layout/HeroVideo";
+import { SectionBand } from "@/components/layout/SectionBand";
+import { CtaBand } from "@/components/layout/CtaBand";
+import { ProofBar } from "@/components/proof/ProofBar";
+import { StatBlock } from "@/components/proof/StatBlock";
+import { AccreditationStrip } from "@/components/proof/AccreditationStrip";
+import { Button } from "@/components/ui/Button";
+import { RequestQuoteButton } from "@/components/quote/RequestQuoteButton";
+import { Reveal } from "@/components/ui/Reveal";
 
-async function getData(): Promise<SeoData> {
-  try {
-    const response = await apiService.fetchSeoData('home');
-    if (response.error || !response.data) {
-      throw new Error(response.error || 'Failed to fetch SEO data');
-    }
-    // console.log("SEO data received: "+ response.data.keywords)
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching SEO data:', error);
-   return {
-  title: 'CSM Aviation',
-  description: 'Luxury air travel services',
-  keywords: ['private jet', 'charter'],
-  ogImage: '/images/G150.png',
-  canonicalUrl: 'https://www.csmaviation.com',
-  robots: 'index, follow',
-  author: 'CSM Aviation',
-  language: 'en',
-  siteName: 'CSM Aviation',
-  type: 'website',
-  twitterHandle: '@CSMAviation',
-};
-  }
-}
-
-const seoData = {
-  title: 'CSM Aviation',
-  description: 'Luxury air travel services',
-  keywords: ['private jet', 'charter'],
-  ogImage: '/images/G150.png',
-  canonicalUrl: 'https://www.csmaviation.com',
-  robots: 'index, follow',
-  author: 'CSM Aviation',
-  language: 'en',
-  siteName: 'CSM Aviation',
-  type: 'website' as const,
-  twitterHandle: '@CSMAviation',
+export const metadata: Metadata = {
+  description:
+    "CSM Aviation — ARGUS Gold private charter, transparent aircraft management, and in-house Part 145 maintenance, flown to a single standard of safety from California's Central Valley.",
+  alternates: { canonical: "/" },
 };
 
-async function generateMetadata(): Promise<Metadata> {
-  // const seoData = await getData();
-  return seoGenerateMetadata(seoData);
-}
-
-// Export the metadata generator for Next.js
-export { generateMetadata };
-
-export default async function Home() {
-  // const seoData = await getData();
-  const structuredData = generateStructuredData(seoData);
-
+export default function Home() {
   return (
     <>
-      <StructuredData data={structuredData} />
-      <HomeBody />
+      <PageHero
+        titleSize="display"
+        align="center"
+        media={<HeroVideo src="/videos/compressed/CSM_Hero.mp4" />}
+        eyebrow={home.hero.eyebrow}
+        title={
+          <>
+            {home.hero.titleLead}{" "}
+            <em className="font-display italic text-gold">{home.hero.titleAccent}</em>{" "}
+            {home.hero.titleTail}
+          </>
+        }
+        lead={home.hero.lead}
+        actions={
+          <>
+            <RequestQuoteButton variant="primary">Request a Quote</RequestQuoteButton>
+            <Button href={site.phone.href} variant="ghost">
+              Call Now
+            </Button>
+          </>
+        }
+      />
+
+      {/* Proof bar — Fog */}
+      <SectionBand tone="light" eyebrow="Trusted in the air" heading="The proof, up front.">
+        <ProofBar items={homeProof} tone="light" />
+      </SectionBand>
+
+      {/* What we do — Fog, 7/5 asymmetric (charter leads) */}
+      <SectionBand
+        tone="light"
+        divider="top"
+        eyebrow={home.whatWeDo.eyebrow}
+        heading={home.whatWeDo.heading}
+        lead={home.whatWeDo.lead}
+      >
+        <div className="grid gap-s6 lg:grid-cols-12">
+          <Reveal className="lg:col-span-7">
+            <Link
+              href={home.whatWeDo.charter.href}
+              className="group flex h-full flex-col justify-between gap-s8 rounded-lg bg-petrol p-s7 text-paper-on-dark transition-colors duration-base hover:bg-petrol-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+            >
+              <div className="flex flex-col gap-s4">
+                <h3 className="font-display text-h2 font-semibold">{home.whatWeDo.charter.title}</h3>
+                <p className="max-w-measure text-lead text-paper-soft">
+                  {home.whatWeDo.charter.body}
+                </p>
+              </div>
+              <span className="inline-flex items-center gap-s2 font-semibold text-gold">
+                {home.whatWeDo.charter.cta}
+                <ArrowRight
+                  size={18}
+                  className="transition-transform duration-base group-hover:translate-x-1"
+                />
+              </span>
+            </Link>
+          </Reveal>
+
+          <div className="flex flex-col gap-s6 lg:col-span-5">
+            {home.whatWeDo.supporting.map((item, i) => (
+              <Reveal key={item.href} delay={(i + 1) * 80} className="h-full">
+                <Link
+                  href={item.href}
+                  className="group flex h-full flex-col justify-between gap-s5 rounded-md border border-line bg-fog-raised p-s6 transition-colors duration-base hover:border-saddle focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+                >
+                  <div className="flex flex-col gap-s3">
+                    <h3 className="font-display text-h3 font-semibold text-ink">{item.title}</h3>
+                    <p className="text-body text-ink-soft">{item.body}</p>
+                  </div>
+                  <span className="inline-flex items-center gap-s2 font-semibold text-saddle transition-colors group-hover:text-gold">
+                    {item.cta}
+                    <ArrowUpRight
+                      size={16}
+                      className="transition-transform duration-base group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    />
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </SectionBand>
+
+      {/* Beyond charter — Petrol */}
+      <SectionBand
+        tone="dark"
+        gradient
+        eyebrow={home.beyond.eyebrow}
+        heading={home.beyond.heading}
+        lead={home.beyond.body}
+      >
+        <div className="mt-s4 grid gap-s8 lg:grid-cols-2 lg:items-end">
+          <ul className="flex flex-wrap gap-s9">
+            {home.beyond.stats.map((s) => (
+              <li key={s.label}>
+                <StatBlock value={s.value} label={s.label} tone="dark" underline />
+              </li>
+            ))}
+          </ul>
+          <div className="flex flex-wrap gap-s4 lg:justify-end">
+            {home.beyond.links.map((l) => (
+              <Button key={l.href} href={l.href} variant="ghost">
+                {l.label}
+              </Button>
+            ))}
+          </div>
+        </div>
+      </SectionBand>
+
+      {/* Reach — Fog (typographic destinations) */}
+      <SectionBand
+        tone="light"
+        eyebrow={home.reach.eyebrow}
+        heading={home.reach.heading}
+        lead={home.reach.lead}
+      >
+        <DestinationsTeaser />
+        <div className="mt-s7">
+          <Button href={home.reach.cta.href} variant="secondary">
+            {home.reach.cta.label}
+          </Button>
+        </div>
+      </SectionBand>
+
+      {/* Accreditation strip — Fog */}
+      <SectionBand
+        tone="light"
+        divider="top"
+        eyebrow={home.accreditation.eyebrow}
+        heading={home.accreditation.heading}
+      >
+        <AccreditationStrip />
+      </SectionBand>
+
+      {/* CTA band + cheatline into footer — Petrol */}
+      <CtaBand />
     </>
   );
 }
