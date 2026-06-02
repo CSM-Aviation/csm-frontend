@@ -8,7 +8,7 @@ import { CtaBand } from "@/components/layout/CtaBand";
 export const metadata: Metadata = {
   title: "FAQs",
   description:
-    "Straight answers about chartering, safety ratings, medical transport, aircraft management, and Part 145 maintenance with CSM Aviation.",
+    "Straight answers about chartering, safety ratings, medical transport, and aircraft management with CSM Aviation.",
   alternates: { canonical: "/faqs" },
 };
 

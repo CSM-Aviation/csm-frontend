@@ -15,7 +15,7 @@ export const faqs: Faq[] = [
   },
   {
     q: "What makes CSM different from a booking broker?",
-    a: "We're an operator, not a middleman. We charter, manage, and maintain aircraft under one roof — so one accountable team stands behind your flight, from the crew to the maintenance that keeps the aircraft airworthy.",
+    a: "We're an operator, not a middleman. We charter and manage aircraft directly, with maintenance and aircraft care provided through our family of affiliated companies — so one accountable team stands behind your flight, from the crew on.",
   },
   {
     q: "Are you safety-rated?",
@@ -34,8 +34,8 @@ export const faqs: Faq[] = [
     a: "An on-demand flight department: crewing, scheduling, compliance, and maintenance oversight, with transparent monthly reporting you can actually read. The goal is a lower cost of ownership without lowering the standard.",
   },
   {
-    q: "Do you maintain aircraft for outside operators?",
-    a: "Yes. Our FAA-certified Part 145 repair station handles MRO, engine repair, parts, and AOG response for our managed fleet and for third-party operators who need the work done right the first time.",
+    q: "Do you handle aircraft maintenance?",
+    a: "Maintenance, repair, and AOG support are provided through our family of affiliated companies — coordinated so the work is tracked, scheduled, and accountable. Ask us and we'll connect you with the right team.",
   },
   {
     q: "How do I reach someone right now?",

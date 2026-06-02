@@ -12,7 +12,7 @@ import { Reveal } from "@/components/ui/Reveal";
 export const metadata: Metadata = {
   title: "About CSM",
   description:
-    "CSM Aviation is a Central Valley operator trusted with what matters — charter, management, and in-house Part 145 maintenance under one accountable roof.",
+    "CSM Aviation is a Central Valley operator trusted with what matters — private charter and aircraft management under one accountable roof.",
   alternates: { canonical: "/company/about" },
 };
 
@@ -23,25 +23,14 @@ export default function AboutPage() {
     <>
       <PageHero eyebrow={hero.eyebrow} title={hero.title} lead={hero.lead} />
 
-      {/* Story — Fog, editorial 7/5 with a Cormorant pull-quote */}
+      {/* Story — Fog, editorial single column */}
       <SectionBand tone="light" eyebrow={story.eyebrow}>
-        <div className="grid gap-s8 lg:grid-cols-12">
-          <div className="flex flex-col gap-s5 lg:col-span-7">
-            {story.paragraphs.map((p, i) => (
-              <Reveal key={i} delay={i * 40}>
-                <p className="max-w-measure text-lead text-ink-soft">{p}</p>
-              </Reveal>
-            ))}
-          </div>
-          <Reveal className="lg:col-span-5">
-            <blockquote className="lg:sticky lg:top-[120px]">
-              <p className="font-display text-h2 font-medium italic leading-tight text-ink">
-                <span className="text-gold">“</span>
-                {story.pullQuote}
-                <span className="text-gold">”</span>
-              </p>
-            </blockquote>
-          </Reveal>
+        <div className="flex flex-col gap-s5 lg:max-w-3xl">
+          {story.paragraphs.map((p, i) => (
+            <Reveal key={i} delay={i * 40}>
+              <p className="text-lead text-ink-soft">{p}</p>
+            </Reveal>
+          ))}
         </div>
       </SectionBand>
 

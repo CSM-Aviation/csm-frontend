@@ -12,12 +12,12 @@ import { serviceSchema } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "Aircraft Management",
   description:
-    "Lower the cost of aircraft ownership without lowering the standard — an on-demand flight department with transparent monthly reporting and in-house Part 145 maintenance.",
+    "Lower the cost of aircraft ownership without lowering the standard — an on-demand flight department with transparent monthly reporting and maintenance oversight.",
   alternates: { canonical: "/management" },
 };
 
 export default function ManagementPage() {
-  const { hero, pitch, transparency, why } = management;
+  const { hero, pitch, why } = management;
 
   return (
     <>
@@ -26,7 +26,7 @@ export default function ManagementPage() {
           name: "Aircraft Management",
           serviceType: "Aircraft management",
           description:
-            "On-demand flight department services with transparent monthly reporting and in-house Part 145 maintenance — lowering the cost of ownership without lowering the standard.",
+            "On-demand flight department services with transparent monthly reporting and maintenance oversight — lowering the cost of ownership without lowering the standard.",
           path: "/management",
         })}
       />
@@ -63,43 +63,6 @@ export default function ManagementPage() {
               </Reveal>
             ))}
           </ul>
-        </div>
-      </SectionBand>
-
-      {/* Transparency proof — Petrol, mock report */}
-      <SectionBand tone="dark" gradient>
-        <div className="grid gap-s8 lg:grid-cols-2 lg:items-center">
-          <Reveal className="flex flex-col gap-s4">
-            <Eyebrow tone="gold">{transparency.eyebrow}</Eyebrow>
-            <h2 className="font-display text-h2 font-semibold text-paper-on-dark">
-              {transparency.heading}
-            </h2>
-            <p className="max-w-lead text-lead text-paper-soft">{transparency.lead}</p>
-          </Reveal>
-
-          <Reveal>
-            <figure className="rounded-lg border border-line-dark bg-petrol-600 p-s6">
-              <figcaption className="mb-s4 flex items-center justify-between border-b border-line-dark pb-s3">
-                <span className="text-eyebrow font-semibold uppercase tracking-[0.26em] text-gold">
-                  {transparency.report.period}
-                </span>
-              </figcaption>
-              <dl className="tnum">
-                {transparency.report.rows.map((row) => (
-                  <div
-                    key={row.label}
-                    className="flex items-baseline justify-between gap-s4 border-b border-line-dark py-s3 last:border-b-0"
-                  >
-                    <dt className="text-body text-paper-soft">{row.label}</dt>
-                    <dd className="text-right text-body font-medium text-paper-on-dark">
-                      {row.value}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-              <p className="mt-s4 text-small text-paper-soft">{transparency.report.note}</p>
-            </figure>
-          </Reveal>
         </div>
       </SectionBand>
 

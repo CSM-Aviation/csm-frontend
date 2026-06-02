@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     template: "%s · CSM Aviation",
   },
   description:
-    "CSM Aviation delivers ARGUS-rated private jet charter, transparent aircraft management, and Part 145 maintenance — flown to a single standard of safety.",
+    "CSM Aviation delivers ARGUS-rated private jet charter and transparent aircraft management — flown to a single standard of safety.",
   openGraph: {
     type: "website",
     siteName: "CSM Aviation",

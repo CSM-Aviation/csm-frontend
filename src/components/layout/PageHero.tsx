@@ -6,6 +6,12 @@ import { cn } from "@/lib/utils";
 
 interface PageHeroProps {
   eyebrow?: string;
+  /** Optional brand logo rendered above the eyebrow inside the hero body. */
+  logo?: React.ReactNode;
+  /** Extra classes for the eyebrow (e.g. an enlarged home-hero eyebrow). */
+  eyebrowClassName?: string;
+  /** Extra classes for the lead paragraph (e.g. an enlarged home-hero lead). */
+  leadClassName?: string;
   title: React.ReactNode;
   lead?: React.ReactNode;
   /** display = home-scale Cormorant; h1 = standard page title. */
@@ -37,6 +43,9 @@ const MEDIA_OVERLAY =
  */
 export function PageHero({
   eyebrow,
+  logo,
+  eyebrowClassName,
+  leadClassName,
   title,
   lead,
   titleSize = "h1",
@@ -73,7 +82,12 @@ export function PageHero({
             centered ? "mx-auto items-center text-center" : "items-start",
           )}
         >
-          {eyebrow && <Eyebrow tone="gold">{eyebrow}</Eyebrow>}
+          {logo && <div className={cn("mb-s2", centered && "flex justify-center")}>{logo}</div>}
+          {eyebrow && (
+            <Eyebrow tone="gold" className={eyebrowClassName}>
+              {eyebrow}
+            </Eyebrow>
+          )}
           <h1
             className={cn(
               "font-display font-semibold tracking-display text-paper-on-dark",
@@ -83,7 +97,13 @@ export function PageHero({
             {title}
           </h1>
           {lead && (
-            <p className={cn("max-w-lead text-lead text-paper-soft", centered && "mx-auto")}>
+            <p
+              className={cn(
+                "max-w-lead text-lead text-paper-soft",
+                centered && "mx-auto",
+                leadClassName,
+              )}
+            >
               {lead}
             </p>
           )}

@@ -75,9 +75,6 @@ export default async function AircraftDetailPage({ params }: { params: { id: str
             <h1 className="font-display text-h1 font-semibold tracking-h1 text-paper-on-dark">
               {aircraft.name}
             </h1>
-            {aircraft.registration && (
-              <p className="tnum text-body text-paper-soft">Tail {aircraft.registration}</p>
-            )}
             <div className="mt-s3 flex flex-wrap gap-s4">
               <Button href={quoteHref} variant="primary">
                 Request this aircraft

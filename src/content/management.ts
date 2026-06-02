@@ -28,32 +28,15 @@ export const management = {
         body: "A clear monthly statement of flights, hours, maintenance, and costs. No black boxes, no surprises at year end.",
       },
       {
-        title: "In-house maintenance program",
-        body: "Your aircraft is maintained in our own Part 145 station — a lifecycle advantage most managers have to outsource.",
+        title: "Maintenance oversight",
+        body: "We coordinate your aircraft's maintenance program with trusted, certified providers — so the work is tracked, scheduled, and accountable, without you managing vendors.",
       },
     ],
   },
 
-  transparency: {
-    eyebrow: "Transparency, shown",
-    heading: "You see what we see.",
-    lead: "A representative month — the kind of statement owners receive, in plain figures.",
-    report: {
-      period: "Monthly statement · sample",
-      rows: [
-        { label: "Flights flown", value: "14" },
-        { label: "Flight hours", value: "28.6" },
-        { label: "Charter revenue applied", value: "Itemized" },
-        { label: "Maintenance events", value: "2 · scheduled" },
-        { label: "Variance to estimate", value: "Within plan" },
-      ],
-      note: "Illustrative sample for layout. Figures provided by stakeholders before launch (§10).",
-    },
-  },
-
   why: {
     eyebrow: "Why CSM",
-    heading: "Safety record and a repair station, under one roof.",
-    body: "The same standard that flies organ-transport missions oversees your aircraft. And because our Part 145 station is in-house, maintenance is a lifecycle advantage — not a vendor relationship you have to manage.",
+    heading: "One accountable team for the life of the aircraft.",
+    body: "The same standard that flies our most demanding missions guides how your aircraft is operated and cared for. Crewing, scheduling, compliance, and maintenance oversight sit with one team — so there are no seams for problems to hide in.",
   },
 } as const;

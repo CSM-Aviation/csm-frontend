@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { home } from "@/content/home";
@@ -6,19 +7,19 @@ import { homeProof } from "@/content/proof";
 import { site } from "@/content/site";
 import { DestinationsTeaser } from "@/components/sections/DestinationsTeaser";
 import { PageHero } from "@/components/layout/PageHero";
-import { HeroVideo } from "@/components/layout/HeroVideo";
 import { SectionBand } from "@/components/layout/SectionBand";
 import { CtaBand } from "@/components/layout/CtaBand";
 import { ProofBar } from "@/components/proof/ProofBar";
 import { StatBlock } from "@/components/proof/StatBlock";
 import { AccreditationStrip } from "@/components/proof/AccreditationStrip";
 import { Button } from "@/components/ui/Button";
+import { Logo } from "@/components/ui/Logo";
 import { RequestQuoteButton } from "@/components/quote/RequestQuoteButton";
 import { Reveal } from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   description:
-    "CSM Aviation — ARGUS Gold private charter, transparent aircraft management, and in-house Part 145 maintenance, flown to a single standard of safety from California's Central Valley.",
+    "CSM Aviation — ARGUS Gold private charter and transparent aircraft management, flown to a single standard of safety from California's Central Valley.",
   alternates: { canonical: "/" },
 };
 
@@ -28,19 +29,32 @@ export default function Home() {
       <PageHero
         titleSize="display"
         align="center"
-        media={<HeroVideo src="/videos/compressed/CSM_Hero.mp4" />}
+        media={
+          <Image
+            src="/images/image_jetcenter_aerial-hero.jpg"
+            alt=""
+            aria-hidden
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+        }
+        logo={<Logo tone="reversed" width={280} priority />}
         eyebrow={home.hero.eyebrow}
+        eyebrowClassName="text-body md:text-lead"
+        leadClassName="text-lead sm:text-h3"
         title={
           <>
-            {home.hero.titleLead}{" "}
-            <em className="font-display italic text-gold">{home.hero.titleAccent}</em>{" "}
-            {home.hero.titleTail}
+            <span className="text-horizon">{home.hero.titleLead}</span>{" "}
+            {home.hero.titleMid}{" "}
+            <em className="font-display italic text-gold">{home.hero.titleAccent}</em>
           </>
         }
         lead={home.hero.lead}
         actions={
           <>
-            <RequestQuoteButton variant="primary">Request a Quote</RequestQuoteButton>
+            <RequestQuoteButton variant="sand">Request a Quote</RequestQuoteButton>
             <Button href={site.phone.href} variant="ghost">
               Call Now
             </Button>

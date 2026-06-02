@@ -14,6 +14,7 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         primary: "bg-gold px-s6 py-s4 text-petrol hover:bg-gold-hover active:bg-gold-press",
+        sand: "bg-sand px-s6 py-s4 text-petrol hover:brightness-[0.96] active:brightness-90",
         secondary:
           "border border-petrol bg-transparent px-s6 py-s4 text-petrol hover:bg-petrol hover:text-fog",
         ghost:
@@ -59,7 +60,7 @@ function Underline() {
 export function Button(props: ButtonProps) {
   const variant = props.variant ?? "primary";
   const cls = cn(buttonVariants({ variant }), props.className);
-  const withUnderline = variant === "primary" || variant === "text";
+  const withUnderline = variant === "primary" || variant === "sand" || variant === "text";
 
   const label = (
     <span className="relative inline-flex items-center gap-s2">

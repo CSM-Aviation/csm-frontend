@@ -2,12 +2,12 @@
  * Site-wide constants (contact, identity). Single source for the header CTA,
  * footer, mobile call action, and structured data. NAP per build spec §07.
  *
- * OPEN CONTENT GAP (§10): street address, social handles beyond X, and the
- * exact base city are stakeholder-confirmed items — placeholders flagged below.
+ * OPEN CONTENT GAP (§10): street address and the exact base city are
+ * stakeholder-confirmed items — placeholders flagged below.
  */
 export const site = {
   name: "CSM Aviation",
-  tagline: "A single standard of safety.",
+  tagline: "Safety Without Compromise.",
   url: "https://www.csmaviation.com",
 
   phone: {
@@ -27,7 +27,9 @@ export const site = {
   },
 
   social: [
-    { label: "X", href: "https://twitter.com/CSMAviation", handle: "@CSMAviation" },
-    // TODO(§10): confirm LinkedIn / Instagram handles before launch.
+    { label: "LinkedIn", href: "https://www.linkedin.com/company/csm-aviation" },
+    { label: "Instagram", href: "https://www.instagram.com/csm_aviation" },
+    { label: "Facebook", href: "https://www.facebook.com/CSMaviation/" },
+    { label: "X", href: "https://twitter.com/CSMAviation" },
   ],
 } as const;
