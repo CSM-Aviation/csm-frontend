@@ -12,7 +12,7 @@ import { RequestQuoteButton } from "@/components/quote/RequestQuoteButton";
 export const metadata: Metadata = {
   title: "Our Fleet",
   description:
-    "Light jets, midsize jets, and turboprops — matched to your mission. Explore the CSM Aviation charter fleet by category.",
+    "Midsize jets, light jets, and turboprops — matched to your mission. Explore the CSM Aviation charter fleet by category.",
   alternates: { canonical: "/charter/fleet" },
 };
 
@@ -40,7 +40,7 @@ export default async function FleetPage({
         lead="Every trip starts with the right aircraft. Filter by category, then look closer — the specs, the cabin, the range that fits your mission."
         actions={
           <>
-            <RequestQuoteButton variant="primary">Request a Quote</RequestQuoteButton>
+            <RequestQuoteButton variant="sand">Request a Quote</RequestQuoteButton>
             <Button href="/charter/trip" variant="ghost">
               Plan a Trip
             </Button>
@@ -58,7 +58,7 @@ export default async function FleetPage({
       <CtaBand
         eyebrow="Flown to one standard"
         heading="Every tail, held to the same safety bar."
-        lead="ARGUS Gold rated, Wyvern registered, and maintained in our own Part 145 station. Tell us your trip and we'll match the aircraft."
+        lead="ARGUS Gold rated and Wyvern registered. Tell us your trip and we'll match the aircraft."
       />
     </>
   );

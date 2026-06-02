@@ -21,7 +21,7 @@ type RequestQuoteButtonProps = Omit<
 export function RequestQuoteButton({
   children = "Request a Quote",
   analyticsLabel,
-  variant = "primary",
+  variant = "sand",
   onClick,
   ...rest
 }: RequestQuoteButtonProps) {

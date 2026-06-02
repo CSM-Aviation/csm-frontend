@@ -13,12 +13,12 @@ export const about = {
 
   story: {
     eyebrow: "Who we are",
-    pullQuote: "The standard that flies an organ-transport mission is the standard that flies every mission.",
     paragraphs: [
-      "CSM Aviation operates from California's Central Valley, positioned to serve all of California and Nevada and to fly anywhere from there. Charter, aircraft management, and an in-house Part 145 repair station sit under one roof.",
-      "That structure is deliberate. When the same team charters, manages, and maintains, there are no seams for problems to hide in — and one accountable group answers for the aircraft across its whole life.",
-      "Our medical and organ-transport work sets the bar. These are time-critical flights where there is no room for error, and the discipline they demand carries into every trip we fly — retail, wholesale, or a quiet weekend away.",
-      "We say less and verify more. Our accreditations are independent audits, not marketing. Our reporting is plain. And our phone is answered, 24 hours a day, by someone who can help.",
+      "CSM Aviation was built on a simple belief: private aviation requires more than access to an aircraft — it requires a trusted partner.",
+      "Based in California's Central Valley and throughout the western United States, we provide comprehensive private aviation solutions globally. We bring together a comprehensive suite of expertise and service to support aircraft management, private charter, sales through CSM Aviation and through our family of affiliated companies, we provide maintenance, aircraft care and detailing, and outsourced family office services designed to simplify the financial and administrative responsibilities of aircraft ownership.",
+      "Our integrated approach is intentional. When the teams responsible for operating, maintaining, and supporting an aircraft work together, owners benefit from greater accountability, transparency, and a deeper understanding of their aircraft throughout its life.",
+      "The same commitment to safety, professionalism, and care for our clients, customers and fleet guides every part of our organization — from the cockpit to the hangar, to the teams supporting each flight behind the scenes.",
+      "Behind every flight is a mission, a business, a family, and a person who places their trust in us. We honor that trust through consistent service, uncompromising standards, and building relationships grounded in safety, accountability and integrity.",
     ],
   },
 

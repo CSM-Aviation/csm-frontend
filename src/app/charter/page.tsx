@@ -42,7 +42,7 @@ export default async function CharterPage() {
         lead={charter.hero.lead}
         actions={
           <>
-            <RequestQuoteButton variant="primary">Request a Quote</RequestQuoteButton>
+            <RequestQuoteButton variant="sand">Request a Quote</RequestQuoteButton>
             <Button href="/charter/trip" variant="ghost">
               Plan a Trip
             </Button>

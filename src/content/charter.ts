@@ -45,7 +45,7 @@ export const charter = {
   fleetTeaser: {
     eyebrow: "The fleet",
     heading: "The right aircraft for the trip.",
-    lead: "Light jets, midsize jets, and turboprops — matched to range, group size, and field.",
+    lead: "We are positioned to fly globally and meet your travel requirements anywhere. Our dedicated fleet below and large network of partners allow us to support trips and missions of any size",
     cta: { label: "See the full fleet", href: "/charter/fleet" },
   },
 

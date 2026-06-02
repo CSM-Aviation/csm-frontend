@@ -6,18 +6,18 @@
  */
 export const home = {
   hero: {
-    eyebrow: "Private charter · Management · Maintenance",
-    // The single accent word renders in italic Gold (see page).
-    titleLead: "Trusted with what",
-    titleAccent: "matters",
-    titleTail: "most.",
+    eyebrow: "Private charter · Management · Acquisition",
+    // Two-color hero (§16): "Safety" renders Horizon Blue, "Compromise" Gold.
+    titleLead: "Safety",
+    titleMid: "Without",
+    titleAccent: "Compromise",
     lead: "24/7 Live Support | Global Reach | Private Jet Charter",
   },
 
   whatWeDo: {
     eyebrow: "What we do",
     heading: "Three services, one standard.",
-    lead: "Not three identical offers — a charter operation, an owner's flight department, and an in-house repair station that reinforce each other.",
+    lead: "Not three identical offers — a charter operation, an owner's flight department, and the affiliated services that reinforce each other.",
     charter: {
       title: "Charter",
       body: "Retail, medical, and wholesale charter across California, Nevada, and beyond. The right aircraft for the mission, briefed and tracked the whole way.",
@@ -33,9 +33,9 @@ export const home = {
       },
       {
         title: "Maintenance",
-        body: "An FAA-certified Part 145 repair station in-house, including AOG response when an aircraft is on the ground.",
+        body: "Aircraft maintenance, care, and AOG support — facilitated through our family of affiliated companies.",
         href: "/maintenance",
-        cta: "Part 145",
+        cta: "Maintenance",
       },
     ],
   },
@@ -43,10 +43,10 @@ export const home = {
   beyond: {
     eyebrow: "The whole aircraft lifecycle",
     heading: "Beyond charter.",
-    body: "Most operators do one thing. CSM keeps charter, management, and Part 145 maintenance under one roof — which means one accountable team for the life of the aircraft, and no seams for problems to hide in.",
+    body: "Most operators do one thing. CSM brings charter and management together with the maintenance and aircraft-care services of our affiliated companies — one accountable relationship for the life of the aircraft, and no seams for problems to hide in.",
     stats: [
       { value: "1", label: "Accountable team, end to end" },
-      { value: "145", label: "In-house FAA repair station" },
+      { value: "24/7", label: "Live specialist support" },
     ],
     links: [
       { label: "Aircraft Management", href: "/management" },

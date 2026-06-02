@@ -54,7 +54,7 @@ export function Header() {
 
       <div className="mx-auto flex h-[72px] max-w-content items-center justify-between px-[var(--page-margin)]">
         <Link href="/" aria-label="CSM Aviation — home" className="flex items-center">
-          <Logo tone={scrolled ? "positive" : "reversed"} width={132} priority />
+          <Logo tone={scrolled ? "positive" : "reversed"} width={168} priority />
         </Link>
 
         {/* Desktop nav */}
@@ -72,7 +72,7 @@ export function Header() {
               />
             ))}
           </ul>
-          <RequestQuoteButton variant="primary">{primaryCta.label}</RequestQuoteButton>
+          <RequestQuoteButton variant="sand">{primaryCta.label}</RequestQuoteButton>
         </nav>
 
         {/* Mobile trigger */}

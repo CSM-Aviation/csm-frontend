@@ -38,7 +38,7 @@ export function SupportAside() {
         </Button>
       </div>
 
-      <p className="text-small text-ink-faint">ARGUS Gold · Wyvern · Part 145 maintenance</p>
+      <p className="text-small text-ink-faint">ARGUS Gold · Wyvern · NBAA member</p>
     </aside>
   );
 }

@@ -14,8 +14,11 @@ const API_KEY = process.env.API_KEY ?? process.env.NEXT_PUBLIC_API_KEY ?? "";
 
 const REVALIDATE_SECONDS = 300;
 
-/** Canonical filter order + display labels (§11). */
-export const CATEGORY_ORDER: FleetCategory[] = ["light", "midsize", "heavy", "turboprop"];
+/**
+ * Canonical filter/display order (§11): largest cabin to smallest, jets before
+ * turboprops — so the fleet reads heavy → midsize → light → turboprop.
+ */
+export const CATEGORY_ORDER: FleetCategory[] = ["heavy", "midsize", "light", "turboprop"];
 
 export const CATEGORY_LABELS: Record<FleetCategory, string> = {
   light: "Light Jets",
@@ -33,10 +36,11 @@ const CATEGORY_SINGULAR: Record<FleetCategory, string> = {
 
 /**
  * Normalize the free-form API category into one or more design buckets.
- * Live values seen: "TURBOPROPS", "LIGHT", "LIGHT | MIDSIZE JETS". The compound
- * form maps to BOTH light and midsize so the aircraft shows under either filter.
- * Unknown tokens are logged (never silently dropped) — the aircraft still
- * appears under "All".
+ * Live values seen: "TURBOPROPS", "LIGHT", "LIGHT | MIDSIZE JETS". An aircraft
+ * is classified by its largest cabin class: a "LIGHT | MIDSIZE" jet (the G150)
+ * is a Midsize, not a "Light · Midsize", so the smaller bucket is dropped when a
+ * larger one is present. Unknown tokens are logged (never silently dropped) —
+ * the aircraft still appears under "All".
  */
 export function normalizeCategory(raw: string): FleetCategory[] {
   const tokens = raw
@@ -53,6 +57,15 @@ export function normalizeCategory(raw: string): FleetCategory[] {
       out.add("heavy");
     else if (token.includes("light")) out.add("light");
     else console.warn(`[fleet] unmapped category token: "${token}" (raw: "${raw}")`);
+  }
+
+  // Classify by the largest cabin class only — collapse smaller co-tags so a
+  // jet lands in (and is labeled with) a single tier.
+  if (out.has("heavy")) {
+    out.delete("midsize");
+    out.delete("light");
+  } else if (out.has("midsize")) {
+    out.delete("light");
   }
 
   return CATEGORY_ORDER.filter((c) => out.has(c));
@@ -148,6 +161,27 @@ async function fetchFleetItems(): Promise<FleetItem[]> {
 }
 
 /**
+ * Fill imagery for any tail whose API record has an empty imageUrls (a data
+ * gap, e.g. the G150 N518KH) by borrowing the gallery of a same-model sibling.
+ * Cards/detail then show the actual aircraft type rather than a placeholder;
+ * once real photos are uploaded for that tail, its own imagery takes over.
+ */
+function backfillImagery(aircraft: Aircraft[]): void {
+  const galleryByName = new Map<string, string[]>();
+  for (const a of aircraft) {
+    if (a.images.length && !galleryByName.has(a.name)) galleryByName.set(a.name, a.images);
+  }
+  for (const a of aircraft) {
+    if (a.images.length) continue;
+    const fallback = galleryByName.get(a.name);
+    if (fallback) {
+      a.images = fallback;
+      a.heroImage = fallback[0];
+    }
+  }
+}
+
+/**
  * All aircraft, normalized and sorted (by first category in canonical order,
  * then name). Degrades gracefully to [] if the API is unreachable so fleet
  * pages render an in-voice empty state instead of crashing the build/route.
@@ -156,6 +190,7 @@ export async function getFleet(): Promise<Aircraft[]> {
   try {
     const items = await fetchFleetItems();
     const aircraft = items.map(toAircraft);
+    backfillImagery(aircraft);
     return aircraft.sort((a, b) => {
       const ai = a.categories[0] ? CATEGORY_ORDER.indexOf(a.categories[0]) : 99;
       const bi = b.categories[0] ? CATEGORY_ORDER.indexOf(b.categories[0]) : 99;

@@ -62,7 +62,7 @@ export default function DestinationDetailPage({ params }: { params: { cityId: st
             </h1>
             <p className="max-w-lead text-lead text-paper-soft">{dest.intro}</p>
             <div className="mt-s3 flex flex-wrap gap-s4">
-              <RequestQuoteButton variant="primary">Request a Quote</RequestQuoteButton>
+              <RequestQuoteButton variant="sand">Request a Quote</RequestQuoteButton>
               <Button href="/charter/trip" variant="ghost">
                 Plan a Trip
               </Button>

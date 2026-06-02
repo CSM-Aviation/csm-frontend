@@ -107,7 +107,7 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
         </nav>
 
         <div className="flex flex-col gap-s3 border-t border-line px-s5 py-s5">
-          <RequestQuoteButton variant="primary" className="w-full" onClick={onClose}>
+          <RequestQuoteButton variant="sand" className="w-full" onClick={onClose}>
             {primaryCta.label}
           </RequestQuoteButton>
           <Button href={site.phone.href} variant="secondary" className="w-full">
