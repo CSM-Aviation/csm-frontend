@@ -18,9 +18,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/maintenance" },
 };
 
+// Page hidden — route returns 404 while the content/code below is preserved.
+// To restore the page, set this to false (or remove the guard).
+const PAGE_HIDDEN = true as boolean;
+
 export default function MaintenancePage() {
-  // Page hidden — route returns 404 while the content/code is preserved.
-  notFound();
+  if (PAGE_HIDDEN) notFound();
 
   const { hero, services, standards, cta } = maintenance;
   const aog = services.items.find((s) => s.urgent);
