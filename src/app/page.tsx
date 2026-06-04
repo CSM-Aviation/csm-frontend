@@ -31,7 +31,7 @@ export default function Home() {
         align="center"
         media={
           <Image
-            src="/images/image_jetcenter_aerial-hero.jpg"
+            src="/images/image_jetcenter_aerial_010.png"
             alt=""
             aria-hidden
             fill
@@ -40,15 +40,16 @@ export default function Home() {
             className="object-cover"
           />
         }
-        logo={<Logo tone="reversed" width={280} priority />}
+        logo={<Logo tone="reversed" width={400} priority />}
         eyebrow={home.hero.eyebrow}
         eyebrowClassName="text-body md:text-lead"
         leadClassName="text-lead sm:text-h3"
         title={
           <>
-            <span className="text-horizon">{home.hero.titleLead}</span>{" "}
-            {home.hero.titleMid}{" "}
-            <em className="font-display italic text-gold">{home.hero.titleAccent}</em>
+            <span className="text-white">{home.hero.titleLead}</span>{" "}
+            <em className="font-display italic text-gold">
+              {home.hero.titleMid} {home.hero.titleAccent}
+            </em>
           </>
         }
         lead={home.hero.lead}

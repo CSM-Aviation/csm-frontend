@@ -32,7 +32,6 @@ export const primaryNav: NavSection[] = [
     ],
   },
   { label: "Aircraft Management", href: "/management" },
-  { label: "Maintenance", href: "/maintenance" },
   {
     label: "Company",
     href: "/company/about",
@@ -67,7 +66,6 @@ export const footerNav: FooterColumn[] = [
     heading: "Services",
     links: [
       { label: "Aircraft Management", href: "/management" },
-      { label: "Maintenance", href: "/maintenance" },
       { label: "Customer Experience", href: "/customer-experience" },
     ],
   },
