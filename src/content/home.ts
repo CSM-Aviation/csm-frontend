@@ -6,8 +6,9 @@
  */
 export const home = {
   hero: {
-    eyebrow: "Private charter · Management · Acquisition",
-    // Two-color hero (§16): "Safety" renders Horizon Blue, "Compromise" Gold.
+    eyebrow: "Private charter · Acquisition · Management",
+    // Two-tone hero (§16): "Safety" is white/upright (the grounded setup);
+    // "Without Compromise" is gold + italic (the emphasized promise).
     titleLead: "Safety",
     titleMid: "Without",
     titleAccent: "Compromise",
@@ -31,12 +32,6 @@ export const home = {
         href: "/management",
         cta: "For owners",
       },
-      {
-        title: "Maintenance",
-        body: "Aircraft maintenance, care, and AOG support — facilitated through our family of affiliated companies.",
-        href: "/maintenance",
-        cta: "Maintenance",
-      },
     ],
   },
 
@@ -50,7 +45,6 @@ export const home = {
     ],
     links: [
       { label: "Aircraft Management", href: "/management" },
-      { label: "Maintenance", href: "/maintenance" },
     ],
   },
 

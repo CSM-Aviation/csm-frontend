@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { maintenance } from "@/content/maintenance";
 import { PageHero } from "@/components/layout/PageHero";
 import { SectionBand } from "@/components/layout/SectionBand";
@@ -18,6 +19,9 @@ export const metadata: Metadata = {
 };
 
 export default function MaintenancePage() {
+  // Page hidden — route returns 404 while the content/code is preserved.
+  notFound();
+
   const { hero, services, standards, cta } = maintenance;
   const aog = services.items.find((s) => s.urgent);
   const rest = services.items.filter((s) => !s.urgent);
