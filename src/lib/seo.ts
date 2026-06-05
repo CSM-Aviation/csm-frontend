@@ -24,7 +24,7 @@ export const organizationSchema: Record<string, unknown> = {
     addressRegion: "CA",
     addressCountry: site.address.country,
   },
-  areaServed: ["California", "Nevada"],
+  areaServed: ["United States", "Worldwide"],
   sameAs: site.social.map((s) => s.href),
 };
 
@@ -41,7 +41,7 @@ export function serviceSchema(opts: {
     serviceType: opts.serviceType,
     description: opts.description,
     url: `${site.url}${opts.path}`,
-    areaServed: ["California", "Nevada"],
+    areaServed: ["United States", "Worldwide"],
     provider: {
       "@type": "Organization",
       name: site.name,

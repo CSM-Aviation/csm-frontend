@@ -12,7 +12,7 @@ import { Reveal } from "@/components/ui/Reveal";
 export const metadata: Metadata = {
   title: "About CSM",
   description:
-    "CSM Aviation is a Central Valley operator trusted with what matters — private charter and aircraft management under one accountable roof.",
+    "CSM Aviation is a private aviation operator trusted with what matters — private charter and aircraft management under one accountable roof.",
   alternates: { canonical: "/company/about" },
 };
 

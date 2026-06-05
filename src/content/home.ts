@@ -21,7 +21,7 @@ export const home = {
     lead: "Not three identical offers — a charter operation, an owner's flight department, and the affiliated services that reinforce each other.",
     charter: {
       title: "Charter",
-      body: "Retail, medical, and wholesale charter across California, Nevada, and beyond. The right aircraft for the mission, briefed and tracked the whole way.",
+      body: "Retail, medical, and wholesale charter — coast to coast and worldwide. The right aircraft for the mission, briefed and tracked the whole way.",
       href: "/charter",
       cta: "Explore charter",
     },
@@ -49,9 +49,9 @@ export const home = {
   },
 
   reach: {
-    eyebrow: "Central Valley reach",
-    heading: "One base. All of California and Nevada.",
-    lead: "Positioned to serve the West and fly anywhere from there. A few routes our clients ask for most:",
+    eyebrow: "Worldwide reach",
+    heading: "Wherever the mission takes you.",
+    lead: "From domestic hops to intercontinental trips, we fly nationwide and worldwide.",
     cta: { label: "All destinations", href: "/destinations" },
   },
 

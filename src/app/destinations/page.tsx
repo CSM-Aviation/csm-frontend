@@ -12,7 +12,7 @@ import { Reveal } from "@/components/ui/Reveal";
 export const metadata: Metadata = {
   title: "Destinations",
   description:
-    "From our Central Valley base to the destinations asked for most — Miami, Los Angeles, New York, Las Vegas, and beyond.",
+    "The destinations our clients ask for most — Miami, Los Angeles, New York, Las Vegas — and anywhere else, nationwide and worldwide.",
   alternates: { canonical: "/destinations" },
 };
 
@@ -22,7 +22,7 @@ export default function DestinationsPage() {
       <PageHero
         eyebrow="Reach"
         title="Where our clients fly."
-        lead="Positioned to serve all of California and Nevada — and to fly anywhere from there. A few of the routes we run most."
+        lead="We fly nationwide and worldwide. A few of the routes we run most."
       />
 
       <SectionBand tone="light">

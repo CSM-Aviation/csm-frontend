@@ -52,7 +52,7 @@ export const charter = {
   reach: {
     eyebrow: "Reach",
     heading: "Where our clients fly.",
-    lead: "From our Central Valley base to the destinations asked for most.",
+    lead: "The destinations our clients ask for most — nationwide and worldwide.",
     cta: { label: "All destinations", href: "/destinations" },
   },
 } as const;
