@@ -48,7 +48,12 @@ export default async function FleetPage({
         }
       />
 
-      <SectionBand tone="light" eyebrow="The fleet" heading="Find your aircraft">
+      <SectionBand
+        tone="light"
+        eyebrow="The fleet"
+        heading="Find your aircraft"
+        lead="This is the fleet we own and maintain to our own standard — but it's only the starting point. Tell us your mission and we can source any aircraft to match."
+      >
         <CategoryFilter categories={categories} active={active} />
         <div className="mt-s8">
           <FleetGrid aircraft={shown} />
