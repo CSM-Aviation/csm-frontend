@@ -61,6 +61,7 @@ export function Header() {
       <div className="mx-auto flex h-[72px] max-w-content items-center justify-between px-[var(--page-margin)]">
         <Link
           href="/"
+          id="header-logo"
           aria-label="CSM Aviation — home"
           className={cn(
             "flex items-center transition-opacity duration-base ease-calm",

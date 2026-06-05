@@ -12,7 +12,8 @@ import { ProofBar } from "@/components/proof/ProofBar";
 import { StatBlock } from "@/components/proof/StatBlock";
 import { AccreditationStrip } from "@/components/proof/AccreditationStrip";
 import { Button } from "@/components/ui/Button";
-import { Logo } from "@/components/ui/Logo";
+import { HeroLogo } from "@/components/layout/HeroLogo";
+import { LogoFlight } from "@/components/layout/LogoFlight";
 import { RequestQuoteButton } from "@/components/quote/RequestQuoteButton";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -25,6 +26,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
+      <LogoFlight />
       <PageHero
         titleSize="display"
         align="center"
@@ -39,7 +41,7 @@ export default function Home() {
             className="object-cover"
           />
         }
-        logo={<Logo tone="reversed" width={400} priority />}
+        logo={<HeroLogo />}
         eyebrow={home.hero.eyebrow}
         eyebrowClassName="text-body md:text-lead"
         leadClassName="text-lead sm:text-h3"
