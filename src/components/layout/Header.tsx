@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ChevronDown, Menu } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { RequestQuoteButton } from "@/components/quote/RequestQuoteButton";
@@ -19,6 +20,11 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const pathname = usePathname();
+
+  // On the home page the hero shows a large centred logo while at the top, so
+  // the header logo stays hidden until the page scrolls past it.
+  const hideLogo = pathname === "/" && !scrolled;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -53,7 +59,17 @@ export function Header() {
       </a>
 
       <div className="mx-auto flex h-[72px] max-w-content items-center justify-between px-[var(--page-margin)]">
-        <Link href="/" aria-label="CSM Aviation — home" className="flex items-center">
+        <Link
+          href="/"
+          id="header-logo"
+          aria-label="CSM Aviation — home"
+          className={cn(
+            "flex items-center transition-opacity duration-base ease-calm",
+            hideLogo && "pointer-events-none opacity-0",
+          )}
+          aria-hidden={hideLogo}
+          tabIndex={hideLogo ? -1 : undefined}
+        >
           <Logo tone={scrolled ? "positive" : "reversed"} width={168} priority />
         </Link>
 

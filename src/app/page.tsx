@@ -5,7 +5,6 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { home } from "@/content/home";
 import { homeProof } from "@/content/proof";
 import { site } from "@/content/site";
-import { DestinationsTeaser } from "@/components/sections/DestinationsTeaser";
 import { PageHero } from "@/components/layout/PageHero";
 import { SectionBand } from "@/components/layout/SectionBand";
 import { CtaBand } from "@/components/layout/CtaBand";
@@ -13,25 +12,27 @@ import { ProofBar } from "@/components/proof/ProofBar";
 import { StatBlock } from "@/components/proof/StatBlock";
 import { AccreditationStrip } from "@/components/proof/AccreditationStrip";
 import { Button } from "@/components/ui/Button";
-import { Logo } from "@/components/ui/Logo";
+import { HeroLogo } from "@/components/layout/HeroLogo";
+import { LogoFlight } from "@/components/layout/LogoFlight";
 import { RequestQuoteButton } from "@/components/quote/RequestQuoteButton";
 import { Reveal } from "@/components/ui/Reveal";
 
 export const metadata: Metadata = {
   description:
-    "CSM Aviation — ARGUS Gold private charter and transparent aircraft management, flown to a single standard of safety from California's Central Valley.",
+    "CSM Aviation — ARGUS Gold private charter and transparent aircraft management, flown to a single standard of safety, nationwide and worldwide.",
   alternates: { canonical: "/" },
 };
 
 export default function Home() {
   return (
     <>
+      <LogoFlight />
       <PageHero
         titleSize="display"
         align="center"
         media={
           <Image
-            src="/images/image_jetcenter_aerial_010.png"
+            src="/images/image_jetcenter_aerial_010.jpeg"
             alt=""
             aria-hidden
             fill
@@ -40,7 +41,7 @@ export default function Home() {
             className="object-cover"
           />
         }
-        logo={<Logo tone="reversed" width={400} priority />}
+        logo={<HeroLogo />}
         eyebrow={home.hero.eyebrow}
         eyebrowClassName="text-body md:text-lead"
         leadClassName="text-lead sm:text-h3"
@@ -156,7 +157,10 @@ export default function Home() {
         heading={home.reach.heading}
         lead={home.reach.lead}
       >
-        <DestinationsTeaser />
+        <p className="max-w-measure text-lead text-ink-soft">
+          Tell us where you need to be and we position the right aircraft for the mission —
+          the same single standard of safety on every leg, coast to coast and across oceans.
+        </p>
         <div className="mt-s7">
           <Button href={home.reach.cta.href} variant="secondary">
             {home.reach.cta.label}

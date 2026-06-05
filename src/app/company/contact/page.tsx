@@ -81,7 +81,7 @@ export default function ContactPage({
                   {site.address.locality}, {site.address.region}
                 </span>
                 <span className="text-small text-ink-faint">
-                  Serving all of California &amp; Nevada
+                  Serving clients nationwide &amp; worldwide
                 </span>
               </span>
             </div>
@@ -109,14 +109,14 @@ export default function ContactPage({
       </SectionBand>
 
       {/* Location — branded, not a raw embed */}
-      <SectionBand tone="dark" gradient eyebrow="Find us" heading="A Central Valley base, built for reach.">
+      <SectionBand tone="dark" gradient eyebrow="Find us" heading="Built for reach.">
         <div className="relative overflow-hidden rounded-lg border border-line-dark bg-petrol-600 p-s8">
           <div className="flex flex-col gap-s5">
             <HorizonRule color="gold" animate />
             <p className="max-w-measure text-lead text-paper-soft">
-              We operate from California&apos;s Central Valley — positioned to serve the entire
-              state and Nevada, and to fly anywhere from there. For ramp details and arrival
-              coordination, call ahead and our team will handle it.
+              We fly nationwide and worldwide, positioning the right aircraft wherever the
+              mission begins. For ramp details and arrival coordination, call ahead and our
+              team will handle it.
             </p>
             <HorizonRule color="line-dark" />
           </div>
