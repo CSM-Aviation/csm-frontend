@@ -25,13 +25,14 @@ export const primaryNav: NavSection[] = [
     href: "/charter",
     children: [
       { label: "Charter Overview", href: "/charter", hint: "How we fly" },
-      { label: "Our Fleet", href: "/charter/fleet", hint: "Aircraft by category" },
+      // { label: "Our Fleet", href: "/charter/fleet", hint: "Aircraft by category" },
       { label: "Destinations", href: "/destinations", hint: "Where we go" },
       { label: "Request a Quote", href: "/charter/quote", hint: "Start a trip" },
       { label: "Plan a Trip", href: "/charter/trip", hint: "Tell us your itinerary" },
     ],
   },
   { label: "Aircraft Management", href: "/management" },
+  { label: "Sales & Acquisitions", href: "/sales-acquisitions" },
   {
     label: "Company",
     href: "/company/about",
@@ -56,7 +57,7 @@ export const footerNav: FooterColumn[] = [
     heading: "Charter",
     links: [
       { label: "Charter Overview", href: "/charter" },
-      { label: "Our Fleet", href: "/charter/fleet" },
+      // { label: "Our Fleet", href: "/charter/fleet" },
       { label: "Request a Quote", href: "/charter/quote" },
       { label: "Plan a Trip", href: "/charter/trip" },
       { label: "Destinations", href: "/destinations" },
@@ -66,6 +67,7 @@ export const footerNav: FooterColumn[] = [
     heading: "Services",
     links: [
       { label: "Aircraft Management", href: "/management" },
+      { label: "Sales & Acquisitions", href: "/sales-acquisitions" },
       { label: "Customer Experience", href: "/customer-experience" },
     ],
   },

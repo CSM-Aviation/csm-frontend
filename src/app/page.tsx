@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { home } from "@/content/home";
@@ -31,14 +30,14 @@ export default function Home() {
         titleSize="display"
         align="center"
         media={
-          <Image
-            src="/images/image_jetcenter_aerial_010.jpeg"
-            alt=""
+          <video
+            src="/videos/compressed/CSM_Hero.mp4"
             aria-hidden
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 h-full w-full object-cover"
           />
         }
         logo={<HeroLogo />}
