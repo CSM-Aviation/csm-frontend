@@ -82,7 +82,7 @@ export default async function CharterPage() {
       </SectionBand>
 
       {/* Fleet teaser — Fog */}
-      <SectionBand
+      {/* <SectionBand
         tone="light"
         eyebrow={charter.fleetTeaser.eyebrow}
         heading={charter.fleetTeaser.heading}
@@ -94,7 +94,7 @@ export default async function CharterPage() {
             {charter.fleetTeaser.cta.label}
           </Button>
         </div>
-      </SectionBand>
+      </SectionBand> */}
 
       {/* Reach — Fog */}
       <SectionBand
