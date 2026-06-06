@@ -10,15 +10,15 @@ export interface ProofStat {
 }
 
 export const homeProof: ProofStat[] = [
+  { value: "18+", label: "Years of excellent service" },
   { value: "Perfect", label: "Safety record" },
-  { value: "ARGUS", label: "Gold rated" },
-  { value: "10+", label: "Years of medical transport" },
-  { value: "24/7", label: "Specialist response" },
+  { value: "24/7", label: "Specialized response" },
+  { value: "Accreditations", label: "Continually growing" },
 ];
 
 export const aboutProof: ProofStat[] = [
-  { value: "10+", label: "Years operating" },
-  { value: "Perfect", label: "Medical-transport record" },
-  { value: "5", label: "Industry accreditations" },
-  { value: "CA + NV", label: "Served from one base" },
+  { value: "Perfect", label: "Safety record" },
+  { value: "18+", label: "Years of excellence" },
+  { value: "Flights", label: "Thousands per year" },
+  { value: "Team", label: "Best in the industry" },
 ];
