@@ -31,7 +31,7 @@ export default function Home() {
         align="center"
         media={
           <video
-            src="/videos/compressed/CSM_Hero.mp4"
+            src="/videos/compressed/CSM_Hero_blurred.mp4"
             aria-hidden
             autoPlay
             muted
