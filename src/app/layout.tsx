@@ -1,77 +1,62 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Suspense } from "react";
+import localFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { MobileCallBar } from "@/components/layout/MobileCallBar";
+import { ScrollProgress } from "@/components/horizon/ScrollProgress";
+import { SiteAnalytics } from "@/components/analytics/SiteAnalytics";
+import { RouteTracker } from "@/components/analytics/RouteTracker";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { QuoteModalProvider } from "@/components/quote/QuoteModalProvider";
+import { organizationSchema } from "@/lib/seo";
 import "./globals.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import { Analytics } from "@vercel/analytics/next"
-import { SpeedInsights } from "@vercel/speed-insights/next"
-import { ConfigProvider } from "./contexts/ConfigContext";
-import AnalyticsTracker from "./admin/analytics/AnalyticsTracker";
-import Breadcrumb from "./components/Breadcrumb";
-import AnalyticsScripts from "./analytics/AnalyticsScripts";
 
-const inter = Inter({ subsets: ["latin"] });
+/**
+ * Self-hosted brand faces (design doc §04/§17). One variable axis per family
+ * covers all weights. next/font/local adds font-display:swap + adjusted
+ * fallback metrics (no CLS) and exposes the token CSS vars consumed by
+ * tokens.css (--font-body / --font-display).
+ */
+const inter = localFont({
+  src: [
+    { path: "../../public/fonts/Inter-Variable.ttf", style: "normal" },
+    { path: "../../public/fonts/Inter-Italic-Variable.ttf", style: "italic" },
+  ],
+  variable: "--font-body",
+  display: "swap",
+  preload: true,
+});
+
+const cormorant = localFont({
+  src: [
+    { path: "../../public/fonts/CormorantGaramond-Variable.ttf", style: "normal" },
+    { path: "../../public/fonts/CormorantGaramond-Italic-Variable.ttf", style: "italic" },
+  ],
+  variable: "--font-display",
+  display: "swap",
+  preload: true,
+});
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.csmaviation.com'),
-  title: 'CSM Aviation - Luxury Private Jet Charter Services',
-  description: 'Experience luxury private jet charter services with CSM Aviation. 24/7 on-demand charter, aircraft management, and maintenance services across California and nationwide.',
-  keywords: ['private jet charter', 'luxury aviation', 'aircraft management', 'private flights', 'CSM Aviation'],
-  icons: {
-    icon: '/favicon.png',
+  metadataBase: new URL("https://www.csmaviation.com"),
+  title: {
+    default: "CSM Aviation — Private Charter, Aircraft Management & Maintenance",
+    template: "%s · CSM Aviation",
   },
-  // Enhanced Open Graph metadata
+  description:
+    "CSM Aviation delivers ARGUS-rated private jet charter and transparent aircraft management — flown to a single standard of safety.",
   openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://www.csmaviation.com',
-    siteName: 'CSM Aviation',
-    title: "CSM Aviation - Luxury Private Jet Charter Services",
-    description: "Experience luxury private jet charter services with CSM Aviation. 24/7 on-demand charter, aircraft management, and maintenance services.",
-    images: [
-      {
-        url: 'https://www.csmaviation.com/images/CSM-Logo-WHITE-01-web300.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'CSM Aviation - Luxury Private Jet Charter Services',
-        type: 'image/jpeg',
-      },
-      // {
-      //   url: 'https://www.csmaviation.com/images/whitebgcsmlogo.png',
-      //   width: 800,
-      //   height: 800,
-      //   alt: 'CSM Aviation Logo',
-      //   type: 'image/png',
-      // }
-    ],
+    type: "website",
+    siteName: "CSM Aviation",
+    url: "https://www.csmaviation.com",
   },
-  // Enhanced Twitter metadata
   twitter: {
-    card: 'summary_large_image',
-    site: '@CSMAviation',
-    creator: '@CSMAviation',
-    title: "CSM Aviation - Luxury Private Jet Charter Services",
-    description: "Experience luxury private jet charter services with CSM Aviation. 24/7 on-demand charter, aircraft management, and maintenance services.",
-    images: {
-      url: 'https://www.csmaviation.com/images/CSM-Logo-WHITE-01-web300.jpg',
-      alt: 'CSM Aviation - Luxury Private Jet Charter Services',
-    },
+    card: "summary_large_image",
+    site: "@CSMAviation",
   },
-  // Additional metadata for better crawler support
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  alternates: {
-    canonical: 'https://www.csmaviation.com',
-  }
 };
 
 export default function RootLayout({
@@ -80,38 +65,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        {/* Additional meta tags for better social media preview control */}
-        {/* <meta property="og:image:secure_url" content="https://www.csmaviation.com/images/G150.png" /> */}
-        
-        {/* Prevent indexing of service images */}
-        <meta name="robots" content="noimageindex" />
-        
-        {/* Link preview optimization */}
-        <link rel="image_src" href="https://www.csmaviation.com/images/CSM-Logo-WHITE-01-web300.jpg" />
-        
-        <AnalyticsScripts />
-      </head>
-      <body className={inter.className}>
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-KJVF5RFH"
-            height="0"
-            width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-          />
-        </noscript>
-        <ConfigProvider>
+    <html lang="en" className={`${inter.variable} ${cormorant.variable}`}>
+      <body>
+        <SiteAnalytics />
+        <JsonLd data={organizationSchema} />
+        <ScrollProgress />
+        <QuoteModalProvider>
           <Header />
-          <Breadcrumb />
-          <main className="mt-24 md:mt-20">{children}
-            <Analytics />
-            <SpeedInsights />
-            <AnalyticsTracker />
-          </main>
+          <main id="main">{children}</main>
           <Footer />
-        </ConfigProvider>
+          <MobileCallBar />
+        </QuoteModalProvider>
+        <Suspense fallback={null}>
+          <RouteTracker />
+        </Suspense>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

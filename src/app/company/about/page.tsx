@@ -1,69 +1,71 @@
-import React from 'react';
-import { NextPage } from 'next';
-import Hero from '@/app/components/Hero1';
-import AboutBody from './AboutBody';
-import Seo, { generateMetadata as seoGenerateMetadata } from '../../components/seo/Seo';
-import StructuredData from '../../components/seo/StructuredData';
-import { apiService, SeoData } from '../../services/apiService';
-import { Metadata } from 'next';
-import { generateStructuredData } from '@/app/utils/structuredData';
+import type { Metadata } from "next";
+import { about } from "@/content/about";
+import { aboutProof } from "@/content/proof";
+import { PageHero } from "@/components/layout/PageHero";
+import { SectionBand } from "@/components/layout/SectionBand";
+import { CtaBand } from "@/components/layout/CtaBand";
+import { ProofBar } from "@/components/proof/ProofBar";
+import { AccreditationStrip } from "@/components/proof/AccreditationStrip";
+import { Eyebrow } from "@/components/ui/Eyebrow";
+import { Reveal } from "@/components/ui/Reveal";
 
-
-async function getData(): Promise<SeoData> {
-  try {
-    const response = await apiService.fetchSeoData('about');
-    if (response.error || !response.data) {
-      throw new Error(response.error || 'Failed to fetch SEO data');
-    }
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching SEO data:', error);
-    return {
-      title: 'CSM Aviation',
-      description: 'Luxury air travel services',
-      keywords: ['private jet', 'charter'],
-      ogImage: '/images/default.jpg',
-      canonicalUrl: 'https://www.csmaviation.com',
-      robots: 'index, follow',
-      author: 'CSM Aviation',
-      language: 'en',
-      siteName: 'CSM Aviation',
-      type: 'website',
-      twitterHandle: '@CSMAviation',
-    };
-  }
-}
-
-async function generateMetadata(): Promise<Metadata> {
-  const seoData = await getData();
-  return seoGenerateMetadata(seoData);
-}
-
-// Export the metadata generator for Next.js
-export { generateMetadata };
-
-const AboutPage: NextPage = async () => {
-  const seoData = await getData();
-  const structuredData = generateStructuredData(seoData);
-  return (
-    <>
-      <StructuredData data={structuredData} />
-      <Hero
-        backgroundImage="/images/Luxury_desktop.jpg"
-        videoSource="/images/Luxury.mp4"
-        title="About Us"
-        subtitle="Experience luxury air travel like never before"
-        isHome={false}
-      />
-
-      <AboutBody />
-      {/* <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-4">Dedicated People Dedicated to Private Aviation</h1>
-        <p>CSM started in private aviation in 2008 with our roots in Aircraft Maintenance and MRO services to aircraft owners in the Central Valley of California.  With the success of the Maintenance operations, Managing Aircraft for local valley farmers and executives followed suit.  Ownership and leadership offering twenty years of Commerical flying experience and thirty years of FAA regulatory experience ultimately led to CSM Aviation operating as a Part 135 Air Charter provider in 2013.  Our focus stays true; provide exceptional and reliable Private Charter and Flight Department services on the backbone of Safety and Maintenance protocols.  </p>
-      </div> */}
-      <div className="h-20"></div>
-    </>
-  );
+export const metadata: Metadata = {
+  title: "About CSM",
+  description:
+    "CSM Aviation is a private aviation operator trusted with what matters — private charter and aircraft management under one accountable roof.",
+  alternates: { canonical: "/company/about" },
 };
 
-export default AboutPage;
+export default function AboutPage() {
+  const { hero, story, standards } = about;
+
+  return (
+    <>
+      <PageHero eyebrow={hero.eyebrow} title={hero.title} lead={hero.lead} />
+
+      {/* Story — Fog, editorial single column */}
+      <SectionBand tone="light" eyebrow={story.eyebrow}>
+        <div className="flex flex-col gap-s5 lg:max-w-3xl">
+          {story.paragraphs.map((p, i) => (
+            <Reveal key={i} delay={i * 40}>
+              <p className="text-lead text-ink-soft">{p}</p>
+            </Reveal>
+          ))}
+        </div>
+      </SectionBand>
+
+      {/* By the numbers — Petrol */}
+      <SectionBand
+        tone="dark"
+        gradient
+        eyebrow="By the numbers"
+        heading="What the record says."
+      >
+        <ProofBar items={aboutProof} tone="dark" />
+      </SectionBand>
+
+      {/* Standards & accreditations — Fog, with context */}
+      <SectionBand
+        tone="light"
+        eyebrow={standards.eyebrow}
+        heading={standards.heading}
+        lead={standards.lead}
+      >
+        <div className="mb-s9">
+          <AccreditationStrip />
+        </div>
+        <ul className="grid gap-s6 md:grid-cols-3">
+          {standards.items.map((item, i) => (
+            <Reveal as="li" key={item.name} delay={i * 80} className="flex flex-col gap-s3">
+              <Eyebrow tone="saddle">{item.name}</Eyebrow>
+              <span aria-hidden className="h-px w-full bg-line" />
+              <p className="text-body text-ink-soft">{item.meaning}</p>
+            </Reveal>
+          ))}
+        </ul>
+      </SectionBand>
+
+      <CtaBand />
+    </>
+  );
+}

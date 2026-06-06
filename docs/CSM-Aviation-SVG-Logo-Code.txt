@@ -1,0 +1,36 @@
+CSM AVIATION — SVG LOGO SOURCE CODE
+Reference for Claude Projects
+====================================================================
+
+This file contains the raw SVG markup for all three CSM Aviation logo
+files. These can be used to recreate or reference the vector artwork.
+
+====================================================================
+LOGO 1: Block Lockup — Deep Petrol (Preferred)
+File: logo-csm-block-petrol__2___1_.svg
+ViewBox: 0 0 84.05 61.18
+Colors: .cls-1 fill:#f5f2ed (Fog)  |  .cls-2 fill:#0e2c3d (Deep Petrol)
+====================================================================
+
+$(cat /mnt/user-data/uploads/logo-csm-block-petrol__2___1_.svg)
+
+====================================================================
+LOGO 2: Block Lockup — Deep Petrol (Variant)
+File: logo-csm-block-petrol__3_.svg
+ViewBox: 0 0 84.05 61.18
+Colors: .cls-1 fill:#f5f2ed (Fog)  |  .cls-2 fill:#0e2c3d (Deep Petrol)
+====================================================================
+
+$(cat /mnt/user-data/uploads/logo-csm-block-petrol__3_.svg)
+
+====================================================================
+LOGO 3: Open Mark — Petrol on Light
+File: logo-csm-petrol__1_.svg
+ViewBox: 0 0 66.39 23.73
+Colors: .cls-1 fill:#0e2c3d (Deep Petrol)
+====================================================================
+
+$(cat /mnt/user-data/uploads/logo-csm-petrol__1_.svg)
+
+====================================================================
+END OF FILE

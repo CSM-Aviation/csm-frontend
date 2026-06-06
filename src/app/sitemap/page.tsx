@@ -1,60 +1,51 @@
-// app/sitemap/page.tsx
-import Link from 'next/link';
-import { apiService } from '@/app/services/apiService';
-import { ChevronRight } from 'lucide-react';
+import type { Metadata } from "next";
+import Link from "next/link";
+import { footerNav } from "@/content/nav";
+import { PageHero } from "@/components/layout/PageHero";
+import { SectionBand } from "@/components/layout/SectionBand";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 
-export default async function SitemapPage() {
-  const fleetResponse = await apiService.fetchFleet();
+export const metadata: Metadata = {
+  title: "Sitemap",
+  description: "Every page on the CSM Aviation site, in one place.",
+  alternates: { canonical: "/sitemap" },
+};
 
-  const staticRoutes = [
-    { title: 'Home', href: '/' },
-    { title: 'Quote', href: '/charter/quote' },
-    { title: 'Trip Planner', href: '/charter/trip' },
-    { title: 'Fleet Overview', href: '/charter/fleet' },
-    { title: 'Management', href: '/management' },
-    { title: 'Maintenance', href: '/maintenance' },
-    { title: 'About', href: '/company/about' },
-    { title: 'Contact', href: '/company/contact' },
-  ];
-
-  const fleetLinks = fleetResponse.data
-    ? fleetResponse.data.map((item: any) => ({
-        title: `${item.aircraftName} (${item.registration})`,
-        href: `/charter/fleet/${item._id}?model=${encodeURIComponent(item.aircraftName)}`,
-      }))
-    : [];
-
+export default function SitemapPage() {
   return (
-    <main className="max-xl:py-20 py-[120px] flex flex-col gap-4 max-md:px-6 px-10">
-      <h1 className="text-6xl max-lg:text-5xl max-md:text-4xl font-bold text-black text-center">Sitemap</h1>
-      <div className='flex justify-center'>
-      <p className='text-neutral-500 text-[18px] max-md:text-[16px]  max-w-lg text-center '>Navigate through our comprehensive directory of services, fleet options, and resources designed to enhance your private aviation experience.</p>
-      </div>
-      <div className='flex flex-col gap-4'>
-      <h1 className='text-black text-3xl max-md:text-2xl font-semibold text-center'>Main Navigation</h1>
-      <ul className="text-lg  grid grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-4">
-        {staticRoutes.map((route, index) => (
-          <li key={index} className='p-4 shadow-md'>
-            <Link href={route.href} className="text-black text-md flex items-center gap-4 max-sm:gap-2 max-sm:text-[14px]">
-            <span><ChevronRight color='#ba9154' size={20}/></span>{route.title}
+    <>
+      <PageHero eyebrow="Sitemap" title="Everything, in one place." />
+
+      <SectionBand tone="light">
+        <ul className="grid gap-s8 sm:grid-cols-2 lg:grid-cols-4">
+          <li className="flex flex-col gap-s3">
+            <Eyebrow tone="gold">Home</Eyebrow>
+            <Link
+              href="/"
+              className="w-fit text-body text-ink-soft transition-colors hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+            >
+              Home
             </Link>
           </li>
-        ))}
-      </ul>
-      </div>
-
-      <div className="mt-4">
-        <h2 className="text-3xl max-md:text-2xl font-semibold mb-4 text-black text-center">Fleet Pages</h2>
-        <ul className="text-lg  grid grid-cols-3 max-sm:grid-cols-1 gap-4">
-          {fleetLinks.map((fleet, index) => (
-            <li key={index} className='p-4 shadow-md'>
-              <Link href={fleet.href} className="text-black text-md flex items-center gap-4 max-sm:gap-2 max-sm:text-[14px]">
-              <span><ChevronRight color='#ba9154' size={20}/></span>{fleet.title}
-              </Link>
+          {footerNav.map((col) => (
+            <li key={col.heading} className="flex flex-col gap-s3">
+              <Eyebrow tone="gold">{col.heading}</Eyebrow>
+              <ul className="flex flex-col gap-s2">
+                {col.links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-body text-ink-soft transition-colors hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </li>
           ))}
         </ul>
-      </div>
-    </main>
+      </SectionBand>
+    </>
   );
 }

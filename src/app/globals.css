@@ -1,278 +1,39 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-rgb: 255, 255, 255;
-  }
-}
-
-body {
-  background: rgb(var(--background-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
-@layer components {
-  .jetinsight-embedded-request-button {
-    @apply items-center appearance-none bg-[#d2d25122] rounded px-4 py-2 text-gray-800 font-bold shadow-md hover:shadow-lg transition duration-300 ease-in-out text-lg lg:text-xl;
-  }
-
-  .jetinsight-embedded-request-button:focus {
-    @apply outline-none ring-2 ring-blue-500;
-  }
-
-  .jetinsight-embedded-request-button:hover {
-    @apply bg-[#d2d25155];
-  }
-
-  .jetinsight-embedded-request-button:active {
-    @apply shadow-inner;
-  }
-}
-
-@media (max-width: 800px) {
-  .jetinsight-embedded-request-button {
-    @apply w-4/5 h-10 text-base;
-  }
-}
-
-@media (max-width: 450px) {
-  .jetinsight-embedded-request-button {
-    @apply w-2/3 h-9 text-sm;
-  }
-}
-
-.align-baseline {
-  vertical-align: baseline;
-}
-/* Optional: Add these styles if you want the video to take up the full width of the screen */
-.video-container {
-  width: 100vw;
-  max-width: 100%;
-  position: relative;
-  background-color: black;
-}
-
-/* Optional: Add these styles if you want to maintain a specific aspect ratio */
-.video-container::before {
-  content: "";
-  display: block;
-  padding-top: 56.25%; /* 16:9 Aspect Ratio */
-}
-
-.video-container > * {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.clip-c {
-  clip-path: path(
-    "M150,50 C80,50 30,120 30,200 C30,280 80,350 150,350 C200,350 240,320 260,280 L200,240 C190,260 170,275 150,275 C110,275 80,240 80,200 C80,160 110,125 150,125 C170,125 190,140 200,160 L260,120 C240,80 200,50 150,50 Z"
-  );
-}
-
-.clip-s {
-  clip-path: path(
-    "M 406 48 C 326 48 286 96 286 144 C 286 230.4 406 230.4 406 268.8 C 406 288 386 297.6 366 297.6 C 346 297.6 326 288 316 268.8 L 266 307.2 C 286 336 326 355.2 366 355.2 C 446 355.2 486 307.2 486 259.2 C 486 172.8 366 172.8 366 134.4 C 366 115.2 386 105.6 406 105.6 C 426 105.6 446 115.2 456 134.4 L 506 96 C 486 67.2 446 48 406 48 Z"
-  );
-}
-
-.clip-m {
-  clip-path: path(
-    "M550,50 L550,350 L630,350 L630,160 L680,280 L730,160 L730,350 L810,350 L810,50 L730,50 L680,170 L630,50 Z"
-  );
-}
-
-#cloud-clip-path {
-  clip-path: polygon(
-    50% 0%,
-    80% 10%,
-    100% 35%,
-    100% 70%,
-    80% 90%,
-    50% 100%,
-    20% 90%,
-    0% 70%,
-    0% 35%,
-    20% 10%
-  );
-}
-
-.navbar {
-  font-family: "Untitled Sans", "DM Sans", Helvetica, Arial, Lucida, sans-serif;
-}
-
-body {
-  scrollbar-width: thin;
-  scrollbar-color: #888 #f1f1f1;
-}
-
-::-webkit-scrollbar {
-  width: 9px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #282828;
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #2e2e2e;
-}
-
-#fleetpage {
-  background-image: url('/images/LOGOS/LIGHT BLUE.svg'); /* Fixed path for Next.js */
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-}
-
-/* Media query for smaller screens */
-@media (max-width: 768px) {
-  #fleetpage {
-    background-size: contain; 
-    background-position: center center;
-    background-repeat: repeat;
-  }
-}
-#fleetdetails{
-  /* background-image:  url('/images/skyblue.png'); */
-  background-size: cover;
-  background-position: start;
-  background-repeat: no-repeat;
-}
-#fleetdetailsd{
-  background-image: linear-gradient(to bottom, rgba(0, 1, 33, 0.755) 10%, transparent 50%), url('/images/skybackground.jpg');
-  background-size: cover;
-  background-position: start;
-  background-repeat: no-repeat;
-}
-
-.shiny-button {
-  background: linear-gradient(135deg, #002d2f, #0270d1);
-  border-radius: 50px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.shiny-button::before {
-  content: '';
-  position: absolute;
-  border: none;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 60%);
-  transform: rotate(45deg);
-  animation: shine 2s infinite linear;
-}
-
-@keyframes shine {
-  0% {
-    transform: translate(-100%, -100%) rotate(45deg);
-  }
-  100% {
-    transform: translate(100%, 100%) rotate(45deg);
-  }
-}
-
-.shiny-button:hover {
-  box-shadow: 0 6px 20px rgba(0, 242, 254, 0.6);
-  transform: translateY(-2px);
-}
-
-
+@import "../styles/tokens.css";
 
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
+  html {
+    scroll-behavior: smooth;
   }
-  .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-  }
-}
 
-
-
-@layer base {
-  * {
-    @apply border-border;
-  }
   body {
-    @apply bg-background text-foreground;
+    background: var(--fog);
+    color: var(--ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Tabular figures for specs / phone numbers / stats (design doc §04). */
+  .tnum {
+    font-feature-settings: "tnum" 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    background: var(--gold);
+    color: var(--petrol);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
