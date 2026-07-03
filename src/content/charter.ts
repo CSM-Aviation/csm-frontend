@@ -19,14 +19,14 @@ export const charter = {
         proof: "ARGUS Gold rated",
       },
       {
-        title: "Medical & organ transport",
-        body: "On-demand, time-critical flights where failure is not an option. This is the work that defines us.",
-        proof: "Perfect safety record · 10+ years",
-      },
-      {
         title: "Wholesale & broker",
         body: "Responsive, verifiable lift for brokers who need a partner that answers the phone and stands behind its operation.",
         proof: "24/7 specialist response",
+      },
+      {
+        title: "Medical & organ transport",
+        body: "On-demand, time-critical flights where failure is not an option. This is the work that defines us.",
+        proof: "Perfect safety record · 18+ years",
       },
     ],
   },
