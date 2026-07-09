@@ -65,7 +65,7 @@ export default function Home() {
 
       {/* Proof bar — Fog */}
       <SectionBand tone="light" eyebrow="Why Owners Choose CSM Aviation" heading="Private Aviation, Built on Trust">
-        <ProofBar items={homeProof} tone="light" />
+        <ProofBar items={homeProof} tone="light" columns={2} />
       </SectionBand>
 
       {/* What we do — Fog, 7/5 asymmetric (charter leads) */}
